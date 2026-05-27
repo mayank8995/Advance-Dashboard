@@ -13,7 +13,7 @@ function Login() {
         {/* Email */}
         <form>
         <div className="mb-4">
-          <label className="text-sm text-gray-500 block mb-1.5">Email</label>
+          <label className="text-sm text-gray-500 block mb-1.5">Username/Admin ID</label>
           <input
             type="email"
             placeholder="you@example.com"
@@ -43,7 +43,7 @@ function Login() {
         </div>
 
         {/* Submit */}
-        <button className="w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors mb-4">
+        <button className="cursor-pointer w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors mb-4">
           Sign in
         </button>
         </form>
