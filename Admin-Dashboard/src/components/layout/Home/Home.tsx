@@ -5,11 +5,11 @@ import Navigation from "../Navigation/Navigation"
 function Home(){
 
     return(
-        <>
+        <div>
         <Header/>
         <Navigation/>
         <Footer/>
-        </>
+        </div>
     )
 
 }
