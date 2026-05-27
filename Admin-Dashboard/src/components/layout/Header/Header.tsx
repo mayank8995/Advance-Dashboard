@@ -3,7 +3,7 @@ function Header(){
 
     return(
         <>
-        <h1 className="h-24 text-3xl font-bold underline">Header</h1>
+        <header className="h-14 min-h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-3 z-10">Header</header>
         </>
     )
 

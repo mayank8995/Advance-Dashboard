@@ -4,15 +4,14 @@ import Header from "../Header/Header"
 import Navigation from "../Navigation/Navigation"
 
 function Home(){
-console.log("DGSGS")
     return(
-        <div className="block md:flex">
-        <Navigation/>
-        <div className="min-w-full ">
-        <Header/>
-        <Dashboard/>
-        <Footer/>
+        <div className="md:flex md:flex-col md:h-screen md:overflow-hidden bg-slate-100">
+            <Header/>
+        <div className="flex-col md:flex md:flex-row md:flex-1 md:overflow-hidden">
+            <Navigation/>
+            <Dashboard/>
         </div>
+            <Footer/>
         </div>
     )
 

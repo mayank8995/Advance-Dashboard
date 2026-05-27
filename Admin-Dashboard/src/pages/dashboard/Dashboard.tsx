@@ -3,7 +3,7 @@ function Dashboard(){
 
     return(
         <>
-        <h1 className="text-3xl font-bold underline">Dashboard</h1>
+        <main className="flex-1 overflow-y-auto p-5">Dashboard</main>
         </>
     )
 
