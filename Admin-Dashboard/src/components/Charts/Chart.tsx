@@ -2,9 +2,9 @@
 export default function Chart() {
   return (
     <>
-     <div className="flex-[2] min-w-0">
+     <div className="flex-[0] min-w-0">
         <div
-          className="col-span-2 bg-white border border-slate-200 rounded-xl p-4 flex flex-col gap-3 hover:shadow-md transition-shadow"
+          className="col-span-2 bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow"
         >
 
           {/* Card Header */}
