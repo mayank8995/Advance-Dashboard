@@ -85,3 +85,21 @@ console.log(twoSum([2, 17, 7, 15], 9))**/
   return arr;
   }
 console.log(moveZeroes([1,2,3,4,5,6]))**/
+function longestSubstring(str) {
+
+    let set = new Set();
+    let slow = 0;
+    let maxLength = 0;
+    for(let fast = 0; fast < str.length; fast++){
+
+      while(set.has(str[fast])){
+        set.delete(str[slow]);
+        slow++;
+      }
+      set.add(str[fast]);
+      maxLength = Math.max(maxLength, fast - slow + 1);
+    }
+  return maxLength
+}
+
+console.log(longestSubstring("aaaba"))

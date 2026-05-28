@@ -1,16 +1,25 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
  function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate();
   const navItems = [
-    { name: "Dashboard", path: "/" },
-    { name: "Employees", path: "/employees" },
-    { name: "Analytics", path: "/analytics" },
-    { name: "Settings", path: "/settings" },
+    { name: "Dashboard", path: "/home/dashboard" },
+    { name: "Employees", path: "/home/employees" },
+    { name: "Analytics", path: "/home/analytics" },
+    { name: "Settings", path: "/home/settings" },
   ];
 
+  function navigateToPage(isOpen:boolean,  navItem?: any, isMobile?:boolean){
+    console.log(isOpen,  navItem, isMobile)
+      if(isMobile) 
+        setIsOpen(!isOpen)
+      else
+        setIsOpen(isOpen)
+      
+      navItem && navigate(`${navItem.path}`)
+  }
   return (
     <>
       {/* Mobile Top Bar */}
@@ -29,7 +38,7 @@ import { NavLink } from "react-router-dom";
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setIsOpen(false)}
+          onClick={() => navigateToPage(false)}
         />
       )}
 
@@ -54,7 +63,7 @@ import { NavLink } from "react-router-dom";
             <NavLink
               key={item.name}
               to={item.path}
-              onClick={() => setIsOpen(false)}
+              onClick={() => navigateToPage(false,item)}
               className={({ isActive }) =>
                 `block rounded-lg px-4 py-3 transition-all duration-200 ${
                   isActive

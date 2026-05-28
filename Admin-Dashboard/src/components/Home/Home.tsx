@@ -1,4 +1,4 @@
-import Dashboard from "../../../pages/dashboard/Dashboard"
+import { Outlet, Route, Routes,  useNavigate } from "react-router-dom"
 import Footer from "../Footer/Footer"
 import Header from "../Header/Header"
 import Navigation from "../Navigation/Navigation"
@@ -9,7 +9,7 @@ function Home(){
             <Header/>
         <div className="flex-col md:flex md:flex-row md:flex-1 md:overflow-hidden">
             <Navigation/>
-            <Dashboard/>
+            <Outlet/>
         </div>
             <Footer/>
         </div>
