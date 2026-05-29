@@ -1,0 +1,75 @@
+{
+  "taskId": "TASK-2026-8942",
+  "metadata": {
+    "createdAt": "2026-05-28T09:30:00Z",
+    "updatedAt": "2026-05-28T14:15:00Z",
+    "category": "Human Resources",
+    "subCategory": "Onboarding"
+  },
+  "taskDetails": {
+    "title": "Background Verification & IT Provisioning for Sarah Jenkins",
+    "description": "Verify submitted background check documents and approve the automated trigger for IT hardware allocation (MacBook Pro and security badge).",
+    "status": "IN_PROGRESS",
+    "priority": "HIGH",
+    "dueDate": "2026-06-02T17:00:00Z"
+  },
+  "assignment": {
+    "requester": {
+      "employeeId": "EMP-4412",
+      "name": "Arjun Mehta",
+      "role": "Talent Acquisition Specialist",
+      "email": "arjun.mehta@company.com"
+    },
+    "assignee": {
+      "employeeId": "EMP-2190",
+      "name": "Elena Rostova",
+      "role": "HR Operations Manager",
+      "email": "elena.rostova@company.com"
+    },
+    "departmentFocus": "Operations"
+  },
+  "relatedEntities": {
+    "candidateId": "CAND-9904",
+    "targetDepartment": "Engineering",
+    "documentLinks": [
+      {
+        "documentType": "Background_Report_PDF",
+        "url": "https://internal.portal.company/docs/vetted/cand-9904_bgc.pdf"
+      }
+    ]
+  },
+  "actionSteps": [
+    {
+      "stepId": "step_1",
+      "label": "Review criminal and employment history report",
+      "isCompleted": true,
+      "completedAt": "2026-05-28T14:10:00Z"
+    },
+    {
+      "stepId": "step_2",
+      "label": "Approve asset allocation in IT inventory system",
+      "isCompleted": false,
+      "completedAt": null
+    },
+    {
+      "stepId": "step_3",
+      "label": "Issue digital onboarding welcome kit",
+      "isCompleted": false,
+      "completedAt": null
+    }
+  ],
+  "auditLog": [
+    {
+      "timestamp": "2026-05-28T09:30:00Z",
+      "action": "TASK_CREATED",
+      "performedBy": "EMP-4412",
+      "comment": "Candidate accepted offer. Initiating standard onboarding track."
+    },
+    {
+      "timestamp": "2026-05-28T14:15:00Z",
+      "action": "STEP_COMPLETED",
+      "performedBy": "EMP-2190",
+      "comment": "Third-party background verification checks out perfectly. Moving to IT clearance."
+    }
+  ]
+}

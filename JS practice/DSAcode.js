@@ -85,21 +85,77 @@ console.log(twoSum([2, 17, 7, 15], 9))**/
   return arr;
   }
 console.log(moveZeroes([1,2,3,4,5,6]))**/
-function longestSubstring(str) {
+// function longestSubstring(str) {
 
-    let set = new Set();
+//     let set = new Set();
+//     let slow = 0;
+//     let maxLength = 0;
+//     for(let fast = 0; fast < str.length; fast++){
+
+//       while(set.has(str[fast])){
+//         set.delete(str[slow]);
+//         slow++;
+//       }
+//       set.add(str[fast]);
+//       maxLength = Math.max(maxLength, fast - slow + 1);
+//     }
+//   return maxLength
+// }
+
+// console.log(longestSubstring("aaaba"))
+
+//Return length of longest contiguous subarray containing at most 2 distinct numbers.
+// function LongestSubArray(arr){
+//    let slow = 0;
+//    let fast;
+//    let maxLength = 0;
+//    let map = new Map();
+//    for(fast = 0; fast<arr.length; fast++){
+//         map.has(arr[fast]) ?  map.set(arr[fast], map.get(arr[fast]) + 1) : map.set(arr[fast], 1);
+//         while(map.size > 2){
+//           map.set(arr[slow], map.get(arr[slow]) - 1);
+//           if(map.get(arr?.[slow]) === 0) map.delete(arr[slow]);
+//           slow++;
+//         }
+//         maxLength = Math.max(maxLength, fast - slow + 1)
+//       }
+//    return maxLength;
+// }
+// console.log(LongestSubArray([1, 2, 1, 3, 2, 2]))
+// console.log(LongestSubArray([1,2,3,9,9,1,2,1,2,3,4,5,7,8,9,5,8,9,9,9,9,9,9]))
+// console.log(LongestSubArray([1,2,1,2,1,2,1,2,1,2,3,4,5,7,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]))
+// console.log(LongestSubArray([1,1,1,2,2,3,3,3,2,2,2]))
+// console.log(LongestSubArray([1,1,1,1,1]))
+// console.log(LongestSubArray([1,2,3,3,4]))
+// console.log(LongestSubArray([1,2,1,2,3]))
+
+
+
+//Maximum Sum Subarray of Size K
+function maxSumSubarray(arr,k){
+    if(k > arr.length) return "No valid maxsum of subarray of size k exists"
     let slow = 0;
-    let maxLength = 0;
-    for(let fast = 0; fast < str.length; fast++){
-
-      while(set.has(str[fast])){
-        set.delete(str[slow]);
-        slow++;
-      }
-      set.add(str[fast]);
-      maxLength = Math.max(maxLength, fast - slow + 1);
+    let currentWindowSum = 0;
+    let maxSum = Number.MIN_SAFE_INTEGER;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentWindowSum += arr[fast];
+        if(fast - slow + 1 === k){
+            maxSum = Math.max(maxSum, currentWindowSum)
+            currentWindowSum -= arr[slow];
+            slow++;
+        }
     }
-  return maxLength
+    return maxSum;
 }
+console.log(maxSumSubarray([2, 1, 5, 1, 3, 2],3))
+console.log(maxSumSubarray([2,2,2,2,2,2],3))
+console.log(maxSumSubarray([2, 1, 5, 1, 3, 2,1,1,1,1,1,1,1,1,1],5))
+console.log(maxSumSubarray([1,1,1,1,1,1,1,1,1],4))
+console.log(maxSumSubarray([1,2,3,4,5,6,7,8,9],3))
+console.log(maxSumSubarray([2,4,3,6,5,7,8],4))
+console.log(maxSumSubarray([],4))
+console.log(maxSumSubarray([-5, -2, -8],2))
 
-console.log(longestSubstring("aaaba"))
+
+
+//arr = [2, 1, 5, 1, 3, 2] k = 3

@@ -1,0 +1,80 @@
+{
+  "employeeList":[{
+  "totalEmployeeCount": 50,
+  "totalNoticePeriodEmployeeCount": 15,
+  "employees": [
+    {
+      "id": 1,
+      "name": "Rahul Sharma",
+      "designation": "Senior Software Engineer",
+      "yearsOfExperience": 8,
+      "projects": [
+        { "name": "Project Alpha", "status": "Active" },
+        { "name": "Project Beta", "status": "Maintenance" }
+      ],
+      "onNoticePeriod": false,
+      "salary": 180000,
+      "rating": 4.5,
+      "attendancePercentage": 94.3,
+      "employeeSatisfaction": "High"
+    },
+    {
+      "id": 2,
+      "name": "Priya Mehta",
+      "designation": "Product Manager",
+      "yearsOfExperience": 10,
+      "projects": [
+        { "name": "Project Gamma", "status": "Active" }
+      ],
+      "onNoticePeriod": true,
+      "salary": 210000,
+      "rating": 4.8,
+      "attendancePercentage": 85.4,
+      "employeeSatisfaction": "Low"
+    },
+    {
+      "id": 3,
+      "name": "Amit Verma",
+      "designation": "Frontend Developer",
+      "yearsOfExperience": 3,
+      "projects": [
+        { "name": "Project Alpha", "status": "Active" }
+      ],
+      "onNoticePeriod": false,
+      "salary": 120000,
+      "rating": 3.9,
+      "attendancePercentage": 89.0,
+      "employeeSatisfaction": "Medium"
+    },
+    {
+      "id": 4,
+      "name": "Sneha Kapoor",
+      "designation": "UI/UX Designer",
+      "yearsOfExperience": 5,
+      "projects": [
+        { "name": "Project Beta", "status": "Maintenance" },
+        { "name": "Project Delta", "status": "Maintenance" }
+      ],
+      "onNoticePeriod": false,
+      "salary": 115000,
+      "rating": 4.2,
+      "attendancePercentage": 88.2,
+      "employeeSatisfaction": "Medium"
+    },
+    {
+      "id": 5,
+      "name": "Vikram Singh",
+      "designation": "Backend Developer",
+      "yearsOfExperience": 6,
+      "projects": [
+        { "name": "Project Delta", "status": "Maintenance" }
+      ],
+      "onNoticePeriod": true,
+      "salary": 140000,
+      "rating": 3.7,
+      "attendancePercentage": 95.7,
+      "employeeSatisfaction": "Low"
+    }
+  ]
+}]
+}
