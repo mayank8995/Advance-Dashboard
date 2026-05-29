@@ -5,7 +5,7 @@ export default function CustomDataTable({list}:any) {
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  
+
   // 1. Sorting logic pipeline
   const sortedData = useMemo(() => {
     let sortableItems = [...list];
@@ -72,7 +72,6 @@ export default function CustomDataTable({list}:any) {
           <tr style={{ backgroundColor: '#f4f4f4', borderBottom: '2px solid #ddd' }}>
             <th onClick={() => handleSort('id')} style={styles.th}>ID {getSortIcon('id')}</th>
             <th onClick={() => handleSort('name')} style={styles.th}>Name {getSortIcon('name')}</th>
-            {/* <th onClick={() => handleSort('role')} style={styles.th}>Role {getSortIcon('role')}</th> */}
             <th onClick={() => handleSort('designation')} style={styles.th}>Department {getSortIcon('department')}</th>
             <th onClick={() => handleSort('yearsOfExperience')} style={styles.th}>Years Exp {getSortIcon('yearsOfExperience')}</th>
           </tr>
@@ -82,7 +81,6 @@ export default function CustomDataTable({list}:any) {
             <tr key={row.id} style={{ borderBottom: '1px solid #ddd' }}>
               <td style={styles.td}>{row.id}</td>
               <td style={styles.td}>{row.name}</td>
-              {/* <td style={styles.td}>{row.role}</td> */}
               <td style={styles.td}>{row.designation}</td>
               <td style={styles.td}>{row.yearsOfExperience}</td>
             </tr>
