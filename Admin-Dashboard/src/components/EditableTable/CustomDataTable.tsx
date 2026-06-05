@@ -1,3 +1,4 @@
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import  { useState, useMemo } from 'react';
 
 export default function CustomDataTable({list}:any) {
@@ -42,13 +43,15 @@ export default function CustomDataTable({list}:any) {
   };
 
   const handleRowsPerPageChange = (e: any) => {
-    setRowsPerPage(Number(e.target.value));
+    setRowsPerPage(Number(e?.target?.value));
     setCurrentPage(1); // Reset index on resize
   };
 
   const getSortIcon = (key: any) => {
-    if (sortConfig.key !== key) return '↕️';
-    return sortConfig.direction === 'asc' ? '🔼' : '🔽';
+    if (sortConfig.key !== key) return <ArrowUpDown />;
+     
+    return sortConfig.direction === 'asc' ? <ArrowUp/>  : <ArrowDown/>;
+
   };
 
   return (
@@ -74,6 +77,10 @@ export default function CustomDataTable({list}:any) {
             <th onClick={() => handleSort('name')} style={styles.th}>Name {getSortIcon('name')}</th>
             <th onClick={() => handleSort('designation')} style={styles.th}>Department {getSortIcon('department')}</th>
             <th onClick={() => handleSort('yearsOfExperience')} style={styles.th}>Years Exp {getSortIcon('yearsOfExperience')}</th>
+            <th onClick={() => handleSort('location')} style={styles.th}>Location {getSortIcon('location')}</th>
+            <th onClick={() => handleSort('workMode')} style={styles.th}>Work Mode {getSortIcon('workMode')}</th>
+            <th onClick={() => handleSort('rating')} style={styles.th}>Rating {getSortIcon('rating')}</th>
+            <th onClick={() => handleSort('onNoticePeriod')} style={styles.th}>Status {getSortIcon('onNoticePeriod')}</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +90,10 @@ export default function CustomDataTable({list}:any) {
               <td style={styles.td}>{row.name}</td>
               <td style={styles.td}>{row.designation}</td>
               <td style={styles.td}>{row.yearsOfExperience}</td>
+              <td style={styles.td}>{row.location}</td>
+              <td style={styles.td}>{row.workMode}</td>
+              <td style={styles.td}>{row.rating}</td>
+              <td style={styles.td}>{row.onNoticePeriod ? 'Yes' : 'No'}</td>
             </tr>
           ))}
         </tbody>

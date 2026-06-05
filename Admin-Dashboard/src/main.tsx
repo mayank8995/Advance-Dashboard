@@ -6,18 +6,39 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './components/Home/Home.tsx'
 import Dashboard from './pages/dashboard/Dashboard.tsx'
 import Employees from './pages/employee/Employees.tsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import Analytics from './pages/analytics/Analytics.tsx'
 
+
+const queryClient = new QueryClient();
+// TypeScript only:
+declare global {
+  interface Window {
+    __TANSTACK_QUERY_CLIENT__:
+      import('@tanstack/query-core')
+        .QueryClient
+  }
+}
+
+window.__TANSTACK_QUERY_CLIENT__ = queryClient
 
 createRoot(document.getElementById('root')!).render(
       // <StrictMode>
+      <QueryClientProvider client = {queryClient}>
+
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<App />}></Route>
       <Route path='home' element={<Home/>}>
         <Route path='dashboard' element={<Dashboard/>}></Route>
         <Route path='employees' element={<Employees/>}></Route>
+        <Route path='analytics' element={<Analytics/>}></Route>
       </Route>
     </Routes>
     </BrowserRouter>
+    <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+
   //  </StrictMode> 
 )

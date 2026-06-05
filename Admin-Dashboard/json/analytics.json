@@ -1,0 +1,201 @@
+{
+  "analytics": {
+    "summary": {
+      "totalEmployees": 125430,
+      "activeProjects": 438,
+      "revenueThisQuarterCr": 1245,
+      "profitMargin": 23.4,
+      "utilizationRate": 87.6,
+      "attritionRate": 12.8
+    },
+
+    "headcountByLocation": [
+      {
+        "city": "Bangalore",
+        "state": "Karnataka",
+        "employeeCount": 35000,
+        "activeProjects": 112,
+        "averageUtilization": 91
+      },
+      {
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "employeeCount": 28000,
+        "activeProjects": 84,
+        "averageUtilization": 89
+      },
+      {
+        "city": "Pune",
+        "state": "Maharashtra",
+        "employeeCount": 22000,
+        "activeProjects": 67,
+        "averageUtilization": 85
+      },
+      {
+        "city": "Noida",
+        "state": "Uttar Pradesh",
+        "employeeCount": 18000,
+        "activeProjects": 53,
+        "averageUtilization": 81
+      },
+      {
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "employeeCount": 15000,
+        "activeProjects": 44,
+        "averageUtilization": 88
+      }
+    ],
+
+    "revenueTrend": [
+      { "month": "Dec 23", "revenueCr": 870 },
+      { "month": "Jan 24", "revenueCr": 910 },
+      { "month": "Feb 24", "revenueCr": 960 },
+      { "month": "Mar 24", "revenueCr": 1030 },
+      { "month": "Apr 24", "revenueCr": 1120 },
+      { "month": "May 24", "revenueCr": 1245 }
+    ],
+
+    "projectStatusDistribution": {
+      "totalProjects": 438,
+      "onTrack": 187,
+      "atRisk": 110,
+      "delayed": 74,
+      "completed": 67
+    },
+
+    "departmentHeadcount": [
+      {
+        "department": "Engineering",
+        "count": 64000
+      },
+      {
+        "department": "Product",
+        "count": 14000
+      },
+      {
+        "department": "QA & Testing",
+        "count": 17000
+      },
+      {
+        "department": "Support",
+        "count": 23000
+      },
+      {
+        "department": "Design",
+        "count": 7000
+      },
+      {
+        "department": "Others",
+        "count": 430
+      }
+    ],
+
+    "utilizationTrend": [
+      { "month": "Dec 23", "utilization": 81.2 },
+      { "month": "Jan 24", "utilization": 82.5 },
+      { "month": "Feb 24", "utilization": 83.0 },
+      { "month": "Mar 24", "utilization": 84.4 },
+      { "month": "Apr 24", "utilization": 84.5 },
+      { "month": "May 24", "utilization": 87.6 }
+    ],
+
+    "attritionInsights": {
+      "thisMonth": 142,
+      "lastMonth": 167,
+      "employeesOnNoticePeriod": 6665,
+      "yearlyAttritionRate": 12.8,
+      "trend": [
+        { "month": "Dec 23", "rate": 14.1 },
+        { "month": "Jan 24", "rate": 13.7 },
+        { "month": "Feb 24", "rate": 13.2 },
+        { "month": "Mar 24", "rate": 12.9 },
+        { "month": "Apr 24", "rate": 13.0 },
+        { "month": "May 24", "rate": 12.8 }
+      ]
+    },
+
+    "topClients": [
+      {
+        "client": "Reliance Jio",
+        "industry": "Telecom",
+        "revenueCr": 250,
+        "contributionPercentage": 20.1
+      },
+      {
+        "client": "Bharti Airtel",
+        "industry": "Telecom",
+        "revenueCr": 195,
+        "contributionPercentage": 15.7
+      },
+      {
+        "client": "HDFC Bank",
+        "industry": "Banking",
+        "revenueCr": 142,
+        "contributionPercentage": 11.4
+      },
+      {
+        "client": "Tata Motors",
+        "industry": "Automobile",
+        "revenueCr": 98,
+        "contributionPercentage": 7.9
+      },
+      {
+        "client": "LIC India",
+        "industry": "Insurance",
+        "revenueCr": 85,
+        "contributionPercentage": 6.8
+      }
+    ],
+
+    "skillsInDemand": [
+      {
+        "skill": "Java",
+        "employeeCount": 12430
+      },
+      {
+        "skill": "Python",
+        "employeeCount": 10215
+      },
+      {
+        "skill": "AWS",
+        "employeeCount": 8745
+      },
+      {
+        "skill": "React",
+        "employeeCount": 7560
+      },
+      {
+        "skill": ".NET",
+        "employeeCount": 5980
+      }
+    ],
+
+    "alerts": [
+      {
+        "id": 1,
+        "severity": "warning",
+        "message": "Airtel Xstream Upgrade project is behind schedule by 12 days",
+        "timestamp": "2h ago"
+      },
+      {
+        "id": 2,
+        "severity": "success",
+        "message": "UPI Fraud Detection project completed 90% milestone",
+        "timestamp": "5h ago"
+      },
+      {
+        "id": 3,
+        "severity": "info",
+        "message": "450 new employees onboarded this month",
+        "timestamp": "1d ago"
+      },
+      {
+        "id": 4,
+        "severity": "warning",
+        "message": "Utilization rate in Chennai office is below 70%",
+        "timestamp": "2d ago"
+      }
+    ]
+  }
+}
