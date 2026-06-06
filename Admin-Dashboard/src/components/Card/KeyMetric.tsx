@@ -23,21 +23,29 @@ export default function KeyMetric({newData}: any) {
       {data && Object?.keys(data).map((key,i) =>(
         <div
           key={i}
-          className="bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow"
+          className="border border-slate-200 rounded-2xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
+  shadow-sm
+  transition-all
+  duration-300"
         >
              {/* Body */}
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-              {
-                data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && <User/>}
-               { data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && <Flag/>}
-                {data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && <MonitorCheck/>}
-                {data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && <Star/>
+            <div className={`h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-t-4 border-t-blue-500'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && 'border-t-4 border-t-orange-500'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && 'border-t-4 border-t-purple-500'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && 'border-t-4 border-t-green-500'}`}>
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && <User className="h-6 w-6 text-blue-600"/>}
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && <Flag className="h-6 w-6 text-orange-600"/>}
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && <MonitorCheck className="h-6 w-6 text-purple-600"/>}
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && <Star className="h-6 w-6 text-green-600"/>
               }
             </div>
           {<div>
-            <p className="text-xs text-slate-400 mb-1 font-bold">{key}</p>
-            <p className="text-2xl font-bold text-slate-900">{data[key]?.value}</p>
+            <p className="mb-1 text-sm text-slate-500 font-medium">{key}</p>
+            <h2 className=" text-3xl
+            font-bold
+            text-slate-800">{data[key]?.value}</h2>
           </div>}
           </div>
           {/*  Footer */}

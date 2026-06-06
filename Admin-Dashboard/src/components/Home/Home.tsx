@@ -3,6 +3,7 @@ import Footer from "../Footer/Footer"
 import Header from "../Header/Header"
 import Navigation from "../Navigation/Navigation"
 import {useAnalyticsData, useGetData} from "../../utils/Utils"
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 
 function Home(){
   // Queries
@@ -14,6 +15,7 @@ function Home(){
    
        if (error) return 'An error has occurred'
     return(
+        <ErrorBoundary fallback={<div>Failed to load</div>}>
         <div className="md:flex md:flex-col md:h-screen  bg-slate-100">
             <Header/>
         <div className="flex-col md:flex md:flex-row md:flex-1 ">
@@ -22,6 +24,7 @@ function Home(){
         </div>
             <Footer/>
         </div>
+        </ErrorBoundary>
     )
 
 }

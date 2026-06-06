@@ -18,6 +18,20 @@ export const PIE_COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042','#8884d8']
 export const REVENUE_TREND_IN_CR = "Revenue Trend (₹ Cr)"
 export const SKILLS_IN_DEMAND = "Skils in Demand(India)"
 
+export const NAV_ITEMS = {
+    DASHBOARD: "/home/dashboard",
+    ANALYTICS: "/home/analytics",
+    EMPLOYEES: "/home/employees",
+    SETTINGS: "/home/settings"
+}
+
+export const SIDE_BAR_ITEMS = {
+    DASHBOARD: "Dashboard",
+    ANALYTICS: "Analytics",
+    EMPLOYEES: "Employees",
+    SETTINGS: "Settings"
+}
+
 
 
 export const RISK_STATUS = {

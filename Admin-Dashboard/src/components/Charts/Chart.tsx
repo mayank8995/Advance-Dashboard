@@ -37,7 +37,7 @@ export default function Chart({newData, title}: any) {
                   - {getTopProjects(value?.projects)?.riskStatus}
                 </span>
               </div>
-              <div className="text-gray-400 font-bold">
+              <div className="mb-1 text-sm text-slate-500 font-medium">
                 {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.manager && value?.manager}
               </div>
             </div>

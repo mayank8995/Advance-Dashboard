@@ -53,9 +53,7 @@ export default function RootCharts({chartType,data,title, X, Y}: any) {
             <div className="flex-[0] min-w-0">
           <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow">
 
-      <h3 style={{ marginBottom: '20px', fontSize: '18px', fontWeight: 'bold' }}>
-        Skills In Demand (India)
-      </h3>
+      <div className="flex items-center justify-between text-2xl font-bold">{title}</div>
       
       <ResponsiveContainer width="100%" height={250}>
         {/* Crucial: layout="vertical" makes the chart horizontal */}
