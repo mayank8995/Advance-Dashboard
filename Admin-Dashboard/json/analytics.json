@@ -67,27 +67,27 @@
     "departmentHeadcount": [
       {
         "department": "Engineering",
-        "count": 64000
+        "count": 25
       },
       {
         "department": "Product",
-        "count": 14000
+        "count": 5
       },
       {
         "department": "QA & Testing",
-        "count": 17000
+        "count": 10
       },
       {
         "department": "Support",
-        "count": 23000
+        "count": 4
       },
       {
         "department": "Design",
-        "count": 7000
+        "count": 4
       },
       {
         "department": "Others",
-        "count": 430
+        "count": 2
       }
     ],
 

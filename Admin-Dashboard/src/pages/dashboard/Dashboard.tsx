@@ -2,23 +2,26 @@ import Card from "../../components/Card/Card"
 import KeyMetric from "../../components/Card/KeyMetric"
 import Chart from "../../components/Charts/Chart"
 import { useQueryClient } from "@tanstack/react-query";
-import { ATTRITION_INSIGHTS, TOP_PROJECTS } from "../../utils/constants";
+import { ATTRITION_INSIGHTS, DEPARTMENT_WISE_HEADCOUNT, TOP_PROJECTS } from "../../utils/constants";
+import KeyMetricCard from "../../components/Card/KeyMetricCard";
+import RootCharts from "../../components/Charts/RootCharts";
 
 function Dashboard(){
     const queryClient = useQueryClient();
     const cachedData: any = queryClient.getQueryData(['initialAppData']);
-
+console
     return(
         <div className="flex flex-col flex-auto">
             <Card>
-                <KeyMetric newData={cachedData}></KeyMetric>
-                <div className="flex flex-row flex-1 min-h-0 gap-4 p-4">
-                    <div className="flex-[2] min-w-0">
-                        <Chart graph={true} title={ATTRITION_INSIGHTS} graphData={cachedData?.employeeList?.[0]?.attritionInsights}></Chart>
+                <KeyMetricCard>
+                    <KeyMetric newData={cachedData}></KeyMetric>
+                </KeyMetricCard>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+                    <div>
+                        <RootCharts X={"month"} Y={"rate"} chartType={"line"} data={cachedData?.employeeList?.[0]?.attritionInsights?.trend} title={ATTRITION_INSIGHTS}></RootCharts>
                     </div>
-                    <div className="flex-[1] min-w-0 flex flex-col gap-4">    
+                    <div>    
                         <Chart graph={false} newData={cachedData} title={TOP_PROJECTS}></Chart>
-                        {/* <Chart></Chart> */}
                     </div>
                 </div>
             </Card>

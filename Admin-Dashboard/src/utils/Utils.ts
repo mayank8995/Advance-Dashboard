@@ -21,8 +21,6 @@ export function getAvgEmployeeSatisfaction(data: Array<any>){
     data?.length > 0 && data.map((value) =>{
              totalSum += value?.rating || 0
     })
-    console.log(totalSum, "   ", data.length)
-
     return data.length > 0 && (totalSum / data.length).toFixed(1)
 
 }

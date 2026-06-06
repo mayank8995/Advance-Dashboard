@@ -13,6 +13,12 @@ export const KEY_TRACK_METRIC_ICON = {
 
 export const TOP_PROJECTS = "Top Projects"
 export const ATTRITION_INSIGHTS = "Attrition Insights"
+export const DEPARTMENT_WISE_HEADCOUNT = "Department-wise Headcount"
+export const PIE_COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042','#8884d8'];
+export const REVENUE_TREND_IN_CR = "Revenue Trend (₹ Cr)"
+export const SKILLS_IN_DEMAND = "Skils in Demand(India)"
+
+
 
 export const RISK_STATUS = {
     ON_TRACK: "On Track",

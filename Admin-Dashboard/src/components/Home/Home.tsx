@@ -2,11 +2,13 @@ import { Outlet } from "react-router-dom"
 import Footer from "../Footer/Footer"
 import Header from "../Header/Header"
 import Navigation from "../Navigation/Navigation"
-import {useGetData} from "../../utils/Utils"
+import {useAnalyticsData, useGetData} from "../../utils/Utils"
 
 function Home(){
   // Queries
-    const { isPending, error } = useGetData()
+    const { isPending, error } = useGetData();
+    const { } = useAnalyticsData();
+
    
        if (isPending) return 'Loading...'
    

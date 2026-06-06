@@ -48,20 +48,33 @@ export default function CustomDataTable({list}:any) {
   };
 
   const getSortIcon = (key: any) => {
-    if (sortConfig.key !== key) return <ArrowUpDown />;
+    if (sortConfig.key !== key) return <ArrowUpDown className='w-4 h-4 text-slate-400'/>;
      
-    return sortConfig.direction === 'asc' ? <ArrowUp/>  : <ArrowDown/>;
+    return sortConfig.direction === 'asc' ? <ArrowUp className='w-4 h-4 text-slate-400' />  : <ArrowDown className='w-4 h-4 text-slate-400'/>;
 
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h2>Custom Employee Directory</h2>
+    <div className="min-h-screen bg-slate-50 p-6">
+      <div className="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+      <h1 className="text-3xl font-bold text-slate-800 px-6 py-4 pb-0">
+        Employee Directory
+      </h1>
 
       {/* Rows Per Page Configurator */}
-      <div style={{ marginBottom: '15px' }}>
+      <div className='px-6 py-4'>
         <label>Rows per page: </label>
-        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+        <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
+          px-3 py-2
+          border
+          border-slate-300
+          rounded-lg
+          bg-white
+          text-sm
+          shadow-sm
+          focus:ring-2
+          focus:ring-blue-500
+          ">
           <option value={2}>2</option>
           <option value={3}>3</option>
           <option value={5}>5</option>
@@ -70,58 +83,103 @@ export default function CustomDataTable({list}:any) {
       </div>
 
       {/* Semantic HTML Table */}
-      <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-        <thead>
-          <tr style={{ backgroundColor: '#f4f4f4', borderBottom: '2px solid #ddd' }}>
-            <th onClick={() => handleSort('id')} style={styles.th}>ID {getSortIcon('id')}</th>
-            <th onClick={() => handleSort('name')} style={styles.th}>Name {getSortIcon('name')}</th>
-            <th onClick={() => handleSort('designation')} style={styles.th}>Department {getSortIcon('department')}</th>
-            <th onClick={() => handleSort('yearsOfExperience')} style={styles.th}>Years Exp {getSortIcon('yearsOfExperience')}</th>
-            <th onClick={() => handleSort('location')} style={styles.th}>Location {getSortIcon('location')}</th>
-            <th onClick={() => handleSort('workMode')} style={styles.th}>Work Mode {getSortIcon('workMode')}</th>
-            <th onClick={() => handleSort('rating')} style={styles.th}>Rating {getSortIcon('rating')}</th>
-            <th onClick={() => handleSort('onNoticePeriod')} style={styles.th}>Status {getSortIcon('onNoticePeriod')}</th>
+      <table className='rounded-2xl
+  shadow-lg
+  border
+  border-slate-200' >
+        <thead className="bg-slate-100">
+          <tr>
+            <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600"  onClick={() => handleSort('id')}>ID {getSortIcon('id')}</th>
+            <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('name')}>Name {getSortIcon('name')}</th>
+            <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('designation')}>Department {getSortIcon('department')}</th>
+            <th className="hidden sm:table-cell px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('yearsOfExperience')} >Years Exp {getSortIcon('yearsOfExperience')}</th>
+            <th className="hidden sm:table-cell px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('location')} >Location {getSortIcon('location')}</th>
+            <th className="hidden sm:table-cell px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('workMode')} >Work Mode {getSortIcon('workMode')}</th>
+            <th className="hidden sm:table-cell px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('rating')} >Rating {getSortIcon('rating')}</th>
+            <th className="hidden sm:table-cell px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('onNoticePeriod')} >Status {getSortIcon('onNoticePeriod')}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='divide-y divide-slate-200'>
           {paginatedData.map((row) => (
-            <tr key={row.id} style={{ borderBottom: '1px solid #ddd' }}>
-              <td style={styles.td}>{row.id}</td>
-              <td style={styles.td}>{row.name}</td>
-              <td style={styles.td}>{row.designation}</td>
-              <td style={styles.td}>{row.yearsOfExperience}</td>
-              <td style={styles.td}>{row.location}</td>
-              <td style={styles.td}>{row.workMode}</td>
-              <td style={styles.td}>{row.rating}</td>
-              <td style={styles.td}>{row.onNoticePeriod ? 'Yes' : 'No'}</td>
+            <tr className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50" key={row.id} >
+              <td className="px-6 py-4" >{row.id}</td>
+              <td className="px-6 py-4 font-medium text-slate-800" >{row.name}</td>
+              <td className="px-6 py-4" >{row.designation}</td>
+              <td className="px-6 py-4 hidden sm:table-cell" >{row.yearsOfExperience}</td>
+              <td className="px-6 py-4 hidden sm:table-cell" >{row.location}</td>
+              <td className="px-6 py-4 hidden sm:table-cell  " 
+                ><span className='px-3 py-1
+                            rounded-full
+                            bg-blue-100
+                            text-blue-700
+                            text-xs
+                            font-medium'>
+                  {row.workMode}
+                  </span></td>
+              <td className="hidden sm:table-cell px-6 py-4  " 
+              ><span className='px-3 py-1
+                              rounded-full
+                              bg-green-100
+                              text-green-700
+                               text-xs
+                              font-semibold'>⭐{row.rating}</span></td>
+              <td className="px-6 py-4 hidden sm:table-cell " 
+              >{row.onNoticePeriod ? <span  className="
+            bg-red-100
+            text-red-700
+            px-3
+            py-1
+            rounded-full
+            text-xs
+            font-medium
+                        ">Yes</span> : <span className="
+            bg-green-100
+            text-green-700
+            px-3
+            py-1
+            rounded-full
+            text-xs
+            font-medium
+            ">No</span>}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
       {/* Pagination Footer Controls */}
-      <div style={{ marginTop: '15px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <div className="flex justify-between items-center px-6 py-4" >
         <button 
+          className=' px-4 py-2
+                    rounded-lg
+                    border
+                    border-slate-300
+                    hover:bg-slate-100'
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
           disabled={currentPage === 1}
         >
           Previous
         </button>
         
-        <span>Page {currentPage} of {totalPages || 1}</span>
+        <span className='font-medium text-slate-600'>Page {currentPage} of {totalPages || 1}</span>
 
         <button 
+         className=' px-4 py-2
+                    rounded-lg
+                    border
+                    border-slate-300
+                    hover:bg-slate-100'
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
           disabled={currentPage === totalPages || totalPages === 0}
         >
           Next
         </button>
       </div>
+         </div>
     </div>
   );
 }
 
 const styles:any = {
-  th: { padding: '12px', cursor: 'pointer', userSelect: 'none' },
+
   td: { padding: '12px' }
 };

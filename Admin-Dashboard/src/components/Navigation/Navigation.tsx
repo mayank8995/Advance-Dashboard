@@ -12,7 +12,6 @@ import { NavLink, useNavigate } from "react-router-dom";
   ];
 
   function navigateToPage(isOpen:boolean,  navItem?: any, isMobile?:boolean){
-    console.log(isOpen,  navItem, isMobile)
       if(isMobile) 
         setIsOpen(!isOpen)
       else

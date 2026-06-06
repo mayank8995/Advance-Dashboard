@@ -3,7 +3,6 @@ import { getAvgEmployeeSatisfaction, getNumberofActiveProjects } from "../../uti
 import  { KEY_TRACK_METRIC, KEY_TRACK_METRIC_ICON } from "../../utils/constants";
 import { Flag, MonitorCheck, Star, User } from "lucide-react";
 
-// Card.tsx
 export default function KeyMetric({newData}: any) {
     const [data, setData] = useState({} as any);
     useEffect(() => {
@@ -26,8 +25,7 @@ export default function KeyMetric({newData}: any) {
           key={i}
           className="bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow"
         >
-
-          {/* Card Header */}
+             {/* Body */}
           <div className="flex items-center justify-between">
             <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
               {
@@ -37,15 +35,12 @@ export default function KeyMetric({newData}: any) {
                 {data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && <Star/>
               }
             </div>
-             {/* Card Body */}
           {<div>
             <p className="text-xs text-slate-400 mb-1 font-bold">{key}</p>
             <p className="text-2xl font-bold text-slate-900">{data[key]?.value}</p>
           </div>}
           </div>
-          {/* Card Footer */}
-         <></>
-
+          {/*  Footer */}
         </div>
       ))}
 
