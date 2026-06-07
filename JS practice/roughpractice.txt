@@ -1,0 +1,19 @@
+#arr = [1,2,1,0,1,1,0]
+#k = 4
+#ans ---> 5
+Given an array of positive integers and an integer k, 
+return the length of the longest contiguous subarray whose sum is less than or equal to k.
+function LongestSubArray(arr,k){
+    let slow = 0;
+    let currentWindowSum = 0;
+    let maxLength = Number.MIN_SAFE_INTEGER;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentWindowSum += arr[fast];
+        while(currentWindowSum > k){
+            currentWindowSum -= arr[slow];
+            slow++;
+        }
+            maxLength = Math.max(maxLength, fast - slow + 1);   
+    }
+    return maxLength === Number.MIN_SAFE_INTEGER ? "No such subarray" : maxLength;
+}

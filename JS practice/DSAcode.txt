@@ -65,26 +65,24 @@ function twoSum(arr, target) {
 
 console.log(twoSum([2, 17, 7, 15], 9))
 arr = [0,1,0,0,0,0,5,6]
-function moveZeroes(arr) {
-    let slow  = 0;
+function moveZeroes(arr){
+    let slow = 0;
     let fast = 0;
-  while(fast<arr.length){
-    if(arr[fast] === 0){
-      fast++;
-    }else if(arr[slow] === 0 && arr[fast] !== 0) {
-        let temp = arr[slow];
-        arr[slow] = arr[fast];
-        arr[fast] = temp;
-        slow++;
+    while(fast < arr.length){
+        if(arr[fast] !== 0){
+                let temp = arr[slow];
+                arr[slow] = arr[fast];
+                arr[fast] = temp;
+                slow++;
+        }
         fast++;
-      }
-    else{
-      fast++;
+        
     }
-  }
-  return arr;
-  }
+        return arr;
+   }
 console.log(moveZeroes([1,2,3,4,5,6]))
+
+   pwwkew
 function longestSubstring(str) {
 
     let set = new Set();
@@ -188,23 +186,20 @@ Return the length of the smallest contiguous subarray whose sum is greater than 
 arr = [2,1,5,2,3,2]
 target = 7
  
-function smallestContiguousSubarray(arr, target){
+
+function smallestContiguousSubarrayLength(arr,target){
     let slow = 0;
-    let currentwindowSum = 0;
-    let smallestLength = Number.MAX_SAFE_INTEGER;
-    let fast = 0;
-  while( fast < arr.length){
-    if(currentwindowSum < target){
-      currentwindowSum += arr[fast];
+    let minLength = Number.MAX_SAFE_INTEGER;
+    let currentSum = 0;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentSum += arr[fast];
+        while(currentSum >= target){
+            minLength = Math.min(minLength, fast - slow + 1);
+            currentSum -= arr[slow];
+            slow++;
+        }
     }
-    if(currentwindowSum >= target){
-        smallestLength = Math.min(smallestLength,fast-slow+1)
-        currentwindowSum -= arr[slow];
-        slow++;
-      }
-      if(currentwindowSum < target) fast++;
-  }
-  return smallestLength === Number.MAX_SAFE_INTEGER ? "No such subarray exists" : smallestLength
+    return minLength === Number.MAX_SAFE_INTEGER ? "No subarray exists" : minLength
 }
 
 console.log(smallestContiguousSubarray([2,1,5,2,3,2],7))
@@ -219,3 +214,21 @@ console.log(smallestContiguousSubarray([],40))
 console.log(smallestContiguousSubarray([8],7))
 console.log(smallestContiguousSubarray([8],8))
 console.log(smallestContiguousSubarray([8],9))
+
+
+Given an array of positive integers and an integer k, 
+return the length of the longest contiguous subarray whose sum is less than or equal to k.
+function LongestSubArray(arr,k){
+    let slow = 0;
+    let currentWindowSum = 0;
+    let maxLength = Number.MIN_SAFE_INTEGER;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentWindowSum += arr[fast];
+        while(currentWindowSum > k){
+            currentWindowSum -= arr[slow];
+            slow++;
+        }
+            maxLength = Math.max(maxLength, fast - slow + 1);   
+    }
+    return maxLength === Number.MIN_SAFE_INTEGER ? "No such subarray" : maxLength;
+}
