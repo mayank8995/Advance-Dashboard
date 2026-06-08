@@ -9,6 +9,7 @@ import Employees from './pages/employee/Employees.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Analytics from './pages/analytics/Analytics.tsx'
+import Settings from './pages/settings/Settings.tsx'
 
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='dashboard' element={<Dashboard/>}></Route>
         <Route path='employees' element={<Employees/>}></Route>
         <Route path='analytics' element={<Analytics/>}></Route>
+        <Route path='settings' element={<Settings/>}></Route>
       </Route>
     </Routes>
     </BrowserRouter>

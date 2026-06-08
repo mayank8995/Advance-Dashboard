@@ -16,11 +16,13 @@ function Home(){
        if (error) return 'An error has occurred'
     return(
         <ErrorBoundary fallback={<div>Failed to load</div>}>
-        <div className="md:flex md:flex-col md:h-screen  bg-slate-100">
+        <div className="md:flex md:flex-col md:h-full bg-slate-100">
             <Header/>
-        <div className="flex-col md:flex md:flex-row md:flex-1 ">
+        <div className="flex-col md:flex md:flex-row md:flex-1 h-full md:overflow-hidden">
             <Navigation/>
+            <div className="flex-1 overflow-y-auto">
             <Outlet/>
+            </div>
         </div>
             <Footer/>
         </div>

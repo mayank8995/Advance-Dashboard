@@ -7,7 +7,7 @@ function Login() {
 
   const navigate = useNavigate();
     const formValuesRef: any = useRef({
-                            username: '',
+                            email: '',
                             password: ''
                           });
 

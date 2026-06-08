@@ -1,0 +1,163 @@
+Two Sum
+Move Zeroes
+Longest Substring Without Repeating Characters
+Maximum Sum Subarray of Size K
+Smallest Subarray With Sum ≥ Target
+-----
+1.
+Given an array of integers arr and an integer target, return the indices of two numbers such that they add up to target.
+Pattern: map, array
+State: currentSum
+Valid Window: 
+Invalid Window: 
+Shrink Condition: 
+Time Complexity: O(n)
+----
+arr = [2,11,7,15]
+target = 9
+
+[], [5], [0], [-5,-2,-8], [1,1,1,1]
+
+function twoSum(arr, target){
+    let map = new Map();
+    for(let i = 0; i < arr.length; i++){
+        let complement = target - arr[i];
+        if(map.has(complement)){
+            return [map.get(complement),i]
+        }else{
+            map.set(arr[i],i)
+        }
+    }
+    return "No sum exists";
+}
+
+2.
+Given an integer array arr, move all 0s to the end of the array while maintaining the relative order of the non-zero elements.
+
+The operation must be performed in-place.
+Input:
+[0,1,0,3,12]
+
+Output:
+[1,3,12,0,0]
+
+Pattern: variable sliding window
+State: currentSum
+Valid Window: 
+Invalid Window: 
+Shrink Condition: when emcounter zero by fast swap
+Time Complexity: O(n)
+[] ,[5], [-5,-2,-7], [1,1,1]
+
+function moveZeroes(arr){
+    let slow = 0;
+    for(let fast = 0; fast < arr.length; fast++){
+        if(arr[fast] !== 0){
+            let temp = arr[slow];
+            arr[slow] = arr[fast];
+            arr[fast] = temp;
+            slow++;
+        }
+    }
+    return arr;
+}
+
+3. 
+
+Pattern: variable sliding window
+State: currentMaxLength
+Valid Window: when no duplicate
+Invalid Window: when duplicate
+Shrink Condition: when emcounter duplicate charac
+Time Complexity: O(n*k)
+
+Input:
+"abcabcbb"
+
+Output:
+3
+a, aa, ab
+
+Given a string str, return the length of the longest substring that contains no repeating characters.
+
+A substring must be contiguous.
+function findLongestsubarray(str){
+    let slow = 0;
+    let set = new Set();
+    let currentMaxLength = Number.MIN_SAFE_INTEGER;
+    for(let fast = 0 ; fast < str.length; fast++){
+        while(set.has(str[fast])){
+            set.delete(str[slow]);
+            slow++;
+        }
+        set.add(str[fast]);
+        currentMaxLength = Math.max(currentMaxLength, fast - slow + 1);
+    }
+    return currentMaxLength === Number.MIN_SAFE_INTEGER ? "No such subarray exists" : currentMaxLength;
+}
+
+4.
+Pattern: fixed sliding window
+State: currentMaxSum
+Valid Window: when sum < k
+Invalid Window: when sum > k
+Shrink Condition: when sum > k
+Time Complexity: O(n*k)
+
+Input:
+
+arr = [2,1,5,1,3,2]
+k = 3
+Output:
+9
+[], [5], [-1,-2,-3,-4] k=2, [1,1,1,1]
+Given an array of integers arr and an integer k,
+return the maximum sum of any contiguous subarray of size exactly k.
+
+function maxSumSubarray(arr, k){
+    if(arr.length  < k) return "No such subarray"
+    let slow = 0;
+    let currentMaxSum = 0
+    let maxSum = Number.MIN_SAFE_INTEGER;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentMaxSum += arr[fast];
+        if(fast - slow + 1 === k){
+            maxSum = Math.max(maxSum, currentMaxSum);
+            currentMaxSum -= arr[slow];
+            slow++;
+        }
+    }
+    return maxSum === Number.MIN_SAFE_INTEGER ? "No such subarray" : maxSum;
+}
+
+5.
+Pattern: fixed sliding window
+State: currentMaxSum
+Valid Window: when sum >= k
+Invalid Window: when sum < k
+Shrink Condition: when sum < k
+Time Complexity: O(n*k)
+Input:
+arr = [2,1,5,2,3,2]
+target = 7
+
+Output:
+2
+Given an array of positive integers arr and an integer target, return the length of the 
+smallest contiguous subarray whose sum is greater than or equal to target.
+If no such subarray exists, return 0.
+
+function smallestContiguousSubarray(arr,target){
+    let slow = 0;
+    let minLength = Number.MAX_SAFE_INTEGER;
+    let currentSum = 0;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentSum += arr[fast];
+        while(currentSum>=target){
+            minLength = Math.min(minLength, fast - slow + 1);
+            currentSum -= arr[slow];
+            slow++;
+        }
+    }
+    return minLength === Number.MAX_SAFE_INTEGER ? 0 : minLength
+}

@@ -18,3 +18,17 @@ export async function getAnalytics() {
     throw error;
   }
 }
+
+export const postSubmitProfileSettings = async (form: any) => {
+  console.log("form>>>", form);
+  try {
+    const res = await apiClient.post("/profile", form);
+    console.log("Created:", res.data);
+    return res.data;
+  } catch (err: any) {
+    console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
+    console.error("Status:", err.response?.status);
+    console.error("URL:", err.config?.url);
+    throw err;
+  }
+};

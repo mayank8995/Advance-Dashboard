@@ -9,7 +9,10 @@ const MyCustomPie = (props: PieSectorShapeProps) => {
 export default function RootCharts({chartType,data,title, X, Y}: any) {
     return <>
         {chartType === 'line' && 
-          <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow">
+          <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
+  shadow-sm
+  transition-all
+  duration-300">
          <div className="flex items-center justify-between text-2xl font-bold">{title}</div>
          <LineChart  key={4364578686} style={{ width: '100%', height: '100%', aspectRatio: 1 }} responsive data={data}>
           <CartesianGrid stroke="#8884d8" strokeDasharray="5 5" />

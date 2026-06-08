@@ -29,7 +29,7 @@ export const SIDE_BAR_ITEMS = {
     DASHBOARD: "Dashboard",
     ANALYTICS: "Analytics",
     EMPLOYEES: "Employees",
-    SETTINGS: "Settings"
+    SETTINGS: "Profile Settings"
 }
 
 
@@ -43,3 +43,23 @@ export const RISK_STATUS = {
 export const PROJECT_DETAILS = {
     MANAGER: "Project Lead"
 }
+
+export const className = `w-full
+px-4
+py-3
+mb-2
+rounded-xl
+border
+border-slate-300
+bg-white
+text-base
+font-medium
+text-slate-800
+placeholder:text-slate-400
+placeholder:font-normal
+focus:border-blue-500
+focus:ring-4
+focus:ring-blue-100
+outline-none
+transition-all
+duration-200`

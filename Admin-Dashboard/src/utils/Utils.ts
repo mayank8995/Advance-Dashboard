@@ -38,7 +38,7 @@ export function getNumberofActiveProjects(data: Array<any>){
 
 export function getTopProjects(data: Array<any>){
              for(let proj of data){
-                    if(proj?.priorityRanking >=1 && proj?.priorityRanking < 6){
+                    if(proj?.priorityRanking === "*"){
                          return proj;
                     }
             }

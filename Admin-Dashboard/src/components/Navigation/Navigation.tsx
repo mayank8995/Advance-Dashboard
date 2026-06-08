@@ -46,8 +46,8 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
       {/* Sidebar */}
       <div
         className={`
-          fixed top-0 left-0 z-50 h-screen w-64 bg-gray-900 text-white
-          transform transition-transform duration-300 shrink-0
+          fixed top-0 left-0 z-50 w-64 bg-gray-900 text-white
+          transform transition-transform duration-300 shrink-0 h-full overflow-y-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:flex
           flex-col

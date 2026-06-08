@@ -16,7 +16,7 @@ console
                 <KeyMetricCard>
                     <KeyMetric newData={cachedData}></KeyMetric>
                 </KeyMetricCard>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-4 p-4">
                     <div>
                         <RootCharts X={"month"} Y={"rate"} chartType={"line"} data={cachedData?.employeeList?.[0]?.attritionInsights?.trend} title={ATTRITION_INSIGHTS}></RootCharts>
                     </div>

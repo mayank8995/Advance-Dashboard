@@ -14,9 +14,12 @@ export default function Chart({newData, title}: any) {
 
   return (
     <>
-    <div className="flex-[0] min-w-0">
+    <div className="flex-[0] min-w-0 ">
         <div
-          className="col-span-2 bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow"
+          className="col-span-2 bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
+  shadow-sm
+  transition-all
+  duration-300"
         >
           <div className="flex items-center justify-between text-2xl font-bold">
               {title}
@@ -24,7 +27,7 @@ export default function Chart({newData, title}: any) {
 
           {Array.isArray(data) && data?.map((value: any, index: number) => {
            return <>
-            {getTopProjects(value?.projects)?.priorityRanking < 6 && <div key={index} className="inline-flex">
+            {getTopProjects(value?.projects)?.priorityRanking === "*" && <div key={index} className="inline-flex">
             {RISK_STATUS.COMPLETED ===  getTopProjects(value?.projects)?.riskStatus && <div className="h-auto bg-green-700 w-2 rounded-full"></div>}
             {RISK_STATUS.AT_RISK ===  getTopProjects(value?.projects)?.riskStatus && <div className="h-auto bg-red-700 w-2 rounded-full"></div>}
             {RISK_STATUS.ON_TRACK ===  getTopProjects(value?.projects)?.riskStatus &&<div className="h-auto bg-green-500 w-2 rounded-full"></div>}

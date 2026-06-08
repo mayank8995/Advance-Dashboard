@@ -51,16 +51,17 @@ Output:
 }
 console.log(twoSum([2, 17, 7, 15], 9))
 
-function twoSum(arr, target) {
+function twoSum(arr, target){
     let map = new Map();
-    for(let i = 0 ; i < arr.length ; i++){
-        map.set(arr[i],i);
+    for(let i = 0; i < arr.length; i++){
+        let complement = target - arr[i];
+        if(map.has(complement)){
+            return [map.get(complement),i]
+        }else{
+            map.set(arr[i],i)
+        }
     }
-  for(let i = 0 ; i < arr.length ; i++){
-    let complement = target - arr[i];
-      if(map.has(complement)) return [i,map.get(complement)]
-    }
-  return []
+    return "No sum exists";
 }
 
 console.log(twoSum([2, 17, 7, 15], 9))
@@ -215,7 +216,7 @@ console.log(smallestContiguousSubarray([8],7))
 console.log(smallestContiguousSubarray([8],8))
 console.log(smallestContiguousSubarray([8],9))
 
-
+08/06/2026
 Given an array of positive integers and an integer k, 
 return the length of the longest contiguous subarray whose sum is less than or equal to k.
 function LongestSubArray(arr,k){

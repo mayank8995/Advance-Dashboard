@@ -1,0 +1,30 @@
+┌─────────────────────────────────────────────┐
+│ Settings > Profile                          │
+├─────────────────────────────────────────────┤
+│                                             │
+│  Avatar        Personal Information         │
+│                                             │
+│  [Photo]       Name                         │
+│                Email                        │
+│                Phone                        │
+│                Department                   │
+│                Designation                  │
+│                                             │
+├─────────────────────────────────────────────┤
+│ Account Information                         │
+│                                             │
+│ Employee ID                                 │
+│ Joining Date                                │
+│ Work Mode                                   │
+│ Location                                    │
+│                                             │
+├─────────────────────────────────────────────┤
+│ Security                                    │
+│                                             │
+│ Change Password                             │
+│ Last Login                                  │
+│ Two Factor Authentication                   │
+│                                             │
+├─────────────────────────────────────────────┤
+│ Save Changes              Cancel            │
+└─────────────────────────────────────────────┘
