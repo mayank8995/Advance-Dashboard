@@ -219,17 +219,126 @@ console.log(smallestContiguousSubarray([8],9))
 08/06/2026
 Given an array of positive integers and an integer k, 
 return the length of the longest contiguous subarray whose sum is less than or equal to k.
+arr=[10,10,10]  k=5
+arr=[3]         k=2
+arr=[1,1,1,1]   k=0
 function LongestSubArray(arr,k){
     let slow = 0;
-    let currentWindowSum = 0;
     let maxLength = Number.MIN_SAFE_INTEGER;
+    let currentSum = 0;
     for(let fast = 0; fast < arr.length; fast++){
-        currentWindowSum += arr[fast];
-        while(currentWindowSum > k){
-            currentWindowSum -= arr[slow];
+        currentSum += arr[fast];
+        while(currentSum > k){
+            currentSum -= arr[slow];
             slow++;
         }
-            maxLength = Math.max(maxLength, fast - slow + 1);   
+        maxLength = Math.max(maxLength, fast - slow + 1);
     }
-    return maxLength === Number.MIN_SAFE_INTEGER ? "No such subarray" : maxLength;
+    return maxLength === Number.MIN_SAFE_INTEGER || maxLength === 0 ? "No such subarray" : maxLength;
 }
+
+Longest Substring Without Repeating Characters
+
+function longestSubstring(str){
+    let slow = 0;
+    let maxLength = Number.MIN_SAFE_INTEGER;
+    let set = new Set();
+    for(let fast = 0; fast < str.length; fast++){
+
+        while(set.has(str[fast])){
+            set.delete(str[slow]);
+            slow++;
+        }
+        set.add(str[fast]);
+        maxLength = Math.max(maxLength, fast - slow + 1);
+    }
+    return (maxLength === Number.MIN_SAFE_INTEGER || maxLength === 0) ? "No subarray" : maxLength
+}
+
+[2,1,5,2] k=7
+[], k=8
+[8], k=8
+[7], k=8
+[9], k=8
+[1,1,1,1] k=0
+Smallest Subarray With Sum ≥ Target
+function smallestContiguousSubarray(arr,k){
+    let slow = 0;
+    let currentSum = 0;
+    let minLength = Number.MAX_SAFE_INTEGER;
+    for(let fast = 0 ; fast < arr.length; fast++){
+        currentSum += arr[fast];
+        while(currentSum >= k){
+            minLength = Math.min(minLength, fast - slow + 1);
+            currentSum -= arr[slow];
+            slow++;
+        }
+    }
+    return (minLength === Number.MAX_SAFE_INTEGER || minLength === 0) ? "No subarray" : minLength
+}
+
+Input:
+arr = [1,2,1,0,1,1,0]
+k = 4
+Output:
+5
+Pattern: sli wind
+State: currSum
+Invariant: k
+Condition: 
+TC: O(n)
+Given an array of positive integers arr and an integer k, 
+return the length of the longest contiguous subarray whose sum is strictly less than k.
+function sumLessThanK(arr, k){
+    let slow = 0;
+    let currentSum = 0;
+    let maxLength = Number.MIN_SAFE_INTEGER;
+
+    for(let fast = 0; fast < arr.length; fast++){
+        currentSum += arr[fast];
+        while(currentSum >= k){
+            currentSum -= arr[slow];
+            slow++;
+        }
+        maxLength = Math.max(maxLength, fast - slow + 1);
+    }
+    return (maxLength === Number.MIN_SAFE_INTEGER || maxLength === 0) ? 0 : maxLength
+}
+
+
+Input:
+arr = [1,2,1]
+k = 3
+Output:
+5
+Pattern: sli wind
+State: currSum, count
+Invariant: k
+Condition: 
+TC: O(n)
+Given an array of positive integers arr and an integer k, 
+return the total number of contiguous subarrays whose sum is less than or equal to k.
+function totalNumberContSubArray(arr,k){
+    let slow = 0;
+    let count = 0;
+    let currentSum = 0;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentSum += arr[fast];
+        while(currentSum > k){
+            currentSum -= arr[slow];
+            slow++;
+        }
+        count = count + fast - slow +1
+    }
+    return count;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { getTopProjects } from "../../utils/Utils";
 import { PROJECT_DETAILS, RISK_STATUS } from "../../utils/constants";
+import { useElementSize } from "../../hooks/useElementSize";
 
 
 export default function Chart({newData, title}: any) {
+
+  const [containerRef, { width, breakpoint }] = useElementSize<HTMLDivElement>();
+
+  const isCompact = breakpoint === 'sm';
+  const isWide = breakpoint === 'lg' || breakpoint === 'xl';
 
   const [data, setData] = useState({} as any);
       useEffect(() => {
@@ -14,9 +20,9 @@ export default function Chart({newData, title}: any) {
 
   return (
     <>
-    <div className="flex-[0] min-w-0 ">
         <div
-          className="col-span-2 bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
+        ref={containerRef} 
+          className="over-flow-y-auto col-span-2 border border-slate-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
   shadow-sm
   transition-all
   duration-300"
@@ -52,7 +58,7 @@ export default function Chart({newData, title}: any) {
          }
 
         </div>
-    </div>
+
     </>
   );
 }

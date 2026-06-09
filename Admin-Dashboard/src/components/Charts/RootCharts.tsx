@@ -3,10 +3,32 @@ import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, R
 import { PIE_COLORS } from "../../utils/constants";
 
 const MyCustomPie = (props: PieSectorShapeProps) => {
+  // console.log("Rendering custom pie sector with props:", props);
   return <Sector {...props} fill={PIE_COLORS[props.index % PIE_COLORS.length]} />;
 };
 
+
+
 export default function RootCharts({chartType,data,title, X, Y}: any) {
+
+const RenderCustomLegend = () => {
+  console.log("Rendering custom legend with data:", data);
+  return (
+    <div>
+      {data.map((entry: any, index: any) => {
+        const itemColor = PIE_COLORS[index % PIE_COLORS.length]
+        return (
+          <div key={entry[X]} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {/* Custom Legend Icon */}
+            <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: itemColor }} />
+            {/* Legend Label */}
+            <span style={{ fontSize: '14px', color: '#333' }}>{entry[X]}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
     return <>
         {chartType === 'line' && 
           <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
@@ -43,11 +65,12 @@ export default function RootCharts({chartType,data,title, X, Y}: any) {
         data={data}
         dataKey={Y}
         nameKey={X}
-        fill="#8884d8"
         isAnimationActive={true}
         shape={MyCustomPie}
+        labelLine={true}
       />
       <Tooltip  />
+      <Legend layout="vertical" align="right" verticalAlign="top" content={RenderCustomLegend} /> 
       <RechartsDevtools />
     </PieChart>
             </div>}

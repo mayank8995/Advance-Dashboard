@@ -2,13 +2,14 @@ import { Outlet } from "react-router-dom"
 import Footer from "../Footer/Footer"
 import Header from "../Header/Header"
 import Navigation from "../Navigation/Navigation"
-import {useAnalyticsData, useGetData} from "../../utils/Utils"
+import {useAnalyticsData, useGetData, usePerformanceCardData} from "../../utils/Utils"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 
 function Home(){
   // Queries
     const { isPending, error } = useGetData();
     const { } = useAnalyticsData();
+    // const { } = usePerformanceCardData();
 
    
        if (isPending) return 'Loading...'
@@ -24,7 +25,7 @@ function Home(){
             <Outlet/>
             </div>
         </div>
-            <Footer/>
+            {/* <Footer/> */}
         </div>
         </ErrorBoundary>
     )

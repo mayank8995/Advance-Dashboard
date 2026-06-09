@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import getEmployees, { getAnalytics } from "../api/MockApi/MockApi";
+import getEmployees, { getAnalytics, getPerformanceCards } from "../api/MockApi/MockApi";
 
 export function useGetData(){
     return useQuery({
@@ -12,6 +12,14 @@ export function useAnalyticsData(){
     return useQuery({
                 queryKey: ['initialAnalyticsData'],
                 queryFn: getAnalytics,
+                staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+  });
+}
+
+export function usePerformanceCardData(){
+    return useQuery({
+                queryKey: ['initialPerformanceCardsData'],
+                queryFn: getPerformanceCards,
                 staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
 }

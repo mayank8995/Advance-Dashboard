@@ -1,53 +1,106 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormField from "../../components/Form/FormField"
 import { className, SIDE_BAR_ITEMS } from "../../utils/constants"
 import type { ProfileForm } from "../../types/types";
-import { postSubmitProfileSettings } from "../../api/MockApi/MockApi";
+import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/MockApi/MockApi";
 
 function Settings(){
 
-     const formValuesRef = useRef<ProfileForm>({name: '',phone: '',email: '',department: '',designation: '',id:'',jdate:new Date(),wmode:'',location:''} as ProfileForm);
-   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const [profile_pic, setImage] = useState(localStorage.getItem("profile_pic") || null);
+    const [initialData, setInitialData] = useState<ProfileForm | null>(null);
+    const [isEditing, setIsEditing] = useState(false);
+     const formValuesRef = useRef<ProfileForm>({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:new Date(),wmode:'',location:'',image:null} as ProfileForm);
+     const refForUpload = useRef<HTMLInputElement>(null); // separate ref for image upload
+
+
+    useEffect(() => {
+        // console.log("profile_pic from localStorage on component mount:", localStorage.getItem("profile_pic"), " profile_pic>>",profile_pic);
+        const fetchProfileData = async () => {
+            const profileData = await getProfileData();
+            if(profileData) {
+                console.log("Profile data fetched:", profileData);
+                formValuesRef.current = profileData;
+                setIsEditing(true);
+                setInitialData(profileData)
+            }
+        }
+    fetchProfileData();
+    }, [])
+    
+     function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    console.log("onchange data", name, value);
-    if (formValuesRef.current && name in formValuesRef.current) {
+    console.log("onchange data", name, value, formValuesRef?.current);
+    if (formValuesRef?.current) {
         formValuesRef.current[name as keyof ProfileForm] = value as any;
     }
 }
 
    const handleSubmit = async (e:any) => {
     e.preventDefault();
-
+    e.stopPropagation();
     console.log("START SUBMIT");
-
     try {
-        const res = await postSubmitProfileSettings(formValuesRef.current);
-
+        let res;
+        if(!isEditing) {
+            res = await postSubmitProfileSettings(formValuesRef.current);
+        }else{
+            res = await editProfileData(formValuesRef.current);
+        }
         console.log("POST SUCCESS", res);
     } catch(err) {
         console.error("POST FAILED", err);
     }
-
     console.log("END SUBMIT");
 };
 
     function onCancel(e:any){
         if(window.confirm("Are you sure you want to cancel? All unsaved changes will be lost.")){
-            formValuesRef.current = {name: '',phone: '',email: '',department: '',designation: '',id:'',jdate:new Date(),wmode:'',location:''} as ProfileForm;
+            setInitialData({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:new Date(),wmode:'',location:'',image:null}); // reset the initial data to clear form fields
         }
     }
 
     function handleUpload(){
-        const fileInput = document.getElementById("real-file") as HTMLInputElement;
-        console.log("fileInput>>>", fileInput);
-        if(fileInput){
-            fileInput.click();
+        try{
+            refForUpload?.current && refForUpload?.current?.click();
+        }catch(e:any){
+            console.error("Upload error:", e);
         }
     }
 function handleFileChange(e:any){
     const file = e.target.files[0];
-    console.log("Selected file:", file);
-    // Here you can implement the logic to upload the file to the server or update the state with the new avatar URL
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please upload an image file");
+        return;
+    }
+
+    // (e.g. max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+        alert("File too large, max 2MB");
+        return;
+    }
+
+    const reader = new FileReader();
+    // Fires once the file is fully read as a Base64 Data URL string
+    reader.onload = () => {
+      const base64String: any = reader.result;
+      
+      try {
+
+        // Save the raw text string to localStorage
+        localStorage.setItem("profile_pic", base64String);
+
+        // Update local React state to reflect changes instantly
+        setImage(base64String);
+      } catch (error) {
+        console.error("Storage limit exceeded or failed:", error, file.size);
+        alert("The image is too large to store in local storage.");
+      }
+    };
+
+    // Convert the file blob into a reusable string
+    reader.readAsDataURL(file);
 }
     return <>
     <div className="w-full">
@@ -55,7 +108,7 @@ function handleFileChange(e:any){
             <div className="mb-4">
                 <h1 className="text-2xl font-bold">{SIDE_BAR_ITEMS.SETTINGS}</h1>
             </div>
-            <form onSubmit = {handleSubmit} className="border-2 border-dotted border-gray-300 p-2" noValidate>
+            <form  onSubmit = {handleSubmit} className="border-2 border-dotted border-gray-300 p-2" noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
                 <div>
                     <h1 className="text-xl
@@ -70,7 +123,7 @@ function handleFileChange(e:any){
                 "
                 >
   <img
-    src={'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'}
+    src={profile_pic ? profile_pic : 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'} // Display the image from localStorage or a placeholder
     alt="Profile"
     className="
       h-full
@@ -82,7 +135,7 @@ function handleFileChange(e:any){
       shadow-lg
     "
   />
-  <input  onChange={handleFileChange} type="file" id="real-file" style={{display: "none"}} />
+  <input ref={refForUpload} onChange={handleFileChange} type="file" style={{display: "none"}} />
   <button
   onClick={handleUpload}
   type="button"
@@ -111,7 +164,7 @@ function handleFileChange(e:any){
 font-semibold
 text-slate-800 mb-2">Personal Information</h2>
                     <div className="flex flex-col-reverse">
-                    <FormField name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onChange} className={className}/>
+                    <FormField defaultValue={initialData?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onInputChange} className={className}/>
                         <label
                         className="
                         block
@@ -125,7 +178,7 @@ text-slate-800 mb-2">Personal Information</h2>
                         </label>
                     </div>
                     <div className="flex flex-col-reverse">
-                    <FormField name={"phone"} type={"text"} placeholder={"Enter your phone number"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.phone} name={"phone"} type={"text"} placeholder={"Enter your phone number"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -139,7 +192,7 @@ text-slate-800 mb-2">Personal Information</h2>
                         </label>
                     </div>
                     <div className="flex flex-col-reverse">
-                    <FormField name={"email"} type={"email"} placeholder={"Enter your email"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.email} name={"email"} type={"email"} placeholder={"Enter your email"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -154,7 +207,7 @@ text-slate-800 mb-2">Personal Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -169,7 +222,7 @@ text-slate-800 mb-2">Personal Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -191,7 +244,7 @@ font-semibold
 text-slate-800 mb-2">Account Information</h2>
                     <div className="flex flex-col-reverse">
 
-                    <FormField name={"id"} type={"text"} placeholder={"Enter your ID"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.empId} name={"empId"} type={"text"} placeholder={"Enter your ID"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -206,7 +259,7 @@ text-slate-800 mb-2">Account Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField name={"jdate"} type={"date"} placeholder={"Enter your joining date"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.jdate} name={"jdate"} type={"date"} placeholder={"Enter your joining date"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -221,7 +274,7 @@ text-slate-800 mb-2">Account Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField name={"wmode"} type={"text"} placeholder={"Enter your work mode"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.wmode} name={"wmode"} type={"text"} placeholder={"Hybrid/Remote/Onsite"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -236,7 +289,7 @@ text-slate-800 mb-2">Account Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField name={"location"} type={"text"} placeholder={"Enter your location"} onChange={onChange} className={className} />
+                    <FormField defaultValue={initialData?.location} name={"location"} type={"text"} placeholder={"Enter your location"} onChange={onInputChange} className={className} />
                     <label
                         className="
                         block
@@ -251,7 +304,7 @@ text-slate-800 mb-2">Account Information</h2>
                     </div>
                 </div>
                 <div className="border-t-2  border-gray-300 border-dotted"></div>
-                <div className="flex justify-between items-center p-4">
+                {!isEditing && <div className="flex justify-between items-center p-4">
                     <button type="submit"
                     className="
                         px-5
@@ -267,9 +320,9 @@ text-slate-800 mb-2">Account Information</h2>
                         duration-200
                     "
                     >
-                    Save Changes
+                    Save Profile
                     </button>
-{/* <button type="button"
+<button type="button"
   className="
     px-5
     py-3
@@ -286,8 +339,27 @@ text-slate-800 mb-2">Account Information</h2>
   onClick={onCancel}
 >
   Cancel
-</button> */}
-                </div>
+</button>
+                </div>}
+                 {isEditing && <div className="flex justify-between items-center p-4">
+                    <button type="submit"
+                    className="
+                        px-5
+                        py-3
+                        rounded-xl
+                        bg-blue-600
+                        text-white
+                        font-medium
+                        shadow-sm
+                        hover:bg-blue-700
+                        hover:shadow-md
+                        transition-all
+                        duration-200
+                    "
+                    >
+                    Edit Profile
+                    </button>
+                </div>}
             </form>
         </div>
     </div>

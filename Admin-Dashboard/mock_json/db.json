@@ -3659,40 +3659,106 @@
       }
     ]
   },
-  "profile": [
-    {
-      "name": "sdfsdfs",
-      "phone": "dfsdf",
-      "email": "sdfsdf@gga.com",
-      "department": "dfgdf",
-      "designation": "gdf",
-      "id": "w7IgozBMNkk",
-      "jdate": "2026-06-01",
-      "wmode": "dfgd",
-      "location": "fgdf"
+  "performanceCards": {
+    "topPerformers": {
+      "title": "Top Performers",
+      "icon": "⭐",
+      "count": 18,
+      "percentage": 18.0,
+      "trend": "up",
+      "trendValue": 3.2,
+      "description": "Employees with rating ≥ 4.5",
+      "employees": [
+        { "id": 11, "name": "Saurabh Jain",    "department": "Engineering", "designation": "Tech Lead",                "rating": 4.9, "attendancePercentage": 95.2 },
+        { "id": 2,  "name": "Priya Mehta",      "department": "Product",     "designation": "Product Manager",          "rating": 4.8, "attendancePercentage": 90.1 },
+        { "id": 13, "name": "Rohit Khanna",     "department": "Product",     "designation": "Senior Product Manager",   "rating": 4.8, "attendancePercentage": 97.1 },
+        { "id": 17, "name": "Shreya Kulkarni",  "department": "Data",        "designation": "Data Scientist",           "rating": 4.7, "attendancePercentage": 95.8 },
+        { "id": 7,  "name": "Karan Malhotra",   "department": "Engineering", "designation": "DevOps Engineer",          "rating": 4.6, "attendancePercentage": 93.1 },
+        { "id": 1,  "name": "Rahul Sharma",     "department": "Engineering", "designation": "Senior Software Engineer", "rating": 4.5, "attendancePercentage": 94.3 }
+      ]
     },
-    {
-      "name": "",
-      "phone": "",
-      "email": "asaf@gmail.com",
-      "department": "",
-      "designation": "",
-      "id": "cPrH9AJvrbE",
-      "jdate": "2026-06-07T21:02:18.637Z",
-      "wmode": "",
-      "location": ""
+    "promotedThisYear": {
+      "title": "Employees Promoted This Year",
+      "icon": "📈",
+      "count": 12,
+      "percentage": 12.0,
+      "trend": "up",
+      "trendValue": 2.1,
+      "description": "Promoted between Jan 2024 – May 2024",
+      "employees": [
+        { "id": 1,  "name": "Rahul Sharma",    "department": "Engineering", "previousDesignation": "Software Engineer",         "currentDesignation": "Senior Software Engineer", "promotedOn": "2024-01-15" },
+        { "id": 7,  "name": "Karan Malhotra",  "department": "Engineering", "previousDesignation": "Software Engineer",         "currentDesignation": "DevOps Engineer",          "promotedOn": "2024-02-10" },
+        { "id": 10, "name": "Meera Joshi",     "department": "Data",        "previousDesignation": "Junior Data Analyst",       "currentDesignation": "Data Analyst",             "promotedOn": "2024-02-28" },
+        { "id": 17, "name": "Shreya Kulkarni", "department": "Data",        "previousDesignation": "Data Analyst",              "currentDesignation": "Data Scientist",           "promotedOn": "2024-03-05" },
+        { "id": 6,  "name": "Neha Gupta",      "department": "QA",          "previousDesignation": "QA Analyst",                "currentDesignation": "QA Engineer",              "promotedOn": "2024-03-20" },
+        { "id": 13, "name": "Rohit Khanna",    "department": "Product",     "previousDesignation": "Product Manager",           "currentDesignation": "Senior Product Manager",   "promotedOn": "2024-04-01" },
+        { "id": 8,  "name": "Riya Arora",      "department": "HR",          "previousDesignation": "HR Business Partner",       "currentDesignation": "HR Manager",               "promotedOn": "2024-04-15" },
+        { "id": 18, "name": "Mohit Bansal",    "department": "Finance",     "previousDesignation": "Finance Analyst",           "currentDesignation": "Finance Manager",          "promotedOn": "2024-04-22" },
+        { "id": 11, "name": "Saurabh Jain",    "department": "Engineering", "previousDesignation": "Senior Software Engineer",  "currentDesignation": "Tech Lead",                "promotedOn": "2024-05-01" },
+        { "id": 14, "name": "Anjali Nair",     "department": "QA",          "previousDesignation": "QA Engineer",               "currentDesignation": "Automation Tester",        "promotedOn": "2024-05-10" },
+        { "id": 19, "name": "Aisha Khan",      "department": "Engineering", "previousDesignation": "Junior Frontend Developer",  "currentDesignation": "Frontend Developer",      "promotedOn": "2024-05-15" },
+        { "id": 2,  "name": "Priya Mehta",     "department": "Product",     "previousDesignation": "Associate Product Manager", "currentDesignation": "Product Manager",          "promotedOn": "2024-05-20" }
+      ]
     },
-    {
-      "name": "qweqwe",
-      "phone": "qweqwe",
-      "email": "qw@sdfs.com",
-      "department": "ffsdf",
-      "designation": "sdfsd",
-      "id": "73-CotpoLG8",
-      "jdate": "2026-06-08",
-      "wmode": "sfdsdf",
-      "location": "sdfsdf"
+    "meetingKPIs": {
+      "title": "Employees Meeting KPIs",
+      "icon": "🎯",
+      "count": 74,
+      "percentage": 74.0,
+      "trend": "up",
+      "trendValue": 5.4,
+      "description": "Employees with rating ≥ 4.0 and attendance ≥ 90%",
+      "breakdown": {
+        "exceeding":  { "label": "Exceeding KPIs",  "count": 18, "percentage": 18.0, "ratingRange": "≥ 4.5" },
+        "meeting":    { "label": "Meeting KPIs",     "count": 56, "percentage": 56.0, "ratingRange": "4.0 – 4.4" },
+        "notMeeting": { "label": "Not Meeting KPIs", "count": 26, "percentage": 26.0, "ratingRange": "< 4.0" }
+      },
+      "trend_history": [
+        { "month": "Dec 23", "percentage": 68.0 },
+        { "month": "Jan 24", "percentage": 69.5 },
+        { "month": "Feb 24", "percentage": 70.2 },
+        { "month": "Mar 24", "percentage": 71.8 },
+        { "month": "Apr 24", "percentage": 72.4 },
+        { "month": "May 24", "percentage": 74.0 }
+      ]
+    },
+    "requiringReview": {
+      "title": "Employees Requiring Review",
+      "icon": "⚠️",
+      "count": 11,
+      "percentage": 11.0,
+      "trend": "down",
+      "trendValue": 1.8,
+      "description": "Employees with rating < 4.0 or attendance < 88% or on notice period",
+      "reasons": {
+        "lowRating":       { "label": "Low Rating (< 4.0)",       "count": 4 },
+        "lowAttendance":   { "label": "Low Attendance (< 88%)",   "count": 3 },
+        "onNoticePeriod":  { "label": "On Notice Period",         "count": 15 },
+        "lowSatisfaction": { "label": "Low Job Satisfaction",     "count": 1 }
+      },
+      "employees": [
+        { "id": 5,  "name": "Vikram Singh",  "department": "Engineering", "designation": "Backend Developer",          "rating": 3.8, "attendancePercentage": 95.7, "employeeSatisfaction": "Low",    "onNoticePeriod": true,  "reviewReason": ["Low Rating", "On Notice Period", "Low Satisfaction"] },
+        { "id": 16, "name": "Nitin Agarwal", "department": "Engineering", "designation": "Software Engineer",          "rating": 3.8, "attendancePercentage": 88.7, "employeeSatisfaction": "Medium", "onNoticePeriod": false, "reviewReason": ["Low Rating"] },
+        { "id": 9,  "name": "Arjun Patel",   "department": "Engineering", "designation": "Software Engineer",          "rating": 3.9, "attendancePercentage": 89.4, "employeeSatisfaction": "Medium", "onNoticePeriod": false, "reviewReason": ["Low Rating"] },
+        { "id": 20, "name": "Tarun Mishra",  "department": "Support",     "designation": "Technical Support Engineer", "rating": 3.9, "attendancePercentage": 89.8, "employeeSatisfaction": "Medium", "onNoticePeriod": true,  "reviewReason": ["Low Rating", "On Notice Period"] },
+        { "id": 4,  "name": "Sneha Kapoor",  "department": "Design",      "designation": "UI/UX Designer",            "rating": 4.2, "attendancePercentage": 88.2, "employeeSatisfaction": "Medium", "onNoticePeriod": false, "reviewReason": ["Low Attendance"] },
+        { "id": 15, "name": "Deepak Yadav",  "department": "Engineering", "designation": "Backend Developer",          "rating": 4.4, "attendancePercentage": 94.1, "employeeSatisfaction": "High",   "onNoticePeriod": true,  "reviewReason": ["On Notice Period"] }
+      ]
     }
-  ],
+  }
+,
+  "profile": {
+    "name": "Mayank Gupta",
+    "phone": "9910867894",
+    "email": "mayankgupta8995@gmail.com",
+    "department": "Engineering",
+    "designation": "Sr. Software Engineer",
+    "empId": "B/2345",
+    "jdate": "2026-06-08",
+    "wmode": "Hybrid",
+    "location": "Karnataka",
+    "image": null,
+    "id": "dP1jdJ2pQ1U"
+  },
   "$schema": "./node_modules/json-server/schema.json"
 }
