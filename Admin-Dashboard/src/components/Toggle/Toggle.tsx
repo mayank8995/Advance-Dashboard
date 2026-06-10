@@ -27,9 +27,9 @@ export default function Toggle() {
         {/* Thumb */}
         <div className={`absolute top-[2px] left-[2px] bg-white h-5 w-5 rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`} />
       </div>
-      <span className="ml-3 text-sm font-medium text-gray-900">
+      {/* <span className="ml-3 text-sm font-medium text-gray-900">
         {enabled ? 'On' : 'Off'}
-      </span>
+      </span> */}
     </label>
   );
 }

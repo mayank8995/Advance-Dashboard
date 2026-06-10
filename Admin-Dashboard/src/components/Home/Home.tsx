@@ -9,7 +9,7 @@ function Home(){
   // Queries
     const { isPending, error } = useGetData();
     const { } = useAnalyticsData();
-    // const { } = usePerformanceCardData();
+    const { } = usePerformanceCardData();
 
    
        if (isPending) return 'Loading...'
@@ -19,7 +19,7 @@ function Home(){
         <ErrorBoundary fallback={<div>Failed to load</div>}>
         <div className="md:flex md:flex-col md:h-full bg-slate-100">
             <Header/>
-        <div className="flex-col md:flex md:flex-row md:flex-1 h-full md:overflow-hidden">
+        <div style={{background: `linear-gradient(135deg, #f0f4ff 0%, #fafafa 50%, #f5f3ff 100%)`}} className=" bg-amber-50 flex-col md:flex md:flex-row md:flex-1 h-full md:overflow-hidden">
             <Navigation/>
             <div className="flex-1 overflow-y-auto">
             <Outlet/>

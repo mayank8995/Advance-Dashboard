@@ -45,9 +45,10 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
 
       {/* Sidebar */}
       <div
+      style={{background:'linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%)'}} 
         className={`
           fixed top-0 left-0 z-50 w-64 bg-gray-900 text-white
-          transform transition-transform duration-300 shrink-0 h-full overflow-y-auto
+          transform transition-transform duration-300 md:shrink-0 h-full md:h-auto overflow-y-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:flex
           flex-col
@@ -65,7 +66,7 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
 </div>
 
         {/* Nav Links */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-2 h-full overflow-y-auto">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
@@ -84,7 +85,7 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
               transition-all
               ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
+                    ? "bg-gradient-to-r from-indigo-600 to-violet-500 rounded-xl text-white shadow-lg shadow-indigo-500/300"
                     : "text-slate-300 hover:bg-slate-800 hover:text-white"
                 }`
               }

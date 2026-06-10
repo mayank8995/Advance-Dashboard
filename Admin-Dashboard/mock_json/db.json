@@ -3678,7 +3678,7 @@
       ]
     },
     "promotedThisYear": {
-      "title": "Employees Promoted This Year",
+      "title": "Promoted This Year",
       "icon": "📈",
       "count": 12,
       "percentage": 12.0,
@@ -3701,7 +3701,7 @@
       ]
     },
     "meetingKPIs": {
-      "title": "Employees Meeting KPIs",
+      "title": "Meeting KPIs",
       "icon": "🎯",
       "count": 74,
       "percentage": 74.0,
@@ -3723,7 +3723,7 @@
       ]
     },
     "requiringReview": {
-      "title": "Employees Requiring Review",
+      "title": "Requiring Review",
       "icon": "⚠️",
       "count": 11,
       "percentage": 11.0,

@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import KeyMetricCard from "../../components/Card/KeyMetricCard";
 import KeyMetric from "../../components/Card/KeyMetric";
 import Card from "../../components/Card/Card";
-import { DEPARTMENT_WISE_HEADCOUNT, REVENUE_TREND_IN_CR, SKILLS_IN_DEMAND } from "../../utils/constants";
+import { ATTRITION_INSIGHTS, DEPARTMENT_WISE_HEADCOUNT, REVENUE_TREND_IN_CR, SKILLS_IN_DEMAND } from "../../utils/constants";
 import RootCharts from "../../components/Charts/RootCharts";
 
 function Analytics(){
@@ -22,18 +22,19 @@ function Analytics(){
                          <KeyMetric newData={keyCachedData}></KeyMetric>
                      </KeyMetricCard>
                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 py-0">
-                            <div>
+                            {/* <div> */}
                                 <RootCharts X={"department"} Y={"count"} title={DEPARTMENT_WISE_HEADCOUNT} chartType={"pie"} data={cachedData?.departmentHeadcount}></RootCharts>
-                            </div>
-                            <div >    
+                            {/* </div> */}
+                            {/* <div >     */}
                                 <RootCharts X={"month"} Y={"revenueCr"} title={REVENUE_TREND_IN_CR} chartType={"line"} data={cachedData?.revenueTrend}></RootCharts>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                            <div >    
+                            {/* </div> */}
+                                <RootCharts X={"month"} Y={"rate"} chartType={"line"} data={cachedData?.attritionInsights?.trend} title={ATTRITION_INSIGHTS}></RootCharts>
                                 <RootCharts X={"employeeCount"} Y={"skill"} title={SKILLS_IN_DEMAND} chartType={"bar"} data={cachedData?.skillsInDemand}></RootCharts>
-                            </div>
-                    </div>
+                     </div>
+                    {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4"> */}
+                            {/* <div >     */}
+                            {/* </div> */}
+                    {/* </div> */}
              </div>
          )
      

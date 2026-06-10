@@ -57,13 +57,13 @@ export default function CustomDataTable({list}:any) {
   return (
     <div className="min-h-screen bg-slate-50 p-6">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto">
-      <h1 className="text-3xl font-bold text-slate-800 px-6 py-4 pb-0">
+      <h1 className="text-lg font-bold text-slate-800 px-6 py-4 pb-0">
         Employee Directory
       </h1>
 
       {/* Rows Per Page Configurator */}
       <div className='px-6 py-4'>
-        <label>Rows per page: </label>
+        <label className='text-sm font-bold'>Rows per page: </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
           px-3 py-2
           border
@@ -75,10 +75,10 @@ export default function CustomDataTable({list}:any) {
           focus:ring-2
           focus:ring-blue-500
           ">
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
+          <option className='text-sm font-bold' value={2}>2</option>
+          <option className='text-sm font-bold' value={3}>3</option>
+          <option className='text-sm font-bold' value={5}>5</option>
+          <option className='text-sm font-bold' value={10}>10</option>
         </select>
       </div>
 
@@ -88,7 +88,7 @@ export default function CustomDataTable({list}:any) {
   border
   border-slate-200' >
         <thead className="bg-slate-100">
-          <tr>
+          <tr className='cursor-pointer'>
             <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600"  onClick={() => handleSort('id')}>ID {getSortIcon('id')}</th>
             <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('name')}>Name {getSortIcon('name')}</th>
             <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort('designation')}>Department {getSortIcon('department')}</th>
@@ -104,18 +104,18 @@ export default function CustomDataTable({list}:any) {
             <tr className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50" key={row.id} >
               <td className="px-6 py-4" >{row.id}</td>
               <td className="px-6 py-4 font-medium text-slate-800" >{row.name}</td>
-              <td className="px-6 py-4" >{row.designation}</td>
-              <td className="px-6 py-4 hidden sm:table-cell" >{row.yearsOfExperience}</td>
-              <td className="px-6 py-4 hidden sm:table-cell" >{row.location}</td>
-              <td className="px-6 py-4 hidden sm:table-cell  " 
-                ><span className='px-3 py-1
+              <td className="px-6 py-4 text-sm text-slate-800" >{row.designation}</td>
+              <td className="px-6 py-4 text-sm text-slate-800 hidden sm:table-cell" >{row.yearsOfExperience}</td>
+              <td className="px-6 py-4 text-sm text-slate-800 hidden sm:table-cell" >{row.location}</td>
+              <td className="px-6 py-4 text-sm text-slate-800 hidden sm:table-cell  " 
+                ><div className='px-3 py-1
                             rounded-full
                             bg-blue-100
                             text-blue-700
                             text-xs
                             font-medium'>
                   {row.workMode}
-                  </span></td>
+                  </div></td>
               <td className="hidden sm:table-cell px-6 py-4  " 
               ><span className='px-3 py-1
                               rounded-full

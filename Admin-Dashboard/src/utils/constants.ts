@@ -10,6 +10,13 @@ export const KEY_TRACK_METRIC_ICON = {
              MONITER_CHECK : "MONITER_CHECK",
              FLAG: "FLAG"
 }
+export const gradients = [
+  'bg-gradient-to-br from-pink-400 to-rose-500',
+  'bg-gradient-to-br from-indigo-400 to-violet-500',
+  'bg-gradient-to-br from-emerald-400 to-teal-500',
+  'bg-gradient-to-br from-amber-400 to-orange-500',
+  'bg-gradient-to-br from-sky-400 to-blue-500',
+]
 
 export const TOP_PROJECTS = "Top Projects"
 export const ATTRITION_INSIGHTS = "Attrition Insights"
@@ -44,7 +51,7 @@ export const PROJECT_DETAILS = {
     MANAGER: "Project Lead"
 }
 
-export const className = `w-full
+export const className_ = `w-full
 px-4
 py-3
 mb-2
@@ -63,3 +70,21 @@ focus:ring-blue-100
 outline-none
 transition-all
 duration-200`
+
+export const className = `w-full px-4 py-2.5 
+  bg-slate-50
+  border border-slate-200 
+  rounded-xl 
+  text-slate-800 
+  text-sm
+  focus:outline-none 
+  focus:ring-2 
+  focus:ring-indigo-400 
+  focus:border-transparent
+  focus:bg-white
+  transition-all duration-200
+  placeholder:text-slate-400`
+
+  export const labelclassName = `block mb-1.5 mt-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide`
+
+  export const PROFILE_SUBHEAD = "Manage your personal information and account details"

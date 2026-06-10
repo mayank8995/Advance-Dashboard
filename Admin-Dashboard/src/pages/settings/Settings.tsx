@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import FormField from "../../components/Form/FormField"
-import { className, SIDE_BAR_ITEMS } from "../../utils/constants"
+import { className, labelclassName, PROFILE_SUBHEAD, SIDE_BAR_ITEMS } from "../../utils/constants"
 import type { ProfileForm } from "../../types/types";
 import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/MockApi/MockApi";
 
@@ -17,7 +17,7 @@ function Settings(){
         // console.log("profile_pic from localStorage on component mount:", localStorage.getItem("profile_pic"), " profile_pic>>",profile_pic);
         const fetchProfileData = async () => {
             const profileData = await getProfileData();
-            if(profileData) {
+            if(profileData && Object.keys(profileData)?.length > 0) {
                 console.log("Profile data fetched:", profileData);
                 formValuesRef.current = profileData;
                 setIsEditing(true);
@@ -103,18 +103,20 @@ function handleFileChange(e:any){
     reader.readAsDataURL(file);
 }
     return <>
-    <div className="w-full">
+    <div className="w-full bg-gradient-to-br from-indigo-50/40 via-white to-slate-50">
         <div className="p-6">
-            <div className="mb-4">
-                <h1 className="text-2xl font-bold">{SIDE_BAR_ITEMS.SETTINGS}</h1>
+            <div className="mb-6">
+            <h1 className="text-2xl font-bold text-slate-800">{SIDE_BAR_ITEMS.SETTINGS}</h1>
+            <h2 className="text-sm text-slate-400 mt-1">{PROFILE_SUBHEAD}</h2>
             </div>
             <form  onSubmit = {handleSubmit} className="border-2 border-dotted border-gray-300 p-2" noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
-                <div>
-                    <h1 className="text-xl
-                    font-semibold
-                    text-slate-800 mb-2">Avatar</h1>
-                <div className="flex justify-center items-center gap-4">
+                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full">
+                    <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-5 bg-indigo-500 rounded-full" />
+                    <h2 className="text-base font-bold text-slate-800">Avatar</h2>
+                    </div>
+                {/* <div className="flex justify-center items-center gap-4">
                                     <div
                 className="
                     relative
@@ -157,22 +159,37 @@ function handleFileChange(e:any){
     ✎
   </button>
                     </div>
+                </div> */}
+<div className="flex flex-col items-center justify-center gap-4 ">
+  
+  <div className="relative">
+    <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
+      <img  src={profile_pic ? profile_pic : 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'} className="w-full h-full object-cover" />
+    </div>
+      <input ref={refForUpload} onChange={handleFileChange} type="file" style={{display: "none"}} />
+  <button
+  onClick={handleUpload}
+  type="button"
+    className="cursor-pointer absolute bottom-1 right-1 w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition"
+  >
+    ✎
+  </button>
+  </div>
+  {initialData?.name && <div className="text-center">
+    <p className="font-bold text-slate-800">{initialData?.name}</p>
+    <p className="text-xs text-slate-400">{initialData?.designation}</p>
+  </div>}
 </div>
                 </div>
                 <div>
-                    <h2 className="text-xl
-font-semibold
-text-slate-800 mb-2">Personal Information</h2>
+                    <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-5 bg-indigo-500 rounded-full" />
+                    <h2 className="text-base font-bold text-slate-800">Personal Information</h2>
+                    </div>
                     <div className="flex flex-col-reverse">
                     <FormField defaultValue={initialData?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onInputChange} className={className}/>
                         <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                        className={labelclassName}
                         >
                         Name
                         </label>
@@ -180,13 +197,7 @@ text-slate-800 mb-2">Personal Information</h2>
                     <div className="flex flex-col-reverse">
                     <FormField defaultValue={initialData?.phone} name={"phone"} type={"text"} placeholder={"Enter your phone number"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                        className={labelclassName}
                         >
                         Phone Number
                         </label>
@@ -194,13 +205,7 @@ text-slate-800 mb-2">Personal Information</h2>
                     <div className="flex flex-col-reverse">
                     <FormField defaultValue={initialData?.email} name={"email"} type={"email"} placeholder={"Enter your email"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Email
                         </label>
@@ -209,13 +214,7 @@ text-slate-800 mb-2">Personal Information</h2>
 
                     <FormField defaultValue={initialData?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Department
                         </label>
@@ -224,13 +223,7 @@ text-slate-800 mb-2">Personal Information</h2>
 
                     <FormField defaultValue={initialData?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Designation
                         </label>
@@ -239,20 +232,15 @@ text-slate-800 mb-2">Personal Information</h2>
             </div>
                 <div className="border-t-2  border-gray-300 border-dotted"></div>
                 <div className="p-4">
-                    <h2 className="text-xl
-font-semibold
-text-slate-800 mb-2">Account Information</h2>
+                    <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-5 bg-indigo-500 rounded-full" />
+                    <h2 className="text-base font-bold text-slate-800">Account Information</h2>
+                    </div>
                     <div className="flex flex-col-reverse">
 
                     <FormField defaultValue={initialData?.empId} name={"empId"} type={"text"} placeholder={"Enter your ID"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Employee ID
                         </label>
@@ -261,13 +249,7 @@ text-slate-800 mb-2">Account Information</h2>
 
                     <FormField defaultValue={initialData?.jdate} name={"jdate"} type={"date"} placeholder={"Enter your joining date"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Joining Date
                         </label>
@@ -276,13 +258,7 @@ text-slate-800 mb-2">Account Information</h2>
 
                     <FormField defaultValue={initialData?.wmode} name={"wmode"} type={"text"} placeholder={"Hybrid/Remote/Onsite"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Work Mode
                         </label>
@@ -291,13 +267,7 @@ text-slate-800 mb-2">Account Information</h2>
 
                     <FormField defaultValue={initialData?.location} name={"location"} type={"text"} placeholder={"Enter your location"} onChange={onInputChange} className={className} />
                     <label
-                        className="
-                        block
-                        mb-2
-                        text-sm
-                        font-medium
-                        text-slate-600
-                        "
+                       className={labelclassName}
                         >
                         Location
                         </label>
@@ -307,34 +277,31 @@ text-slate-800 mb-2">Account Information</h2>
                 {!isEditing && <div className="flex justify-between items-center p-4">
                     <button type="submit"
                     className="
-                        px-5
-                        py-3
+                        px-6 py-2.5
+                        bg-gradient-to-r from-indigo-600 to-violet-600
+                        text-white font-semibold text-sm
                         rounded-xl
-                        bg-blue-600
-                        text-white
-                        font-medium
-                        shadow-sm
-                        hover:bg-blue-700
-                        hover:shadow-md
-                        transition-all
-                        duration-200
+                        shadow-lg shadow-indigo-500/30
+                        hover:shadow-xl hover:shadow-indigo-500/40
+                        hover:from-indigo-700 hover:to-violet-700
+                        transition-all duration-200
+                        cursor-pointer
                     "
                     >
                     Save Profile
                     </button>
+ 
 <button type="button"
   className="
-    px-5
-    py-3
-    rounded-xl
-    border
-    border-slate-300
-    bg-white
-    text-slate-700
-    font-medium
-    hover:bg-slate-100
-    transition-all
-    duration-200
+       px-6 py-2.5
+  bg-gradient-to-r from-slate-600 to-violet-200
+  text-white font-semibold text-sm
+  rounded-xl
+  shadow-lg shadow-indigo-500/30
+  hover:shadow-xl hover:shadow-indigo-500/40
+  hover:from-slate-300 hover:to-violet-200
+  transition-all duration-200
+  cursor-pointer
   "
   onClick={onCancel}
 >
@@ -344,17 +311,15 @@ text-slate-800 mb-2">Account Information</h2>
                  {isEditing && <div className="flex justify-between items-center p-4">
                     <button type="submit"
                     className="
-                        px-5
-                        py-3
+                          px-6 py-2.5
+                        bg-gradient-to-r from-indigo-600 to-violet-600
+                        text-white font-semibold text-sm
                         rounded-xl
-                        bg-blue-600
-                        text-white
-                        font-medium
-                        shadow-sm
-                        hover:bg-blue-700
-                        hover:shadow-md
-                        transition-all
-                        duration-200
+                        shadow-lg shadow-indigo-500/30
+                        hover:shadow-xl hover:shadow-indigo-500/40
+                        hover:from-indigo-700 hover:to-violet-700
+                        transition-all duration-200
+                        cursor-pointer
                     "
                     >
                     Edit Profile

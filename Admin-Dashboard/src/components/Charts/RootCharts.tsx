@@ -31,11 +31,9 @@ const RenderCustomLegend = () => {
 };
     return <>
         {chartType === 'line' && 
-          <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
-  shadow-sm
-  transition-all
-  duration-300">
-         <div className="flex items-center justify-between text-2xl font-bold">{title}</div>
+          <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-lg  transition-all duration-300">
+         <div className="flex items-center justify-between text-lg font-bold">{title}</div>
+         <div  className="overflow-y-auto min-h-0 max-h-[350px]">
          <LineChart  key={4364578686} style={{ width: '100%', height: '100%', aspectRatio: 1 }} responsive data={data}>
           <CartesianGrid stroke="#8884d8" strokeDasharray="5 5" />
           <XAxis  dataKey={X}    stroke="#8884d8" />
@@ -55,11 +53,13 @@ const RenderCustomLegend = () => {
           <Tooltip />
           <RechartsDevtools />
         </LineChart>
+         </div>
           </div>
        }
         {chartType === 'pie' && 
-                  <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow">
-         <div className="flex items-center justify-between text-2xl font-bold">{title}</div>
+                  <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-lg  transition-all duration-300">
+         <div className="flex items-center justify-between text-lg font-bold">{title}</div>
+         <div  className="overflow-y-auto min-h-0 max-h-[350px]">
             <PieChart style={{ width: '100%', height: '100%', aspectRatio: 1 }} responsive>
       <Pie
         data={data}
@@ -72,14 +72,15 @@ const RenderCustomLegend = () => {
       <Tooltip  />
       <Legend layout="vertical" align="right" verticalAlign="top" content={RenderCustomLegend} /> 
       <RechartsDevtools />
-    </PieChart>
+           </PieChart>
+           </div>
             </div>}
 
         {chartType === 'bar' &&
-            <div className="flex-[0] min-w-0">
-          <div className="col-span-2 bg-white border border-slate-200 rounded-xl p-2 flex flex-col gap-3 hover:shadow-md transition-shadow">
+          <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-lg  transition-all duration-300">
 
-      <div className="flex items-center justify-between text-2xl font-bold">{title}</div>
+      <div className="flex items-center justify-between text-lg font-bold">{title}</div>
+         <div  className="overflow-y-auto min-h-0 max-h-[350px]">
       
       <ResponsiveContainer width="100%" height={250}>
         {/* Crucial: layout="vertical" makes the chart horizontal */}
@@ -88,9 +89,10 @@ const RenderCustomLegend = () => {
           data={data}
           layout="vertical"
           margin={{ top: 5, right: 50, left: 10, bottom: 5 }}
+          className="flex items-center justify-between text-sm font-bold"
         >
           {/* Hide the grid lines and X-axis line/ticks to match the clean look */}
-          <XAxis type="number" hide />
+          <XAxis type="number" hide  className="flex items-center justify-between text-sm font-bold"/>
           
           {/* YAxis displays the text labels */}
           <YAxis 
@@ -98,8 +100,9 @@ const RenderCustomLegend = () => {
             type="category" 
             axisLine={false} 
             tickLine={false}
-            tick={{ fill: '#333', fontSize: 14 }}
+            tick={{ fill: '#333', fontSize: 12 }}
             width={60}
+            className="flex items-center justify-between text-sm font-bold"
           />
           
           <Tooltip cursor={{ fill: 'transparent' }} />
@@ -109,18 +112,18 @@ const RenderCustomLegend = () => {
             dataKey={X} 
             fill="#3b82f6" 
             radius={[10, 10, 10, 10]} // Gives the bars rounded pill ends
-            barSize={14} // Controls the thickness of the bars
+            barSize={10} // Controls the thickness of the bars
             label={{ 
               position: 'right', 
               fill: '#000', 
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: '500',
             //   formatter: (value) => value.toLocaleString() // Adds commas to numbers
             }}
           />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+      </div>
     </div>
         }
     </>

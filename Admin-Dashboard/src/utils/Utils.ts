@@ -51,3 +51,7 @@ export function getTopProjects(data: Array<any>){
                     }
             }
 }
+
+export function setWidthAsperPercentage(percentage:any){
+    return ``
+}

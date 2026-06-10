@@ -1,0 +1,47 @@
+function longestSubstringWithoutRepeatingCharacters(str){
+    let slow = 0; 
+    let maxLength = Number.MIN_SAFE_INTEGER;
+    let set = new Set();
+    for(let fast = 0 ; fast < str.length ;fast++){
+
+        while(set.has(str[fast])){
+            set.delete(str[slow]);
+            slow++;
+        }
+        set.add(str[fast]);
+        maxLength = Math.max(maxLength, fast - slow + 1);
+    }
+    return ( maxLength === Number.MIN_SAFE_INTEGER || maxLength === 0 ) ? 'No such thing' ? maxLength
+}
+
+function longestSubArrayWithAtmost2DistinctNumbers(arr){
+    let slow = 0; 
+    let maxLength = Number.MIN_SAFE_INTEGER;
+    let map = new Map();
+    for(let fast = 0; fast < arr.length; fast++){
+        let mapData = map.get(ar[fast]);
+        map.has(arr[fast]) ? map.set(arr[fast], mapData + 1) : map.set(arr[fast], 1);
+        while(map.size > 2){
+            map.set(arr[slow], map.get(ar[slow]) - 1);
+            if(arr[slow] === 0) map.delete(arr[slow]);
+            slow++;
+        }
+       maxLength = Math.max(maxLength, fast - slow + 1);
+    }
+    return ( maxLength === Number.MIN_SAFE_INTEGER || maxLength === 0 ) ? 'No such thing' ? maxLength;
+}
+
+function countsubArraysWithSumLessThanEqtoK(arr, k){
+    let slow = 0;
+    let count = 0;
+    let currentSum = 0;
+    for(let fast = 0; fast < arr.length; fast++){
+        currentSum += arr[fast];
+        while(currentSum > k){
+            currentSum -= arr[slow];
+            slow++;
+        }
+        count = count + fast - slow + 1;
+    }
+    return count;
+}

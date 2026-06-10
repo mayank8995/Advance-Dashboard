@@ -24,13 +24,15 @@ export default function KeyMetric({newData}: any) {
       {data && Object?.keys(data).map((key,i) =>(
         <div
           key={i}
-          className="border border-slate-200 rounded-2xl p-5 flex flex-col gap-3 hover:shadow-lg bg-white
-  shadow-sm
-  transition-all
-  duration-300"
-        >
+          className={`bg-gradient-to-br from-white to-indigo-50/40 border border-slate-200 rounded-xl flex flex-col gap-3 pt-2 pl-2 pr-2 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200
+            ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-t-4 border-t-blue-500'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && 'border-t-4 border-t-orange-500'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && 'border-t-4 border-t-purple-500'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && 'border-t-4 border-t-green-500'}
+            `}>
+
              {/* Body */}
-          <div className="flex items-center justify-between">
+          <div className="grid grid-cols-2 gap-6 items-center" >
             <div className={`h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center
               ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-t-4 border-t-blue-500'}
               ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && 'border-t-4 border-t-orange-500'}
@@ -42,11 +44,9 @@ export default function KeyMetric({newData}: any) {
                 {data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && <Star className="h-6 w-6 text-green-600"/>
               }
             </div>
-          {<div>
-            <p className="mb-1 text-sm text-slate-500 font-medium">{key}</p>
-            <h2 className=" text-3xl
-            font-bold
-            text-slate-800">{data[key]?.value}</h2>
+          {<div className="col-span-1">
+            <h1 className="mb-1 text-sm text-slate-500 font-medium ">{key}</h1>
+            <h2 className="text-xl font-bold text-indigo-600 drop-shadow-sm">{data[key]?.value}</h2>
           </div>}
           </div>
           {/*  Footer */}
