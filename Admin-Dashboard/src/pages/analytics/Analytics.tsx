@@ -30,6 +30,7 @@ function Analytics(){
                             {/* </div> */}
                                 <RootCharts X={"month"} Y={"rate"} chartType={"line"} data={cachedData?.attritionInsights?.trend} title={ATTRITION_INSIGHTS}></RootCharts>
                                 <RootCharts X={"employeeCount"} Y={"skill"} title={SKILLS_IN_DEMAND} chartType={"bar"} data={cachedData?.skillsInDemand}></RootCharts>
+                                
                      </div>
                     {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4"> */}
                             {/* <div >     */}

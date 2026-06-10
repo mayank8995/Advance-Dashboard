@@ -11,3 +11,39 @@ select option {
   background: white;
   color: #334155;
 }
+
+/* ==========================================================================
+   Global Scrollbar Styles
+   ========================================================================== */
+
+/* 1. Standard approach for modern Firefox and Chrome/Edge/Safari (recent engines) */
+* {
+  scrollbar-width: thin;          /* Options: auto | thin | none */
+  scrollbar-color: #888888 #f1f1f1; /* Format: thumb_color track_color */
+}
+
+/* 2. WebKit/Blink approach for fine-grained control (Chrome, Safari, Edge, Opera) */
+
+/* The scrollbar background track width/height */
+*::-webkit-scrollbar {
+  width: 10px;  /* Vertical scrollbar width */
+  height: 10px; /* Horizontal scrollbar height */
+}
+
+/* The empty track space behind the draggable handle */
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* The draggable handle element */
+*::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 5px;
+  border: 2px solid #f1f1f1; /* Creates padding between thumb and track edge */
+}
+
+/* Handle appearance when hovered over */
+*::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}

@@ -88,3 +88,5 @@ export const className = `w-full px-4 py-2.5
   export const labelclassName = `block mb-1.5 mt-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide`
 
   export const PROFILE_SUBHEAD = "Manage your personal information and account details"
+
+  export const VIEW_MORE = "View More"

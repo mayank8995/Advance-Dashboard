@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getTopProjects } from "../../utils/Utils";
-import { gradients, PROJECT_DETAILS, RISK_STATUS } from "../../utils/constants";
+import { getTop6ArrayElement, getTopProjects } from "../../utils/Utils";
+import { gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE } from "../../utils/constants";
 import { useElementSize } from "../../hooks/useElementSize";
-import { Medal } from "lucide-react";
+import { ArrowRight, Medal } from "lucide-react";
 
 
 export default function Card({topProjects, topPerformersList, promotedThisYear, meetingKPIs, requiringReview, title, cardToShow}: any) {
@@ -11,7 +11,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
 
   // const isCompact = breakpoint === 'sm';
   // const isWide = breakpoint === 'lg' || breakpoint === 'xl';
-
+  // console.log(topProjects, topPerformersList, promotedThisYear, meetingKPIs, requiringReview)
   const [topProj, setTopProjects] = useState(topProjects);
   const [topPerformers, setTopPerformers] = useState(topPerformersList);
   const [promoted, setPromoted] = useState(promotedThisYear);
@@ -19,10 +19,10 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
   const [requiring, setRequiring] = useState(requiringReview);
       useEffect(() => {
           topProjects && setTopProjects(topProjects?.employeeList?.[0]?.employees)
-          topPerformersList && setTopPerformers(topPerformersList)
-          promotedThisYear && setPromoted(promotedThisYear)
+          topPerformersList && setTopPerformers(getTop6ArrayElement(topPerformersList))
+          promotedThisYear && setPromoted(getTop6ArrayElement(promotedThisYear))
           meetingKPIs && setMeeting(meetingKPIs)
-          requiringReview && setRequiring(requiringReview)
+          requiringReview && setRequiring(getTop6ArrayElement(requiringReview))
       },[])
 
        
@@ -44,7 +44,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             {RISK_STATUS.COMPLETED ===  getTopProjects(value?.projects)?.riskStatus && <div className="h-auto bg-green-700 w-2 rounded-full"></div>}
             {RISK_STATUS.AT_RISK ===  getTopProjects(value?.projects)?.riskStatus && <div className="h-auto bg-red-700 w-2 rounded-full"></div>}
             {RISK_STATUS.ON_TRACK ===  getTopProjects(value?.projects)?.riskStatus &&<div className="h-auto bg-green-500 w-2 rounded-full"></div>}
-            <div className="p-2">
+            <div className="p-2 grid grid-cols-2">
               <div className="flex flex-col ">
                 <span className="text-gray-950 font-bold text-sm">
                   {getTopProjects(value?.projects)?.name}
@@ -53,7 +53,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
                   {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.manager && value?.manager}
                 </span>
               </div>
-              <div className="">
+              <div className="items-center flex justify-end">
                <span className={`${RISK_STATUS.AT_RISK ===  getTopProjects(value?.projects)?.riskStatus ? "bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs" :"bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs"}`}>
                    {getTopProjects(value?.projects)?.riskStatus}
                 </span>
@@ -66,7 +66,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           )
          }
           </div>
-
+{ true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
         </div>}
          {cardToShow?.topPerformers &&<div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
           <div className="mb-4 flex items-center justify-between">
@@ -104,6 +104,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
               </div>
           </div></>})}
           </div>
+          { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
          </div>}
           {cardToShow?.promotedThisYear &&<div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
           <div className="mb-4 flex items-center justify-between gap-4">
@@ -139,6 +140,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             </div> */}
           </div></>})}
           </div>
+           { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
          </div>}
           {cardToShow?.meetingKPIs &&
           <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
@@ -196,6 +198,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
           </div>
           </div>
+          { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
          </div>
          }
          {cardToShow?.requiringReview &&<div className=" bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
@@ -208,7 +211,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           <div className="overflow-y-auto min-h-0 max-h-[350px]">
           {Array.isArray(requiring?.employees) && requiring?.employees?.map((value: any, index: number) => {
            return <>
-          <div className="grid grid-cols-3 gap-6 mb-2" key={index+1}>
+          <div className="grid grid-cols-3 gap-6" key={index+1}>
              <div className="col-span-2">
               <div>
               <div className="inline-flex items-center gap-3"> 
@@ -224,7 +227,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
               </div>
             </div>
             <div className="flex flex-col items-end gap-1">
-          {value.reviewReason.map((reason:any) => (
+          {/* {value.reviewReason.map((reason:any ,index:number) => (
             <span key={reason} className={`flex items-center text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap
               ${reason === 'Low Rating'       ? 'bg-orange-100 text-orange-600' : ''}
               ${reason === 'Low Attendance'   ? 'bg-yellow-100 text-yellow-600' : ''}
@@ -233,13 +236,20 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             `}>
               {reason}
             </span>
-          ))}
+          ))} */}
+          <span className={`flex items-center text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap
+            ${value.reviewReason[0] === 'Low Rating'       ? 'bg-orange-100 text-orange-600' : ''}
+            ${value.reviewReason[0] === 'Low Attendance'   ? 'bg-yellow-100 text-yellow-600' : ''}
+            ${value.reviewReason[0] === 'On Notice Period' ? 'bg-red-100 text-red-600'       : ''}
+            ${value.reviewReason[0] === 'Low Satisfaction' ? 'bg-purple-100 text-purple-600' : ''}
+          `}>{value.reviewReason[0]}</span>
         </div>
           <div>
           </div>
           </div>
           </>})}
           </div>
+          { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
          </div>}
     </>
   );
