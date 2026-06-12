@@ -1,0 +1,18 @@
+Base Case:
+What gets smaller?
+Recursive Relationship:
+1. Palindrome -- malayalam
+
+bc - startI === endI || str.length === 0 return true;
+rc - if(str[startI] === str[endI]) x(str,startI++,endI--)
+    else return false
+startI ----- endI window gets smaller
+
+2. Find Maximum Element Using Recursion [3,7,2,9,5]  -  9
+
+bc - arr.length === 1 ?  return arr[0] : return "empty array"
+rc -  Math.max(arr[0], maxElement(arr.slice(1,arr.length))) // handle empty array cases
+arr gets smaller
+       
+3. Problem: Generate All Subsequences
+

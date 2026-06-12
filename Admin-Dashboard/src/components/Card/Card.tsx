@@ -1,31 +1,25 @@
 import { useEffect, useState } from "react";
-import { getTop6ArrayElement, getTopProjects } from "../../utils/Utils";
-import { gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE } from "../../utils/constants";
-import { useElementSize } from "../../hooks/useElementSize";
+import { getTopProjects } from "../../utils/Utils";
+import { CARD_CONTENT_LIMIT_TO_SCROLL, gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE } from "../../utils/constants";
 import { ArrowRight, Medal } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 export default function Card({topProjects, topPerformersList, promotedThisYear, meetingKPIs, requiringReview, title, cardToShow}: any) {
 
-  // const [containerRef, { width, breakpoint }] = useElementSize<HTMLDivElement>();
 
-  // const isCompact = breakpoint === 'sm';
-  // const isWide = breakpoint === 'lg' || breakpoint === 'xl';
-  // console.log(topProjects, topPerformersList, promotedThisYear, meetingKPIs, requiringReview)
   const [topProj, setTopProjects] = useState(topProjects);
   const [topPerformers, setTopPerformers] = useState(topPerformersList);
   const [promoted, setPromoted] = useState(promotedThisYear);
   const [meeting, setMeeting] = useState(meetingKPIs);
   const [requiring, setRequiring] = useState(requiringReview);
       useEffect(() => {
-          topProjects && setTopProjects(topProjects?.employeeList?.[0]?.employees)
-          topPerformersList && setTopPerformers(getTop6ArrayElement(topPerformersList))
-          promotedThisYear && setPromoted(getTop6ArrayElement(promotedThisYear))
+          topProjects && setTopProjects(getTopProjects(topProjects?.employeeList?.[0]?.employees))
+          topPerformersList && setTopPerformers(topPerformersList)
+          promotedThisYear && setPromoted(promotedThisYear)
           meetingKPIs && setMeeting(meetingKPIs)
-          requiringReview && setRequiring(getTop6ArrayElement(requiringReview))
+          requiringReview && setRequiring(requiringReview)
       },[])
-
-       
 
   return (
     <>
@@ -40,33 +34,34 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           <div className="overflow-y-auto min-h-0 max-h-[350px]">
           {Array.isArray(topProj) && topProj?.map((value: any, index: number) => {
            return <>
-            {getTopProjects(value?.projects)?.priorityRanking === "*" && <div key={index} className="">
-            {RISK_STATUS.COMPLETED ===  getTopProjects(value?.projects)?.riskStatus && <div className="h-auto bg-green-700 w-2 rounded-full"></div>}
-            {RISK_STATUS.AT_RISK ===  getTopProjects(value?.projects)?.riskStatus && <div className="h-auto bg-red-700 w-2 rounded-full"></div>}
-            {RISK_STATUS.ON_TRACK ===  getTopProjects(value?.projects)?.riskStatus &&<div className="h-auto bg-green-500 w-2 rounded-full"></div>}
+            {index < CARD_CONTENT_LIMIT_TO_SCROLL && value?.priorityRanking === "*" && <div key={index} className="">
+            {RISK_STATUS.COMPLETED ===  value?.riskStatus && <div className="h-auto bg-green-700 w-2 rounded-full"></div>}
+            {RISK_STATUS.AT_RISK ===  value?.riskStatus && <div className="h-auto bg-red-700 w-2 rounded-full"></div>}
+            {RISK_STATUS.ON_TRACK ===  value?.riskStatus &&<div className="h-auto bg-green-500 w-2 rounded-full"></div>}
             <div className="p-2 grid grid-cols-2">
               <div className="flex flex-col ">
                 <span className="text-gray-950 font-bold text-sm">
-                  {getTopProjects(value?.projects)?.name}
+                  {value?.name}
                   </span>
-                <span className="mb-1 text-xs text-slate-500 font-medium">
+                <span className="mb-1 flex items-center text-xs text-slate-500 font-bold">
                   {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.manager && value?.manager}
                 </span>
               </div>
-              <div className="items-center flex justify-end">
-               <span className={`${RISK_STATUS.AT_RISK ===  getTopProjects(value?.projects)?.riskStatus ? "bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs" :"bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs"}`}>
-                   {getTopProjects(value?.projects)?.riskStatus}
+              <div className="items-center flex justify-end ">
+               <span className={`${RISK_STATUS.AT_RISK ===  value?.riskStatus ? "bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs" :"bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs"}`}>
+                   {value?.riskStatus}
                 </span>
               </div>
             </div>
-            </div>}
+            </div>
+            }
           </> 
           }
           
           )
          }
           </div>
-{ true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
+        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
         </div>}
          {cardToShow?.topPerformers &&<div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
           <div className="mb-4 flex items-center justify-between">
@@ -78,16 +73,13 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
            <div className="overflow-y-auto min-h-0 max-h-[350px]">
           {Array.isArray(topPerformers?.employees) && topPerformers?.employees?.map((value: any, index: number) => {
            return <>
-          <div className="grid  grid-cols-3 gap-6 mb-2" key={value?.id}>
+          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid  grid-cols-3 gap-6 mb-2" key={value?.id}>
              <div className="col-span-2">
               <div  className="inline-flex items-center gap-6 text-sm">
                 {index >=0 && index <=2 && <Medal className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0
               ${index === 0 ? 'bg-yellow-400' :
                 index === 1 ? 'bg-gray-400' :
                 index === 2 ? 'bg-amber-600' : ''}`} />}
-               {/* <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm flex-shrink-0">
-                {value.name.split(' ').map((n:any) => n[0]).join('')}
-              </div> */}
                {index > 2 && <div className={`w-8 h-8 text-center text-sm font-bold`}>
               {index + 1}
              </div>}
@@ -102,9 +94,11 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
                   <h1>⭐</h1>
                   <h1>{value?.rating}</h1>
               </div>
-          </div></>})}
+          </div>}
+          </>
+          })}
           </div>
-          { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
+          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
           {cardToShow?.promotedThisYear &&<div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
           <div className="mb-4 flex items-center justify-between gap-4">
@@ -116,7 +110,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
            <div className="overflow-y-auto min-h-0 max-h-[350px]">
           {Array.isArray(promoted?.employees) && promoted?.employees?.map((value: any, index: number) => {
            return <>
-          <div className="grid grid-cols-3 gap-6 mb-2" key={value?.id}>            
+          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid grid-cols-3 gap-6 mb-2" key={value?.id}>            
             <div className="col-span-2">
               <div>
               <div className="inline-flex items-center gap-3"> 
@@ -138,9 +132,10 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             {/* <div>
               {value?.promotedOn}
             </div> */}
-          </div></>})}
+          </div>}
+          </>})}
           </div>
-           { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
+           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
           {cardToShow?.meetingKPIs &&
           <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
@@ -198,8 +193,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
           </div>
           </div>
-          { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
-         </div>
+        </div>
          }
          {cardToShow?.requiringReview &&<div className=" bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
           <div className=" mb-4 flex flex-row items-center justify-between">
@@ -211,7 +205,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           <div className="overflow-y-auto min-h-0 max-h-[350px]">
           {Array.isArray(requiring?.employees) && requiring?.employees?.map((value: any, index: number) => {
            return <>
-          <div className="grid grid-cols-3 gap-6" key={index+1}>
+          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid grid-cols-3 gap-6" key={index+1}>
              <div className="col-span-2">
               <div>
               <div className="inline-flex items-center gap-3"> 
@@ -246,10 +240,10 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
         </div>
           <div>
           </div>
-          </div>
+          </div>}
           </>})}
           </div>
-          { true && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><a className="items-center flex flex-row text-blue-700" href="#"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></a></div>}
+          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
     </>
   );

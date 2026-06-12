@@ -181,7 +181,7 @@
                 "name": "Project Nexus",
                 "status": "Active",
                 "riskStatus": "At Risk",
-                "priorityRanking": 4
+                "priorityRanking": "*"
               }
             ],
             "skills": [
@@ -3674,7 +3674,16 @@
         { "id": 13, "name": "Rohit Khanna",     "department": "Product",     "designation": "Senior Product Manager",   "rating": 4.8, "attendancePercentage": 97.1 },
         { "id": 17, "name": "Shreya Kulkarni",  "department": "Data",        "designation": "Data Scientist",           "rating": 4.7, "attendancePercentage": 95.8 },
         { "id": 7,  "name": "Karan Malhotra",   "department": "Engineering", "designation": "DevOps Engineer",          "rating": 4.6, "attendancePercentage": 93.1 },
-        { "id": 1,  "name": "Rahul Sharma",     "department": "Engineering", "designation": "Senior Software Engineer", "rating": 4.5, "attendancePercentage": 94.3 }
+        { "id": 1,  "name": "Rahul Sharma",     "department": "Engineering", "designation": "Senior Software Engineer", "rating": 4.5, "attendancePercentage": 94.3 },
+         {
+            "id": 24,
+            "name": "Rahul Pillai",
+            "department": "Engineering",
+            "designation": "Frontend Developer",
+            "joiningDate": "2023-05-02",
+            "rating": 4.3,
+            "attendancePercentage": 93.7 
+          }
       ]
     },
     "promotedThisYear": {

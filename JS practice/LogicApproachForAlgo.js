@@ -26,7 +26,6 @@ For most sliding-window problems, ask these three questions first:
     Repeat until valid
 **/
 /**
- * 
         "Longest substring without repeating characters"
         ↓
         Variable-size sliding window
@@ -39,7 +38,6 @@ For most sliding-window problems, ask these three questions first:
         ↓
         Fixed-size sliding window
  */
-
         /**
          * 
          * before solving any problem, answer:
@@ -50,3 +48,20 @@ For most sliding-window problems, ask these three questions first:
             Only then code.
          */
 
+
+/**Recursion */
+/** Code BEFORE recursive call
+→ Executes while going down
+
+Code AFTER recursive call
+→ Executes while coming back up 
+
+1. What gets smaller each call?
+
+2. How can I express the problem using a smaller version of itself?
+
+3. What is the smallest input whose answer I already know?
+
+
+
+**/

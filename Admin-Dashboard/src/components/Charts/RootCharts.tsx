@@ -3,25 +3,21 @@ import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, R
 import { PIE_COLORS } from "../../utils/constants";
 
 const MyCustomPie = (props: PieSectorShapeProps) => {
-  // console.log("Rendering custom pie sector with props:", props);
   return <Sector {...props} fill={PIE_COLORS[props.index % PIE_COLORS.length]} />;
 };
 
 
 
-export default function RootCharts({chartType,data,title, X, Y}: any) {
+export default function RootCharts({chartType,data,title, X, Y, name}: any) {
 
 const RenderCustomLegend = () => {
-  console.log("Rendering custom legend with data:", data);
   return (
     <div>
       {data.map((entry: any, index: any) => {
         const itemColor = PIE_COLORS[index % PIE_COLORS.length]
         return (
           <div key={entry[X]} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            {/* Custom Legend Icon */}
             <span style={{ display: 'inline-block', width: '12px', height: '12px', backgroundColor: itemColor }} />
-            {/* Legend Label */}
             <span style={{ fontSize: '14px', color: '#333' }}>{entry[X]}</span>
           </div>
         );
@@ -31,7 +27,7 @@ const RenderCustomLegend = () => {
 };
     return <>
         {chartType === 'line' && 
-          <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-lg  transition-all duration-300">
+          <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
          <div className="flex items-center justify-between text-lg font-bold">{title}</div>
          <div  className="overflow-y-auto min-h-0 max-h-[350px]">
          <LineChart  key={4364578686} style={{ width: '100%', height: '100%', aspectRatio: 1 }} responsive data={data}>
@@ -48,6 +44,7 @@ const RenderCustomLegend = () => {
             activeDot={{
               stroke: '#8884d8',
             }}
+            name={name}
           />
     <Legend align="right" />
           <Tooltip />
@@ -57,7 +54,7 @@ const RenderCustomLegend = () => {
           </div>
        }
         {chartType === 'pie' && 
-                  <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-lg  transition-all duration-300">
+                  <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
          <div className="flex items-center justify-between text-lg font-bold">{title}</div>
          <div  className="overflow-y-auto min-h-0 max-h-[350px]">
             <PieChart style={{ width: '100%', height: '100%', aspectRatio: 1 }} responsive>
@@ -77,7 +74,7 @@ const RenderCustomLegend = () => {
             </div>}
 
         {chartType === 'bar' &&
-          <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-lg  transition-all duration-300">
+          <div className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200">
 
       <div className="flex items-center justify-between text-lg font-bold">{title}</div>
          <div  className="overflow-y-auto min-h-0 max-h-[350px]">

@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Analytics from './pages/analytics/Analytics.tsx'
 import Settings from './pages/settings/Settings.tsx'
+import ViewMore from './components/ViewMore/ViewMore.tsx'
+import { DashboardRoot } from './pages/dashboard/DashboardRoot.tsx'
 
 
 const queryClient = new QueryClient();
@@ -32,7 +34,10 @@ createRoot(document.getElementById('root')!).render(
     <Routes>
       <Route path='/' element={<App />}></Route>
       <Route path='home' element={<Home/>}>
-        <Route path='dashboard' element={<Dashboard/>}></Route>
+       <Route path='dashboard' element={<DashboardRoot/>}>
+           <Route path='' element={<Dashboard/>} />
+        <Route path='viewmore' element={<ViewMore/>}/>
+        </Route>
         <Route path='employees' element={<Employees/>}></Route>
         <Route path='analytics' element={<Analytics/>}></Route>
         <Route path='settings' element={<Settings/>}></Route>

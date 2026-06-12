@@ -23,7 +23,13 @@ export const ATTRITION_INSIGHTS = "Attrition Insights"
 export const DEPARTMENT_WISE_HEADCOUNT = "Department-wise Headcount"
 export const PIE_COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042','#8884d8'];
 export const REVENUE_TREND_IN_CR = "Revenue Trend (₹ Cr)"
-export const SKILLS_IN_DEMAND = "Skils in Demand(India)"
+export const SKILLS_IN_DEMAND = "Skils in Demand"
+export const TOP_CLIENTS = "Top clients"
+export const TOP_PERFORMERS = "Top performers"
+export const PROMOTED_THIS_YEAR = "PROMOTED_THIS_Year"
+export const EMPLOYEE_DIREC = "Employee Directory"
+
+
 
 export const NAV_ITEMS = {
     DASHBOARD: "/home/dashboard",
@@ -90,3 +96,73 @@ export const className = `w-full px-4 py-2.5
   export const PROFILE_SUBHEAD = "Manage your personal information and account details"
 
   export const VIEW_MORE = "View More"
+
+export const headers_top_projects = [
+            {key:"manager", value:"MANAGER"},
+            {key:"name", value:"NAME"},
+            {key:"riskStatus", value:"RISK STATUS"},
+            {key:"status", value:"STATUS"}
+]
+ export const columns_top_projects = {
+            "manager":"manager",
+             "name":"name",
+            "riskStatus":"riskStatus",
+            "status":"status"          
+}
+
+export const headers_top_performers = [
+            {key:"id", value:"ID"},
+            {key:"name", value:"NAME"},
+            {key:"designation", value:"DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"},
+            {key:"rating", value:"RATING"}
+]
+ export const columns_top_performers = {
+            "id":"id",
+             "name":"name",
+            "designation":"designation",
+            "department":"department",
+            "rating": "rating"       
+}
+export const headers_promotedThisYear = [
+            {key:"id", value:"ID"},
+            {key:"name", value:"NAME"},
+            {key:"currentDesignation", value:"DESIGNATION"},
+            {key:"previousDesignation", value:"PREV DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"},
+            {key:"promotedOn", value:"PROMOTED ON"}
+]
+ export const columns_promotedThisYear = {
+            "id":"id",
+            "name":"name",
+            "currentDesignation":"designation",
+            "previousDesignation":"previousDesignation",      
+            "department":"department",              
+            "promotedOn":"promotedOn"
+}
+
+export const headers_requiringReview = [
+            {key:"id", value:"ID"},
+            {key:"name", value:"NAME"},
+            {key:"designation", value:"DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"},
+            {key:"employeeSatisfaction", value:"EMPLOYEE SATISFACTION"},
+            {key:"rating", value:"RATING"}
+]
+ export const columns_requiringReview = {
+            "id":"id",
+             "name":"name",
+            "designation":"designation",
+            "department":"department",
+            "employeeSatisfaction":"employeeSatisfaction",       
+            "rating":"rating"
+}
+
+export const CARD_CONTENT_LIMIT_TO_SCROLL = 5
+
+export const VIEW_MORE_ROUTES = {
+    "top_projects" : "topProjects",
+    "top_performers": "topPerformers",
+    "promotedThisYear": "promotedThisYear",
+    "requiringReview": "requiringReview"
+}
