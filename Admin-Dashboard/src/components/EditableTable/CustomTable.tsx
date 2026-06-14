@@ -78,8 +78,8 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
   };
 
   const getSortIcon = (key: any) => {
-    if (sortConfig.key !== key) return <ArrowUpDown className='w-4 h-4 text-slate-400'/>;  
-    return sortConfig.direction === 'asc' ? <ArrowUp className='w-4 h-4 text-slate-400' />  : <ArrowDown className='w-4 h-4 text-slate-400'/>;
+    if (sortConfig.key !== key) return <ArrowUpDown className='w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400'/>;  
+    return sortConfig.direction === 'asc' ? <ArrowUp className='w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400' />  : <ArrowDown className='w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400'/>;
   };
 
   const handleTableSearch = (e: any) => {
@@ -87,30 +87,31 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
-      <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto">
-      <h1 className="text-lg font-bold text-slate-800 px-6 py-4 pb-0">
+    <div className="min-h-screen bg-slate-50 p-6 dark:bg-gray-800">
+      <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
+      <h1 className="text-lg font-bold text-slate-800 px-6 py-4 pb-0 dark:text-slate-100">
         {title}
       </h1>
       {/* Rows Per Page Configurator */}
       <div className='flex flex-row items-center'>
       <div className='px-6 py-4'>
-        <label className='text-sm font-bold'>Rows per page: </label>
+        <label className='text-sm font-bold dark:text-slate-100'>Rows per page: </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
           px-3 py-2
           border
-          border-slate-300
+          border-slate-300 dark:border-slate-700
           rounded-lg
-          bg-white
+          bg-white dark:bg-slate-800
           text-sm
           shadow-sm
           focus:ring-2
-          focus:ring-blue-500
+          focus:ring-blue-500 dark:text-slate-300
+          dark:outline-none dark:focus:outline-none
           ">
-          <option className='text-sm font-bold' value={2}>2</option>
-          <option className='text-sm font-bold' value={3}>3</option>
-          <option className='text-sm font-bold' value={5}>5</option>
-          <option className='text-sm font-bold' value={10}>10</option>
+          <option className='text-sm font-bold outline-none' value={2}>2</option>
+          <option className='text-sm font-bold outline-none' value={3}>3</option>
+          <option className='text-sm font-bold outline-none' value={5}>5</option>
+          <option className='text-sm font-bold outline-none' value={10}>10</option>
         </select>
       </div>
       <div>
@@ -124,17 +125,17 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       <table className='rounded-2xl
   shadow-lg
   border
-  border-slate-200 m-[10px]' >
+  border-slate-200 m-[10px] dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50' >
         <thead className="bg-slate-100">
-          {headers?.length > 0 && <tr className='cursor-pointer '>
+          {headers?.length > 0 && <tr className='cursor-pointer dark:bg-slate-800 dark:border-slate-700'>
             {headers?.map((header: any) => {
-                return <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600" onClick={() => handleSort(header?.key)}>{header?.value} {getSortIcon(header?.key)}</th>
+                return <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400" onClick={() => handleSort(header?.key)}>{header?.value} {getSortIcon(header?.key)}</th>
             })}
           </tr>
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData.map((row,index) =>  <tr className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50" key={index+1}>{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800" >{row[col]}</td>)}</tr>)}
+          {paginatedData.map((row,index) =>  <tr className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" key={index+1}>{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{row[col]}</td>)}</tr>)}
         </tbody>
       </table>
         </div> 

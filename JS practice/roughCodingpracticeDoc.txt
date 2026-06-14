@@ -1,6 +1,13 @@
-bc - startI === endI || str.length === 0 return true;
-rc - if(str[startI] === str[endI]) x(str,startI++,endI--)
-    else return false
-startI ----- endI window gets smaller
+Given a JavaScript object where values can themselves be objects, return the maximum nesting depth.
+const obj = {
+  a: {
+    b: {
+      c: {}
+    }
+  }
+}
 
-malayalam
+function maxDepth(obj, maxdepth){
+
+    
+}

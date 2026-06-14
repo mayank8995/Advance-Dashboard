@@ -1,17 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Toggle() {
   const [enabled, setEnabled] = useState(false);
 
+    useEffect(() => {
+      if(localStorage.getItem("theme") === 'dark'){
+        toggle(true)
+      }
+    },[])
+
   function toggle(enable: boolean){
         const root = document.documentElement;
-
-    if (!enable) {
+console.log("enable>>>",enable)
+    if (enable) {
       root.setAttribute('data-theme', 'dark');
+      localStorage.setItem("theme","dark")
     } else {
-      root.removeAttribute('data-theme');
+        root.removeAttribute('data-theme');
+        localStorage.removeItem("theme")
     }
         setEnabled(enable)
+        // Use CustomEvent to include details since Event has no newValue property
+        const event = new CustomEvent('storage', { detail: { newValue: enable } });
+        window.dispatchEvent(event);
   }
 
   return (
@@ -27,9 +38,9 @@ export default function Toggle() {
         {/* Thumb */}
         <div className={`absolute top-[2px] left-[2px] bg-white h-5 w-5 rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`} />
       </div>
-      {/* <span className="ml-3 text-sm font-medium text-gray-900">
-        {enabled ? 'On' : 'Off'}
-      </span> */}
+      <span className="ml-3 text-sm font-medium text-gray-900">
+        {enabled ? '🌙 Dark' : '☀️ Light'}
+      </span>
     </label>
   );
 }

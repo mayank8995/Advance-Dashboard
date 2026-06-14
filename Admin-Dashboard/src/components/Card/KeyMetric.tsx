@@ -24,30 +24,28 @@ export default function KeyMetric({newData}: any) {
       {data && Object?.keys(data).map((key,i) =>(
         <div
           key={i}
-          className={`bg-gradient-to-br from-white to-indigo-50/40 border border-slate-200 rounded-xl flex flex-col gap-3 pt-2 pl-2 pr-2 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200
-            ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-t-4 border-t-blue-500'}
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && 'border-t-4 border-t-orange-500'}
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && 'border-t-4 border-t-purple-500'}
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && 'border-t-4 border-t-green-500'}
+          className={`items-center bg-gradient-to-br from-white to-indigo-50/40 border border-slate-200 rounded-xl flex flex-col gap-3 p-2 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-blue-950/20 dark:border-none
+            ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-l-4 border-l-blue-500 dark:border-l-blue-400'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && 'border-l-4 border-l-orange-500 dark:border-l-orange-400'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && 'border-l-4 border-l-purple-500 dark:border-l-purple-400'}
+              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && 'border-l-4 border-l-green-500 dark:border-l-green-400'}
             `}>
 
              {/* Body */}
-          <div className="grid grid-cols-2 gap-6 items-center" >
-            <div className={`h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-t-4 border-t-blue-500'}
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && 'border-t-4 border-t-orange-500'}
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && 'border-t-4 border-t-purple-500'}
-              ${data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && 'border-t-4 border-t-green-500'}`}>
-                {data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && <User className="h-6 w-6 text-blue-600"/>}
-                {data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && <Flag className="h-6 w-6 text-orange-600"/>}
-                {data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && <MonitorCheck className="h-6 w-6 text-purple-600"/>}
-                {data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && <Star className="h-6 w-6 text-green-600"/>
+          <div className="items-center flex flex-row justify-between pl-2" >
+            <div className={`h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center`}>
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && <User className="h-6 w-6 text-blue-600" size={5}/>}
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && <Flag className="h-6 w-6 text-orange-600" size={5}/>}
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['MONITER_CHECK'] && <MonitorCheck className="h-6 w-6 text-purple-600" size={5}/>}
+                {data[key]?.icon === KEY_TRACK_METRIC_ICON['STAR'] && <Star className="h-6 w-6 text-green-600" size={5}/>
               }
             </div>
-          {<div className="col-span-1">
-            <h1 className="mb-1 text-sm text-slate-500 font-medium ">{key}</h1>
-            <h2 className="text-xl font-bold text-indigo-600 drop-shadow-sm">{data[key]?.value}</h2>
-          </div>}
+            {/* <div> */}
+          <div className="pl-2 flex flex-col">
+            <div className="items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100 w-50 truncate">{key}</div>
+            <h2 className="text-xl font-bold text-indigo-600 drop-shadow-sm ">{data[key]?.value}</h2>
+          </div>
+            {/* </div> */}
           </div>
           {/*  Footer */}
         </div>

@@ -1,0 +1,283 @@
+// ── 1. BACKGROUNDS ──────────────────────────────────────────────────────────
+
+// Page background
+className="bg-white                dark:bg-slate-950"
+
+// Card / surface
+className="bg-white                dark:bg-slate-900"
+
+// Subtle card (nested)
+className="bg-slate-50             dark:bg-slate-800"
+
+// Input background
+className="bg-slate-100            dark:bg-slate-800"
+
+// Sidebar
+className="bg-white                dark:bg-slate-900"
+
+// Active nav item
+className="bg-indigo-50            dark:bg-indigo-950"
+
+// Badge backgrounds
+className="bg-green-100            dark:bg-green-900/40"
+className="bg-red-100              dark:bg-red-900/40"
+className="bg-amber-100            dark:bg-amber-900/40"
+className="bg-indigo-100           dark:bg-indigo-900/40"
+
+// Table row alternate
+className="bg-white                dark:bg-slate-900"
+className="bg-slate-50             dark:bg-slate-800/60"
+
+// Tooltip / popover
+className="bg-slate-900            dark:bg-slate-700"
+
+
+// ── 2. TEXT COLORS ──────────────────────────────────────────────────────────
+
+// Primary text
+className="text-slate-900          dark:text-slate-100"
+
+// Secondary text
+className="text-slate-600          dark:text-slate-400"
+
+// Muted / hint text
+className="text-slate-400          dark:text-slate-500"
+
+// Active / accent text
+className="text-indigo-600         dark:text-indigo-400"
+
+// Success text
+className="text-green-600          dark:text-green-400"
+
+// Warning text
+className="text-amber-600          dark:text-amber-400"
+
+// Danger text
+className="text-red-600            dark:text-red-400"
+
+// Badge text
+className="text-green-700          dark:text-green-300"
+className="text-red-700            dark:text-red-300"
+className="text-indigo-700         dark:text-indigo-300"
+
+// Heading
+className="text-slate-800          dark:text-slate-100"
+
+// Placeholder
+className="placeholder:text-slate-400 dark:placeholder:text-slate-600"
+
+
+// ── 3. BORDERS ──────────────────────────────────────────────────────────────
+
+// Default border
+className="border border-slate-200      dark:border-slate-700"
+
+// Subtle border
+className="border border-slate-100      dark:border-slate-800"
+
+// Strong border
+className="border border-slate-300      dark:border-slate-600"
+
+// Accent border
+className="border border-indigo-200     dark:border-indigo-800"
+
+// Divider line
+className="divide-y divide-slate-100    dark:divide-slate-800"
+
+// Focus ring
+className="focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+
+// Input border
+className="border border-slate-200 dark:border-slate-700 focus:border-indigo-500 dark:focus:border-indigo-400"
+
+// Card top accent
+className="border-t-4 border-indigo-500 dark:border-indigo-400"
+
+
+// ── 4. HOVER ACTIONS ────────────────────────────────────────────────────────
+
+// Row hover
+className="hover:bg-slate-50           dark:hover:bg-slate-800"
+
+// Nav item hover
+className="hover:bg-slate-100          dark:hover:bg-slate-800"
+
+// Button hover
+className="hover:bg-indigo-700         dark:hover:bg-indigo-500"
+
+// Outline button hover
+className="hover:bg-slate-100          dark:hover:bg-slate-800"
+
+// Card hover
+className="hover:shadow-md             dark:hover:shadow-slate-900/50"
+
+// Link hover
+className="hover:text-indigo-600       dark:hover:text-indigo-400"
+
+// Icon button hover
+className="hover:bg-slate-100          dark:hover:bg-slate-700"
+
+// Table row hover
+className="hover:bg-indigo-50/60       dark:hover:bg-indigo-950/40"
+
+// Danger hover
+className="hover:bg-red-50             dark:hover:bg-red-950/40"
+
+
+// ── 1. BACKGROUND GRADIENTS ─────────────────────────────────────────────────
+
+// Page background
+className="bg-gradient-to-br from-slate-50 to-indigo-50/30
+           dark:bg-gradient-to-br dark:from-slate-950 dark:to-indigo-950/30"
+
+// Sidebar
+className="bg-gradient-to-b from-slate-900 to-indigo-950
+           dark:from-slate-950  dark:to-slate-900"
+
+// Card subtle
+className="bg-gradient-to-br from-white to-indigo-50/40
+           dark:from-slate-900  dark:to-indigo-950/40"
+
+// Card — per section tint
+className="bg-gradient-to-br from-white to-yellow-50/40   dark:from-slate-900 dark:to-yellow-950/20"  // top performers
+className="bg-gradient-to-br from-white to-green-50/40    dark:from-slate-900 dark:to-green-950/20"   // promoted
+className="bg-gradient-to-br from-white to-indigo-50/40   dark:from-slate-900 dark:to-indigo-950/20"  // KPIs
+className="bg-gradient-to-br from-white to-red-50/40      dark:from-slate-900 dark:to-red-950/20"     // review
+
+
+// ── 2. BUTTON GRADIENTS ──────────────────────────────────────────────────────
+
+// Primary button
+className="bg-gradient-to-r from-indigo-600 to-violet-600
+           dark:from-indigo-500 dark:to-violet-500
+           hover:from-indigo-700 hover:to-violet-700
+           dark:hover:from-indigo-600 dark:hover:to-violet-600"
+
+// Success button
+className="bg-gradient-to-r from-emerald-500 to-teal-500
+           dark:from-emerald-600 dark:to-teal-600"
+
+// Danger button
+className="bg-gradient-to-r from-red-500 to-rose-500
+           dark:from-red-600   dark:to-rose-600"
+
+// Sidebar active item
+className="bg-gradient-to-r from-indigo-600 to-violet-500
+           dark:from-indigo-700 dark:to-violet-600"
+
+
+// ── 3. TEXT GRADIENTS ────────────────────────────────────────────────────────
+
+// Heading gradient
+className="bg-gradient-to-r from-indigo-600 to-violet-600
+           dark:from-indigo-400 dark:to-violet-400
+           bg-clip-text text-transparent"
+
+// Metric number gradient
+className="bg-gradient-to-r from-indigo-500 to-purple-500
+           dark:from-indigo-300 dark:to-purple-300
+           bg-clip-text text-transparent text-4xl font-bold"
+
+
+// ── 4. PROGRESS BAR GRADIENTS ───────────────────────────────────────────────
+
+// In JSX — use inline style for dynamic width
+<div className="h-2.5 rounded-full" style={{
+  width: `${percentage}%`,
+  background: 'linear-gradient(90deg, #6366f1, #a855f7)'  // indigo → purple
+}} />
+
+// Per bar — different gradients
+// Exceeding
+style={{ background: 'linear-gradient(90deg, #34d399, #10b981)' }}  // green
+// Meeting
+style={{ background: 'linear-gradient(90deg, #818cf8, #6366f1)' }}  // indigo
+// Not Meeting
+style={{ background: 'linear-gradient(90deg, #fb923c, #ef4444)' }}  // orange → red
+// Attendance
+style={{ background: 'linear-gradient(90deg, #38bdf8, #6366f1)' }}  // sky → indigo
+
+// Dark mode — slightly more vivid
+style={{ background: isDark
+  ? 'linear-gradient(90deg, #4ade80, #22c55e)'   // brighter green in dark
+  : 'linear-gradient(90deg, #34d399, #10b981)'   // softer in light
+}}
+
+
+// ── 5. AVATAR GRADIENTS ──────────────────────────────────────────────────────
+
+// Rotate through these by index
+const avatarGradients = [
+  'bg-gradient-to-br from-pink-400    to-rose-500',
+  'bg-gradient-to-br from-indigo-400  to-violet-500',
+  'bg-gradient-to-br from-emerald-400 to-teal-500',
+  'bg-gradient-to-br from-amber-400   to-orange-500',
+  'bg-gradient-to-br from-sky-400     to-blue-500',
+  'bg-gradient-to-br from-purple-400  to-fuchsia-500',
+  'bg-gradient-to-br from-lime-400    to-green-500',
+  'bg-gradient-to-br from-cyan-400    to-sky-500',
+]
+
+// Usage
+<div className={`w-9 h-9 rounded-full text-white font-bold text-sm
+  flex items-center justify-center
+  ${avatarGradients[index % avatarGradients.length]}`}>
+  {initials}
+</div>
+
+
+// ── 6. BADGE GRADIENTS ───────────────────────────────────────────────────────
+
+// Active / success
+className="bg-gradient-to-r from-emerald-400 to-teal-400 text-white"
+
+// Warning
+className="bg-gradient-to-r from-amber-400 to-orange-400 text-white"
+
+// Danger / notice
+className="bg-gradient-to-r from-red-400 to-rose-500 text-white"
+
+// Info
+className="bg-gradient-to-r from-sky-400 to-indigo-400 text-white"
+
+// Promoted
+className="bg-gradient-to-r from-green-400 to-emerald-500 text-white"
+
+
+// ── 7. CARD BORDER GLOW (dark mode) ─────────────────────────────────────────
+
+className="border border-slate-200
+           dark:border-slate-700
+           dark:shadow-lg dark:shadow-indigo-950/50
+           hover:dark:shadow-indigo-900/60
+           transition-shadow duration-300"
+
+
+// ── 8. TABLE HEADER GRADIENT ────────────────────────────────────────────────
+
+<thead>
+  <tr className="bg-gradient-to-r from-indigo-600 to-violet-600
+                 dark:from-indigo-800 dark:to-violet-900
+                 text-white">
+    <th>...</th>
+  </tr>
+</thead>
+
+
+// ── 9. METRIC CARD TOP BORDER GRADIENT ──────────────────────────────────────
+
+// Use inline style for gradient border-top (Tailwind can't do gradient borders natively)
+<div className="relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900 p-5">
+  {/* gradient top bar */}
+  <div className="absolute top-0 left-0 right-0 h-1 
+    bg-gradient-to-r from-indigo-500 to-violet-500" />
+  {/* card content */}
+</div>
+
+
+// ── 10. DARK MODE GRADIENT OVERLAY ──────────────────────────────────────────
+
+// Sidebar footer fade
+className="bg-gradient-to-t from-slate-900 to-transparent
+           dark:from-slate-950 dark:to-transparent
+           h-16 absolute bottom-0 left-0 right-0"

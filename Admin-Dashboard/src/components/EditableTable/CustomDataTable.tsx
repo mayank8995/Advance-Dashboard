@@ -77,7 +77,7 @@ export default function CustomDataTable({list}:any) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
+    <div className="min-h-screen bg-slate-50 p-6 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto">
       <h1 className="text-lg font-bold text-slate-800 px-6 py-4 pb-0">
         {EMPLOYEE_DIREC}

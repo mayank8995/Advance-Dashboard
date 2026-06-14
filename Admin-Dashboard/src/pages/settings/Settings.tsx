@@ -103,63 +103,20 @@ function handleFileChange(e:any){
     reader.readAsDataURL(file);
 }
     return <>
-    <div className="w-full bg-gradient-to-br from-indigo-50/40 via-white to-slate-50">
-        <div className="p-6">
+    <div className="w-full bg-gradient-to-br from-indigo-50/40 via-white to-slate-50 dark:bg-gray-800">
+        <div className="p-6 dark:bg-gray-800">
             <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800">{SIDE_BAR_ITEMS.SETTINGS}</h1>
-            <h2 className="text-sm text-slate-400 mt-1">{PROFILE_SUBHEAD}</h2>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{SIDE_BAR_ITEMS.SETTINGS}</h1>
+            <h2 className="text-sm text-slate-400 mt-1 dark:text-slate-300">{PROFILE_SUBHEAD}</h2>
             </div>
             <form  onSubmit = {handleSubmit} className="border-2 border-dotted border-gray-300 p-2" noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
-                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full">
+                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full dark:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20">
                     <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-5 bg-indigo-500 rounded-full" />
-                    <h2 className="text-base font-bold text-slate-800">Avatar</h2>
+                    <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">Avatar</h2>
                     </div>
-                {/* <div className="flex justify-center items-center gap-4">
-                                    <div
-                className="
-                    relative
-                    h-50
-                    w-50
-                "
-                >
-  <img
-    src={profile_pic ? profile_pic : 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'} // Display the image from localStorage or a placeholder
-    alt="Profile"
-    className="
-      h-full
-      w-full
-      rounded-full
-      object-cover
-      border-4
-      border-white
-      shadow-lg
-    "
-  />
-  <input ref={refForUpload} onChange={handleFileChange} type="file" style={{display: "none"}} />
-  <button
-  onClick={handleUpload}
-  type="button"
-    className="
-      absolute
-      bottom-1
-      right-1
-      h-10
-      w-10
-      rounded-full
-      bg-blue-600
-      text-white
-      flex
-      items-center
-      justify-center
-      shadow-md
-    "
-  >
-    ✎
-  </button>
-                    </div>
-                </div> */}
+ 
 <div className="flex flex-col items-center justify-center gap-4 ">
   
   <div className="relative">
@@ -176,15 +133,15 @@ function handleFileChange(e:any){
   </button>
   </div>
   {initialData?.name && <div className="text-center">
-    <p className="font-bold text-slate-800">{initialData?.name}</p>
-    <p className="text-xs text-slate-400">{initialData?.designation}</p>
+    <p className="font-bold text-slate-800 dark:text-slate-100">{initialData?.name}</p>
+    <p className="text-xs text-slate-400 dark:text-slate-300">{initialData?.designation}</p>
   </div>}
 </div>
                 </div>
                 <div>
                     <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-5 bg-indigo-500 rounded-full" />
-                    <h2 className="text-base font-bold text-slate-800">Personal Information</h2>
+                    <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">Personal Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
                     <FormField defaultValue={initialData?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onInputChange} className={className}/>
@@ -234,7 +191,7 @@ function handleFileChange(e:any){
                 <div className="p-4">
                     <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-5 bg-indigo-500 rounded-full" />
-                    <h2 className="text-base font-bold text-slate-800">Account Information</h2>
+                    <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">Account Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
 

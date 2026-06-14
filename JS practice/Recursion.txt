@@ -14,5 +14,30 @@ bc - arr.length === 1 ?  return arr[0] : return "empty array"
 rc -  Math.max(arr[0], maxElement(arr.slice(1,arr.length))) // handle empty array cases
 arr gets smaller
        
-3. Problem: Generate All Subsequences
+3. Fibonacci
+Base Case: n === 0 return 0 || n===1 return 1
+What gets smaller? n
+Recursive Relationship: 
+                        let num = fibb(n-2) + fibb(n-1)
+
+n=4
+f1+f2 -> 1 + f0 + f1 ->>> 1 + 0 + 1 == 2
+0 1 1 2 3
+
+[1,2,3,4,5]
+4. Reverse an array using recursion
+
+function reverse(arr,start,end){
+    if(start >= end) return arr;
+            let temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+    return reverse(arr,++start, --end);
+}
+let num = []
+function reverse(arr){
+   if(arr.length === 0) return [];
+
+   return [...reverse(arr.slice(1)), arr[0]]
+}
 

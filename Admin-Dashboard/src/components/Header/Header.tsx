@@ -7,7 +7,7 @@ function Header(){
 
     return(
         <>
-        <header className="h-14 min-h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-3 z-10">
+        <header className="h-14 min-h-14 bg-white border-b border-slate-200 flex items-center px-5 gap-3 z-10 dark:dark:bg-slate-950 dark:border-slate-700">
             <Toggle/>
             <div>
             {/* <UserStar /> */}

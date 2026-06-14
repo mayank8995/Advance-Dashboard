@@ -45,13 +45,13 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
 
       {/* Sidebar */}
       <div
-      style={{background:'linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%)'}} 
         className={`
-          fixed top-0 left-0 z-50 w-64 bg-gray-900 text-white
+          bg-gradient-to-br from-slate-900 to-indigo-950
+          fixed top-0 left-0 z-50 w-64  text-white
           transform transition-transform duration-300 md:shrink-0 h-full md:h-auto overflow-y-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:flex
-          flex-col
+          flex-col dark:bg-gradient-to-br dark:from-slate-950  dark:to-slate-900
         `}
       >
         {/* Logo */}

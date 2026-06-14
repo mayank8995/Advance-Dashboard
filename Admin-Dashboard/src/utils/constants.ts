@@ -18,6 +18,14 @@ export const gradients = [
   'bg-gradient-to-br from-sky-400 to-blue-500',
 ]
 
+export const bgColors = [
+  'bg-purple-500',
+  'bg-violet-500',
+  'bg-teal-500',
+  'bg-orange-500',
+  'bg-blue-500',
+]
+
 export const TOP_PROJECTS = "Top Projects"
 export const ATTRITION_INSIGHTS = "Attrition Insights"
 export const DEPARTMENT_WISE_HEADCOUNT = "Department-wise Headcount"
@@ -78,18 +86,18 @@ transition-all
 duration-200`
 
 export const className = `w-full px-4 py-2.5 
-  bg-slate-50
-  border border-slate-200 
+  bg-slate-50 dark:bg-slate-800
+  border border-slate-200  dark:border-slate-700
   rounded-xl 
-  text-slate-800 
+  text-slate-800 dark:text-slate-300
   text-sm
   focus:outline-none 
   focus:ring-2 
-  focus:ring-indigo-400 
+  focus:ring-indigo-400 dark:focus:ring-slate-800
   focus:border-transparent
-  focus:bg-white
+  focus:bg-white dark:focus:dark:bg-slate-800
   transition-all duration-200
-  placeholder:text-slate-400`
+  placeholder:text-slate-400 dark:placeholder:text-slate-500 dark:scheme-dark`
 
   export const labelclassName = `block mb-1.5 mt-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide`
 
@@ -165,4 +173,25 @@ export const VIEW_MORE_ROUTES = {
     "top_performers": "topPerformers",
     "promotedThisYear": "promotedThisYear",
     "requiringReview": "requiringReview"
+}
+
+export const headers_employees = [
+            {key:"id", value:"ID"},
+            {key:"name", value:"NAME"},
+            {key:"designation", value:"DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"},
+            {key:"yearsOfExperience", value:"YEARS EXP"},
+            {key:"location", value:"LOCATION"},
+            {key:"workMode", value:"WORK MODE"},
+            {key:"rating", value:"RATING"}
+]
+ export const columns_employees = {
+            "id":"id",
+             "name":"name",
+            "designation":"designation",
+            "department":"department",
+            "yearsOfExperience": "yearsOfExperience",
+            "location": "location",
+            "workMode": "workMode", 
+            "rating": "workMode" 
 }
