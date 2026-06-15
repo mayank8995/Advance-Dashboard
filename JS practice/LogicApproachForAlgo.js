@@ -63,5 +63,16 @@ Code AFTER recursive call
 3. What is the smallest input whose answer I already know?
 
 
+Type 1 
+One problem
+↓
+One smaller problem
 
+
+Type 2
+One problem
+↓
+Two choices
+↓
+Two recursive calls
 **/

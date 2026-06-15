@@ -106,14 +106,14 @@ export const className = `w-full px-4 py-2.5
   export const VIEW_MORE = "View More"
 
 export const headers_top_projects = [
-            {key:"manager", value:"MANAGER"},
             {key:"name", value:"NAME"},
+            {key:"projectName", value:"PROJECT NAME"},
             {key:"riskStatus", value:"RISK STATUS"},
             {key:"status", value:"STATUS"}
 ]
  export const columns_top_projects = {
-            "manager":"manager",
-             "name":"name",
+            "name":"name",
+             "projectName":"projectName",
             "riskStatus":"riskStatus",
             "status":"status"          
 }
@@ -154,7 +154,7 @@ export const headers_requiringReview = [
             {key:"name", value:"NAME"},
             {key:"designation", value:"DESIGNATION"},
             {key:"department", value:"DEPARTMENT"},
-            {key:"employeeSatisfaction", value:"EMPLOYEE SATISFACTION"},
+            {key:"reviewReason", value:"REVIEW REASON"},
             {key:"rating", value:"RATING"}
 ]
  export const columns_requiringReview = {
@@ -162,7 +162,7 @@ export const headers_requiringReview = [
              "name":"name",
             "designation":"designation",
             "department":"department",
-            "employeeSatisfaction":"employeeSatisfaction",       
+            "reviewReason":"reviewReason",
             "rating":"rating"
 }
 
@@ -173,6 +173,13 @@ export const VIEW_MORE_ROUTES = {
     "top_performers": "topPerformers",
     "promotedThisYear": "promotedThisYear",
     "requiringReview": "requiringReview"
+}
+
+export const VIEW_MORE_ROUTES_VALUES = {
+    "top_projects" : "Top Projects",
+    "top_performers": "Top Performers",
+    "promotedThisYear": "Promoted This Year",
+    "requiringReview": "Requiring Review"
 }
 
 export const headers_employees = [

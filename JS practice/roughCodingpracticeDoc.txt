@@ -1,13 +1,1 @@
-Given a JavaScript object where values can themselves be objects, return the maximum nesting depth.
-const obj = {
-  a: {
-    b: {
-      c: {}
-    }
-  }
-}
-
-function maxDepth(obj, maxdepth){
-
-    
-}
+Generate All Subsequences

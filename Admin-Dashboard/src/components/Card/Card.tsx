@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTopProjects } from "../../utils/Utils";
-import { bgColors, CARD_CONTENT_LIMIT_TO_SCROLL, gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE } from "../../utils/constants";
+import { bgColors, CARD_CONTENT_LIMIT_TO_SCROLL, gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE, VIEW_MORE_ROUTES_VALUES } from "../../utils/constants";
 import { ArrowRight, Briefcase, Medal, Star, Target, TriangleAlert, Trophy, UserStar } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -64,7 +64,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           
           )
          }
-        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects" state={{name:VIEW_MORE_ROUTES_VALUES.top_projects}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
         </div>
         }
@@ -103,7 +103,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>}
           </>
           })}
-          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers" state={{name:VIEW_MORE_ROUTES_VALUES.top_performers}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
          </div>}
           {cardToShow?.promotedThisYear &&<div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 darK:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20 dark:border-none">
@@ -141,7 +141,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             </div> */}
           </div>}
           </>})}
-           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear" state={{name:VIEW_MORE_ROUTES_VALUES.promotedThisYear}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
          </div>}
           {cardToShow?.meetingKPIs &&
@@ -240,7 +240,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
           </div>}
           </>})}
-          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview"><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview" state={{name:VIEW_MORE_ROUTES_VALUES.requiringReview}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
          </div>}
     </>

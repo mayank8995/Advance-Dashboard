@@ -55,7 +55,7 @@ Array.prototype.customFilter = function (fn:any, obj:any) {
   const filtered = []; // it will receive all values that match to condition passed in fn callback.
     for (let i = 0; i < this.length; i++) {
             if (fn(this[i])) {
-                const topProjectsObj = {manager:obj?.manager || "",...this[i]}
+                const topProjectsObj = {name:obj?.manager || "",...this[i]}
                 filtered.push(topProjectsObj);
             }
     }
@@ -98,6 +98,7 @@ export function performDeepSearch(obj:any, target:string) {
 Array.prototype.deepSearchCustomFilter = function(txtTobeSearched: string){
   const filtered: any[] = [];
   if(this){
+    console.table("this>>>",this)
       for(let i=0;i<this.length;i++){
         if(this[i]){
           if(performDeepSearch(this[i], txtTobeSearched)){

@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import { className } from '../../utils/constants';
+import MobileViewCardForTable from './MobileViewCardForTable';
 
 export default function CustomTable({list, columnsData, headersData, title}:any) {
   // State configuration
@@ -16,7 +17,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
     const [headers, setHeaders] = useState(headersData);
 
     useEffect(() => {
-        console.log(columnsData,headersData,list)
+        // console.log(columnsData,headersData,list)
         setColumn(columnsData);
         setHeaders(headersData)
     })
@@ -95,7 +96,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       {/* Rows Per Page Configurator */}
       <div className='flex flex-row items-center'>
       <div className='px-6 py-4'>
-        <label className='text-sm font-bold dark:text-slate-100'>Rows per page: </label>
+        <label className='text-sm font-bold dark:text-slate-100 pr-2'>Rows per page </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
           px-3 py-2
           border
@@ -114,7 +115,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
           <option className='text-sm font-bold outline-none' value={10}>10</option>
         </select>
       </div>
-      <div>
+      <div className='px-6 py-4'>
         <FormField type={"text"} name={"search"} placeholder={"Search"} className={className} onChange={handleTableSearch}/>
       </div>
       </div>
@@ -122,22 +123,25 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
 
 
       {/* Semantic HTML Table */}
-      <table className='rounded-2xl
+      <table className='hidden sm:table rounded-2xl
   shadow-lg
   border
-  border-slate-200 m-[10px] dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50' >
+  border-slate-200 m-[10px] dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50 ' >
         <thead className="bg-slate-100">
           {headers?.length > 0 && <tr className='cursor-pointer dark:bg-slate-800 dark:border-slate-700'>
-            {headers?.map((header: any) => {
-                return <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400" onClick={() => handleSort(header?.key)}>{header?.value} {getSortIcon(header?.key)}</th>
+            {headers?.map((header: any, index:number) => {
+                return <th key={index+3*index} className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400" onClick={() => handleSort(header?.key)}>{header?.value} {getSortIcon(header?.key)}</th>
             })}
           </tr>
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData.map((row,index) =>  <tr className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" key={index+1}>{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{row[col]}</td>)}</tr>)}
+          {paginatedData.map((row,index) =>  <tr key={index+4*index} className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>)}
         </tbody>
       </table>
+        <div className='sm:hidden'>
+            <MobileViewCardForTable list={paginatedData} headersData={headers} />
+        </div>
         </div> 
 
       {/* Pagination Footer Controls */}
@@ -151,14 +155,14 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
                     hover:shadow-xl hover:shadow-indigo-500/40
                     hover:from-slate-300 hover:to-violet-200
                     transition-all duration-200
-                    cursor-pointer'
+                    cursor-pointer '
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
           disabled={currentPage === 1}
         >
           Previous
         </button>
         
-        <span className='text-sm font-bold'>Page {currentPage} of {totalPages || 1}</span>
+        <span className='text-sm font-bold dark:text-slate-100'>Page {currentPage} of {totalPages || 1}</span>
 
         <button 
          className=' px-6 py-2.5

@@ -41,3 +41,67 @@ function reverse(arr){
    return [...reverse(arr.slice(1)), arr[0]]
 }
 
+print all keys
+function printAllKeys(obj){
+    for(const key in obj){
+        console.log("key>>>",key)
+        printAllKeys(obj[key]);
+    }
+}
+
+count total keys
+
+    let count = 0;
+function countAllKeys(obj){
+    for(const key in obj){
+        count++
+        countAllKeys(obj[key]);
+    }
+    return count
+}
+Find If Key Exists
+
+function findIfKeyExists(obj, target){
+    if( typeof obj !== 'object' || obj === null) return false;
+    for(const key in obj){
+        if(target === key) {
+            return true;
+        }
+        const found = findIfKeyExists(obj[key],target);
+        if(found) return true;
+    }
+    return false;
+}
+
+Collect All Keys Into Array
+function collectAllKeysIntoArrays(obj,arr){
+    for(const key in obj){
+        console.log("key>>",key);
+        key && arr.push(key)
+        collectAllKeysIntoArrays(obj[key],arr);
+    }
+    return arr;
+}
+
+
+Given a JavaScript object where values can themselves be objects, return the maximum nesting depth.
+const obj = {
+  a: {},
+  b: {
+    c: {}
+  },
+  d: {
+    e: {
+      f: {}
+    }
+  }
+}
+
+function maxDepth(obj){
+    let maxN = 0;
+    if(Object.keys(obj).length === 0 || obj === null) return 0;
+    for(const key in obj){
+       maxN = Math.max(maxN,1 + maxDepth(obj[key]));
+    }
+    return maxN;
+}

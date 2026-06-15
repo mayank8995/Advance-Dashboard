@@ -41,7 +41,9 @@ function ViewMore(){
     },[])
 
     return(
+        <> 
         <CustomTable list={data} columnsData={columnsData} headersData={headersData} title={title} />
+        </>
     )
 
 }
