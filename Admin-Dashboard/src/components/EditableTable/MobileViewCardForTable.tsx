@@ -15,7 +15,7 @@ export default function MobileViewCardForTable({list, headersData}:any){
     }
     return<>
         <div>
-            {list.map((row:any,index:number) =>  <div key={index+2*index} className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800">{headersData.map((header: any) => {
+            {list.map((row:any,index:number) =>  <div key={index+2*index} className="hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800">{headersData.map((header: any) => {
                 return <div className={getRowCss(header?.key)}>
                     <span className={getHeaderCss(header?.key)}>{header?.value?.split(' ').map((n:any) => n[0] + n.substring(1).toLowerCase()).join(' ')}:&nbsp;</span>
                     {header?.key === 'name' && 

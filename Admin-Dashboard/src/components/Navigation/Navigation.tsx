@@ -24,12 +24,10 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
   return (
     <>
       {/* Mobile Top Bar */}
-      <div className="md:hidden flex items-center justify-between bg-[#02122d] text-white p-4">
-        <h1 className="text-xl font-bold">Admin</h1>
-
+      <div className="absolute top-0 right-0 md:hidden flex items-center justify-between p-4">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-2xl"
+          className="pl-2 text-xl text-slate-800 dark:text-slate-100"
         >
           ☰
         </button>

@@ -84,28 +84,32 @@ export function setWidthAsperPercentage(percentage:any){
     return ``
 }
 
-export function performDeepSearch(obj:any, target:string) {
-  for (let key in obj) {
-    if (obj[key]?.toString()?.toLowerCase()?.includes(target)) return true;
-    // If the property is an object, look inside it recursively
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      if (performDeepSearch(obj[key], target)) return true;
+
+export function performDeepSearch(obj:any, target:string){
+    if( obj === null || typeof obj !== 'object') return false;
+    for(const key in obj){
+        if (obj[key]?.toString()?.toLowerCase()?.includes(target)) {
+            // console.log("obj[key]>>>>",obj[key])
+            return true;
+        }
+        const found = performDeepSearch(obj[key],target);
+        if(found) return true;
     }
-  }
-  return false;
+    return false;
 }
+
 
 Array.prototype.deepSearchCustomFilter = function(txtTobeSearched: string){
   const filtered: any[] = [];
   if(this){
-    console.table("this>>>",this)
       for(let i=0;i<this.length;i++){
         if(this[i]){
-          if(performDeepSearch(this[i], txtTobeSearched)){
+          if(performDeepSearch(this[i], txtTobeSearched?.toLowerCase())){
             filtered.push(this[i]);
           }
         }
       }
+    //   console.log("filtered>>>>",filtered);
   }
   return filtered;
 }

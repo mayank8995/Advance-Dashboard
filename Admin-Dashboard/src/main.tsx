@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Home from './components/Home/Home.tsx'
 import Dashboard from './pages/dashboard/Dashboard.tsx'
 import Employees from './pages/employee/Employees.tsx'
@@ -26,11 +26,54 @@ declare global {
 
 window.__TANSTACK_QUERY_CLIENT__ = queryClient
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />
+  },
+  {
+    path: 'home',
+    element: <Home />,
+    handle: { breadcrumb: 'Home' },
+    children:[
+   {
+    path: 'dashboard',
+    element: <DashboardRoot />,
+      handle: { breadcrumb: 'Dashboard' },
+    children: [
+      {
+        path: '',
+        element: <Dashboard />
+      },
+      {
+        path: 'viewmore',
+        element: <ViewMore />,
+        handle: { breadcrumb: 'View More' }
+      }
+    ]
+  },
+   {
+    path: 'employees',
+    element: <Employees />,
+    handle: { breadcrumb: 'Employees' }
+  }, {
+    path: 'analytics',
+    element: <Analytics />,
+    handle: { breadcrumb: 'Analytics' }
+  }, {
+    path: 'settings',
+    element: <Settings />,
+    handle: { breadcrumb: 'Settings' }
+  }
+    ]
+  }
+]);
+
 createRoot(document.getElementById('root')!).render(
       // <StrictMode>
       <QueryClientProvider client = {queryClient}>
 
-    <BrowserRouter>
+    {/* <BrowserRouter>
     <Routes>
       <Route path='/' element={<App />}></Route>
       <Route path='home' element={<Home/>}>
@@ -43,7 +86,10 @@ createRoot(document.getElementById('root')!).render(
         <Route path='settings' element={<Settings/>}></Route>
       </Route>
     </Routes>
-    </BrowserRouter>
+    </BrowserRouter> */}
+    <RouterProvider router={router}>
+
+    </RouterProvider>
     <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
 

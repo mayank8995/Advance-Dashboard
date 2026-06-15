@@ -16,7 +16,6 @@ function Analytics(){
                 setTheme(true)
             }
             function handleStorageEvent(e:any){
-                console.log("teteteteet")
                 setTheme(e?.detail?.newValue) 
             }
             window.addEventListener('storage', handleStorageEvent);

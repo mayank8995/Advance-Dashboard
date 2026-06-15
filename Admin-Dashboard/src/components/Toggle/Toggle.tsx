@@ -34,13 +34,13 @@ console.log("enable>>>",enable)
         className="sr-only" 
       />
       {/* Track */}
-      <div className={`relative w-11 h-6 transition-colors duration-200 ease-in-out rounded-full ${enabled ? 'bg-blue-600' : 'bg-gray-200'}`}>
+      <div className={`relative w-12 h-6 transition-colors duration-200 ease-in-out rounded-full ${enabled ? 'bg-blue-600' : 'bg-gray-200'}`}>
         {/* Thumb */}
-        <div className={`absolute top-[2px] left-[2px] bg-white h-5 w-5 rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`} />
+        <div className={`absolute  ${enabled ? 'top-[2px] left-[6px]' : 'top-[2px] left-[2px]'} bg-white h-5 w-5 rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`} />
+        <div className={`absolute ${enabled ? '' : 'left-[5px]'} transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-0' : 'translate-x-5'}`}>
+        {enabled ? '🌙' : '☀️'}
       </div>
-      <span className="ml-3 text-sm font-medium text-gray-900">
-        {enabled ? '🌙 Dark' : '☀️ Light'}
-      </span>
+      </div>
     </label>
   );
 }

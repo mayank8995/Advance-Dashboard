@@ -3,6 +3,7 @@ import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import { className } from '../../utils/constants';
 import MobileViewCardForTable from './MobileViewCardForTable';
+import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 
 export default function CustomTable({list, columnsData, headersData, title}:any) {
   // State configuration
@@ -90,15 +91,15 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
   return (
     <div className="min-h-screen bg-slate-50 p-6 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
-      <h1 className="text-lg font-bold text-slate-800 px-6 py-4 pb-0 dark:text-slate-100">
-        {title}
+      <h1 className="flex flex-row text-lg font-bold text-slate-800 px-6 py-4 pb-0 dark:text-slate-100">
+        <Breadcrumb />{title}
       </h1>
       {/* Rows Per Page Configurator */}
-      <div className='flex flex-row items-center'>
-      <div className='px-6 py-4'>
+      <div className='flex flex-row items-center justify-between'>
+      <div className='flex items-center px-6 py-4'>
         <label className='text-sm font-bold dark:text-slate-100 pr-2'>Rows per page </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
-          px-3 py-2
+          px-2 py-1
           border
           border-slate-300 dark:border-slate-700
           rounded-lg
@@ -116,7 +117,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
         </select>
       </div>
       <div className='px-6 py-4'>
-        <FormField type={"text"} name={"search"} placeholder={"Search"} className={className} onChange={handleTableSearch}/>
+        <FormField type={"text"} name={"search"} placeholder={"Search"}  onChange={handleTableSearch}/>
       </div>
       </div>
        <div className='flex flex-col justify-center'>  
@@ -136,7 +137,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData.map((row,index) =>  <tr key={index+4*index} className="hover:bg-blue-50 transition-colors duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>)}
+          {paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>)}
         </tbody>
       </table>
         <div className='sm:hidden'>

@@ -96,7 +96,7 @@ export const className = `w-full px-4 py-2.5
   focus:ring-indigo-400 dark:focus:ring-slate-800
   focus:border-transparent
   focus:bg-white dark:focus:dark:bg-slate-800
-  transition-all duration-200
+  focus:transition-all focus:duration-200
   placeholder:text-slate-400 dark:placeholder:text-slate-500 dark:scheme-dark`
 
   export const labelclassName = `block mb-1.5 mt-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide`
@@ -202,3 +202,5 @@ export const headers_employees = [
             "workMode": "workMode", 
             "rating": "workMode" 
 }
+
+export const ADMIN_PORTAL = "Admin Portal"
