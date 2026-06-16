@@ -1,4 +1,3 @@
-import { UserStar } from "lucide-react"
 import Toggle from "../Toggle/Toggle"
 import { ADMIN_PORTAL } from "../../utils/constants"
 

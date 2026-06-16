@@ -80,9 +80,7 @@ export function getTop6ArrayElement(data: any){
     const modifiedObj = { ...data, "employees": data?.employees?.length > 5 ? data?.employees?.slice(0,5) : data?.employees}
     return modifiedObj;
 }
-export function setWidthAsperPercentage(percentage:any){
-    return ``
-}
+
 
 
 export function performDeepSearch(obj:any, target:string){

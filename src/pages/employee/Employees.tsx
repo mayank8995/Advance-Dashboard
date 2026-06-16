@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import CustomDataTable from "../../components/EditableTable/CustomDataTable"
 import { useQueryClient } from "@tanstack/react-query";
 import CustomTable from "../../components/EditableTable/CustomTable";
-import { columns_employees, columns_top_projects, EMPLOYEE_DIREC, headers_employees, headers_top_projects } from "../../utils/constants";
+import { columns_employees, EMPLOYEE_DIREC, headers_employees } from "../../utils/constants";
 
 function Employees(){
      const [data, setData] = useState([]);

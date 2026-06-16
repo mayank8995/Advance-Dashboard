@@ -53,7 +53,7 @@ function Settings(){
     console.log("END SUBMIT");
 };
 
-    function onCancel(e:any){
+    function onCancel(){
         if(window.confirm("Are you sure you want to cancel? All unsaved changes will be lost.")){
             setInitialData({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:new Date(),wmode:'',location:'',image:null}); // reset the initial data to clear form fields
         }

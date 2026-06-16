@@ -1,7 +1,7 @@
 import { RechartsDevtools } from "@recharts/devtools";
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Sector, Tooltip, XAxis, YAxis, type PieSectorShapeProps } from "recharts";
 import { PIE_COLORS } from "../../utils/constants";
-import { useEffect, useState } from "react";
+
 
 const MyCustomPie = (props: PieSectorShapeProps) => {
   return <Sector {...props} fill={PIE_COLORS[props.index % PIE_COLORS.length]} />;
