@@ -10,7 +10,7 @@ function App() {
     <div>
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/src/assets/background.png')" }}
+        style={{ backgroundImage: "url('/assets/background.png')" }}
       /> 
       <div className="absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:left-[80%] md:-translate-x-1/2 w-full max-w-md px-4" > 
         <Login/>
