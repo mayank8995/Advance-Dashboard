@@ -70,7 +70,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')!).render(
-      // <StrictMode>
+      <StrictMode>
       <QueryClientProvider client = {queryClient}>
 
     {/* <BrowserRouter>
@@ -93,5 +93,5 @@ createRoot(document.getElementById('root')!).render(
     <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
 
-  //  </StrictMode> 
+    </StrictMode> 
 )
