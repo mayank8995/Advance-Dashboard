@@ -1,1 +1,103 @@
-Generate All Subsequences
+Problem — Deep Clone Object
+
+Given:
+
+const obj = {
+  id: "TC-902",
+  name: "TechCorp",
+  hierarchy: {
+    departments: {
+      engineering: {
+        lead: "Alex Rivera",
+        teams: [
+          {
+            teamName: "Frontend",
+            metrics: {
+              velocity: 42,
+              activeSprints: {
+                current: {
+                  id: "sprint-101",
+                  goals: ["Deploy UI v2", "Fix memory leaks"]
+                }
+              }
+            }
+          },
+          {
+            teamName: "Backend",
+            metrics: {
+              velocity: 88,
+              activeSprints: {
+                current: {
+                  id: "sprint-102",
+                  goals: ["Deploy  v2", "Fix  leaks"]
+                }
+              }
+            }
+          },{
+            teamName: "Devops",
+            metrics: {
+              velocity: 99,
+              activeSprints: {
+                current: {
+                  id: "sprint-103",
+                  goals: ["Deploy v2 pipeline", "Fix memory leaks in server"]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+};
+
+Create a completely new object:
+const clone = deepClone(obj);
+
+function deepCloneLengthy(obj){
+ 
+  if(obj === null || typeof obj !== 'object') return obj;
+  let newObject = Array.isArray(obj) ? [] : {};
+    for(const key in obj){
+         if(Array.isArray(obj[key])){
+             const newarr = [];
+                for(let i=0;i<obj[key].length;i++){
+                   if(typeof obj[key][i] === 'object'){
+                    newarr.push(deepClone(obj[key][i]))
+                   }else{
+                     newarr.push(obj[key][i])
+                   }
+             }
+             newObject[key] = newarr;
+        }
+        else if(typeof obj[key] === 'object'){
+                 newObject[key] = deepClone(obj[key]);
+            
+        }else{
+            newObject[key] = obj[key];
+        }
+    }
+    return newObject;
+}
+function deepClone(obj){
+ 
+  if(obj === null || typeof obj !== 'object') return obj;
+  let newObject = Array.isArray(obj) ? [] : {};
+    for(const key in obj){
+        newObject[key] = deepClone(obj[key]);
+    }
+    return newObject;
+}
+
+
+            teamName: "Devopsssssssssssssssssssssssss",
+            metrics: {
+              velocity: 99,
+              activeSprints: {
+                current: {
+                  id: "sprint-103",
+                  goals: ["Deploy mango", "Fix memory leaks in server"]
+                }
+              }
+            }
+          } 

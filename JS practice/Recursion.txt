@@ -27,13 +27,6 @@ f1+f2 -> 1 + f0 + f1 ->>> 1 + 0 + 1 == 2
 [1,2,3,4,5]
 4. Reverse an array using recursion
 
-function reverse(arr,start,end){
-    if(start >= end) return arr;
-            let temp = arr[start];
-            arr[start] = arr[end];
-            arr[end] = temp;
-    return reverse(arr,++start, --end);
-}
 let num = []
 function reverse(arr){
    if(arr.length === 0) return [];
@@ -104,4 +97,164 @@ function maxDepth(obj){
        maxN = Math.max(maxN,1 + maxDepth(obj[key]));
     }
     return maxN;
+}
+
+Generate All Subsequences
+Input: str = "abc"
+Output: [a, ab, abc, ac, b, bc, c]
+Explanation: Given string has 7 subsequences.
+Input: str = "aa"
+Output: [a, a, aa] 
+Explanation: Given string has 3 subsequences.
+
+function generateAllSubsequence(str, index, current){
+        if(index === str.length) return [current]
+         const included = generateAllSubsequence(str,index + 1,current + str[index]);  
+         const excluded = generateAllSubsequence(str,index + 1, current);
+         return [...included,...excluded]
+}
+
+
+Count All Subsequences
+
+Problem:
+
+Given a string:
+
+"abc"  ['abc', 'ab', 'ac', 'a', 'bc', 'b', 'c', '']
+
+Return the number of subsequences.
+
+Expected:
+
+8
+
+
+function countAllSubsequence(str,index){
+    if(index === str.length){
+        return 1
+    }
+    else{
+        const includedCount = countAllSubsequence(str,index+1);
+        const excludedCount = countAllSubsequence(str, index+1);
+        return includedCount +  excludedCount;
+    }
+}
+
+Flatten Nested Array (Frontend Relevant)
+
+Input:
+
+[1,[2,[3,4]],5]
+
+Output:
+
+[1,2,3,4,5]
+
+function flattenArray(arr){
+    if(arr.length === 0) return [];
+    else{
+      const b = [];
+        for(let i=0;i<arr.length;i++){
+            if(Array.isArray(arr[i])){
+                b.push(...flattenArray(arr[i]))
+            }else{
+                b.push(arr[i])
+            }
+        }
+      return b
+    }
+}
+
+
+Problem — Deep Clone Object
+
+Given:
+
+const obj = {
+  id: "TC-902",
+  name: "TechCorp",
+  hierarchy: {
+    departments: {
+      engineering: {
+        lead: "Alex Rivera",
+        teams: [
+          {
+            teamName: "Frontend",
+            metrics: {
+              velocity: 42,
+              activeSprints: {
+                current: {
+                  id: "sprint-101",
+                  goals: ["Deploy UI v2", "Fix memory leaks"]
+                }
+              }
+            }
+          },
+          {
+            teamName: "Backend",
+            metrics: {
+              velocity: 88,
+              activeSprints: {
+                current: {
+                  id: "sprint-102",
+                  goals: ["Deploy  v2", "Fix  leaks"]
+                }
+              }
+            }
+          },{
+            teamName: "Devops",
+            metrics: {
+              velocity: 99,
+              activeSprints: {
+                current: {
+                  id: "sprint-103",
+                  goals: ["Deploy v2 pipeline", "Fix memory leaks in server"]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+};
+
+Create a completely new object:
+const clone = deepClone(obj);
+
+function deepCloneLengthy(obj){
+ 
+  if(obj === null || typeof obj !== 'object') return obj;
+  let newObject = Array.isArray(obj) ? [] : {};
+    for(const key in obj){
+         if(Array.isArray(obj[key])){
+             const newarr = [];
+                for(let i=0;i<obj[key].length;i++){
+                   if(typeof obj[key][i] === 'object'){
+                    newarr.push(deepClone(obj[key][i]))
+                   }else{
+                     newarr.push(obj[key][i])
+                   }
+             }
+             newObject[key] = newarr;
+        }
+        else if(typeof obj[key] === 'object'){
+                 newObject[key] = deepClone(obj[key]);
+            
+        }else{
+            newObject[key] = obj[key];
+        }
+    }
+    return newObject;
+}
+// much of work done above leading to down below
+function deepClone(obj){
+ 
+  if(obj === null || typeof obj !== 'object') return obj;
+  let newObject = Array.isArray(obj) ? [] : {};
+    for(const key in obj){
+        newObject[key] = deepClone(obj[key]);
+    }
+    return newObject;
 }

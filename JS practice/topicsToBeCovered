@@ -1,0 +1,124 @@
+1. Sliding Window (Completed / Revision)
+Fixed Window
+Maximum Sum Subarray of Size K
+First Subarray of Size K with Sum = X
+Maximum Element in Every Window of Size K (Brute Force)
+Average of Every Window of Size K
+Count Windows of Size K with Sum ≤ X
+Variable Window
+Smallest Subarray with Sum ≥ Target
+Longest Subarray with Sum ≤ K
+Longest Subarray with Sum < K
+Count Subarrays with Sum ≤ K
+Longest Subarray with At Most K Distinct Elements
+Longest Substring Without Repeating Characters
+2. Recursion (Current Topic)
+Basic Recursion
+Print 1 → N
+Print N → 1
+Factorial
+Sum of First N Numbers
+Reverse String
+Palindrome Check
+Fibonacci
+Reverse Array
+Maximum Element in Array
+Object Traversal (Frontend Relevant)
+Print All Keys in Nested Object
+Count All Keys
+Find If Key Exists
+Collect All Keys into Array
+Maximum Depth of Nested Object
+Count Total Nested Objects
+Branching Recursion
+Generate All Subsequences
+Generate All Subsets of Array
+Letter Case Permutation
+Generate Parentheses (Important)
+3. Stack
+Easy
+Valid Parentheses
+Remove Adjacent Duplicates
+Backspace String Compare
+Medium
+Next Greater Element
+Previous Greater Element
+Monotonic Stack Introduction
+Daily Temperatures
+Stock Span Problem
+Frontend Relevant
+Browser Back/Forward Navigation
+Undo/Redo System
+Expression Evaluation Basics
+4. Queue / Deque
+Implement Queue
+Circular Queue
+Sliding Window Maximum (Deque)
+First Negative Number in Every Window
+5. Two Pointers
+Two Sum Sorted Array
+Remove Duplicates
+Move Zeroes
+Container With Most Water
+3 Sum (Important)
+6. Binary Search
+Basic
+Binary Search
+First Occurrence
+Last Occurrence
+Count Occurrences
+Medium
+Search Insert Position
+Peak Element
+Rotated Sorted Array
+Search in Rotated Sorted Array
+7. Linked List
+Reverse Linked List
+Middle of Linked List
+Detect Cycle
+Merge Two Sorted Lists
+Remove Nth Node from End
+8. Trees (Very Important)
+Traversal
+DFS Preorder
+DFS Inorder
+DFS Postorder
+BFS Level Order
+Medium
+Maximum Depth of Tree
+Diameter of Tree
+Validate BST
+Lowest Common Ancestor
+Path Sum
+9. Heap / Priority Queue
+K Largest Elements
+K Smallest Elements
+Top K Frequent Elements
+Merge K Sorted Arrays
+10. Graphs (Interview Level)
+DFS
+BFS
+Number of Islands
+Clone Graph
+Course Schedule
+11. Dynamic Programming
+Climbing Stairs
+Fibonacci Memoization
+House Robber
+Coin Change
+Longest Increasing Subsequence
+12. Frontend-Specific DSA Problems
+
+These are extremely common in frontend interviews:
+
+Flatten Nested Array
+Deep Clone Object
+Debounce
+Throttle
+Event Emitter
+Promise.all
+Promise.race
+LRU Cache
+Nested Comment Tree Traversal
+File Explorer Tree
+Virtual DOM Diff (Conceptual)
