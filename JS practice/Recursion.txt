@@ -92,7 +92,7 @@ const obj = {
 
 function maxDepth(obj){
     let maxN = 0;
-    if(Object.keys(obj).length === 0 || obj === null) return 0;
+    if(obj === null || Object.keys(obj).length === 0) return 0;
     for(const key in obj){
        maxN = Math.max(maxN,1 + maxDepth(obj[key]));
     }
@@ -257,4 +257,127 @@ function deepClone(obj){
         newObject[key] = deepClone(obj[key]);
     }
     return newObject;
+}
+
+{
+  a: {},
+  b: {
+    c: {}
+  }
+}
+
+Return:
+
+4 (consider root object also)
+
+function countNestedObject(obj){
+  let count = 1;
+  if(obj === null || typeof obj !== 'object') return 0;
+  else{
+    for(const key in obj){
+      count += countNestedObject(obj[key])
+    }
+  }
+  return count;
+}
+
+Find All Values For A Key
+
+Given:
+
+{
+  id: 1,
+  child: {
+    id: 2,
+    child: {
+      id: 3
+    }
+  }
+}
+
+Target:
+
+id
+
+Return:
+
+[1,2,3]
+
+function findAllValuesForAKey(obj,target,values){
+  if(obj === null || typeof obj !== 'object') return values;
+  else{
+    for(const key in obj){
+        if(key === target) {
+          values.push(obj[key]); 
+        }
+        findAllValuesForAKey(obj[key], target,values);
+    }
+  }
+  return values;
+}
+
+function findAllValuesForAKeyW/oPAssingValuesinParameters(obj,target){
+  if(obj === null || typeof obj !== 'object') return [];
+  else{
+    let values =[];
+    for(const key in obj){
+        if(key === target) {
+           values = [...values,obj[key]]
+        }
+       values = [...values,...findAllValuesForAKey(obj[key],target)]
+    }
+  return [...values]
+  }
+  
+}
+
+Nested Comment Search (Frontend)
+This is much closer to real frontend work than abstract recursion.
+Given:
+const comments = {
+  id: 1,
+  text: "Root Comment",
+  replies: [
+    {
+      id: 2,
+      text: "Reply 1",
+      replies: []
+    },
+    {
+      id: 3,
+      text: "Reply 2",
+      replies: [
+        {
+          id: 4,
+          text: "Nested Reply",
+          replies: []
+        }
+      ]
+    }
+  ]
+};
+
+Find:
+
+id = 4
+
+Return:
+
+{
+  id: 4,
+  text: "Nested Reply",
+  replies: []
+}
+
+function nestedCommentSearch(obj,id,target){
+  if(obj === null || typeof obj !== 'object') return null;
+  else{
+    for(const key in obj){
+        if(key===id && obj[key] === target) {
+           return obj;
+        }
+       const searched = nestedCommentSearch(obj[key],id,target);
+      if(searched) return searched
+    }
+  }
 }

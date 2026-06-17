@@ -204,3 +204,5 @@ export const headers_employees = [
 }
 
 export const ADMIN_PORTAL = "Admin Portal"
+
+export const NO_RESULT_FOUND = "No exact match found"

@@ -35,7 +35,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">{title}</h1>
           </div>
           </div>
-          <div className="overflow-y-auto min-h-0 max-h-[350px]">
+          <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
           {Array.isArray(topProj) && topProj?.map((value: any, index: number) => {
            return <>
             {index < CARD_CONTENT_LIMIT_TO_SCROLL && value?.priorityRanking === "*" && <div key={index} className="flex flex-row mb-2">
@@ -64,8 +64,8 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           
           )
          }
-        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects" state={{name:VIEW_MORE_ROUTES_VALUES.top_projects}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
+        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects" state={{name:VIEW_MORE_ROUTES_VALUES.top_projects}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
         </div>
         }
          {cardToShow?.topPerformers &&<div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-yellow-950/20 dark:border-none">
@@ -76,7 +76,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
             <span className=" bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {topPerformers?.trendValue}%</span>
           </div>
-           <div className="overflow-y-auto min-h-0 max-h-[350px]">
+           <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
           {Array.isArray(topPerformers?.employees) && topPerformers?.employees?.map((value: any, index: number) => {
            return <>
           {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid  grid-cols-3 gap-6 mb-2" key={value?.id}>
@@ -103,8 +103,8 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>}
           </>
           })}
-          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers" state={{name:VIEW_MORE_ROUTES_VALUES.top_performers}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
+          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers" state={{name:VIEW_MORE_ROUTES_VALUES.top_performers}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
           {cardToShow?.promotedThisYear &&<div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 darK:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20 dark:border-none">
           <div className="mb-4 flex items-center justify-between gap-4">
@@ -114,7 +114,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
             <h2 className=" bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {promoted?.trendValue}%</h2>
           </div>
-           <div className="overflow-y-auto min-h-0 max-h-[350px]">
+           <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
           {Array.isArray(promoted?.employees) && promoted?.employees?.map((value: any, index: number) => {
            return <>
           {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid grid-cols-3 gap-6 mb-2" key={value?.id}>            
@@ -141,8 +141,8 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             </div> */}
           </div>}
           </>})}
-           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear" state={{name:VIEW_MORE_ROUTES_VALUES.promotedThisYear}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
+           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear" state={{name:VIEW_MORE_ROUTES_VALUES.promotedThisYear}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
           {cardToShow?.meetingKPIs &&
           <div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-indigo-950/20 dark:border-none">
@@ -153,7 +153,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
             <h2 className=" bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {meeting?.trendValue}%</h2>
           </div>
-          <div className="overflow-y-auto min-h-0 max-h-[350px] flex flex-col">
+          <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1 flex flex-col">
           <div className="mb-2">
             <h1 className="flex items-center text-sm font-bold dark:text-slate-100">{meeting?.percentage} / 100 employees</h1>
           </div>
@@ -210,7 +210,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
             <h2 className="bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">↓ {requiringReview?.trendValue}%</h2>
           </div>
-          <div className="overflow-y-auto min-h-0 max-h-[350px]">
+          <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
           {Array.isArray(requiring?.employees) && requiring?.employees?.map((value: any, index: number) => {
            return <>
           {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid grid-cols-3 gap-6" key={index+1}>
@@ -240,8 +240,8 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
           </div>}
           </>})}
-          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="absolute bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview" state={{name:VIEW_MORE_ROUTES_VALUES.requiringReview}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
           </div>
+          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview" state={{name:VIEW_MORE_ROUTES_VALUES.requiringReview}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
     </>
   );

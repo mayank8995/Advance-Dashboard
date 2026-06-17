@@ -97,17 +97,18 @@ export function performDeepSearch(obj:any, target:string){
 }
 
 
-Array.prototype.deepSearchCustomFilter = function(txtTobeSearched: string){
+Array.prototype.deepSearchCustomFilter = function(query: string){
   const filtered: any[] = [];
+  const cleanQuery = query.trim().replace(/\s+/g, ' ').toLowerCase();
   if(this){
       for(let i=0;i<this.length;i++){
         if(this[i]){
-          if(performDeepSearch(this[i], txtTobeSearched?.toLowerCase())){
+          if(performDeepSearch(this[i], cleanQuery)){
             filtered.push(this[i]);
           }
         }
       }
-    //   console.log("filtered>>>>",filtered);
+      // console.log("filtered>>>>",filtered);
   }
   return filtered;
 }

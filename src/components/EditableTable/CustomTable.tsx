@@ -3,6 +3,7 @@ import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import MobileViewCardForTable from './MobileViewCardForTable';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
+import { NO_RESULT_FOUND } from '../../utils/constants';
 
 export default function CustomTable({list, columnsData, headersData, title}:any) {
   // State configuration
@@ -56,7 +57,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
 
   // Pagination computation 
   const totalPages = Math.ceil((sortedData.length) / rowsPerPage);
-
+console.log(currentPage, "dssvsddvsdv",totalPages)
   
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -96,7 +97,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       {/* Rows Per Page Configurator */}
       <div className='flex flex-row items-center justify-between'>
       <div className='flex items-center px-6 py-4'>
-        <label className='text-sm font-bold dark:text-slate-100 pr-2'>Rows per page </label>
+        <label className='text-sm font-bold dark:text-slate-100 pr-2'>Rows / page </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
           px-2 py-1
           border
@@ -136,11 +137,11 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>)}
+          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800'>{NO_RESULT_FOUND}</h1></td></tr>}
         </tbody>
       </table>
         <div className='sm:hidden'>
-            <MobileViewCardForTable list={paginatedData} headersData={headers} />
+           { paginatedData?.length > 0 ? <MobileViewCardForTable list={paginatedData} headersData={headers} /> : <div className='flex flex-col items-center dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800'><h1 className='dark:text-slate-100 text-slate-800'>{NO_RESULT_FOUND}</h1></div>}
         </div>
         </div> 
 
@@ -148,32 +149,32 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       <div className="flex justify-between items-center px-6 py-4" >
         <button 
           className=' px-6 py-2.5
-                    bg-gradient-to-r from-slate-600 to-violet-200
-                    text-white font-semibold text-sm
-                    rounded-xl
-                    shadow-lg shadow-indigo-500/30
-                    hover:shadow-xl hover:shadow-indigo-500/40
-                    hover:from-slate-300 hover:to-violet-200
-                    transition-all duration-200
-                    cursor-pointer '
+                        bg-gradient-to-r from-indigo-600 to-violet-600
+                        text-white font-semibold text-xs md:text-sm
+                        rounded-xl
+                        shadow-lg shadow-indigo-500/30
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
+                        hover:enabled:from-indigo-700 hover:enabled:to-violet-700
+                        transition-all duration-200
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed'
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
           disabled={currentPage === 1}
         >
           Previous
         </button>
         
-        <span className='text-sm font-bold dark:text-slate-100'>Page {currentPage} of {totalPages || 1}</span>
+        <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>Page {currentPage} of {totalPages || 1}</span>
 
         <button 
-         className=' px-6 py-2.5
-                    bg-gradient-to-r from-slate-600 to-violet-200
-                    text-white font-semibold text-sm
-                    rounded-xl
-                    shadow-lg shadow-indigo-500/30
-                    hover:shadow-xl hover:shadow-indigo-500/40
-                    hover:from-slate-300 hover:to-violet-200
-                    transition-all duration-200
-                    cursor-pointer'
+         className='px-6 py-2.5
+                        bg-gradient-to-r from-indigo-600 to-violet-600
+                        text-white font-semibold text-xs md:text-sm
+                        rounded-xl
+                        shadow-lg shadow-indigo-500/30
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
+                        hover:enabled:from-indigo-700 hover:enabled:to-violet-700
+                        transition-all duration-200
+                        cursor-pointer  disabled:text-gray-400 disabled:cursor-not-allowed'
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
           disabled={currentPage === totalPages || totalPages === 0}
         >

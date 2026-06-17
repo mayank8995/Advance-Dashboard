@@ -76,3 +76,50 @@ Two choices
 ↓
 Two recursive calls
 **/
+/**Recursion Pattern Recognition
+
+You now have three combine patterns:
+
+Pattern 1
+Take maximum
+
+Example:
+
+Max Depth
+Max Element
+Pattern 2
+Add everything
+
+Example:
+
+Count Subsequences
+Count Nested Objects
+Pattern 3
+Merge collections
+
+Example:
+
+Generate Subsequences
+Collect Keys
+Flatten Array
+**/
+/**This is the recursion rule I want you to remember:
+
+If you create local state inside recursion
+let count = ...
+let arr = ...
+let max = ...
+
+then you must either:
+
+Option 1: Return it upward
+return count;
+return arr;
+return max;
+
+and parent combines.
+
+Option 2: Pass a shared accumulator
+recurse(obj, arr)
+
+so everyone modifies the same object/array.**/
