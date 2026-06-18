@@ -7,7 +7,6 @@ import Home from './components/Home/Home.tsx'
 import Dashboard from './pages/dashboard/Dashboard.tsx'
 import Employees from './pages/employee/Employees.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Analytics from './pages/analytics/Analytics.tsx'
 import Settings from './pages/settings/Settings.tsx'
 import ViewMore from './components/ViewMore/ViewMore.tsx'
@@ -71,27 +70,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
       <StrictMode>
-      <QueryClientProvider client = {queryClient}>
-
-    {/* <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<App />}></Route>
-      <Route path='home' element={<Home/>}>
-       <Route path='dashboard' element={<DashboardRoot/>}>
-           <Route path='' element={<Dashboard/>} />
-        <Route path='viewmore' element={<ViewMore/>}/>
-        </Route>
-        <Route path='employees' element={<Employees/>}></Route>
-        <Route path='analytics' element={<Analytics/>}></Route>
-        <Route path='settings' element={<Settings/>}></Route>
-      </Route>
-    </Routes>
-    </BrowserRouter> */}
-    <RouterProvider router={router}>
-
-    </RouterProvider>
-    <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-
-    </StrictMode> 
+          <QueryClientProvider client = {queryClient}>
+          <RouterProvider router={router} />
+          </QueryClientProvider>
+      </StrictMode> 
 )

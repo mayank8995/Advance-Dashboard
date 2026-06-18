@@ -3,59 +3,89 @@ import FormField from "../../components/Form/FormField"
 import { className, labelclassName, PROFILE_SUBHEAD, SIDE_BAR_ITEMS } from "../../utils/constants"
 import type { ProfileForm } from "../../types/types";
 import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/MockApi/MockApi";
+import { validateField } from "../../utils/FormValidation";
 
 function Settings(){
 
     const [profile_pic, setImage] = useState(localStorage.getItem("profile_pic") || null);
-    const [initialData, setInitialData] = useState<ProfileForm | null>(null);
     const [isEditing, setIsEditing] = useState(false);
-     const formValuesRef = useRef<ProfileForm>({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:new Date(),wmode:'',location:'',image:null} as ProfileForm);
+    const [formValues, setFormValues] = useState<ProfileForm | null>({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:'',wmode:'',location:'',image:null});
      const refForUpload = useRef<HTMLInputElement>(null); // separate ref for image upload
-
+     const [errors, setErrors] = useState({});
+    const [formDisabled, setFormDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-        // console.log("profile_pic from localStorage on component mount:", localStorage.getItem("profile_pic"), " profile_pic>>",profile_pic);
         const fetchProfileData = async () => {
             const profileData = await getProfileData();
             if(profileData && Object.keys(profileData)?.length > 0) {
                 console.log("Profile data fetched:", profileData);
-                formValuesRef.current = profileData;
                 setIsEditing(true);
-                setInitialData(profileData)
+                setFormValues(profileData)
             }
         }
     fetchProfileData();
     }, [])
     
-     function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    console.log("onchange data", name, value, formValuesRef?.current);
-    if (formValuesRef?.current) {
-        formValuesRef.current[name as keyof ProfileForm] = value as any;
-    }
+    setFormValues((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
+        let msg = validateField(name,value);
+        console.log("msg>>>",msg)
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: msg,
+        }));
+}
+
+function checkFormValidity(){
+    let valid: boolean = true;
+     for(const key in formValues){
+            console.log("VZXVXZVXXZ",key)
+            if((key === "name" || key === "department" || key === "designation" || key === "empId" || key === "jdate"))
+            {
+                console.log("VZXVXZVXXZ",formValues[key])
+                    let msg = validateField(key,formValues[key]);
+                    if(msg) valid = false
+                    console.log("msg>>>",msg)
+                    setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [key]: msg,
+                    }));
+            }
+        }
+    return valid
 }
 
    const handleSubmit = async (e:any) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("START SUBMIT");
+    console.log("START SUBMIT", formValues,e);
     try {
-        let res;
-        if(!isEditing) {
-            res = await postSubmitProfileSettings(formValuesRef.current);
+        if(checkFormValidity()){
+            console.log("inside herer")
+            setFormDisabled(false)
+            let res;
+            if(!isEditing) {
+                res = await postSubmitProfileSettings(formValues);
+            }else{
+                res = await editProfileData(formValues);
+            }
+            console.log("POST SUCCESS", res);
         }else{
-            res = await editProfileData(formValuesRef.current);
+                console.log("ELSE SUBMIT");
         }
-        console.log("POST SUCCESS", res);
     } catch(err) {
         console.error("POST FAILED", err);
     }
-    console.log("END SUBMIT");
+
 };
 
     function onCancel(){
         if(window.confirm("Are you sure you want to cancel? All unsaved changes will be lost.")){
-            setInitialData({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:new Date(),wmode:'',location:'',image:null}); // reset the initial data to clear form fields
+             setFormValues({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:'',wmode:'',location:'',image:null}); // reset the initial data to clear form fields
         }
     }
 
@@ -109,7 +139,7 @@ function handleFileChange(e:any){
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{SIDE_BAR_ITEMS.SETTINGS}</h1>
             <h2 className="text-sm text-slate-400 mt-1 dark:text-slate-300">{PROFILE_SUBHEAD}</h2>
             </div>
-            <form  onSubmit = {handleSubmit} className="border-2 border-dotted border-gray-300 p-2" noValidate>
+            <form  onSubmit = {handleSubmit} className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl  shadow-sm border border-slate-100 p-2 flex flex-col gap-3 hover:shadow-xl  dark:bg-gradient-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none" noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
                 <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full dark:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20">
                     <div className="flex items-center gap-2 mb-4">
@@ -132,9 +162,9 @@ function handleFileChange(e:any){
     ✎
   </button>
   </div>
-  {initialData?.name && <div className="text-center">
-    <p className="font-bold text-slate-800 dark:text-slate-100">{initialData?.name}</p>
-    <p className="text-xs text-slate-400 dark:text-slate-300">{initialData?.designation}</p>
+  {formValues?.name && <div className="text-center">
+    <p className="font-bold text-slate-800 dark:text-slate-100">{formValues?.name}</p>
+    <p className="text-xs text-slate-400 dark:text-slate-300">{formValues?.designation}</p>
   </div>}
 </div>
                 </div>
@@ -144,7 +174,7 @@ function handleFileChange(e:any){
                     <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">Personal Information</h2>
                     </div>
                     <div className="flex flex-col-reverse">
-                    <FormField defaultValue={initialData?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onInputChange} className={className}/>
+                    <FormField errors={errors} value={formValues?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onInputChange} className={className}/>
                         <label
                         className={labelclassName}
                         >
@@ -152,7 +182,7 @@ function handleFileChange(e:any){
                         </label>
                     </div>
                     <div className="flex flex-col-reverse">
-                    <FormField defaultValue={initialData?.phone} name={"phone"} type={"text"} placeholder={"Enter your phone number"} onChange={onInputChange} className={className} />
+                    <FormField maxlength={10} errors={errors} value={formValues?.phone} name={"phone"} type={"text"} placeholder={"Enter your phone number"} onChange={onInputChange} className={className} />
                     <label
                         className={labelclassName}
                         >
@@ -160,7 +190,7 @@ function handleFileChange(e:any){
                         </label>
                     </div>
                     <div className="flex flex-col-reverse">
-                    <FormField defaultValue={initialData?.email} name={"email"} type={"email"} placeholder={"Enter your email"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.email} name={"email"} type={"email"} placeholder={"Enter your email"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -169,7 +199,7 @@ function handleFileChange(e:any){
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField defaultValue={initialData?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -178,7 +208,7 @@ function handleFileChange(e:any){
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField defaultValue={initialData?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -187,7 +217,7 @@ function handleFileChange(e:any){
                     </div>
                 </div>
             </div>
-                <div className="border-t-2  border-gray-300 border-dotted"></div>
+                <hr className="border-t-2  border-gray-300 border-dotted dark:border-gray-600"></hr>
                 <div className="p-4">
                     <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-5 bg-indigo-500 rounded-full" />
@@ -195,7 +225,7 @@ function handleFileChange(e:any){
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField defaultValue={initialData?.empId} name={"empId"} type={"text"} placeholder={"Enter your ID"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.empId} name={"empId"} type={"text"} placeholder={"Enter your ID"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -204,7 +234,7 @@ function handleFileChange(e:any){
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField defaultValue={initialData?.jdate} name={"jdate"} type={"date"} placeholder={"Enter your joining date"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.jdate} name={"jdate"} type={"date"} placeholder={"Enter your joining date"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -213,7 +243,7 @@ function handleFileChange(e:any){
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField defaultValue={initialData?.wmode} name={"wmode"} type={"text"} placeholder={"Hybrid/Remote/Onsite"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.wmode} name={"wmode"} type={"text"} placeholder={"Hybrid/Remote/Onsite"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -222,7 +252,7 @@ function handleFileChange(e:any){
                     </div>
                     <div className="flex flex-col-reverse">
 
-                    <FormField defaultValue={initialData?.location} name={"location"} type={"text"} placeholder={"Enter your location"} onChange={onInputChange} className={className} />
+                    <FormField errors={errors} value={formValues?.location} name={"location"} type={"text"} placeholder={"Enter your location"} onChange={onInputChange} className={className} />
                     <label
                        className={labelclassName}
                         >
@@ -230,7 +260,7 @@ function handleFileChange(e:any){
                         </label>
                     </div>
                 </div>
-                <div className="border-t-2  border-gray-300 border-dotted"></div>
+                <hr className="border-t-2  border-gray-300 border-dotted dark:border-gray-600"></hr>
                 {!isEditing && <div className="flex justify-between items-center p-4">
                     <button type="submit"
                     className="
@@ -239,34 +269,37 @@ function handleFileChange(e:any){
                         text-white font-semibold text-sm
                         rounded-xl
                         shadow-lg shadow-indigo-500/30
-                        hover:shadow-xl hover:shadow-indigo-500/40
-                        hover:from-indigo-700 hover:to-violet-700
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
+                        hover:enabled:from-indigo-700 hover:enabled:to-violet-700
                         transition-all duration-200
-                        cursor-pointer
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed
                     "
+                    disabled = {formDisabled}
                     >
                     Save Profile
                     </button>
  
-<button type="button"
-  className="
-       px-6 py-2.5
-  bg-gradient-to-r from-slate-600 to-violet-200
-  text-white font-semibold text-sm
-  rounded-xl
-  shadow-lg shadow-indigo-500/30
-  hover:shadow-xl hover:shadow-indigo-500/40
-  hover:from-slate-300 hover:to-violet-200
-  transition-all duration-200
-  cursor-pointer
-  "
-  onClick={onCancel}
->
-  Cancel
-</button>
+                <button type="button"
+                id="submit"
+                className="
+                    px-6 py-2.5
+                bg-gradient-to-r from-slate-600 to-violet-200
+                text-white font-semibold text-sm
+                rounded-xl
+                shadow-lg shadow-indigo-500/30
+                hover:shadow-xl hover:shadow-indigo-500/40
+                hover:from-slate-300 hover:to-violet-200
+                transition-all duration-200
+                cursor-pointer
+                "
+                onClick={onCancel}
+                >
+                Cancel
+                </button>
                 </div>}
                  {isEditing && <div className="flex justify-between items-center p-4">
                     <button type="submit"
+                    id="edit"
                     className="
                           px-6 py-2.5
                         bg-gradient-to-r from-indigo-600 to-violet-600
@@ -277,7 +310,9 @@ function handleFileChange(e:any){
                         hover:from-indigo-700 hover:to-violet-700
                         transition-all duration-200
                         cursor-pointer
+                        
                     "
+                    disabled = {formDisabled}
                     >
                     Edit Profile
                     </button>

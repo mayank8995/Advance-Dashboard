@@ -1,9 +1,10 @@
 import { className as defaultClass } from "../../utils/constants"
 
 
-function FormField({type, placeholder,name,onChange,className, defaultValue}: {type?: string, placeholder?: string, name?: string, onChange?: any, className?: string, defaultValue?: Date | string | undefined}) {
+function FormField({type, placeholder,name,onChange,className, value,errors,maxlength,style }: {type?: string, placeholder?: string, name?: string, onChange?: any, className?: string, value?:any, errors?:any, maxlength?:number, style?:any}) {
     return <>
-    <input type={type || "text"} name={name || "text"} defaultValue={defaultValue instanceof Date ? defaultValue.toISOString() : defaultValue ?? ""} onChange={onChange} className={className || defaultClass} placeholder={placeholder} />
+    <input style={style} maxLength={maxlength} value={value} type={type || "text"} name={name || "text"}  onChange={onChange} className={className || defaultClass} placeholder={placeholder} />
+            {name && errors && errors[name] && <span style={{ color: "red", fontSize: "12px" }}>{errors[name]}</span>}
     </>
 }
 

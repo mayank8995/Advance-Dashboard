@@ -8,8 +8,8 @@ import { useEffect } from "react"
 function Home(){
   // Queries
     const { isPending, error } = useGetData();
-    const { } = useAnalyticsData();
     const { } = usePerformanceCardData();
+    const { } = useAnalyticsData();
 
     useEffect(() =>{
          const root = document.documentElement;

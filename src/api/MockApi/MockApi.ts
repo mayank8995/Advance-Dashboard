@@ -1,5 +1,5 @@
 import apiClient from "../http-common";
-import type { ProfileForm } from "../../types/types";
+import type { LoginForm, ProfileForm } from "../../types/types";
 export default async function getEmployees() {
   try {
     const response = await apiClient.get('/employeeList');
@@ -23,6 +23,7 @@ export async function getAnalytics() {
 export async function getPerformanceCards() { 
  try {
     const response = await apiClient.get('/performanceCards');
+    console.log("response>>>>",response)
          return response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -30,11 +31,11 @@ export async function getPerformanceCards() {
   }
 }
 
-export const postSubmitProfileSettings = async (form: any) => {
+export const postSubmitProfileSettings = async (form: ProfileForm | null) => {
   console.log("form>>>", form);
   try {
     const res = await apiClient.post("/profile", form);
-    console.log("Created:", res.data);
+    console.log("Created:", res);
     return res.data;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
@@ -57,10 +58,24 @@ export const getProfileData = async () => {
   }
 };
 
-export const editProfileData = async (payload: ProfileForm) => {
+export const editProfileData = async (payload: ProfileForm | null) => {
   try {
     const res = await apiClient.put("/profile",payload);
     console.log("Edited:", res.data);
+    return res.data;
+  } catch (err: any) {
+    console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
+    console.error("Status:", err.response?.status);
+    console.error("URL:", err.config?.url);
+    throw err;
+  }
+};
+
+export const doLogin = async (form: LoginForm) => {
+  console.log("form>>>", form);
+  try {
+    const res = await apiClient.post("/login", JSON.stringify(form));
+    console.log("Created:", res);
     return res.data;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong

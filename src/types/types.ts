@@ -11,8 +11,13 @@ export interface ProfileForm {
   department?: string;
   designation?: string;
   empId?:string;
-  jdate?:Date;
+  jdate?:string;
   wmode?:string;
   location?:string;
   image?:string | null;
+}
+
+export interface LoginForm {
+  email: string;
+  password: string;
 }

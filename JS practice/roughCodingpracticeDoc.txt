@@ -1,38 +1,10 @@
-File Explorer Traversal
-Given:
-const tree = {
-  name: "root",
-  children: [
-    {
-      name: "src",
-      children: [
-        {
-          name: "components",
-          children: []
-        }
-      ]
-    },
-    {
-      name: "public",
-      children: []
-    }
-  ]
-};
-Print:
-root
-root/src
-root/src/components
-root/public
-
 function fileExplorerTraversal(obj,currentPath){
   if(obj === null || typeof obj !== 'object') return currentPath;
   else{
-    for(const key in obj){
-      if(key === "name"){
-          let path = currentPath.length > 0 ? currentPath + '/' + obj[key] : currentPath + obj[key]
-          currentPath = fileExplorerTraversal(obj[key],path)
-      }
-       const directory = fileExplorerTraversal(obj[key],currentPath);
+    for(const child of obj){
+      let path = currentPath.length > 0 ? currentPath + '/' + child.name : currentPath + child.name
+      currentPath = fileExplorerTraversal(child.children,path);
+      const directory = fileExplorerTraversal(child.children,currentPath);
       if(directory) console.log(directory)
     }
   }

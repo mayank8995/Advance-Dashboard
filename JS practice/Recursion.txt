@@ -89,7 +89,10 @@ const obj = {
     }
   }
 }
-
+Base Case: obj === null || typeof obj !== 'object return 0
+What gets smaller? child object Traversal
+Recursive Relationship: max = Math.max(max, 1 + maxDepth(obj[key]))
+Traversal Type: arbitrary object traversal
 function maxDepth(obj){
     let maxN = 0;
     if(obj === null || Object.keys(obj).length === 0) return 0;
@@ -106,6 +109,14 @@ Explanation: Given string has 7 subsequences.
 Input: str = "aa"
 Output: [a, a, aa] 
 Explanation: Given string has 3 subsequences.
+
+Base Case: index === str.length return [current]
+What gets smaller? str traversed through index
+Recursive Relationship: 
+                    a = gensubseq(str, index + 1, current + str[index])
+                    b = gensubseq(str, index + 1, current)
+                    return [...a,...b]
+Traversal Type: branching traversal - include/exclude
 
 function generateAllSubsequence(str, index, current){
         if(index === str.length) return [current]
@@ -129,6 +140,14 @@ Expected:
 
 8
 
+Base Case: index === str.length return 1
+What gets smaller? str traversed through index
+Recursive Relationship: a = gensubseq(str, index + 1)
+                        b = gensubseq(str, index + 1)
+                    return a+b;
+Traversal Type: branching traversal
+Return style: Child returns number
+Parent adds numbers
 
 function countAllSubsequence(str,index){
     if(index === str.length){
@@ -150,6 +169,13 @@ Input:
 Output:
 
 [1,2,3,4,5]
+
+Base Case: arr.length === 0 return []
+What gets smaller?: arr to be traversed
+Recursive Relationship: if(Array.isArray(arr[i])) flattenArray.push(...flatten(arr[i])) else flattenArray.push(arr[i]) return flattenArray
+Traversal Type: array traversal
+Return style: Child returns array
+Parent merges arrays
 
 function flattenArray(arr){
     if(arr.length === 0) return [];
@@ -220,6 +246,14 @@ const obj = {
   }
 };
 
+Base Case: obj === null || typeof obj !== 'object' return obj;
+newcloned = Array.isArray(obj) ? [] : {}
+What gets smaller? child object
+Recursive Relationship: newcloned[key] = deepClone(obj[key])
+Traversal Type: arbitrary object traversal
+Return Style: Child returns cloned value
+Parent assembles cloned object
+
 Create a completely new object:
 const clone = deepClone(obj);
 
@@ -270,6 +304,14 @@ Return:
 
 4 (consider root object also)
 
+Base Case: 
+count = 1;
+obj === null || typeof obj === return 0
+What gets smaller? child object
+Recursive Relationship: count += countNestedObject(obj[key]) return count
+Traversal Type: arbitrary object traversal
+Return Style: child return number, parents adds it 
+
 function countNestedObject(obj){
   let count = 1;
   if(obj === null || typeof obj !== 'object') return 0;
@@ -315,6 +357,17 @@ function findAllValuesForAKey(obj,target,values){
   }
   return values;
 }
+Base Case: obj === null || typeof obj !== 'object' return [];
+What gets smaller? 
+      Current object
+      ↓
+      Child object
+Recursive Relationship: 
+let values = [];
+if(key === target) values = [...values, obj[key]]
+values = [...values, findNested(obj[key],target)]  return [...values]
+Traversal Type: arbitrary object traversal
+Return Style: child return value, parent stores it
 
 function findAllValuesForAKeyW/oPAssingValuesinParameters(obj,target){
   if(obj === null || typeof obj !== 'object') return [];
@@ -369,6 +422,18 @@ Return:
   replies: []
 }
 
+Base Case: obj === null || typeof obj !== 'object' return null;
+What gets smaller? 
+      Current object
+      ↓
+      Child object
+Recursive Relationship: if(obj[key] === value) return obj;
+                        let a = nestedCommentSearch(obj[key]);
+                        if(a) return a;
+Traversal Type: arbitrary object traversal
+Return Style: Child returns comment object
+Parent bubbles it upward
+
 function nestedCommentSearch(obj,id,target){
   if(obj === null || typeof obj !== 'object') return null;
   else{
@@ -379,5 +444,52 @@ function nestedCommentSearch(obj,id,target){
        const searched = nestedCommentSearch(obj[key],id,target);
       if(searched) return searched
     }
+  }
+}
+
+File Explorer Traversal
+Given:
+const tree = {
+  name: "root",
+  children: [
+    {
+      name: "src",
+      children: [
+        {
+          name: "components",
+          children: []
+        }
+      ]
+    },
+    {
+      name: "public",
+      children: []
+    }
+  ]
+};
+Print:
+root
+root/src
+root/src/components
+root/public
+Base Case: obj === null || typeof obj !== 'object' return currentPath;
+What gets smaller? 
+      Current object
+      ↓
+      Child object
+Recursive Relationship: 
+          currentPath = currentPath.length > 0 ? currentPath + '/' + obj[key] : currentPath + obj[key]
+          fileExplorerTraversal(child,currentPath); 
+Traversal Type: object traversal
+Return Style: parent passes path child concats it;
+
+function fileExplorerTraversal(obj,currentPath){
+  if(obj === null) return null;
+  else{
+      currentPath = currentPath ? currentPath + '/' + obj.name : currentPath + obj.name;
+      console.log(currentPath)
+      for(const child of obj.children || []){
+        fileExplorerTraversal(child,currentPath);        
+      }
   }
 }

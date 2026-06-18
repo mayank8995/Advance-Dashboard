@@ -1,27 +1,67 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { NAV_ITEMS } from "../../utils/constants";
+import { className, labelclassName, NAV_ITEMS } from "../../utils/constants";
+import FormField from "../../components/Form/FormField";
+import { validateField } from "../../utils/FormValidation";
+import type { LoginForm } from "../../types/types";
+import { doLogin } from "../../api/MockApi/MockApi";
 
 // LoginCard.jsx
 function Login() {
 
   const navigate = useNavigate();
-    const formValuesRef: any = useRef({
+    const [form, setForm] = useState<LoginForm>({
                             email: '',
                             password: ''
                           });
+     const [errors, setErrors] = useState({});
 
-   const handleSubmit = (e: any) => {
-    console.log("Form submitted smoothly without a reload!",formValuesRef.current);
-    navigate(NAV_ITEMS.DASHBOARD);
-    e.preventDefault(); 
+function checkFormValidity(){
+    let valid: boolean = true;
+   for (const key of Object.keys(form) as Array<keyof LoginForm>) {
+    let msg = validateField(key, form[key]);
+        if(msg) valid = false
+        console.log("msg>>>",msg)
+            setErrors((prevErrors) => ({
+                    ...prevErrors,
+          [key]: msg,
+                    }));                                      
+        }
+    return valid;
+}
+   const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Form submitted smoothly without a reload!");
+    try {
+            if(checkFormValidity()){
+                console.log("inside herer")
+                let res;
+                res = await doLogin(form);
+                navigate(NAV_ITEMS.DASHBOARD);
+                console.log("POST SUCCESS", res);
+            }else{
+                    console.log("ELSE SUBMIT");
+            }
+        } catch(err) {
+            console.error("POST FAILED", err);
+        }
   };
 
   const handleOnChange = (e: any) => {
     const { name, value } = e.target;
     console.log("onchange data",name, value);
     try{
-      formValuesRef.current[name] = value;
+      setForm((prevData: any) => ({
+        ...prevData,
+        [name]:value
+      }))
+      let msg = validateField(name,value);
+              console.log("msg>>>",msg)
+              setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: msg,
+              }));
     }catch(e:any){
 
     }
@@ -37,8 +77,8 @@ function Login() {
         </div>
 
         {/* Email */}
-        <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <form onSubmit={handleSubmit} noValidate>
+        {/* <div className="mb-4">
           <label className="text-sm text-gray-500 block mb-1.5">Username/Admin ID</label>
           <input
             name="email"
@@ -47,10 +87,30 @@ function Login() {
             onChange={handleOnChange}
             className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+        </div> */}
+        <div className="mb-4 flex flex-col-reverse">
+                    <FormField  errors={errors} value={form?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={handleOnChange} className={className} />
+                    <label
+                        className={labelclassName}
+                        >
+                        Username/Admin ID
+                        </label>
+        </div>
+        <div className="mb-4 flex flex-col-reverse">
+                    <FormField  errors={errors} value={form?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={handleOnChange} className={className} />
+                    <div className="flex justify-between">
+                      <label
+                        className={labelclassName}
+                        >
+                        Password
+                        </label>
+                        <a href="#" className="text-sm text-blue-500">Forgot password?</a>
+                    </div>
+                  
         </div>
 
         {/* Password */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <div className="flex justify-between mb-1.5">
             <label className="text-sm text-gray-500">Password</label>
             <a href="#" className="text-sm text-blue-500">Forgot password?</a>
@@ -62,7 +122,7 @@ function Login() {
             onChange={handleOnChange}
             className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
+        </div> */}
 
         {/* Remember me */}
         {/* <div className="flex items-center gap-2 mb-5">
@@ -73,7 +133,15 @@ function Login() {
         </div> */}
 
         {/* Submit */}
-        <button  type="submit" className="cursor-pointer w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors mb-4">
+        <button  type="submit" className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
+                        bg-gradient-to-r from-slate-600 to-gray-800
+                        text-white font-semibold text-sm
+                        rounded-xl
+                        shadow-lg shadow-indigo-500/30
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
+                        hover:enabled:from-slate-800 hover:enabled:to-gray-900
+                        transition-all duration-200
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed">
           Sign in
         </button>
         </form>

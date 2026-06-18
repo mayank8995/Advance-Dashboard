@@ -1,9 +1,9 @@
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, SquareChevronLeft, SquareChevronRight, X } from 'lucide-react';
 import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import MobileViewCardForTable from './MobileViewCardForTable';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
-import { NO_RESULT_FOUND } from '../../utils/constants';
+import { className, NO_RESULT_FOUND } from '../../utils/constants';
 
 export default function CustomTable({list, columnsData, headersData, title}:any) {
   // State configuration
@@ -91,12 +91,21 @@ console.log(currentPage, "dssvsddvsdv",totalPages)
   return (
     <div className="min-h-screen bg-slate-50 p-6 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
-      <h1 className="flex flex-row text-lg font-bold text-slate-800 px-6 py-4 pb-0 dark:text-slate-100">
-        <Breadcrumb />{title}
-      </h1>
+        <div className="flex items-center justify-between px-6 py-4 pb-0">
+        <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base flex items-center gap-2">
+          <Breadcrumb />{title}
+        </h2>
+        <span className="text-slate-400 text-xs">{list?.length || 0} projects</span>
+      </div>
+        <div className='sm:hidden px-6 py-4'>
+          <div className='relative'>
+              <FormField style={{width:'100%'}} value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={handleTableSearch}/>
+              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-[6px] top-[10px] dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+          </div>
+        </div>
       {/* Rows Per Page Configurator */}
       <div className='flex flex-row items-center justify-between'>
-      <div className='flex items-center px-6 py-4'>
+      <div className='flex items-center px-6 pb-4'>
         <label className='text-sm font-bold dark:text-slate-100 pr-2'>Rows / page </label>
         <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
           px-2 py-1
@@ -115,10 +124,36 @@ console.log(currentPage, "dssvsddvsdv",totalPages)
           <option className='text-sm font-bold outline-none' value={5}>5</option>
           <option className='text-sm font-bold outline-none' value={10}>10</option>
         </select>
+        <div className="sm:hidden flex justify-center items-center px-6 py-0" >
+        <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>Page {currentPage} / {totalPages || 1}</span>
+        <button disabled={currentPage === 1}
+        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+        className={`p-2 transition-colors ${
+        currentPage === 1 
+          ? 'opacity-40 cursor-not-allowed pointer-events-none disabled:text-gray-400 dark:disabled:text-gray-100' 
+          : 'cursor-pointer text-gray-950 dark:text-gray-100'
+      }`}
+        >
+        <SquareChevronLeft />
+        </button>
+          <button disabled={currentPage === totalPages || totalPages === 0} 
+          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+           className={`p-2 transition-colors ${
+        (currentPage === totalPages || totalPages === 0)
+          ? 'opacity-40 cursor-not-allowed pointer-events-none disabled:text-gray-400 dark:disabled:text-gray-100' 
+          : 'cursor-pointer text-gray-950 dark:text-gray-100'
+      }`}
+          >
+          <SquareChevronRight />
+          </button>
       </div>
-      <div className='px-6 py-4'>
-        <FormField type={"text"} name={"search"} placeholder={"Search"}  onChange={handleTableSearch}/>
       </div>
+      <div className='hidden sm:flex px-6 pb-4'>
+          <div className='relative'>
+              <FormField  value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={handleTableSearch}/>
+              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-[6px] top-[10px] dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+          </div>
+        </div>
       </div>
        <div className='flex flex-col justify-center'>  
 
@@ -140,13 +175,13 @@ console.log(currentPage, "dssvsddvsdv",totalPages)
           {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800'>{NO_RESULT_FOUND}</h1></td></tr>}
         </tbody>
       </table>
-        <div className='sm:hidden'>
+        <div className='sm:hidden pl-[8px] pr-[8px]'>
            { paginatedData?.length > 0 ? <MobileViewCardForTable list={paginatedData} headersData={headers} /> : <div className='flex flex-col items-center dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800'><h1 className='dark:text-slate-100 text-slate-800'>{NO_RESULT_FOUND}</h1></div>}
         </div>
         </div> 
 
       {/* Pagination Footer Controls */}
-      <div className="flex justify-between items-center px-6 py-4" >
+      <div className="hidden sm:flex justify-between items-center px-6 py-4" >
         <button 
           className=' px-6 py-2.5
                         bg-gradient-to-r from-indigo-600 to-violet-600
@@ -163,7 +198,7 @@ console.log(currentPage, "dssvsddvsdv",totalPages)
           Previous
         </button>
         
-        <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>Page {currentPage} of {totalPages || 1}</span>
+        <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>Page {currentPage} / {totalPages || 1}</span>
 
         <button 
          className='px-6 py-2.5
