@@ -19,12 +19,12 @@ export default function MobileViewCardForTable({list, headersData}:any){
                             <h2 className="pl-2 text-slate-800 dark:text-slate-300">{Array.isArray(row[header?.key]) && row[header?.key]?.length > 0 ? row[header?.key][0] : row[header?.key]}</h2>
                         </div>
                         }                  
-                    {header?.key === 'rating' ? <div className="flex flex-col items-start"><h2 className="px-3 py-1
+                    {header?.key === 'rating' ? <div className={getRowCss(header?.key)}><h2 className="text-slate-500">{header?.value?.split(' ').map((n:any) => n[0] + n.substring(1).toLowerCase()).join(' ')}</h2><div className="flex flex-col items-start"><h2 className="px-3 py-1
                               rounded-full
                               bg-green-100
                               text-green-700
                                text-xs
-                              font-semibold dark:bg-emerald-900/40 dark:text-emerald-400">{row[header?.key]}</h2></div> : 
+                              font-semibold dark:bg-emerald-900/40 dark:text-emerald-400">{row[header?.key]}</h2></div></div> : 
             <>{header?.key !== 'name' && <div className={getRowCss(header?.key)}>
             <h2 className="text-slate-500">{header?.value?.split(' ').map((n:any) => n[0] + n.substring(1).toLowerCase()).join(' ')}</h2>
                 <h2 className="pl-2 text-slate-800 dark:text-slate-300">{Array.isArray(row[header?.key]) && row[header?.key]?.length > 0 ? row[header?.key][0] : row[header?.key]}</h2>
