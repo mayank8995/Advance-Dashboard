@@ -83,15 +83,18 @@ export function getTop6ArrayElement(data: any){
 
 
 
-export function performDeepSearch(obj:any, target:string){
+export function  performDeepSearch(obj:any, target:string){
     if( obj === null || typeof obj !== 'object') return false;
     for(const key in obj){
-        if (obj[key]?.toString()?.toLowerCase()?.includes(target)) {
+            // console.log(key, "obj[key]>>>>",obj[key])
+        if ((typeof obj[key] === 'number' || typeof obj[key] === 'string' || typeof obj[key] === 'boolean' )&& obj[key].toString().toLowerCase().includes(target)) {
             // console.log("obj[key]>>>>",obj[key])
             return true;
         }
-        const found = performDeepSearch(obj[key],target);
-        if(found) return true;
+       if (typeof obj[key] === 'object' && obj[key] !== null) {
+            const found = performDeepSearch(obj[key], target);
+            if (found) return true;
+      }
     }
     return false;
 }
@@ -100,6 +103,8 @@ export function performDeepSearch(obj:any, target:string){
 Array.prototype.deepSearchCustomFilter = function(query: string){
   const filtered: any[] = [];
   const cleanQuery = query.trim().replace(/\s+/g, ' ').toLowerCase();
+      // console.log("cleanQuery>>>>",cleanQuery);
+
   if(this){
       for(let i=0;i<this.length;i++){
         if(this[i]){

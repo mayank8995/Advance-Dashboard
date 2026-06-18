@@ -4,7 +4,7 @@ import  { KEY_TRACK_METRIC, KEY_TRACK_METRIC_ICON } from "../../utils/constants"
 import { Flag, MonitorCheck, Star, User } from "lucide-react";
 
 export default function KeyMetric({newData}: any) {
-  console.log("key metric data", newData  )
+  // console.log("key metric data", newData  )
     const [data, setData] = useState({} as any);
     useEffect(() => {
       if(newData){

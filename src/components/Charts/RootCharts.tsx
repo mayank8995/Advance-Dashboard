@@ -11,7 +11,7 @@ const MyCustomPie = (props: PieSectorShapeProps) => {
 
 export default function RootCharts({chartType,data,title, X, Y, name,theme}: any) {
 
-  console.log("theme>>>>",theme)
+  // console.log("theme>>>>",theme)
 
 const RenderCustomLegend = () => {
   return (

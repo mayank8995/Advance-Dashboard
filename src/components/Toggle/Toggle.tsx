@@ -12,7 +12,7 @@ export default function Toggle() {
 
   function toggle(enable: boolean){
         const root = document.documentElement;
-console.log("enable>>>",enable)
+// console.log("enable>>>",enable)
     if (enable) {
       root.setAttribute('data-theme', 'dark');
       localStorage.setItem("theme","dark")

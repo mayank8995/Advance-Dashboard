@@ -24,7 +24,7 @@ function checkFormValidity(){
    for (const key of Object.keys(form) as Array<keyof LoginForm>) {
     let msg = validateField(key, form[key]);
         if(msg) valid = false
-        console.log("msg>>>",msg)
+        // console.log("msg>>>",msg)
             setErrors((prevErrors) => ({
                     ...prevErrors,
           [key]: msg,
@@ -35,18 +35,18 @@ function checkFormValidity(){
    const handleSubmit = async (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Form submitted smoothly without a reload!");
+    // console.log("Form submitted smoothly without a reload!");
     try {
             if(checkFormValidity()){
-                console.log("inside herer")
+                // console.log("inside herer")
                 let res;
                 setIsLoading(true);
                 res = await doLogin(form);
                 setIsLoading(true);
                 navigate(NAV_ITEMS.DASHBOARD);
-                console.log("POST SUCCESS", res);
+                // console.log("POST SUCCESS", res);
             }else{
-                    console.log("ELSE SUBMIT");
+                    // console.log("ELSE SUBMIT");
                     setIsLoading(true);
             }
         } catch(err) {
@@ -57,14 +57,14 @@ function checkFormValidity(){
 
   const handleOnChange = (e: any) => {
     const { name, value } = e.target;
-    console.log("onchange data",name, value);
+    // console.log("onchange data",name, value);
     try{
       setForm((prevData: any) => ({
         ...prevData,
         [name]:value
       }))
       let msg = validateField(name,value);
-              console.log("msg>>>",msg)
+              // console.log("msg>>>",msg)
               setErrors((prevErrors) => ({
                 ...prevErrors,
                 [name]: msg,

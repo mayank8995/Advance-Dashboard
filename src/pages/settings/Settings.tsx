@@ -20,7 +20,7 @@ function Settings(){
         const fetchProfileData = async () => {
             const profileData = await getProfileData();
             if(profileData && Object.keys(profileData)?.length > 0) {
-                console.log("Profile data fetched:", profileData);
+                // console.log("Profile data fetched:", profileData);
                 setIsEditing(true);
                 setFormValues(profileData)
             }
@@ -35,7 +35,7 @@ function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
             [name]: value
         }))
         let msg = validateField(name,value);
-        console.log("msg>>>",msg)
+        // console.log("msg>>>",msg)
         setErrors((prevErrors) => ({
           ...prevErrors,
           [name]: msg,
@@ -45,13 +45,13 @@ function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
 function checkFormValidity(){
     let valid: boolean = true;
      for(const key in formValues){
-            console.log("VZXVXZVXXZ",key)
+            // console.log("VZXVXZVXXZ",key)
             if((key === "name" || key === "department" || key === "designation" || key === "empId" || key === "jdate"))
             {
-                console.log("VZXVXZVXXZ",formValues[key])
+                // console.log("VZXVXZVXXZ",formValues[key])
                     let msg = validateField(key,formValues[key]);
                     if(msg) valid = false
-                    console.log("msg>>>",msg)
+                    // console.log("msg>>>",msg)
                     setErrors((prevErrors) => ({
                     ...prevErrors,
                     [key]: msg,
@@ -68,7 +68,7 @@ function checkFormValidity(){
     try {
         if(checkFormValidity()){
             setIsDataLoading(true);
-            console.log("inside herer")
+            // console.log("inside herer")
             setFormDisabled(false)
             let res;
             if(!isEditing) {
@@ -78,9 +78,9 @@ function checkFormValidity(){
                 res = await editProfileData(formValues);
                     setIsDataLoading(false);
             }
-            console.log("POST SUCCESS", res);
+            // console.log("POST SUCCESS", res);
         }else{
-                console.log("ELSE SUBMIT");
+                // console.log("ELSE SUBMIT");
                 setIsDataLoading(false);
         }
     } catch(err) {

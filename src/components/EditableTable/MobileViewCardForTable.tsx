@@ -1,7 +1,7 @@
 import { bgColors, gradients } from "../../utils/constants"
 
 export default function MobileViewCardForTable({list, headersData}:any){
-    console.log("list>>>",list, "  headersData>>",headersData )
+    // console.log("list>>>",list, "  headersData>>",headersData )
     function getRowCss(value: string){
         let initialCss = `grid grid-cols-2 gap-y-2 text-xs`
         if(value === 'id') return 'hidden'

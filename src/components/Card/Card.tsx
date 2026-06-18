@@ -19,7 +19,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           promotedThisYear && setPromoted(promotedThisYear)
           meetingKPIs && setMeeting(meetingKPIs)
           requiringReview && setRequiring(requiringReview)
-          console.log("topProj>>>>",topProj);
+          // console.log("topProj>>>>",topProj);
       },[])
 
   return (

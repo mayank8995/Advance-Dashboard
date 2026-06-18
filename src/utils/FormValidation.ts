@@ -18,6 +18,6 @@
     if ((name === "name" || name === "department" || name === "designation" || name === "empId" || name === "jdate") && !value.trim()) {
       errorMsg = `${name} is required!`;
     }
-    console.log(name, value)
+    // console.log(name, value)
     return errorMsg;
   };
