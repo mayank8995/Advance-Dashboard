@@ -73,9 +73,10 @@ function checkFormValidity(){
             let res;
             if(!isEditing) {
                 res = await postSubmitProfileSettings(formValues);
-                    setIsDataLoading(false);
             }else{
                 res = await editProfileData(formValues);
+            }
+            if(res){
                     setIsDataLoading(false);
             }
             // console.log("POST SUCCESS", res);

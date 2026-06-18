@@ -42,16 +42,18 @@ function checkFormValidity(){
                 let res;
                 setIsLoading(true);
                 res = await doLogin(form);
-                setIsLoading(true);
-                navigate(NAV_ITEMS.DASHBOARD);
+                if(res){
+                  setIsLoading(false);
+                  navigate(NAV_ITEMS.DASHBOARD);
+                }
                 // console.log("POST SUCCESS", res);
             }else{
                     // console.log("ELSE SUBMIT");
-                    setIsLoading(true);
+                    setIsLoading(false);
             }
         } catch(err) {
             console.error("POST FAILED", err);
-                setIsLoading(true);
+                setIsLoading(false);
         }
   };
 
