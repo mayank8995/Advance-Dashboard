@@ -5,6 +5,7 @@ import FormField from "../../components/Form/FormField";
 import { validateField } from "../../utils/FormValidation";
 import type { LoginForm } from "../../types/types";
 import { doLogin } from "../../api/MockApi/MockApi";
+import { TailSpin } from "react-loader-spinner";
 
 // LoginCard.jsx
 function Login() {
@@ -15,6 +16,8 @@ function Login() {
                             password: ''
                           });
      const [errors, setErrors] = useState({});
+
+     const [isLoading, setIsLoading] = useState(false);
 
 function checkFormValidity(){
     let valid: boolean = true;
@@ -37,14 +40,18 @@ function checkFormValidity(){
             if(checkFormValidity()){
                 console.log("inside herer")
                 let res;
+                setIsLoading(true);
                 res = await doLogin(form);
+                setIsLoading(true);
                 navigate(NAV_ITEMS.DASHBOARD);
                 console.log("POST SUCCESS", res);
             }else{
                     console.log("ELSE SUBMIT");
+                    setIsLoading(true);
             }
         } catch(err) {
             console.error("POST FAILED", err);
+                setIsLoading(true);
         }
   };
 
@@ -142,7 +149,16 @@ function checkFormValidity(){
                         hover:enabled:from-slate-800 hover:enabled:to-gray-900
                         transition-all duration-200
                         cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed">
-          Sign in
+          
+          {isLoading ? <TailSpin
+                                        visible={true}
+                                        height={20}
+                                        color="#4fa94d"
+                                        ariaLabel="tail-spin-loading"
+                                        radius="1"
+                                        wrapperStyle={{}}
+                                        wrapperClass="flex items-center justify-center"
+                                        /> : <>Sign in</>}
         </button>
         </form>
         {/* Sign up link */}

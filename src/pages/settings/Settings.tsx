@@ -4,6 +4,7 @@ import { className, labelclassName, PROFILE_SUBHEAD, SIDE_BAR_ITEMS } from "../.
 import type { ProfileForm } from "../../types/types";
 import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/MockApi/MockApi";
 import { validateField } from "../../utils/FormValidation";
+import { TailSpin } from "react-loader-spinner";
 
 function Settings(){
 
@@ -13,6 +14,7 @@ function Settings(){
      const refForUpload = useRef<HTMLInputElement>(null); // separate ref for image upload
      const [errors, setErrors] = useState({});
     const [formDisabled, setFormDisabled] = useState<boolean>(false);
+    const [isLoading, setIsDataLoading] = useState(false);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -65,20 +67,25 @@ function checkFormValidity(){
     console.log("START SUBMIT", formValues,e);
     try {
         if(checkFormValidity()){
+            setIsDataLoading(true);
             console.log("inside herer")
             setFormDisabled(false)
             let res;
             if(!isEditing) {
                 res = await postSubmitProfileSettings(formValues);
+                    setIsDataLoading(false);
             }else{
                 res = await editProfileData(formValues);
+                    setIsDataLoading(false);
             }
             console.log("POST SUCCESS", res);
         }else{
                 console.log("ELSE SUBMIT");
+                setIsDataLoading(false);
         }
     } catch(err) {
         console.error("POST FAILED", err);
+        setIsDataLoading(false);
     }
 
 };
@@ -276,7 +283,15 @@ function handleFileChange(e:any){
                     "
                     disabled = {formDisabled}
                     >
-                    Save Profile
+                    {isLoading ? <TailSpin
+                                        visible={true}
+                                        height={20}
+                                        color="#4fa94d"
+                                        ariaLabel="tail-spin-loading"
+                                        radius="1"
+                                        wrapperStyle={{}}
+                                        wrapperClass="flex items-center justify-center"
+                                        /> : <>Save Profile</>}
                     </button>
  
                 <button type="button"
@@ -314,7 +329,15 @@ function handleFileChange(e:any){
                     "
                     disabled = {formDisabled}
                     >
-                    Edit Profile
+                    {isLoading ? <TailSpin
+                                        visible={true}
+                                        height={20}
+                                        color="#4fa94d"
+                                        ariaLabel="tail-spin-loading"
+                                        radius="1"
+                                        wrapperStyle={{}}
+                                        wrapperClass="flex items-center justify-center"
+                                        /> : <>Edit Profile</>}
                     </button>
                 </div>}
             </form>
