@@ -114,26 +114,26 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       <div className='flex-1 justify-between  flex items-center px-6 pb-4'>
         <div className='flex justify-center items-center'>
           <label className=' hidden sm:flex text-sm font-bold dark:text-slate-100 pr-2'>Rows / page </label>
-          <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
-            px-2 py-1
-            border
-            border-slate-300 dark:border-slate-700
-            rounded-lg
-            bg-white dark:bg-slate-800
-            text-sm
-            shadow-sm
-            focus:ring-2
-            focus:ring-blue-500 dark:text-slate-300
-            dark:outline-none dark:focus:outline-none
-            ">
-            <option className='text-sm font-bold outline-none' value={2}>2</option>
-            <option className='text-sm font-bold outline-none' value={3}>3</option>
-            <option className='text-sm font-bold outline-none' value={5}>5</option>
-            <option className='text-sm font-bold outline-none' value={10}>10</option>
-          </select>
-        </div>
-        <div className="flex justify-center items-center" >
-        {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
+        <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
+          px-2 py-1
+          border
+          border-slate-300 dark:border-slate-700
+          rounded-lg
+          bg-white dark:bg-slate-800
+          text-sm
+          shadow-sm
+          focus:ring-2
+          focus:ring-blue-500 dark:text-slate-300
+          dark:outline-none dark:focus:outline-none
+          ">
+          <option className='text-sm font-bold outline-none' value={2}>2</option>
+          <option className='text-sm font-bold outline-none' value={3}>3</option>
+          <option className='text-sm font-bold outline-none' value={5}>5</option>
+          <option className='text-sm font-bold outline-none' value={10}>10</option>
+        </select>
+         </div>
+        <div className="sm:hidden flex justify-center items-center px-6 py-0" >
+        {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>Page {currentPage} / {totalPages || 1}</span> */}
         <button disabled={currentPage === 1}
         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
         className={`p-2 transition-colors ${
@@ -144,7 +144,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
         >
         <SquareChevronLeft />
         </button>
-        <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span>
+         <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span>
           <button disabled={currentPage === totalPages || totalPages === 0} 
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
            className={`p-2 transition-colors ${
@@ -185,12 +185,12 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
         </tbody>
       </table>
         <div className='sm:hidden pl-[8px] pr-[8px]'>
-           { <MobileViewCardForTable list={paginatedData} headersData={headers} /> }
+           { paginatedData?.length > 0 ? <MobileViewCardForTable list={paginatedData} headersData={headers} /> : <div className='flex flex-col items-center dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800'><h1 className='dark:text-slate-100 text-slate-800'>{NO_RESULT_FOUND}</h1></div>}
         </div>
         </div> 
 
       {/* Pagination Footer Controls */}
-      {/* <div className="hidden sm:flex justify-between items-center px-6 py-4" >
+      <div className="hidden sm:flex justify-between items-center px-6 py-4" >
         <button 
           className=' px-6 py-2.5
                         bg-gradient-to-r from-indigo-600 to-violet-600
@@ -224,7 +224,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
         >
           Next
         </button>
-      </div> */}
+      </div>
          </div>
     </div>
   );
