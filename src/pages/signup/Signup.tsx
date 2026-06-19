@@ -2,20 +2,19 @@
 // import FormField from "../../components/Form/FormField";
 // import { className, labelclassName } from "../../utils/constants";
 import { useState } from "react";
-import { initialFormData, type Errors, type FormData, type SignUpForm } from "../../types/types";
+import { initialFormData, type Errors, type FormData } from "../../types/types";
 import { className, labelclassName, stepConfig } from "../../utils/constants";
 import FormField from "../../components/Form/FormField";
 import { TailSpin } from "react-loader-spinner";
 import { validateField } from "../../services/form-validation.service";
 import { doSignup } from "../../api/admin-portal-api/admin-portal.api";
-import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Errors>({});
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+
 
   const updateStep = <K extends keyof FormData>(key: K, data: FormData[K], activeKey:string) => {
     // console.log(key," <><><> ",data,activeKey);
