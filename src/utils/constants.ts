@@ -1,3 +1,5 @@
+import { validateFormOne, validateFormTwo } from "../services/form-validation.service";
+
 export const KEY_TRACK_METRIC = {
             TOTAL_EMPLOYEES: "Total Employees",
              NOTICE_PERIOD_EMP: "Employees on notice period",
@@ -205,4 +207,12 @@ export const headers_employees = [
 
 export const ADMIN_PORTAL = "Admin Portal"
 
-export const NO_RESULT_FOUND = "No exact match found"
+export const NO_RESULT_FOUND = "No match found"
+
+// map step index -> its slice key + validator
+export const stepConfig = [
+  { key: 'formOne' as const, validate: validateFormOne },
+  { key: 'formTwo' as const, validate: validateFormTwo }
+];
+
+export const MSG_404 = "Endpoint not found"

@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import FormField from "../../components/Form/FormField"
 import { className, labelclassName, PROFILE_SUBHEAD, SIDE_BAR_ITEMS } from "../../utils/constants"
 import type { ProfileForm } from "../../types/types";
-import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/MockApi/MockApi";
-import { validateField } from "../../utils/FormValidation";
+import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/admin-portal-api/admin-portal.api";
+import { validateField } from "../../services/form-validation.service";
 import { TailSpin } from "react-loader-spinner";
 
 function Settings(){
@@ -142,7 +142,7 @@ function handleFileChange(e:any){
 }
     return <>
     <div className="w-full bg-gradient-to-br from-indigo-50/40 via-white to-slate-50 dark:bg-gray-800">
-        <div className="p-6 dark:bg-gray-800">
+        <div className="p-4 dark:bg-gray-800">
             <div className="mb-6">
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{SIDE_BAR_ITEMS.SETTINGS}</h1>
             <h2 className="text-sm text-slate-400 mt-1 dark:text-slate-300">{PROFILE_SUBHEAD}</h2>

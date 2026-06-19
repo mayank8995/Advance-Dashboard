@@ -1,5 +1,6 @@
-import apiClient from "../http-common";
-import type { LoginForm, ProfileForm } from "../../types/types";
+import apiClient from "../../services/http-common.service";
+import type { LoginForm, ProfileForm, SignUpForm } from "../../types/types";
+
 export default async function getEmployees() {
   try {
     const response = await apiClient.get('/employeeList');
@@ -60,7 +61,7 @@ export const getProfileData = async () => {
 
 export const editProfileData = async (payload: ProfileForm | null) => {
   try {
-    const res = await apiClient.put("/profile",payload);
+    const res = await apiClient.patch("/profile",payload);
     // console.log("Edited:", res.data);
     return res.data;
   } catch (err: any) {
@@ -75,6 +76,20 @@ export const doLogin = async (form: LoginForm) => {
   // console.log("form>>>", form);
   try {
     const res = await apiClient.post("/login", JSON.stringify(form));
+    // console.log("Created:", res);
+    return res.data;
+  } catch (err: any) {
+    console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
+    console.error("Status:", err.response?.status);
+    console.error("URL:", err.config?.url);
+    throw err;
+  }
+};
+
+export const doSignup = async (form: SignUpForm) => {
+  // console.log("form>>>", form);
+  try {
+    const res = await apiClient.post("/signup", JSON.stringify(form));
     // console.log("Created:", res);
     return res.data;
   } catch (err: any) {

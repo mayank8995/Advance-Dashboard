@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, ArrowUpDown, SquareChevronLeft, SquareChevronRight, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, SquareChevronLeft, SquareChevronRight, TextSearch, X } from 'lucide-react';
 import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import MobileViewCardForTable from './MobileViewCardForTable';
@@ -90,7 +90,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 dark:bg-gray-800">
+    <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
         <div className="flex items-center justify-between px-6 py-4 pb-0">
         <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base flex items-center gap-2">
@@ -138,19 +138,19 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
         className={`p-2 transition-colors ${
         currentPage === 1 
-          ? 'opacity-40 cursor-not-allowed pointer-events-none disabled:text-gray-400 dark:disabled:text-gray-100' 
-          : 'cursor-pointer text-gray-950 dark:text-gray-100'
+          ? 'opacity-40 cursor-not-allowed pointer-events-none  disabled:text-gray-400 dark:disabled:text-gray-100' 
+          : 'cursor-pointer text-gray-600 dark:text-gray-100'
       }`}
         >
         <SquareChevronLeft />
         </button>
-        <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span>
+        <span className='text-xs md:text-sm font-bold  dark:text-slate-100'>{currentPage} / {totalPages || 1}</span>
           <button disabled={currentPage === totalPages || totalPages === 0} 
           onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
            className={`p-2 transition-colors ${
         (currentPage === totalPages || totalPages === 0)
-          ? 'opacity-40 cursor-not-allowed pointer-events-none disabled:text-gray-400 dark:disabled:text-gray-100' 
-          : 'cursor-pointer text-gray-950 dark:text-gray-100'
+          ? 'opacity-40 cursor-not-allowed pointer-events-none  disabled:text-gray-400 dark:disabled:text-gray-100' 
+          : 'cursor-pointer text-gray-600 dark:text-gray-100'
       }`}
           >
           <SquareChevronRight />
@@ -181,11 +181,11 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800'>{NO_RESULT_FOUND}</h1></td></tr>}
+          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800'><span><TextSearch className='pr-1'/>{NO_RESULT_FOUND}</span></h1></td></tr>}
         </tbody>
       </table>
         <div className='sm:hidden pl-[8px] pr-[8px]'>
-           { <MobileViewCardForTable list={paginatedData} headersData={headers} /> }
+           { paginatedData?.length > 0 ? <MobileViewCardForTable list={paginatedData} headersData={headers} /> : <div className='bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-gradient-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2   dark:border-slate-900/50'><h1 className='dark:text-slate-100 text-slate-800'><span className='flex items-center justify-center'><TextSearch className='pr-1'/>{NO_RESULT_FOUND}</span></h1></div>}
         </div>
         </div> 
 

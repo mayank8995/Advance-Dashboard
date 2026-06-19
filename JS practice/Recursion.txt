@@ -472,16 +472,16 @@ root
 root/src
 root/src/components
 root/public
-Base Case: obj === null || typeof obj !== 'object' return currentPath;
-What gets smaller? 
-      Current object
+
+Base Case: obj === null return null;
+What gets smaller?  Current object
       ↓
       Child object
-Recursive Relationship: 
-          currentPath = currentPath.length > 0 ? currentPath + '/' + obj[key] : currentPath + obj[key]
-          fileExplorerTraversal(child,currentPath); 
-Traversal Type: object traversal
-Return Style: parent passes path child concats it;
+Recursive Relationship: currentPath = currentPath ? currentPath + "/" + obj.name : currentPath + obj.name;
+fileExplorerTraversal(child, currentPath)
+Traversal Type: known object traversal
+Return Style: parent passes current path to child , child concats it
+State carried downward: currentPath
 
 function fileExplorerTraversal(obj,currentPath){
   if(obj === null) return null;
@@ -493,3 +493,54 @@ function fileExplorerTraversal(obj,currentPath){
       }
   }
 }
+
+
+Generate All Valid Parentheses
+
+Input:
+
+n = 2
+
+Output:
+
+[
+  "(())",
+  "()()"
+]
+
+//shared accumulator method
+function generateValidParanthesis(current, openCount, closeCount,n,arr){
+
+    if(openCount === n && closeCount === n) return arr.push(current);
+    else{
+      if(openCount < n) {
+         generateValidParanthesis(current + "(", openCount + 1, closeCount,n,arr);
+
+      }
+      if(closeCount < openCount){
+          generateValidParanthesis(current + ")", openCount , closeCount + 1,n,arr);
+     }
+      }
+    return arr
+  }
+
+//child passes to parent
+function generateValidParanthesis(current, openCount, closeCount,n){
+
+    if(openCount === n && closeCount === n) return [current];
+
+      let open;
+      let close;
+      if(openCount < n) {
+         open = generateValidParanthesis(current + "(", openCount + 1, closeCount,n);
+      }else if(openCount === n){
+        open = [];
+      }
+      if(closeCount < openCount){
+          close = generateValidParanthesis(current + ")", openCount , closeCount + 1,n);
+     }else if(closeCount === openCount){
+       close = [];
+     }
+       
+    return [...open, ...close]
+  }

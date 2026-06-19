@@ -21,3 +21,31 @@ export interface LoginForm {
   email: string;
   password: string;
 }
+
+export interface SignUpForm {
+  name: string;
+  department: string;
+  designation: string;
+  empId: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface FormData {
+  formOne: { name: string; email: string; password: string; confirmPassword: string; };
+  formTwo: { designation: string; department: string; empId: string; };
+}
+
+export type Errors = Partial<Record<string, string>>;
+
+export const initialFormData: FormData = {
+   formOne: { name: '', email: '',password: '',confirmPassword: '', },
+   formTwo: { designation: '', department: '',empId: '' }
+};
+
+export interface ResponseObject{
+  data: any;
+  status: number;
+  statusText: string;
+}

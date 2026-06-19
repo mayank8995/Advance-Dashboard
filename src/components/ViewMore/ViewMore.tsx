@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import CustomTable from "../EditableTable/CustomTable";
 import { useSearchParams } from "react-router-dom";
-import { getTopProjects } from "../../utils/Utils";
+import { getTopProjects } from "../../services/utils.service";
 import { columns_promotedThisYear, columns_requiringReview, columns_top_performers, columns_top_projects, headers_promotedThisYear, headers_requiringReview, headers_top_performers, headers_top_projects, TOP_PROJECTS, VIEW_MORE_ROUTES } from "../../utils/constants";
 
 function ViewMore(){

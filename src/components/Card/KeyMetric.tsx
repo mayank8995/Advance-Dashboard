@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAvgEmployeeSatisfaction, getNumberofActiveProjects } from "../../utils/Utils";
+import { getAvgEmployeeSatisfaction, getNumberofActiveProjects } from "../../services/utils.service";
 import  { KEY_TRACK_METRIC, KEY_TRACK_METRIC_ICON } from "../../utils/constants";
 import { Flag, MonitorCheck, Star, User } from "lucide-react";
 

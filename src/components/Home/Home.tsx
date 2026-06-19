@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom"
 import Header from "../Header/Header"
 import Navigation from "../Navigation/Navigation"
-import {useAnalyticsData, useGetData, usePerformanceCardData} from "../../utils/Utils"
+import {useAnalyticsData, useGetData, usePerformanceCardData} from "../../services/utils.service"
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary"
 import { useEffect, useState } from "react"
 import { Puff } from "react-loader-spinner"

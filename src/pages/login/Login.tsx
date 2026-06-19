@@ -1,14 +1,14 @@
 import {  useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { className, labelclassName, NAV_ITEMS } from "../../utils/constants";
 import FormField from "../../components/Form/FormField";
-import { validateField } from "../../utils/FormValidation";
+import { validateField } from "../../services/form-validation.service";
 import type { LoginForm } from "../../types/types";
-import { doLogin } from "../../api/MockApi/MockApi";
+import { doLogin } from "../../api/admin-portal-api/admin-portal.api";
 import { TailSpin } from "react-loader-spinner";
 
 // LoginCard.jsx
-function Login() {
+function Login({onCustomEvent}:any) {
 
   const navigate = useNavigate();
     const [form, setForm] = useState<LoginForm>({
@@ -113,7 +113,7 @@ function checkFormValidity(){
                         >
                         Password
                         </label>
-                        <a href="#" className="text-sm text-blue-500">Forgot password?</a>
+                        {/* <a href="#" className="text-sm text-blue-500">Forgot password?</a> */}
                     </div>
                   
         </div>
@@ -143,14 +143,14 @@ function checkFormValidity(){
 
         {/* Submit */}
         <button  type="submit" className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
-                        bg-gradient-to-r from-slate-600 to-gray-800
                         text-white font-semibold text-sm
                         rounded-xl
                         shadow-lg shadow-indigo-500/30
                         hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
                         hover:enabled:from-slate-800 hover:enabled:to-gray-900
                         transition-all duration-200
-                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed">
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed"
+                        >
           
           {isLoading ? <TailSpin
                                         visible={true}
@@ -166,7 +166,7 @@ function checkFormValidity(){
         {/* Sign up link */}
         <p className="text-center text-sm text-gray-500">
           Don't have an account?{' '}
-          <a href="#" className="text-blue-500">Create one</a>
+          <a onClick={() => onCustomEvent(false)} className="text-blue-500">Create one</a>
         </p>
 
       </div>

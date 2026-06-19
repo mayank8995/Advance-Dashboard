@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTopProjects } from "../../utils/Utils";
+import { getTopProjects } from "../../services/utils.service";
 import { bgColors, CARD_CONTENT_LIMIT_TO_SCROLL, gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE, VIEW_MORE_ROUTES_VALUES } from "../../utils/constants";
 import { ArrowRight, Briefcase, Medal, Star, Target, TriangleAlert, Trophy, UserStar } from "lucide-react";
 import { Link } from "react-router-dom";
