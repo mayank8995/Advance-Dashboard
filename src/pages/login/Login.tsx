@@ -6,6 +6,7 @@ import { validateField } from "../../services/form-validation.service";
 import type { LoginForm } from "../../types/types";
 import { doLogin } from "../../api/admin-portal-api/admin-portal.api";
 import { TailSpin } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 // LoginCard.jsx
 function Login({onCustomEvent}:any) {
@@ -42,11 +43,19 @@ function checkFormValidity(){
                 let res;
                 setIsLoading(true);
                 res = await doLogin(form);
-                if(res){
+                if(res.status === 200){
                   setIsLoading(false);
+                  toast.success(res.data.message,{
+
+                  })
                   navigate(NAV_ITEMS.DASHBOARD);
+                }else{
+                   toast.error(res.data.message,{
+
+                  })
+                  console.log("in else POST SUCCESS", res);
+                  setIsLoading(false);
                 }
-                // console.log("POST SUCCESS", res);
             }else{
                     // console.log("ELSE SUBMIT");
                     setIsLoading(false);

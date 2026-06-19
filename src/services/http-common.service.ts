@@ -1,6 +1,5 @@
 import axios, { AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 import type { ResponseObject } from "../types/types";
-import { MSG_404 } from "../utils/constants";
 
  const apiClient =  axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
@@ -40,23 +39,14 @@ apiClient.interceptors.response.use(
   },
   function (error:AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    let responseError:ResponseObject = { 
-      data: [],
-      status: 0,
-      statusText: ''
-    };
-    
-    if(Number(error?.status) === 404){
-       responseError = {
-      data: [],
-      status: Number(error.status),
-      statusText: MSG_404
+    // Do something with response error    
+     const responseError: ResponseObject = {
+      data: error?.response?.data,
+      status: error?.response?.status as number,
+      statusText: error?.response?.statusText as string
     }
-    }
-    console.log("error>>",error,error?.status)
 
-    return Promise.reject(responseError);
+    return responseError;
   }
 );
 

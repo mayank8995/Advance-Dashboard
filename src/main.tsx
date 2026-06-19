@@ -8,10 +8,10 @@ import Dashboard from './pages/dashboard/Dashboard.tsx'
 import Employees from './pages/employee/Employees.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Analytics from './pages/analytics/Analytics.tsx'
-import Settings from './pages/settings/Settings.tsx'
+import Settings from './pages/profile-settings/ProfileSettings.tsx'
 import ViewMore from './components/ViewMore/ViewMore.tsx'
 import { DashboardRoot } from './pages/dashboard/DashboardRoot.tsx'
-
+import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient();
 // TypeScript only:
@@ -71,6 +71,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
       <StrictMode>
           <QueryClientProvider client = {queryClient}>
+            <ToastContainer />
           <RouterProvider router={router} />
           </QueryClientProvider>
       </StrictMode> 

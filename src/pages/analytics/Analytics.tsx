@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 
 function Analytics(){
           const queryClient = useQueryClient();
-          const cachedData: any = queryClient.getQueryData(['initialAnalyticsData']);
-          const keyCachedData: any = queryClient.getQueryData(['initialAppData']);
+          const {data: cachedData}: any = queryClient.getQueryData(['initialAnalyticsData']);
+          const {data: keyCachedData}: any = queryClient.getQueryData(['initialAppData']);
           const [theme, setTheme] = useState<boolean>(false);
 
           useEffect(() => {

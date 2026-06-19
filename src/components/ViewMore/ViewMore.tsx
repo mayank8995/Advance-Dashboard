@@ -12,8 +12,8 @@ function ViewMore(){
     const [title, setTitle] = useState<any>([]);
     const [searchParams] = useSearchParams();
      const queryClient = useQueryClient();
-     const cachedData: any = queryClient.getQueryData(['initialAppData']);
-     const otherData: any = queryClient.getQueryData(['initialPerformanceCardsData']);
+     const {data: cachedData}: any = queryClient.getQueryData(['initialAppData']);
+     const {data: otherData}: any = queryClient.getQueryData(['initialPerformanceCardsData']);
 
     useEffect(() => {
         const target = searchParams?.get("target");

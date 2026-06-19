@@ -5,10 +5,10 @@ import type { ProfileForm } from "../../types/types";
 import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/admin-portal-api/admin-portal.api";
 import { validateField } from "../../services/form-validation.service";
 import { TailSpin } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
-function Settings(){
+function ProfileSettings(){
 
-    const [profile_pic, setImage] = useState(localStorage.getItem("profile_pic") || null);
     const [isEditing, setIsEditing] = useState(false);
     const [formValues, setFormValues] = useState<ProfileForm | null>({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:'',wmode:'',location:'',image:null});
      const refForUpload = useRef<HTMLInputElement>(null); // separate ref for image upload
@@ -18,15 +18,15 @@ function Settings(){
 
     useEffect(() => {
         const fetchProfileData = async () => {
-            const profileData = await getProfileData();
-            if(profileData && Object.keys(profileData)?.length > 0) {
+            const { data: profileData} = await getProfileData();
+            if(profileData["profile"] && Object.keys(profileData["profile"])?.length > 0) {
                 // console.log("Profile data fetched:", profileData);
                 setIsEditing(true);
-                setFormValues(profileData)
+                setFormValues(profileData["profile"])
             }
         }
     fetchProfileData();
-    }, [])
+    }, [isEditing])
     
 function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -73,11 +73,30 @@ function checkFormValidity(){
             let res;
             if(!isEditing) {
                 res = await postSubmitProfileSettings(formValues);
+                if(res.status === 201){
+                    toast.success(res.data.message,{
+
+                    })
+                    setIsEditing(true);
+                }else{
+                    toast.error(res.data.message,{
+
+                    })
+                }
+                setIsDataLoading(false);
             }else{
                 res = await editProfileData(formValues);
-            }
-            if(res){
-                    setIsDataLoading(false);
+                if(res.status === 201){
+                    toast.success(res.data.message,{
+
+                    })
+                    setIsEditing(true);
+                }else{
+                    toast.error(res.data.message,{
+
+                    })
+                }
+                setIsDataLoading(false);
             }
             // console.log("POST SUCCESS", res);
         }else{
@@ -93,7 +112,7 @@ function checkFormValidity(){
 
     function onCancel(){
         if(window.confirm("Are you sure you want to cancel? All unsaved changes will be lost.")){
-             setFormValues({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:'',wmode:'',location:'',image:null}); // reset the initial data to clear form fields
+             setFormValues({name: '',phone: '',email: '',department: '',designation: '',empId:'',jdate:'',wmode:'',location:'',image:undefined}); // reset the initial data to clear form fields
         }
     }
 
@@ -123,14 +142,11 @@ function handleFileChange(e:any){
     // Fires once the file is fully read as a Base64 Data URL string
     reader.onload = () => {
       const base64String: any = reader.result;
-      
       try {
-
-        // Save the raw text string to localStorage
-        localStorage.setItem("profile_pic", base64String);
-
-        // Update local React state to reflect changes instantly
-        setImage(base64String);
+        setFormValues((prevData) => ({
+            ...prevData,
+            image: base64String
+        }))
       } catch (error) {
         console.error("Storage limit exceeded or failed:", error, file.size);
         alert("The image is too large to store in local storage.");
@@ -159,7 +175,7 @@ function handleFileChange(e:any){
   
   <div className="relative">
     <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
-      <img  src={profile_pic ? profile_pic : 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'} className="w-full h-full object-cover" />
+      <img  src={formValues?.image ?? 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'} className="w-full h-full object-cover" />
     </div>
       <input ref={refForUpload} onChange={handleFileChange} type="file" style={{display: "none"}} />
   <button
@@ -347,4 +363,4 @@ function handleFileChange(e:any){
     </>
 }
 
-export default Settings
+export default ProfileSettings

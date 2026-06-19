@@ -4,7 +4,7 @@ import type { LoginForm, ProfileForm, SignUpForm } from "../../types/types";
 export default async function getEmployees() {
   try {
     const response = await apiClient.get('/employeeList');
-         return response.data;
+         return response;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
@@ -14,7 +14,7 @@ export default async function getEmployees() {
 export async function getAnalytics() {
   try {
     const response = await apiClient.get('/analytics');
-         return response.data;
+         return response;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
@@ -25,7 +25,7 @@ export async function getPerformanceCards() {
  try {
     const response = await apiClient.get('/performanceCards');
     // console.log("response>>>>",response)
-         return response.data;
+         return response;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
@@ -37,7 +37,7 @@ export const postSubmitProfileSettings = async (form: ProfileForm | null) => {
   try {
     const res = await apiClient.post("/profile", form);
     // console.log("Created:", res);
-    return res.data;
+    return res;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
     console.error("Status:", err.response?.status);
@@ -50,7 +50,7 @@ export const getProfileData = async () => {
   try {
     const res = await apiClient.get("/profile");
     // console.log("got:", res.data);
-    return res.data;
+    return res;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
     console.error("Status:", err.response?.status);
@@ -63,7 +63,7 @@ export const editProfileData = async (payload: ProfileForm | null) => {
   try {
     const res = await apiClient.patch("/profile",payload);
     // console.log("Edited:", res.data);
-    return res.data;
+    return res;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
     console.error("Status:", err.response?.status);
@@ -77,7 +77,7 @@ export const doLogin = async (form: LoginForm) => {
   try {
     const res = await apiClient.post("/login", JSON.stringify(form));
     // console.log("Created:", res);
-    return res.data;
+    return res;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
     console.error("Status:", err.response?.status);
@@ -91,7 +91,7 @@ export const doSignup = async (form: SignUpForm) => {
   try {
     const res = await apiClient.post("/signup", JSON.stringify(form));
     // console.log("Created:", res);
-    return res.data;
+    return res;
   } catch (err: any) {
     console.error("API Error:", err.message);      // ← this will tell you exactly what's wrong
     console.error("Status:", err.response?.status);

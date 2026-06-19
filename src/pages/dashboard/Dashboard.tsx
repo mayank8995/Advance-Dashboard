@@ -6,9 +6,8 @@ import KeyMetricCard from "../../components/Card/KeyMetricCard";
 
 function Dashboard(){
     const queryClient = useQueryClient();
-    const cachedData: any = queryClient.getQueryData(['initialAppData']);
-    const cachedPerformanceCardData: any = queryClient.getQueryData(['initialPerformanceCardsData']);
-    // console.log("cached performance card data", cachedPerformanceCardData);
+    const { data: cachedData}: any = queryClient.getQueryData(['initialAppData']);
+    const { data: cachedPerformanceCardData}: any = queryClient.getQueryData(['initialPerformanceCardsData']);
     return(
         <div className="flex flex-col flex-auto">
                 <KeyMetricCard>

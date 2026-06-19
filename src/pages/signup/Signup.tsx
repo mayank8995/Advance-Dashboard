@@ -8,13 +8,14 @@ import FormField from "../../components/Form/FormField";
 import { TailSpin } from "react-loader-spinner";
 import { validateField } from "../../services/form-validation.service";
 import { doSignup } from "../../api/admin-portal-api/admin-portal.api";
+import { toast } from "react-toastify";
 
-export default function Signup() {
+export default function Signup({onCustomEvent}: any) {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Errors>({});
   const [isLoading, setIsLoading] = useState(false);
-
+  
 
   const updateStep = <K extends keyof FormData>(key: K, data: FormData[K], activeKey:string) => {
     // console.log(key," <><><> ",data,activeKey);
@@ -62,10 +63,19 @@ export default function Signup() {
                             let res;
                             setIsLoading(true);
                             res = await doSignup({...formData['formOne'], ...formData['formTwo']});
-                            if(res){
-                              setIsLoading(false);
-                              window.location.reload();
-                            }
+                            if(res.status === 201){
+                                              toast.success(res.data.message,{
+                            
+                                              })
+                                              onCustomEvent()
+                                            }else{
+                                               toast.error(res.data.message,{
+                            
+                                              })
+                                              console.log("in else POST SUCCESS", res);
+                                            }
+                                              setIsLoading(false);
+
         } catch(err) {
             console.error("POST FAILED", err);
                 setIsLoading(false);

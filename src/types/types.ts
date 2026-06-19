@@ -44,8 +44,18 @@ export const initialFormData: FormData = {
    formTwo: { designation: '', department: '',empId: '' }
 };
 
-export interface ResponseObject{
+export interface  ResponseObject{
   data: any;
   status: number;
   statusText: string;
+}
+
+export interface ErrorResponseObject {
+  data: any;
+  status: number;
+  statusText: string;
+  code?: string,
+  config?: any,
+  request?: any,
+  response?: any
 }
