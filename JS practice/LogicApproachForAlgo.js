@@ -123,3 +123,40 @@ Option 2: Pass a shared accumulator
 recurse(obj, arr)
 
 so everyone modifies the same object/array.**/
+
+
+/**----STACK---- */
+/* Valid Parentheses
+   Next Greater Element
+   Browser History
+   Undo/Redo
+   Daily Temperatures */
+
+/*Stack Type 1
+Matching Stack
+
+Examples:
+
+Valid Parentheses
+HTML Tags
+XML Tags
+
+Rule:
+
+Push opening
+Pop matching closing
+
+Stack Type 2
+Monotonic Stack
+
+Examples:
+
+Next Greater Element
+Daily Temperatures
+Stock Span
+
+Rule:
+
+Remove useless candidates
+Top becomes answer
+Push current*/

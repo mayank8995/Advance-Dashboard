@@ -7,7 +7,7 @@ import { className, labelclassName, stepConfig } from "../../utils/constants";
 import FormField from "../../components/Form/FormField";
 import { TailSpin } from "react-loader-spinner";
 import { validateField } from "../../services/form-validation.service";
-import { doSignup } from "../../api/admin-portal-api/admin-portal.api";
+import { doSignup } from "../../api/admin-portal.api";
 import { toast } from "react-toastify";
 
 export default function Signup({onCustomEvent}: any) {
@@ -44,7 +44,7 @@ export default function Signup({onCustomEvent}: any) {
   };
 
   const handleFinalSubmit = async () => {
-   console.log("final formData>>>",formData, {...formData})
+//    console.log("final formData>>>",formData, {...formData})
     // re-validate everything, not just the last step
     const allErrors = stepConfig.reduce<Errors>((acc, { key, validate }) => {
       return { ...acc, ...validate(formData[key] as any) };
@@ -72,7 +72,7 @@ export default function Signup({onCustomEvent}: any) {
                                                toast.error(res.data.message,{
                             
                                               })
-                                              console.log("in else POST SUCCESS", res);
+                                            //   console.log("in else POST SUCCESS", res);
                                             }
                                               setIsLoading(false);
 

@@ -4,9 +4,10 @@ import { className, labelclassName, NAV_ITEMS } from "../../utils/constants";
 import FormField from "../../components/Form/FormField";
 import { validateField } from "../../services/form-validation.service";
 import type { LoginForm } from "../../types/types";
-import { doLogin } from "../../api/admin-portal-api/admin-portal.api";
+import { doLogin } from "../../api/admin-portal.api";
 import { TailSpin } from "react-loader-spinner";
 import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
 
 // LoginCard.jsx
 function Login({onCustomEvent}:any) {
@@ -19,6 +20,8 @@ function Login({onCustomEvent}:any) {
      const [errors, setErrors] = useState({});
 
      const [isLoading, setIsLoading] = useState(false);
+    const context = useAuth();
+      // console.log("context>>>>",context)
 
 function checkFormValidity(){
     let valid: boolean = true;
@@ -48,6 +51,7 @@ function checkFormValidity(){
                   toast.success(res.data.message,{
 
                   })
+                  context.login({...res.data.user})
                   navigate(NAV_ITEMS.DASHBOARD);
                 }else{
                    toast.error(res.data.message,{

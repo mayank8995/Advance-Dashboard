@@ -101,7 +101,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
                               bg-green-100
                               text-green-700
                                text-xs
-                              font-semibold dark:bg-emerald-900/40 dark:text-emerald-400">{list?.length || 0}</span>
+                              font-semibold dark:bg-emerald-900/40 dark:text-emerald-400">Total: {list?.length || 0}</span>
       </div>
         <div className='sm:hidden px-6 py-4'>
           <div className='relative'>

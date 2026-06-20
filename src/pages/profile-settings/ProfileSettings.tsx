@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import FormField from "../../components/Form/FormField"
 import { className, labelclassName, PROFILE_SUBHEAD, SIDE_BAR_ITEMS } from "../../utils/constants"
 import type { ProfileForm } from "../../types/types";
-import { editProfileData, getProfileData, postSubmitProfileSettings } from "../../api/admin-portal-api/admin-portal.api";
+import { editProfileData, postSubmitProfileSettings } from "../../api/admin-portal.api";
 import { validateField } from "../../services/form-validation.service";
 import { TailSpin } from "react-loader-spinner";
 import { toast } from "react-toastify";
+import { useProfileData } from "../../services/utils.service";
+import { useQueryClient } from "@tanstack/react-query";
 
 function ProfileSettings(){
 
@@ -15,18 +17,16 @@ function ProfileSettings(){
      const [errors, setErrors] = useState({});
     const [formDisabled, setFormDisabled] = useState<boolean>(false);
     const [isLoading, setIsDataLoading] = useState(false);
-
+    const { data:profileData } = useProfileData();
+    const queryClient = useQueryClient();
+    
     useEffect(() => {
-        const fetchProfileData = async () => {
-            const { data: profileData} = await getProfileData();
-            if(profileData["profile"] && Object.keys(profileData["profile"])?.length > 0) {
-                // console.log("Profile data fetched:", profileData);
-                setIsEditing(true);
-                setFormValues(profileData["profile"])
-            }
-        }
-    fetchProfileData();
-    }, [isEditing])
+    if(profileData?.data && Object.keys(profileData)?.length > 0){
+        // console.log("data>>>",profileData)
+        setIsEditing(true);
+        setFormValues(profileData.data)
+    }
+    }, [profileData,isEditing])
     
 function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -91,6 +91,7 @@ function checkFormValidity(){
 
                     })
                     setIsEditing(true);
+                    queryClient.invalidateQueries({ queryKey: ['profileData'] });
                 }else{
                     toast.error(res.data.message,{
 
@@ -175,7 +176,7 @@ function handleFileChange(e:any){
   
   <div className="relative">
     <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
-      <img  src={formValues?.image ?? 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'} className="w-full h-full object-cover" />
+      <img  src={formValues?.image ?? ""} className="aspect-square w-full h-full object-cover" alt='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'/>
     </div>
       <input ref={refForUpload} onChange={handleFileChange} type="file" style={{display: "none"}} />
   <button

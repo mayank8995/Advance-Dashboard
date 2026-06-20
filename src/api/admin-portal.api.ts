@@ -1,5 +1,5 @@
-import apiClient from "../../services/http-common.service";
-import type { LoginForm, ProfileForm, SignUpForm } from "../../types/types";
+import apiClient from "../services/http-common.service";
+import type { LoginForm, ProfileForm, SignUpForm } from "../types/types";
 
 export default async function getEmployees() {
   try {

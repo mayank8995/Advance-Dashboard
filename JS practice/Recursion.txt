@@ -508,6 +508,8 @@ Output:
   "()()"
 ]
 
+
+
 //shared accumulator method
 function generateValidParanthesis(current, openCount, closeCount,n,arr){
 
@@ -524,6 +526,18 @@ function generateValidParanthesis(current, openCount, closeCount,n,arr){
     return arr
   }
 
+
+Base Case openCount === n && closedCount === n return [current]
+What gets smaller - openCount & closeCount
+Recursion Condition - 
+ let openArr;
+  let closeArr;
+if(openCount < n) openArr = generateValidParanthesis(current + "(" ,openCount + 1, closeCount,n)
+if(closedCount < openCount) closeArr = generateValidParanthesis(current + ")" ,openCount , closeCount + 1,n)
+return [...openArr, ...closeArr]
+
+Traversal Type - branching,counting
+Return Style - child to parent to merges
 //child passes to parent
 function generateValidParanthesis(current, openCount, closeCount,n){
 

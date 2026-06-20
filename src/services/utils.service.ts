@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import getEmployees, { getAnalytics, getPerformanceCards } from "../api/admin-portal-api/admin-portal.api";
+import getEmployees, { getAnalytics, getPerformanceCards, getProfileData } from "../api/admin-portal.api";
 
 declare global {
   interface Array<T> {
@@ -27,6 +27,14 @@ export function usePerformanceCardData(){
     return useQuery({
                 queryKey: ['initialPerformanceCardsData'],
                 queryFn: getPerformanceCards,
+                staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+  });
+}
+
+export function useProfileData(){
+    return useQuery({
+                queryKey: ['profileData'],
+                queryFn: getProfileData,
                 staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
 }

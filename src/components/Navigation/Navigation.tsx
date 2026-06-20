@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { NAV_ITEMS, SIDE_BAR_ITEMS } from "../../utils/constants";
-import { BarChart3, Home, Settings, Users } from "lucide-react";
+import { BarChart3, Home, LogOut, Settings, Users } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
  function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const context = useAuth()
   const navItems = [
     { name: SIDE_BAR_ITEMS.DASHBOARD, path: NAV_ITEMS.DASHBOARD },
     { name: SIDE_BAR_ITEMS.EMPLOYEES, path:NAV_ITEMS.EMPLOYEES },
     { name: SIDE_BAR_ITEMS.ANALYTICS, path: NAV_ITEMS.ANALYTICS },
     { name:SIDE_BAR_ITEMS.SETTINGS, path:NAV_ITEMS.SETTINGS },
+    {name: SIDE_BAR_ITEMS.LOGOUT, path: NAV_ITEMS.LOGOUT}
   ];
 
   function navigateToPage(isOpen:boolean,  navItem?: any, isMobile?:boolean){
@@ -18,8 +21,16 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
         setIsOpen(!isOpen)
       else
         setIsOpen(isOpen)
-      
-      navItem && navigate(`${navItem.path}`)
+      if(navItem && navItem.path === NAV_ITEMS.LOGOUT){
+          context?.logout();
+      }else if(navItem && navItem.path === NAV_ITEMS.ANALYTICS){
+        startTransition(() => {
+         navigate(`${navItem.path}`)
+        });
+      }
+      else{
+        navItem && navigate(`${navItem.path}`)
+      }
   }
   return (
     <>
@@ -96,6 +107,8 @@ import { BarChart3, Home, Settings, Users } from "lucide-react";
               {item.name === SIDE_BAR_ITEMS.EMPLOYEES && <><Users className="h-5 w-5" size={18}/>{item.name}</>}
               {item.name === SIDE_BAR_ITEMS.ANALYTICS && <><BarChart3 className="h-5 w-5" size={18}/>{item.name}</>}
               {item.name === SIDE_BAR_ITEMS.SETTINGS && <><Settings className="h-5 w-5" size={18}/>{item.name}</>}
+              {item.name === SIDE_BAR_ITEMS.LOGOUT && <><LogOut className="h-5 w-5" size={18} />{item.name}</>}
+            
 
             </NavLink>
           ))}
