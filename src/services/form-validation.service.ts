@@ -30,7 +30,7 @@ import type { Errors, FormData } from "../types/types";
   const specialCharRegex = /^[a-zA-Z0-9\s-._@\/]*$/;
    Object.keys(data).forEach((key) => {
      const field = key as keyof typeof data;
-  console.log("wqeqwqeqweq",field, data[field])
+  // console.log("wqeqwqeqweq",field, data[field])
      if (!specialCharRegex.test(data[field])) {
         errors[field] = 'Special characters not allowed'
     }
@@ -49,7 +49,7 @@ import type { Errors, FormData } from "../types/types";
       errors[field] = `${field} is required`
     }
   })
-  console.log("errorserrors",errors)
+  // console.log("errorserrors",errors)
 
   return errors;
 };

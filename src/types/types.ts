@@ -1,7 +1,8 @@
 
 export interface Login {
-  name: string;
+  name:string;
   email: string;
+  id: string;
 }
 
 export interface ProfileForm {

@@ -45,14 +45,16 @@ export const NAV_ITEMS = {
     DASHBOARD: "/home/dashboard",
     ANALYTICS: "/home/analytics",
     EMPLOYEES: "/home/employees",
-    SETTINGS: "/home/settings"
+    SETTINGS: "/home/settings",
+    LOGOUT: "/"
 }
 
 export const SIDE_BAR_ITEMS = {
     DASHBOARD: "Dashboard",
     ANALYTICS: "Analytics",
     EMPLOYEES: "Employees",
-    SETTINGS: "Profile Settings"
+    SETTINGS: "Profile Settings",
+    LOGOUT: "Logout"
 }
 
 

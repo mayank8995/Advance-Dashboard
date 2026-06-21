@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-export function DashboardRoot(){
+export default function DashboardRoot(){
 
     return <div>
         

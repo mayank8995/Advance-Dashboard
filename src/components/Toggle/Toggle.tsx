@@ -1,29 +1,19 @@
 import { Moon, Sun } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
+import { useTheme } from '../../hooks/useTheme';
 
 export default function Toggle() {
-  const [enabled, setEnabled] = useState(false);
-
-    useEffect(() => {
-      if(localStorage.getItem("theme") === 'dark'){
-        toggle(true)
-      }
-    },[])
-
+  const {toggleTheme} = useTheme()
+  const [enabled, setEnabled] = useState<boolean>(localStorage.getItem("theme") === 'dark');
   function toggle(enable: boolean){
-        const root = document.documentElement;
-// console.log("enable>>>",enable)
+    const root = document.documentElement;
     if (enable) {
       root.setAttribute('data-theme', 'dark');
-      localStorage.setItem("theme","dark")
     } else {
         root.removeAttribute('data-theme');
-        localStorage.removeItem("theme")
     }
-        setEnabled(enable)
-        // Use CustomEvent to include details since Event has no newValue property
-        const event = new CustomEvent('storage', { detail: { newValue: enable } });
-        window.dispatchEvent(event);
+    setEnabled(enable)
+    toggleTheme();
   }
 
   return (

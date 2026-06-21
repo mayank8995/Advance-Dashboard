@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 export default function Card({topProjects, topPerformersList, promotedThisYear, meetingKPIs, requiringReview, title, cardToShow}: any) {
 
-
   const [topProj, setTopProjects] = useState(topProjects);
   const [topPerformers, setTopPerformers] = useState(topPerformersList);
   const [promoted, setPromoted] = useState(promotedThisYear);

@@ -1,17 +1,20 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import Home from './components/Home/Home.tsx'
-import Dashboard from './pages/dashboard/Dashboard.tsx'
-import Employees from './pages/employee/Employees.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import Analytics from './pages/analytics/Analytics.tsx'
-import Settings from './pages/profile-settings/ProfileSettings.tsx'
-import ViewMore from './components/ViewMore/ViewMore.tsx'
-import { DashboardRoot } from './pages/dashboard/DashboardRoot.tsx'
 import { ToastContainer } from 'react-toastify';
+import { AuthProvider } from './context/AuthContext.tsx'
+import { ProtectedRoute } from './pages/protected-routes/ProtectedRoutes.tsx'
+const Home = React.lazy(() => import('./components/Home/Home.tsx'));
+const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard.tsx'));
+const Employees = React.lazy(() => import('./pages/employee/Employees.tsx'));
+const Analytics = React.lazy(() => import('./pages/analytics/Analytics.tsx'));
+const Settings = React.lazy(() => import('./pages/profile-settings/ProfileSettings.tsx'));
+const ViewMore = React.lazy(() => import('./components/ViewMore/ViewMore.tsx'));
+const DashboardRoot = React.lazy(() => import('./pages/dashboard/DashboardRoot.tsx'));
+
 
 const queryClient = new QueryClient();
 // TypeScript only:
@@ -31,6 +34,10 @@ const router = createBrowserRouter([
     element: <App />
   },
   {
+    path: '',
+    element: <ProtectedRoute />,
+    children:[
+       {
     path: 'home',
     element: <Home />,
     handle: { breadcrumb: 'Home' },
@@ -66,13 +73,17 @@ const router = createBrowserRouter([
   }
     ]
   }
+    ]
+  }
 ]);
 
 createRoot(document.getElementById('root')!).render(
       <StrictMode>
           <QueryClientProvider client = {queryClient}>
             <ToastContainer />
+            <AuthProvider>
           <RouterProvider router={router} />
+           </AuthProvider>
           </QueryClientProvider>
       </StrictMode> 
 )
