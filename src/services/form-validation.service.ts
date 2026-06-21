@@ -11,10 +11,13 @@ import type { Errors, FormData } from "../types/types";
     if (name === "phone" && !/^[(?:\+91|91)?[6-9]\d{9}]*$/.test(value)) {
       errorMsg = "Phone number is invalid";
     }
-    if (name === "email" && !/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)) {
+    if (name === "email" && !/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/.test(value)) {
       errorMsg = "Invalid email address";
     }
     if (name === "password" && value.length < 6) {
+      errorMsg = "Password must be at least 6 characters";
+    }
+     if (name === "confirmPassword" && value.length < 6) {
       errorMsg = "Password must be at least 6 characters";
     }
     if ((name === "name" || name === "department" || name === "designation" || name === "empId" || name === "jdate") && !value.trim()) {
@@ -49,6 +52,9 @@ import type { Errors, FormData } from "../types/types";
       errors[field] = `${field} is required`
     }
   })
+       if(data.confirmPassword !== data.password) {
+        errors["confirmPassword"] = "Please make sure your passwords match"
+        }
   // console.log("errorserrors",errors)
 
   return errors;

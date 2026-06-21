@@ -1,1 +1,51 @@
-x
+Base Case- obj === null || typeof obj !== 'object' return obj;
+newClone = Array.isArray(obj) ? [] : {}
+Recursion Case-  newClone[key] = deepClone(obj[key])
+retrun newClone
+What gets smaller- current obj -> child obj
+Traversal Type- arbitrary object traversal
+Return Style- child to parent and parent merges new object
+
+Base Case- 
+count = 1
+obj === null || typeof obj !== 'object' return 0;
+Recursion Case-  count += countNestedObject(obj[key])
+return count;
+What gets smaller- current obj -> child obj
+Traversal Type- arbitrary object traversal
+Return Style- child to parent and parent adds
+
+Base Case- 
+            index === str.length return [current]
+Recursion Case-  
+              included = generateAllSubsequence(str, index+1, current + str[index])
+              excluded = generateAllSubsequence(str, index+1, current)
+return [...included, ...excluded]
+What gets smaller- index - > str
+Traversal Type- branching
+Return Style- child to parent and parent merges
+
+Base Case  openCount === n && closedCount === n return [current]
+Recursion Case 
+                  if(openCount < closedCount) open = generateValidParanthesis(current+"(" , openCount + 1,closedCountn)
+                  else
+                    open = [];
+                  if(closedCount < n) close = generateValidParanthesis(current+")" , openCount closedCount + 1,n)
+                  else 
+                    close = [];
+return [...open,...close]
+
+What gets smaller openCount, closedCount
+Traversal Type - branching
+Return Style - child to parent and parent merges
+
+What does the stack represent? it represents the collection of possible next greater element
+Why process right-to-left? When processing arr[i],
+all elements to the right
+have already been processed.
+Why pop elements? Those elements can never be the next greater
+for any future element to the left.
+
+Why can't we store only values? - beacuse we have to measure distance = index of element in the stack top in the array - current index of element in the array
+What does the stack store? {value and  index}
+How is it different from Next Greater Element? it measures diatance

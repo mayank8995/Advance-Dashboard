@@ -1,6 +1,6 @@
 import {  useState } from "react";
 import {  useNavigate } from "react-router-dom";
-import { className, labelclassName, NAV_ITEMS } from "../../utils/constants";
+import { loginClassName, loginLabelclassNAme, NAV_ITEMS } from "../../utils/constants";
 import FormField from "../../components/Form/FormField";
 import { validateField } from "../../services/form-validation.service";
 import type { LoginForm } from "../../types/types";
@@ -89,47 +89,38 @@ function checkFormValidity(){
     }
   }
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="bg-white border border-gray-200 rounded-xl p-8 w-full max-w-md">
+    <div className="flex items-center justify-center">
+      <div className="max-h-[600px] h-[510px] bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-8 w-full max-w-md">
 
         {/* Header */}
         <div className="mb-6">
-          <h2 className="text-xl font-medium text-gray-900">Welcome back</h2>
-          <p className="text-sm text-gray-500 mt-1">Sign in to your account</p>
+          <h2 className="text-white font-bold text-xl">Welcome back</h2>
+          <p className="text-slate-400 text-sm">Sign in to your account</p>
         </div>
 
         {/* Email */}
         <form onSubmit={handleSubmit} noValidate>
-        {/* <div className="mb-4">
-          <label className="text-sm text-gray-500 block mb-1.5">Username/Admin ID</label>
-          <input
-            name="email"
-            type="email"
-            placeholder="you@example.com"
-            onChange={handleOnChange}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div> */}
-        <div className="mb-4 flex flex-col-reverse">
-                    <FormField  errors={errors} value={form?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={handleOnChange} className={className} />
+          <div>
+
+        <div className="mb-4 flex flex-col">
                     <label
-                        className={labelclassName}
+                        className={loginLabelclassNAme}
                         >
                         Username/Admin ID
                         </label>
+                    <FormField  errors={errors} value={form?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={handleOnChange} className={loginClassName} />
         </div>
-        <div className="mb-4 flex flex-col-reverse">
-                    <FormField  errors={errors} value={form?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={handleOnChange} className={className} />
-                    <div className="flex justify-between">
+        <div className="mb-4 flex flex-col">
                       <label
-                        className={labelclassName}
+                        className={loginLabelclassNAme}
                         >
                         Password
                         </label>
+                    <FormField  errors={errors} value={form?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={handleOnChange} className={loginClassName} />
                         {/* <a href="#" className="text-sm text-blue-500">Forgot password?</a> */}
-                    </div>
                   
         </div>
+          </div>
 
         {/* Password */}
         {/* <div className="mb-4">
@@ -155,13 +146,12 @@ function checkFormValidity(){
         </div> */}
 
         {/* Submit */}
-        <button  type="submit" className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
-                        text-white font-semibold text-sm
-                        rounded-xl
+        <button  type="submit" className=" w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-4  mb-4 px-6 
+                         text-sm
                         shadow-lg shadow-indigo-500/30
                         hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
                         hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                        transition-all duration-200
+                        
                         cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed"
                         >
           
@@ -177,13 +167,16 @@ function checkFormValidity(){
         </button>
         </form>
         {/* Sign up link */}
-        <p className="text-center text-sm text-gray-500">
+        {/* <p className="text-center text-sm text-gray-500">
           Don't have an account?{' '}
           <a onClick={() => onCustomEvent(false)} className="text-blue-500">Create one</a>
-        </p>
+        </p> */}
+        <p className="text-center text-slate-400 text-sm">
+  Don't have an account? <span onClick={() => onCustomEvent(false)}  className="text-[#9d8df1] cursor-pointer">Create one</span>
+</p>
 
       </div>
-    </div>
+     </div>
   );
 }
 export default Login

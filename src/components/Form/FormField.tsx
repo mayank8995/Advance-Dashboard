@@ -7,7 +7,7 @@ function FormField({type, placeholder,name,onChange,className, value,errors,maxl
     }
     return <>
     <input style={style} maxLength={maxlength} value={value} type={type || "text"} name={name || "text"}  onChange={handleOnchange} className={className || defaultClass} placeholder={placeholder} />
-            {name && errors && errors[name] && <span style={{ color: "red", fontSize: "12px" }}>{errors[name]}</span>}
+            {name && errors && errors[name] && <span className="text-red-400 px-2" style={{ fontSize: "12px" }}>{errors[name]}</span>}
     </>
 }
 

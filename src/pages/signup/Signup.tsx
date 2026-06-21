@@ -3,12 +3,13 @@
 // import { className, labelclassName } from "../../utils/constants";
 import { useState } from "react";
 import { initialFormData, type Errors, type FormData } from "../../types/types";
-import { className, labelclassName, stepConfig } from "../../utils/constants";
+import { loginClassName, loginLabelclassNAme, stepConfig } from "../../utils/constants";
 import FormField from "../../components/Form/FormField";
 import { TailSpin } from "react-loader-spinner";
 import { validateField } from "../../services/form-validation.service";
 import { doSignup } from "../../api/admin-portal.api";
 import { toast } from "react-toastify";
+import { ChevronLeft, StepBack } from "lucide-react";
 
 export default function Signup({onCustomEvent}: any) {
   const [step, setStep] = useState(0);
@@ -62,6 +63,9 @@ export default function Signup({onCustomEvent}: any) {
      try {
                             let res;
                             setIsLoading(true);
+
+                            
+
                             res = await doSignup({...formData['formOne'], ...formData['formTwo']});
                             if(res.status === 201){
                                               toast.success(res.data.message,{
@@ -84,34 +88,25 @@ export default function Signup({onCustomEvent}: any) {
   };
 
   const steps = [
-    <StepOneForm data={formData.formOne} errors={errors} onChange={(d,k) => updateStep('formOne', d,k)} />,
-    <StepTwoForm data={formData.formTwo} errors={errors} onChange={(d,k) => updateStep('formTwo', d,k)} />
+    <StepOneForm onCustomEvent={onCustomEvent} data={formData.formOne} errors={errors} onChange={(d,k) => updateStep('formOne', d,k)} />,
+    <StepTwoForm handleBack={handleBack} data={formData.formTwo} errors={errors} onChange={(d,k) => updateStep('formTwo', d,k)} />
   ];
 
   const isLastStep = step === stepConfig.length - 1;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-8 w-full max-w-md">
+    <div className="max-h-[600px] h-[510px] bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-8 w-full max-w-md">
         <form  noValidate>
         {steps[step]}
             <div>
-                {step > 0 && <button className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
-                                text-white font-semibold text-sm 
-                                rounded-xl
-                                shadow-lg shadow-indigo-500/30
-                                hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
-                                hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                                transition-all duration-200
-                                cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed" onClick={handleBack}>Back</button>}
                 {isLastStep
-                ? <button type="button" onClick={handleFinalSubmit} className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
-                                text-white font-semibold text-sm 
-                                rounded-xl
-                                shadow-lg shadow-indigo-500/30
-                                hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
-                                hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                                transition-all duration-200
-                                cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed">{isLoading ? <TailSpin
+                ? <button type="button" onClick={handleFinalSubmit} className=" w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-4  px-6 
+                         text-sm
+                        shadow-lg shadow-indigo-500/30
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
+                        hover:enabled:from-slate-800 hover:enabled:to-gray-900
+                        
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed">{isLoading ? <TailSpin
                                         visible={true}
                                         height={20}
                                         color="#4fa94d"
@@ -120,93 +115,100 @@ export default function Signup({onCustomEvent}: any) {
                                         wrapperStyle={{}}
                                         wrapperClass="flex items-center justify-center"
                                         /> : <>Submit</>}</button>
-                : <button  type="button" className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
-                                text-white font-semibold text-sm 
-                                rounded-xl
-                                shadow-lg shadow-indigo-500/30
-                                hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
-                                hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                                transition-all duration-200
-                                cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed" onClick={handleNext}>Next</button>}
+                : <button  type="button" className=" w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-4  px-6 
+                         text-sm
+                        shadow-lg shadow-indigo-500/30
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
+                        hover:enabled:from-slate-800 hover:enabled:to-gray-900
+                        
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed" onClick={handleNext}>Next</button>}
             </div>
         </form>
     </div>
   );
 }
 
-export function StepOneForm({ data, errors, onChange }: {
+export function StepOneForm({ data, errors, onChange, onCustomEvent }: {
   data: FormData['formOne'];
   errors: Errors;
   onChange: (data: FormData['formOne'], activeKey:string) => void;
+  onCustomEvent?: any;
 }) {
   return (
     <>
-      <div className="mb-4 flex flex-col-reverse">
-                         <FormField  data={data} errors={errors} value={data?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onChange} className={className} />
+    <div className="mb-4 flex flex-row text-slate-400 font-medium " onClick={onCustomEvent}>
+        <StepBack className="text-slate-400 text-xs font-medium tracking-wide" /> <span className="pl-2">Back to Login</span>
+    </div>
+      <div className="mb-4 flex flex-col">
                          <label
-                             className={labelclassName}
+                             className={loginLabelclassNAme}
                              >
                             Name
                          </label>
+                         <FormField  data={data} errors={errors} value={data?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onChange} className={loginClassName} />
         </div>
-   <div className="mb-4 flex flex-col-reverse">
-                         <FormField  data={data} errors={errors} value={data?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={onChange} className={className} />
+   <div className="mb-4 flex flex-col">
                          <label
-                             className={labelclassName}
+                             className={loginLabelclassNAme}
                              >
                             Email
                         </label>
+                         <FormField  data={data} errors={errors} value={data?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={onChange} className={loginClassName} />
                     </div>
-                     <div className="mb-4 flex flex-col-reverse">
-                        <FormField  data={data} errors={errors} value={data?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={className} />
+                     <div className="mb-4 flex flex-col">
                         <label
-                            className={labelclassName}
+                            className={loginLabelclassNAme}
                             >
                            Password
                         </label>
+                        <FormField  data={data} errors={errors} value={data?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={loginClassName} />
                     </div>
-                    <div className="mb-4 flex flex-col-reverse">
-                        <FormField  data={data} errors={errors} value={data?.confirmPassword} name={"confirmPassword"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={className} />
+                    <div className="mb-4 flex flex-col">
                         <label
-                            className={labelclassName}
+                            className={loginLabelclassNAme}
                             >
                            Confirm Password
                         </label>
+                        <FormField  data={data} errors={errors} value={data?.confirmPassword} name={"confirmPassword"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={loginClassName} />
                     </div>
         </>
   );
 }
 
-export function StepTwoForm({ data, errors, onChange }: {
+export function StepTwoForm({ data, errors, onChange, handleBack }: {
   data: FormData['formTwo'];
   errors: Errors;
   onChange: (data: FormData['formTwo'],activeKey:string) => void;
+  handleBack: any;
 }) {
   return (
     <>
-     <div className="mb-4 flex flex-col-reverse">
-                         <FormField data={data}  errors={errors} value={data?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onChange} className={className} />
+    <div className="mb-4 flex flex-row text-slate-400 font-medium tracking-wide" onClick={handleBack}>
+        <ChevronLeft  className="text-slate-400 text-xs font-medium tracking-wide" /> <span className="pl-1">Back</span>
+    </div>
+     <div className="mb-4 flex flex-col">
                          <label
-                            className={labelclassName}
+                            className={loginLabelclassNAme}
                             >
                            Department
                         </label>
+                         <FormField data={data}  errors={errors} value={data?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onChange} className={loginClassName} />
                     </div>
-                     <div className="mb-4 flex flex-col-reverse">
-                        <FormField  data={data} errors={errors} value={data?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onChange} className={className} />
+                     <div className="mb-4 flex flex-col">
                         <label
-                            className={labelclassName}
+                            className={loginLabelclassNAme}
                             >
                            Designation
                         </label>
+                        <FormField  data={data} errors={errors} value={data?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onChange} className={loginClassName} />
                     </div>
-                     <div className="mb-4 flex flex-col-reverse">
-                        <FormField data={data}  errors={errors} value={data?.empId} name={"empId"} type={"text"} placeholder={"you@example.com"} onChange={onChange} className={className} />
+                     <div className="mb-4 flex flex-col">
                         <label
-                            className={labelclassName}
+                            className={loginLabelclassNAme}
                             >
                            Employee Id
                         </label>
+                        <FormField data={data}  errors={errors} value={data?.empId} name={"empId"} type={"text"} placeholder={"you@example.com"} onChange={onChange} className={loginClassName} />
                     </div>
                     {/* <button  type="button" className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
                         text-white font-semibold text-sm 
