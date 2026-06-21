@@ -11,7 +11,7 @@ import type { Errors, FormData } from "../types/types";
     if (name === "phone" && !/^[(?:\+91|91)?[6-9]\d{9}]*$/.test(value)) {
       errorMsg = "Phone number is invalid";
     }
-    if (name === "email" && !/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)) {
+    if (name === "email" && !/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/.test(value)) {
       errorMsg = "Invalid email address";
     }
     if (name === "password" && value.length < 6) {

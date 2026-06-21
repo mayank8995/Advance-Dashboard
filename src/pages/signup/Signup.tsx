@@ -9,6 +9,7 @@ import { TailSpin } from "react-loader-spinner";
 import { validateField } from "../../services/form-validation.service";
 import { doSignup } from "../../api/admin-portal-api/admin-portal.api";
 import { toast } from "react-toastify";
+import { MoveLeft } from "lucide-react";
 
 export default function Signup({onCustomEvent}: any) {
   const [step, setStep] = useState(0);
@@ -84,7 +85,7 @@ export default function Signup({onCustomEvent}: any) {
   };
 
   const steps = [
-    <StepOneForm data={formData.formOne} errors={errors} onChange={(d,k) => updateStep('formOne', d,k)} />,
+    <StepOneForm onCustomEvent={onCustomEvent} data={formData.formOne} errors={errors} onChange={(d,k) => updateStep('formOne', d,k)} />,
     <StepTwoForm data={formData.formTwo} errors={errors} onChange={(d,k) => updateStep('formTwo', d,k)} />
   ];
 
@@ -134,44 +135,48 @@ export default function Signup({onCustomEvent}: any) {
   );
 }
 
-export function StepOneForm({ data, errors, onChange }: {
+export function StepOneForm({ data, errors, onChange, onCustomEvent }: {
   data: FormData['formOne'];
   errors: Errors;
   onChange: (data: FormData['formOne'], activeKey:string) => void;
+  onCustomEvent?: any;
 }) {
   return (
     <>
-      <div className="mb-4 flex flex-col-reverse">
-                         <FormField  data={data} errors={errors} value={data?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onChange} className={className} />
+    <div className="mb-4 flex flex-col">
+        <MoveLeft onClick={onCustomEvent}/> 
+    </div>
+      <div className="mb-4 flex flex-col">
                          <label
                              className={labelclassName}
                              >
                             Name
                          </label>
+                         <FormField  data={data} errors={errors} value={data?.name} name={"name"} type={"text"} placeholder={"Enter your name"} onChange={onChange} className={className} />
         </div>
-   <div className="mb-4 flex flex-col-reverse">
-                         <FormField  data={data} errors={errors} value={data?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={onChange} className={className} />
+   <div className="mb-4 flex flex-col">
                          <label
                              className={labelclassName}
                              >
                             Email
                         </label>
+                         <FormField  data={data} errors={errors} value={data?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={onChange} className={className} />
                     </div>
-                     <div className="mb-4 flex flex-col-reverse">
-                        <FormField  data={data} errors={errors} value={data?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={className} />
+                     <div className="mb-4 flex flex-col">
                         <label
                             className={labelclassName}
                             >
                            Password
                         </label>
+                        <FormField  data={data} errors={errors} value={data?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={className} />
                     </div>
-                    <div className="mb-4 flex flex-col-reverse">
-                        <FormField  data={data} errors={errors} value={data?.confirmPassword} name={"confirmPassword"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={className} />
+                    <div className="mb-4 flex flex-col">
                         <label
                             className={labelclassName}
                             >
                            Confirm Password
                         </label>
+                        <FormField  data={data} errors={errors} value={data?.confirmPassword} name={"confirmPassword"} type={"password"} placeholder={"••••••••"} onChange={onChange} className={className} />
                     </div>
         </>
   );
@@ -184,29 +189,29 @@ export function StepTwoForm({ data, errors, onChange }: {
 }) {
   return (
     <>
-     <div className="mb-4 flex flex-col-reverse">
-                         <FormField data={data}  errors={errors} value={data?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onChange} className={className} />
+     <div className="mb-4 flex flex-col">
                          <label
                             className={labelclassName}
                             >
                            Department
                         </label>
+                         <FormField data={data}  errors={errors} value={data?.department} name={"department"} type={"text"} placeholder={"Enter your department"} onChange={onChange} className={className} />
                     </div>
-                     <div className="mb-4 flex flex-col-reverse">
-                        <FormField  data={data} errors={errors} value={data?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onChange} className={className} />
+                     <div className="mb-4 flex flex-col">
                         <label
                             className={labelclassName}
                             >
                            Designation
                         </label>
+                        <FormField  data={data} errors={errors} value={data?.designation} name={"designation"} type={"text"} placeholder={"Enter your designation"} onChange={onChange} className={className} />
                     </div>
-                     <div className="mb-4 flex flex-col-reverse">
-                        <FormField data={data}  errors={errors} value={data?.empId} name={"empId"} type={"text"} placeholder={"you@example.com"} onChange={onChange} className={className} />
+                     <div className="mb-4 flex flex-col">
                         <label
                             className={labelclassName}
                             >
                            Employee Id
                         </label>
+                        <FormField data={data}  errors={errors} value={data?.empId} name={"empId"} type={"text"} placeholder={"you@example.com"} onChange={onChange} className={className} />
                     </div>
                     {/* <button  type="button" className=" w-full bg-gray-900   hover:bg-gray-700  mb-4  px-6 py-2.5
                         text-white font-semibold text-sm 

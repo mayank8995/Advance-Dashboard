@@ -106,24 +106,22 @@ function checkFormValidity(){
             className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div> */}
-        <div className="mb-4 flex flex-col-reverse">
-                    <FormField  errors={errors} value={form?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={handleOnChange} className={className} />
+        <div className="mb-4 flex flex-col">
                     <label
                         className={labelclassName}
                         >
                         Username/Admin ID
                         </label>
+                    <FormField  errors={errors} value={form?.email} name={"email"} type={"email"} placeholder={"you@example.com"} onChange={handleOnChange} className={className} />
         </div>
-        <div className="mb-4 flex flex-col-reverse">
-                    <FormField  errors={errors} value={form?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={handleOnChange} className={className} />
-                    <div className="flex justify-between">
+        <div className="mb-4 flex flex-col">
                       <label
                         className={labelclassName}
                         >
                         Password
                         </label>
+                    <FormField  errors={errors} value={form?.password} name={"password"} type={"password"} placeholder={"••••••••"} onChange={handleOnChange} className={className} />
                         {/* <a href="#" className="text-sm text-blue-500">Forgot password?</a> */}
-                    </div>
                   
         </div>
 
