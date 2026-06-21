@@ -89,6 +89,17 @@ outline-none
 transition-all
 duration-200`
 
+export const loginClassName = `w-full
+  focus:ring-[#534ab7] 
+  focus:border-[#7c3aed]/50
+  focus:outline-none 
+  focus:ring-2 
+  focus:border-transparent
+  focus:transition-all focus:duration-200
+  bg-[#0f0a1f] border border-white/10 rounded-lg px-3 py-2.5 
+  text-slate-200 text-sm placeholder:text-slate-500
+  `
+
 export const className = `w-full px-4 py-2.5 
   bg-slate-50 dark:bg-slate-800
   border border-slate-200  dark:border-slate-700
@@ -104,6 +115,8 @@ export const className = `w-full px-4 py-2.5
   placeholder:text-slate-400 dark:placeholder:text-slate-500 dark:scheme-dark`
 
   export const labelclassName = `block mb-1.5 mt-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide`
+
+  export const loginLabelclassNAme = `block mb-1.5 mt-1.5 text-slate-400 text-xs font-medium tracking-wide uppercase`
 
   export const PROFILE_SUBHEAD = "Manage your personal information and account details"
 

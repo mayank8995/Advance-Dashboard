@@ -17,6 +17,9 @@ import type { Errors, FormData } from "../types/types";
     if (name === "password" && value.length < 6) {
       errorMsg = "Password must be at least 6 characters";
     }
+     if (name === "confirmPassword" && value.length < 6) {
+      errorMsg = "Password must be at least 6 characters";
+    }
     if ((name === "name" || name === "department" || name === "designation" || name === "empId" || name === "jdate") && !value.trim()) {
       errorMsg = `${name} is required!`;
     }
@@ -49,6 +52,9 @@ import type { Errors, FormData } from "../types/types";
       errors[field] = `${field} is required`
     }
   })
+       if(data.confirmPassword !== data.password) {
+        errors["confirmPassword"] = "Please make sure your passwords match"
+        }
   // console.log("errorserrors",errors)
 
   return errors;
