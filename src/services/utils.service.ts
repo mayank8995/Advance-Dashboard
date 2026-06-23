@@ -1,23 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import getEmployees, { getAnalytics, getPerformanceCards, getProfileData } from "../api/admin-portal.api";
+import type { FilterQueryObject } from "../types/types";
+import { FILTER_TABLE_KEY } from "../utils/constants";
 
 declare global {
   interface Array<T> {
     customFilter(predicate: (item: T) => boolean, obj:any): T[];
     deepSearchCustomFilter(txtTobeSearched: string): T[];
+    applyFilterOnTable(fliterQuery: Map<string,string | boolean | Array<T>>): T[];
   }
 }
 
 export function useGetData(){
     return useQuery({
-                queryKey: ['initialAppData'],
+                queryKey: ['employeesData'],
                 queryFn: getEmployees,
                 staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
 }
 export function useAnalyticsData(){
     return useQuery({
-                queryKey: ['initialAnalyticsData'],
+                queryKey: ['analyticsData'],
                 queryFn: getAnalytics,
                 staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
@@ -25,7 +28,7 @@ export function useAnalyticsData(){
 
 export function usePerformanceCardData(){
     return useQuery({
-                queryKey: ['initialPerformanceCardsData'],
+                queryKey: ['performanceCardsData'],
                 queryFn: getPerformanceCards,
                 staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
@@ -60,10 +63,11 @@ export function getNumberofActiveProjects(data: Array<any>){
 }
 
 Array.prototype.customFilter = function (fn:any, obj:any) {
-  const filtered = []; // it will receive all values that match to condition passed in fn callback.
+  const filtered = [];
     for (let i = 0; i < this.length; i++) {
             if (fn(this[i])) {
-                const topProjectsObj = {name:obj?.manager || "",...this[i]}
+              console.log("obj>>>>",obj)
+                const topProjectsObj = {name:(obj?.manager || ""),...this[i]}
                 filtered.push(topProjectsObj);
             }
     }
@@ -81,6 +85,7 @@ export function getTopProjects(data: Array<any>){
 
         }
     }
+    console.log("topProjectsArray>>>>>",topProjectsArray)
     return topProjectsArray;
 }
 
@@ -105,6 +110,23 @@ export function  performDeepSearch(obj:any, target:string){
     return false;
 }
 
+export function  filterSearchInTable(obj:any, fliterQuery:Map<string,string | boolean | string[]>,count:number){
+    if( obj === null || typeof obj !== 'object') return false;
+    for(const key in obj){
+            if(fliterQuery.has(key) && fliterQuery.get(key) === obj[key]){
+                count++;
+            }
+       if (typeof obj[key] === 'object' && obj[key] !== null) {
+            const found = filterSearchInTable(obj[key], fliterQuery, count);
+              if (found) return true;
+      }
+    }
+    if(count === fliterQuery.size) {
+            return true;
+        }
+    return false;
+}
+
 
 Array.prototype.deepSearchCustomFilter = function(query: string){
   const filtered: any[] = [];
@@ -117,6 +139,71 @@ Array.prototype.deepSearchCustomFilter = function(query: string){
           }
         }
       }
+      // console.log(filtered)
   }
   return filtered;
+}
+
+Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | boolean | string[]>){
+  const filtered: any[] = [];
+  if(this){
+      for(let i=0;i<this.length;i++){
+        if(this[i]){
+         if(filterSearchInTable(this[i], fliterQuery,0)){
+          console.log("in if applyFilterOnTabl")
+            filtered.push(this[i]);
+          }
+        }
+      }
+      console.log("applyFilterOnTable>",filtered)
+  }
+  return filtered;
+}
+ 
+// export function  traverseObjectListofValues(obj:any,valuesMap:Map<string, any[]>,filterSet:Set<any>){
+//     for(const key in obj){
+//         const value = obj[key];
+//         if((typeof value === 'boolean' || typeof value === 'string' )){
+//                 if (filterSet.has(key)) {
+//                   if(valuesMap.has(key)){
+//                     const arr = valuesMap.get(key);
+//                     if(!arr?.includes(value)) valuesMap.get(key)?.push(value)
+//                   }else{
+//                     valuesMap.set(key,[value])
+//                   }
+//                 }
+//          }
+//     }
+//     return valuesMap;
+// }
+ // {
+  //   key: "",
+  //   value: []
+  // }
+export function transformDataForFilterModalUI(list: any){
+  const valuesMap = new Map(FILTER_TABLE_KEY.map(item => [item, [] as Array<string | boolean>]));
+  const filterSet = new Set(FILTER_TABLE_KEY)
+  
+  const data = list.employeeList[0].employees;
+  // console.log("list>>>",data,FILTER_TABLE_KEY,valuesMap,filterSet)
+      for(let i=0;i<data.length;i++){
+        if(data[i]){
+         for(const key in data[i]){
+        const value = data[i][key];
+        if((typeof value === 'boolean' || typeof value === 'string' )){
+                if (filterSet.has(key)) {
+                  if(valuesMap.has(key)){
+                    const arr = valuesMap.get(key);
+                    if(!arr?.includes(value)) valuesMap.get(key)?.push(value)
+                  }else{
+                    valuesMap.set(key,[value])
+                  }
+                }
+         }
+    }
+        }
+      }
+
+      // console.log("valuesMap>>>>>",valuesMap)
+return valuesMap;
 }

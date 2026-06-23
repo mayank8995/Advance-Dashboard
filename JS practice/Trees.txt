@@ -1,0 +1,12 @@
+1. Inorder  left -> root ->right
+2. Preorder root -> left -> right
+3. Postorder left -> right -> root
+
+4. Max Depth of Binary Tree
+Base Case: 
+count = 1
+if  node === null return 0
+What gets smaller: tree 
+Recursive Relationship:  count += depth
+Traversal Type:
+Return Style:

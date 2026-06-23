@@ -1,10 +1,20 @@
-import { ArrowDown, ArrowUp, ArrowUpDown, SquareChevronLeft, SquareChevronRight, TextSearch, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Funnel, SquareChevronLeft, SquareChevronRight, TextSearch, X } from 'lucide-react';
 import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import MobileViewCardForTable from './MobileViewCardForTable';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 import { className, NO_RESULT_FOUND } from '../../utils/constants';
+import { useQueryClient } from '@tanstack/react-query';
+import FilterModal from '../FilterComponent/FilterModal';
 
+const mockdata =      [
+    { "key": "department", "value": "Engineering" },
+    { "key": "designation", "value": "Senior Software Engineer" },
+    { "key": "employeeSatisfaction", "value": "High" },
+    { "key": "location", "value": "Pune" },
+    { "key": "onNoticePeriod", "value": false }
+  ]
+  const hashMap = new Map(mockdata.map(obj => [obj.key, obj.value]));
 export default function CustomTable({list, columnsData, headersData, title}:any) {
   // State configuration
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
@@ -12,6 +22,42 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [txtToBeSearched, setTextToBeSearched] = useState('');
   const [searchList, setSearchList] = useState(list);
+  //
+  const [showModal, setShowModal] = useState(false)
+  const [isCustomTableFilter, setIsCustomTableFilter] = useState(false)
+  const [tableCustomFilterData, setTableCustomFilterData] = useState(hashMap)
+  const queryClient = useQueryClient();
+
+    useEffect(() => {
+          setIsCustomTableFilter(false)
+    },[])
+
+     useEffect(() => {
+    if (!showModal) return;
+
+    // Save original body overflow style
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    
+    // Prevent scrolling
+    document.body.style.overflow = 'hidden';
+
+    // Re-enable scrolling when component unmounts or closes
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, [showModal]);
+
+  // debounce query
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setIsCustomTableFilter(false)
+      setDebouncedQuery(txtToBeSearched)
+      setCurrentPage(1);
+    }, 300)
+    return () => clearTimeout(timerId)
+  },[txtToBeSearched])
+  //
 
   //
     const [cols, setColumn] = useState(columnsData);
@@ -24,19 +70,23 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
     })
 
 
-  //
 
   useEffect(() => {
     if(list?.length > 0) setSearchList(list)
     else setSearchList([])
   })
 
+      // modal data [{key:"", value:""}] value be array
+      /**
+       * flag based if modal other search otherwise normal sarch
+       */
   // Handle Search
   const searchTable = useMemo(() => {
    let searchableList = [...searchList];
-   const newList = searchableList?.deepSearchCustomFilter(txtToBeSearched)
+  //  const newList = searchableList?.deepSearchCustomFilter(debouncedQuery)
+      const newList = isCustomTableFilter ? searchableList.applyFilterOnTable(tableCustomFilterData) : searchableList?.deepSearchCustomFilter(debouncedQuery)
    return newList;
- }, [searchList,txtToBeSearched,sortConfig]);
+ }, [searchList,debouncedQuery,sortConfig,isCustomTableFilter]);
 
   // Sorting logic 
   const sortedData = useMemo(() => {
@@ -84,12 +134,23 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
     return sortConfig.direction === 'asc' ? <ArrowUp className='w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400' />  : <ArrowDown className='w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400'/>;
   };
 
-  const handleTableSearch = (e: any) => {
-    setTextToBeSearched(e?.target?.value || "");
-    setCurrentPage(1);
+  const openFilterModal = () => {
+    setShowModal(true)
+    queryClient.setQueryData(['openmodal'], true)
+  }
+
+  const closeModal = () => {
+     setShowModal(false)
+  }
+
+  const submitFilterData = (data:any) => {
+    console.log("In here!!!!!",data)
+    queryClient.setQueryData(['todos'], hashMap)
+    setIsCustomTableFilter(true);
   }
 
   return (
+    <>    
     <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
         <div className="flex items-center justify-between px-6 py-4 pb-0">
@@ -105,13 +166,14 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       </div>
         <div className='sm:hidden px-6 py-4'>
           <div className='relative'>
-              <FormField style={{width:'100%'}} value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={handleTableSearch}/>
+              <FormField style={{width:'100%'}} value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value || "")}/>
               {txtToBeSearched && <X width={18} className='absolute bottom-0 right-[6px] top-[10px] dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       {/* Rows Per Page Configurator */}
       <div className='mt-4 flex flex-row items-center justify-between'>
       <div className='flex-1 justify-between  flex items-center px-6 pb-4'>
+        <div className='flex flex-row items-center'>
         <div className='flex justify-center items-center'>
           <label className=' hidden sm:flex text-sm font-bold dark:text-slate-100 pr-2'>Rows / page </label>
           <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
@@ -131,6 +193,8 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
             <option className='text-sm font-bold outline-none' value={5}>5</option>
             <option className='text-sm font-bold outline-none' value={10}>10</option>
           </select>
+        </div>
+          <Funnel className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> 
         </div>
         <div className="flex justify-center items-center" >
         {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
@@ -159,7 +223,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       </div>
       <div className='hidden sm:flex px-6 pb-4'>
           <div className='relative'>
-              <FormField  value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={handleTableSearch}/>
+              <FormField  value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value||"")}/>
               {txtToBeSearched && <X width={18} className='absolute bottom-0 right-[6px] top-[10px] dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
@@ -181,7 +245,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800'><span><TextSearch className='pr-1'/>{NO_RESULT_FOUND}</span></h1></td></tr>}
+          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(cols).map((col) => <td className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[col]) && row[col]?.length > 0 ? row[col][0] : row[col]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800 flex flex-row justify-center items-center'><TextSearch className='pr-1'/><span>{NO_RESULT_FOUND}</span></h1></td></tr>}
         </tbody>
       </table>
         <div className='sm:hidden pl-[8px] pr-[8px]'>
@@ -227,6 +291,10 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
       </div> */}
          </div>
     </div>
+    <div  className={`transition-opacity duration-300 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
+      {<FilterModal closeModal={closeModal} />}
+    </div>
+    </>
   );
 }
 

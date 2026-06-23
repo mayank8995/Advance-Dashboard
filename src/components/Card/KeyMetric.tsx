@@ -32,7 +32,7 @@ export default function KeyMetric({newData}: any) {
             `}>
 
              {/* Body */}
-          <div className="items-center flex flex-row pl-2" >
+          <div className="items-center flex flex-row " >
             <div className={`h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center`}>
                 {data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && <User className="h-6 w-6 text-blue-600" size={5}/>}
                 {data[key]?.icon === KEY_TRACK_METRIC_ICON['FLAG'] && <Flag className="h-6 w-6 text-orange-600" size={5}/>}
@@ -42,7 +42,8 @@ export default function KeyMetric({newData}: any) {
             </div>
             {/* <div> */}
           <div className="pl-2 flex flex-col">
-            <div className="items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100 w-50 truncate">{key}</div>
+            <div className="hidden sm:flex items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100 w-50 truncate">{key.length > 20 ? `${key.substring(0,20)}...` : key}</div>
+            <div className="sm:hidden items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100">{key}</div>
             <h2 className="text-xl font-bold text-indigo-600 drop-shadow-sm ">{data[key]?.value}</h2>
           </div>
             {/* </div> */}

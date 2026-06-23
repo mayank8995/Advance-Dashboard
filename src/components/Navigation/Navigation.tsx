@@ -47,7 +47,7 @@ import { useAuth } from "../../context/AuthContext";
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 sm:z-0 md:hidden"
           onClick={() => navigateToPage(false)}
         />
       )}
@@ -56,7 +56,7 @@ import { useAuth } from "../../context/AuthContext";
       <div
         className={`
           bg-gradient-to-br from-slate-900 to-indigo-950
-          fixed top-0 left-0 z-50 w-64  text-white
+          fixed top-0 left-0 z-50 sm:z-0 w-64  text-white
           transform transition-transform duration-300 md:shrink-0 h-full md:h-auto overflow-y-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:flex

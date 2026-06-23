@@ -12,3 +12,6 @@ select option {
   color: #334155;
 }
 
+*:focus {
+    outline: none;
+}

@@ -7,7 +7,7 @@ function Employees(){
      const [data, setData] = useState([]);
      const queryClient = useQueryClient();
     useEffect(() => {
-        const {data:cachedData}: any = queryClient.getQueryData(['initialAppData']);
+        const {data:cachedData}: any = queryClient.getQueryData(['employeesData']);
         setData(cachedData?.employeeList?.[0]?.employees);
     },[])
     return(
