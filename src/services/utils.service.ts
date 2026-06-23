@@ -207,3 +207,16 @@ export function transformDataForFilterModalUI(list: any){
       // console.log("valuesMap>>>>>",valuesMap)
 return valuesMap;
 }
+
+export function deepCloneCustom(obj: any) {
+  if (obj === null || typeof obj !== 'object') return obj;
+  if (obj instanceof Date) return new Date(obj.getTime());  
+  
+  const newObject: any = Array.isArray(obj) ? [] : {};
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {  
+      newObject[key] = deepCloneCustom(obj[key]);
+    }
+  }
+  return newObject;
+}

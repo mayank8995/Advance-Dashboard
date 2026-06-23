@@ -233,3 +233,13 @@ export const stepConfig = [
 export const MSG_404 = "Endpoint not found"
 
 export const FILTER_TABLE_KEY = ["department", "designation", "location","workMode","employeeSatisfaction","onNoticePeriod"]
+
+export const CORRESPONDING_FILTER_TABLE_KEY_NAME = { 
+                                                      "department": "Department" , 
+                                                      "designation":"Designation",
+                                                      "location": "Location", 
+                                                      "workMode": "Work Mode", 
+                                                      "employeeSatisfaction": "Employee Satisfaction", 
+                                                      "onNoticePeriod": "On Notice Period"
+                                                    }
+        
