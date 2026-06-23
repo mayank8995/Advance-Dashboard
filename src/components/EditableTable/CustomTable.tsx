@@ -144,9 +144,9 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
   }
 
   const submitFilterData = (data:any) => {
-    console.log("In here!!!!!",data)
-    queryClient.setQueryData(['todos'], hashMap)
-    setIsCustomTableFilter(true);
+    console.log("In here customtable!!!!!",data)
+    queryClient.setQueryData(['filterKeyData'], data)
+    // setIsCustomTableFilter(true);
   }
 
   return (
@@ -292,7 +292,7 @@ export default function CustomTable({list, columnsData, headersData, title}:any)
          </div>
     </div>
     <div  className={`transition-opacity duration-300 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
-      {<FilterModal closeModal={closeModal} />}
+      {<FilterModal closeModal={closeModal} submitFilterData={submitFilterData}/>}
     </div>
     </>
   );

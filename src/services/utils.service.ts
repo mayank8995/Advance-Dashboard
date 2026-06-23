@@ -66,7 +66,7 @@ Array.prototype.customFilter = function (fn:any, obj:any) {
   const filtered = [];
     for (let i = 0; i < this.length; i++) {
             if (fn(this[i])) {
-              console.log("obj>>>>",obj)
+              // console.log("obj>>>>",obj)
                 const topProjectsObj = {name:(obj?.manager || ""),...this[i]}
                 filtered.push(topProjectsObj);
             }
@@ -110,11 +110,29 @@ export function  performDeepSearch(obj:any, target:string){
     return false;
 }
 
+// export function  filterSearchInTable(obj:any, fliterQuery:Map<string,string | boolean | string[]>,count:number){
+//     if( obj === null || typeof obj !== 'object') return false;
+//     for(const key in obj){
+//             if(fliterQuery.has(key) && fliterQuery.get(key) === obj[key]){
+//                 count++;
+//             }
+//        if (typeof obj[key] === 'object' && obj[key] !== null) {
+//             const found = filterSearchInTable(obj[key], fliterQuery, count);
+//               if (found) return true;
+//       }
+//     }
+//     if(count === fliterQuery.size) {
+//             return true;
+//         }
+//     return false;
+// }
+
+
 export function  filterSearchInTable(obj:any, fliterQuery:Map<string,string | boolean | string[]>,count:number){
     if( obj === null || typeof obj !== 'object') return false;
     for(const key in obj){
-            if(fliterQuery.has(key) && fliterQuery.get(key) === obj[key]){
-                count++;
+            if(fliterQuery.has(key)){
+                console.log("get key>>>>",fliterQuery.get(key))
             }
        if (typeof obj[key] === 'object' && obj[key] !== null) {
             const found = filterSearchInTable(obj[key], fliterQuery, count);
@@ -219,4 +237,10 @@ export function deepCloneCustom(obj: any) {
     }
   }
   return newObject;
+}
+
+
+export function filteredTableData(searchList: any, queryList: any){
+
+  // searchList?.map((item: any) => item)?.filter((it: any))
 }
