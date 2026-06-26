@@ -188,7 +188,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         <div className='sm:hidden px-6 py-4'>
           <div className='relative'>
               <FormField style={{width:'100%'}} value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value || "")}/>
-              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+              {txtToBeSearched && <X width={18} className='cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       <div className='mt-4 flex flex-row items-center justify-between'>
@@ -245,7 +245,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
       <div className='hidden sm:flex px-6 pb-4'>
           <div className='relative'>
               <FormField  value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value||"")}/>
-              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+              {txtToBeSearched && <X width={18} className='cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       </div>
