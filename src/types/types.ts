@@ -60,3 +60,8 @@ export interface ErrorResponseObject {
   request?: any,
   response?: any
 }
+
+export type FilterQueryObject = {
+  key: string; 
+  value: string | string[] | boolean
+}

@@ -1,0 +1,98 @@
+import React, { useRef, useState } from 'react';
+import { ArrowDown, ArrowUp } from 'lucide-react';
+
+type SortConfig = {
+  key: string;
+  direction: string;
+};
+
+
+interface SortModalComponentProps {
+  isOpen: boolean;
+  headersData: any;
+  sortConfig: SortConfig
+  onSort: (value: string) => void;
+  closeSortModal: () => void;
+}
+
+
+const SortModalComponent: React.FC<SortModalComponentProps> = ({
+  isOpen,
+  headersData,
+  sortConfig,
+  onSort,
+  closeSortModal,
+}) => {
+  if (!isOpen) {
+    return null;
+  }
+    const [focusedIndex, setFocusedIndex] = useState("")
+
+    const myElementRef: any = useRef(null);
+    
+        function handleRadio(index: string){
+            console.log("index>>>>",index)
+            setFocusedIndex(index)
+        }
+
+        function getSortIcon(sortConfig:SortConfig){
+          return sortConfig.direction === 'asc' ? <ArrowUp size={20} /> : <ArrowDown size={20}/>
+        }
+
+        function handleSort(){
+          if (myElementRef?.current) {
+              console.log(myElementRef?.current?.id)
+              onSort && onSort(myElementRef?.current?.id)
+          }
+        }
+
+  return (
+    <>
+        <div className="bg-white fixed z-300 left-0 right-0 bottom-0 rounded-t-2xl">
+          <div className="flex flex-row justify-between items-center p-2 text-sm font-semibold border-b-2 border-b-slate-200"><h2>Sorting</h2>
+          <button type="button" onClick={() => closeSortModal?.()} aria-label="Close sort modal">
+            ×
+          </button></div>
+            <div className="grid grid-cols-2 max-h-[600px] h-fit overflow-y-auto p-4 "> 
+          {headersData?.map((header: any, index: number) => 
+            // <div >                             
+                        <div ref={myElementRef}  key={index + 21*index} id={focusedIndex}
+                        className={`m-1 h-10 inline-flex items-center gap-1.5 
+                                                px-2 py-2 rounded-b-xl font-medium whitespace-nowrap 
+                                                border  
+                                                text-xs
+                                                outline-none
+                                                ${ !(focusedIndex === header.key)? 'border-slate-400 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50 dark:hover:bg-indigo-950/30' 
+                                                : 'border-indigo-600 dark:border-indigo-400 bg-red-50 dark:bg-red-950/40 text-indigo-600 dark:text-indigo-400 font-semibold'}`}
+                       onClick={() => handleRadio(header.key)}
+                        >
+                            <input
+                                    type="radio"
+                                    name={header.value}
+                                    value={header.value}
+                                    checked={focusedIndex === header.key}
+                                    onChange={() => handleRadio(header.key)}
+                                    className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600': ''}`}
+                                />
+                                {header.value}
+                        </div>
+          )}
+            <div className='p-2 flex flex-row items-center'>
+              <label className='text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase'>Direction:</label>
+                <button onClick={handleSort} type="button" className={`ml-2 flex items-center cursor-pointer px-2 py-2 rounded-md transition-colors ${!focusedIndex ? 'text-slate-500 bg-slate-700/50' : 'bg-[#534ab7] text-white '}`} 
+                
+                disabled={!focusedIndex}
+                >
+                {getSortIcon(sortConfig)}
+                </button>
+            </div>
+            </div>
+    </div>
+     <div
+          className="fixed inset-0 bg-black/50 z-200"
+        />
+    </>
+  );
+};
+
+export default SortModalComponent;

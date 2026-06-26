@@ -41,6 +41,7 @@ export default function PieChartComponent({data,title, X, Y}: any) {
             isAnimationActive={true}
             shape={MyCustomPie}
             labelLine={true}
+            style={{outline:"none"}}
           />
           <Tooltip  />
           <Legend layout="vertical" align="right" verticalAlign="top" content={RenderCustomLegend} /> 

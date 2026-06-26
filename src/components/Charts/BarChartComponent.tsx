@@ -20,7 +20,7 @@ export default function BarChartComponent({data,title, X, Y}: any) {
           className="flex items-center justify-between text-sm font-bold"
         >
           {/* Hide the grid lines and X-axis line/ticks to match the clean look */}
-          <XAxis type="number" hide  className="flex items-center justify-between text-sm font-bold"/>
+          <XAxis type="number" hide  className="flex items-center justify-between text-sm font-bold outline-0" />
           
           {/* YAxis displays the text labels */}
           <YAxis 
@@ -30,7 +30,7 @@ export default function BarChartComponent({data,title, X, Y}: any) {
             tickLine={false}
             tick={{ fill: themeMode === 'dark' ? '#f3f4f6' : '#333', fontSize: 12 }}
             width={60}
-            className="flex items-center justify-between text-sm font-bold"
+            className="flex items-center justify-between text-sm font-bold outline-0"           
           />
           
           <Tooltip cursor={{ fill: 'transparent' }} />

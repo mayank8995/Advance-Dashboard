@@ -37,7 +37,12 @@ function Home(){
                                                           
     return(
         <ErrorBoundary fallback={<div>Failed to load</div>}>
-        {(isVisualLoading || userLoading || performanceDataLoading || analyticsDataLoading) ? <div className="md:flex md:flex-col md:h-full bg-slate-100"><Puff
+        <div className="md:flex md:flex-col md:h-full bg-slate-100">
+            <Header/>
+        <div style={{background: `linear-gradient(135deg, #f0f4ff 0%, #fafafa 50%, #f5f3ff 100%)`}} className=" bg-amber-50 flex-col md:flex md:flex-row md:flex-1 h-full md:overflow-hidden dark:bg-gray-800">
+            <Navigation/>
+            <div className="flex-1 overflow-y-auto dark:bg-gray-800">
+            {(isVisualLoading || userLoading || performanceDataLoading || analyticsDataLoading) ? <div className="md:flex md:flex-col md:h-full bg-slate-100"><Puff
                 visible={true}
                 height="80"
                 width="80"
@@ -45,16 +50,11 @@ function Home(){
                 ariaLabel="puff-loading"
                 wrapperStyle={{}}
                 wrapperClass="flex items-center justify-center min-h-screen"
-            /></div> : <div className="md:flex md:flex-col md:h-full bg-slate-100">
-            <Header/>
-        <div style={{background: `linear-gradient(135deg, #f0f4ff 0%, #fafafa 50%, #f5f3ff 100%)`}} className=" bg-amber-50 flex-col md:flex md:flex-row md:flex-1 h-full md:overflow-hidden dark:bg-gray-800">
-            <Navigation/>
-            <div className="flex-1 overflow-y-auto dark:bg-gray-800">
-            <Outlet/>
+            /></div> : <Outlet/>}
             </div>
         </div>
             {/* <Footer/> */}
-        </div>}
+        </div>
         </ErrorBoundary>
     )
 

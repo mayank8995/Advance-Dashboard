@@ -44,10 +44,10 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             <div className="p-2 flex flex-row justify-between w-full">
               <div className="flex flex-col">
                 <span className="text-gray-950 font-bold text-sm dark:text-slate-100">
-                  {value?.name}
+                  {value?.projectName}
                   </span>
                 <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
-                  {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.manager && value?.manager}
+                  {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.name && value?.name}
                 </span>
               </div>
               <div className="items-center flex justify-end">
