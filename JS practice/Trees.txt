@@ -90,3 +90,51 @@ into:
       C   B
      /   / \
     F   E   D
+Base Case: if(nd === null) return nd;
+What gets smaller: current -> child
+Recursive Relationship: 
+  
+  let temp = nd.left;
+  nd.left = nd.right;
+  nd.right = temp;
+  mirrorTree(nd.left);
+  mirrorTree(nd.right);
+  return nd;
+
+Traversal Type: dfs
+Return Style: child switches from left to right
+
+
+function mirrorTree(nd){
+  if(nd === null) return nd;
+  
+  mirrorTree(nd.left);
+  mirrorTree(nd.right);
+  
+  let temp = nd.left;
+  nd.left = nd.right;
+  nd.right = temp;
+  
+  return nd;
+  
+}
+
+8.Sum of All Nodes
+
+Return the sum of all node values.
+
+Base Case: if(nd === null) return 0;
+What gets smaller: current -> child
+Recursive Relationship: 
+
+return sum(node.left) + sum(node.right) + node.value
+
+Traversal Type: post dfs
+Return Style: child returns node value , parent add them
+
+function sum(node){
+
+ if(node === null) return 0;
+ 
+  return sum(node.left) + sum(node.right) + node.value
+}
