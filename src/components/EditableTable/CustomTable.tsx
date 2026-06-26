@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowDownWideNarrow, ArrowUp, ArrowUpDown, ArrowUpWideNarrow, Funnel, FunnelX, SquareChevronLeft, SquareChevronRight, TextSearch, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Funnel, FunnelX, SquareChevronLeft, SquareChevronRight, TextSearch, X } from 'lucide-react';
 import  { useState, useMemo, useEffect } from 'react';
 import FormField from '../Form/FormField';
 import MobileViewCardForTable from './MobileViewCardForTable';
@@ -175,7 +175,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
     <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
         <div className="flex items-center justify-between px-6 py-4 pb-0">
-        <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base flex items-center gap-2">
+        <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base  items-center gap-2">
           <Breadcrumb />{title}
         </h2>
         <span className="px-3 py-1
@@ -188,7 +188,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         <div className='sm:hidden px-6 py-4'>
           <div className='relative'>
               <FormField style={{width:'100%'}} value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value || "")}/>
-              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-[6px] top-[10px] dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       <div className='mt-4 flex flex-row items-center justify-between'>
@@ -214,7 +214,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
             <option className='text-sm font-bold outline-none' value={10}>10</option>
           </select>
         </div>          
-          {<div className='flex items-center'><div>{tableCustomFilterData.size === 0 ? <Funnel className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{sortConfig.direction === 'asc' ? <ArrowUpWideNarrow onClick={openSortModal} /> : <ArrowDownWideNarrow onClick={openSortModal} />}</div></div>}
+          {<div className='flex items-center'><div>{tableCustomFilterData.size === 0 ? <Funnel className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{<ArrowUpDown onClick={openSortModal} />}</div></div>}
         </div>
         <div className="flex justify-center items-center" >
         {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
@@ -244,7 +244,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
       <div className='hidden sm:flex px-6 pb-4'>
           <div className='relative'>
               <FormField  value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value||"")}/>
-              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-[6px] top-[10px] dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       </div>
@@ -253,7 +253,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
       <table className='hidden sm:table rounded-2xl
   shadow-lg
   border
-  border-slate-200 m-[10px] dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50 ' >
+  border-slate-200 m-2.5 dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50 ' >
         <thead className="bg-slate-100">
           {headersData?.length > 0 && <tr className='cursor-pointer dark:bg-slate-800 dark:border-slate-700'>
             {headersData?.map((header: any, index:number) => {
@@ -266,8 +266,8 @@ import SortModalComponent from '../SortModal/SortModalComponent';
           {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(columnsData).map((columnsData,id) => <td key={id+6*id} className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[columnsData]) && row[columnsData]?.length > 0 ? row[columnsData][0] : row[columnsData]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800 flex flex-row justify-center items-center'><TextSearch className='pr-1'/><span>{NO_RESULT_FOUND}</span></h1></td></tr>}
         </tbody>
       </table>
-        <div className='sm:hidden pl-[8px] pr-[8px]'>
-           { paginatedData?.length > 0 ? <MobileViewCardForTable key={paginatedData.length} list={paginatedData} headersData={headersData} /> : <div className='bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-gradient-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2   dark:border-slate-900/50'><h1 className='dark:text-slate-100 text-slate-800'><span className='flex items-center justify-center'><TextSearch className='pr-1'/>{NO_RESULT_FOUND}</span></h1></div>}
+        <div className='sm:hidden pl-2 pr-2'>
+           { paginatedData?.length > 0 ? <MobileViewCardForTable key={paginatedData.length} list={paginatedData} headersData={headersData} /> : <div className='bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2   dark:border-slate-900/50'><h1 className='dark:text-slate-100 text-slate-800'><span className='flex items-center justify-center'><TextSearch className='pr-1'/>{NO_RESULT_FOUND}</span></h1></div>}
         </div>
         </div> 
          </div>
