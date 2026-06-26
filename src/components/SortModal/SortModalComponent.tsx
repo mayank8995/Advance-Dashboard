@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
+import { TailSpin } from 'react-loader-spinner';
 
 type SortConfig = {
   key: string;
@@ -29,6 +30,12 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
     const [focusedIndex, setFocusedIndex] = useState("")
 
     const myElementRef: any = useRef(null);
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      
+    },[])
     
         function handleRadio(index: string){
             console.log("index>>>>",index)
@@ -42,10 +49,14 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
 
         function handleSort(){
           if (myElementRef?.current) {
-              console.log(myElementRef?.current?.id)
+              setLoading(true)
+              setTimeout(() => {
+                setLoading(false)
+              },2000)
               onSort && onSort(myElementRef?.current?.id)
           }
         }
+
 
   return (
     <>
@@ -84,7 +95,17 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
                 
                 disabled={!focusedIndex}
                 >
-                {getSortIcon(sortConfig,focusedIndex)}
+                {!loading && getSortIcon(sortConfig,focusedIndex)}
+                {loading && <TailSpin
+                                        visible={true}
+                                        height={20}
+                                        width={20}
+                                        color="#ffff"
+                                        ariaLabel="tail-spin-loading"
+                                        radius="1"
+                                        wrapperStyle={{}}
+                                        wrapperClass="flex items-center justify-center"
+                                        /> }
                 </button>
             </div>
             </div>

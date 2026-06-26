@@ -80,7 +80,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
       <StrictMode>
           <QueryClientProvider client = {queryClient}>
-            <ToastContainer />
+            <ToastContainer autoClose={1000} />
             <AuthProvider>
           <RouterProvider router={router} />
            </AuthProvider>

@@ -9,7 +9,7 @@ export default function MobileViewCardForTable({list, headersData}:any){
     }
 
     return<>
-            {list.map((row:any,index:number) =>  <div key={index+2*index} className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-gradient-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 ">{headersData.map((header: any,id: number) => {
+            {list.map((row:any,index:number) =>  <div key={index+2*index} className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 ">{headersData.map((header: any,id: number) => {
                 return <div key={id+7*id}>
                     {header?.key === 'name' && 
                     <div className="flex items-center gap-3">
@@ -27,7 +27,7 @@ export default function MobileViewCardForTable({list, headersData}:any){
                               font-semibold dark:bg-emerald-900/40 dark:text-emerald-400">{row[header?.key]}</h2></div></div> : 
             <>{header?.key !== 'name' && <div className={getRowCss(header?.key)}>
             <h2 className="text-slate-500">{header?.value?.split(' ').map((n:any) => n[0] + n.substring(1).toLowerCase()).join(' ')}</h2>
-                <h2 className="pl-2 text-slate-800 dark:text-slate-300">{Array.isArray(row[header?.key]) && row[header?.key]?.length > 0 ? row[header?.key][0] : row[header?.key]}</h2>
+                <h2 className="pl-2 text-slate-800 dark:text-slate-300">{Array.isArray(row[header?.key]) && row[header?.key]?.length > 0 ? row[header?.key].map((item:string, index: number) => <div key={index+row[header?.key].length}>{item}</div>) : row[header?.key]}</h2>
             </div>}</>                       
   }     
                 </div>

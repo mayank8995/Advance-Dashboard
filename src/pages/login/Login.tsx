@@ -90,7 +90,7 @@ function checkFormValidity(){
   }
   return (
     <div className="flex items-center justify-center">
-      <div className="max-h-[600px] h-[510px] bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-8 w-full max-w-md">
+      <div className="max-h-150 h-127.5 bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-8 w-full max-w-md">
 
         {/* Header */}
         <div className="mb-6">

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import getEmployees, { getAnalytics, getPerformanceCards, getProfileData } from "../api/admin-portal.api";
-import { FILTER_TABLE_KEY } from "../utils/constants";
 
 declare global {
   interface Array<T> {
@@ -84,7 +83,7 @@ export function getTopProjects(data: Array<any>){
 
         }
     }
-    console.log("topProjectsArray>>>>>",topProjectsArray)
+    // console.log("topProjectsArray>>>>>",topProjectsArray)
     return topProjectsArray;
 }
 
@@ -99,7 +98,7 @@ export function  performDeepSearch(obj:any, target:string){
     if( obj === null || typeof obj !== 'object') return false;
     for(const key in obj){
         if ((typeof obj[key] === 'number' || typeof obj[key] === 'string' || typeof obj[key] === 'boolean' )&& obj[key].toString().toLowerCase().includes(target)) {
-          console.log("ZXCZXCZXCZXCZX>>")
+          // console.log("ZXCZXCZXCZXCZX>>")
             return true;
         }
        if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -117,7 +116,7 @@ export function  filterSearchInTable(obj:any, fliterQuery:Map<string,string | bo
     if( obj === null || typeof obj !== 'object') return false;
     for(const key in obj){
             if(fliterQuery.has(key)){
-                console.log("get key>>>>",fliterQuery.get(key))
+                // console.log("get key>>>>",fliterQuery.get(key))
             }
        if (typeof obj[key] === 'object' && obj[key] !== null) {
             const found = filterSearchInTable(obj[key], fliterQuery, count);
@@ -143,7 +142,7 @@ Array.prototype.deepSearchCustomFilter = function(query: string){
             }
           }
         }
-        console.log(filtered,"query>>>>",query)
+        // console.log(filtered,"query>>>>",query)
         
     // }else{
       // return filteredTableData(this, tableCustomFilterData)
@@ -158,7 +157,7 @@ Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | b
       for(let i=0;i<this.length;i++){
         if(this[i]){
          if(filterSearchInTable(this[i], fliterQuery,0)){
-          console.log("in if applyFilterOnTabl")
+          // console.log("in if applyFilterOnTabl")
             filtered.push(this[i]);
           }
         }
@@ -168,29 +167,39 @@ Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | b
   return filtered;
 }
  
-export function transformDataForFilterModalUI(list: any){
-  const valuesMap = new Map(FILTER_TABLE_KEY.map(item => [item, [] as Array<string | boolean>]));
-  const filterSet = new Set(FILTER_TABLE_KEY)
-  
-  const data = list.employeeList[0].employees;
+export function transformDataForFilterModalUI(relevantData: Function){
+  const {data, headers} = relevantData();
+  const valuesMap = new Map<string, Array<string | boolean | string[]>>(headers.map((data: any) => data.key)?.map((item: any) => [item, [] as Array<string | boolean | string[]>]));
+  console.log("valuesMap",valuesMap, relevantData())
+  const filterSet = new Set(headers.map((data: any) => data.key))
   // console.log("list>>>",data,FILTER_TABLE_KEY,valuesMap,filterSet)
       for(let i=0;i<data.length;i++){
         if(data[i]){
          for(const key in data[i]){
         const value = data[i][key];
-        if((typeof value === 'boolean' || typeof value === 'string' )){
+
+    if((typeof value === 'boolean' || typeof value === 'string' || Array.isArray(value))){
                 if (filterSet.has(key)) {
                   if(valuesMap.has(key)){
-                    const arr = valuesMap.get(key);
-                    if(!arr?.includes(value)) valuesMap.get(key)?.push(value)
+                    const content = valuesMap.get(key);
+                    if(Array.isArray(value)){
+                      const val = valuesMap.get(key) as string[];
+                      const newSet = new Set([...val,...value]);
+                      valuesMap.set(key,[...newSet]);
+                    }else{
+                      if(!content?.includes(value)){
+                        valuesMap.get(key)?.push(value)
+                      }
+                    }
                   }else{
-                    valuesMap.set(key,[value])
+                    !Array.isArray(value) ? valuesMap.set(key,[value]) : valuesMap.set(key,[...value])
                   }
                 }
          }
-    }
-        }
+        
       }
+    }
+  }
 
       // console.log("valuesMap>>>>>",valuesMap)
 return valuesMap;
@@ -217,10 +226,20 @@ let flag = 1;
         flag = 1;
         for (let [key, value] of queryList) {
           if(value.length === 0) continue;
-              if(!value.includes(item[key])){
-                  flag = 0;
-                  break;
+          if(Array.isArray(item[key])){
+              // to be coded for array
+              console.log(item[key])
+              const match = value.filter((it: string) => item[key].includes(it))
+              if(match.length === 0){
+                flag = 0;
+                break;
               }
+          }else{
+            if(!value.includes(item[key])){
+                flag = 0;
+                break;
+            }
+          }
     }
     flag && filteredArray.push(item)
   }

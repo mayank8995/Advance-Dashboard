@@ -91,7 +91,8 @@ function checkFormValidity(){
 
                     })
                     setIsEditing(true);
-                    queryClient.invalidateQueries({ queryKey: ['profileData'] });
+                    queryClient.removeQueries({ queryKey: ['profileData'], exact: true })
+
                 }else{
                     toast.error(res.data.message,{
 
@@ -158,15 +159,15 @@ function handleFileChange(e:any){
     reader.readAsDataURL(file);
 }
     return <>
-    <div className="w-full bg-gradient-to-br from-indigo-50/40 via-white to-slate-50 dark:bg-gray-800">
+    <div className="w-full bg-linear-to-br from-indigo-50/40 via-white to-slate-50 dark:bg-gray-800">
         <div className="p-4 dark:bg-gray-800">
             <div className="mb-6">
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">{SIDE_BAR_ITEMS.SETTINGS}</h1>
             <h2 className="text-sm text-slate-400 mt-1 dark:text-slate-300">{PROFILE_SUBHEAD}</h2>
             </div>
-            <form  onSubmit = {handleSubmit} className="bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl  shadow-sm border border-slate-100 p-2 flex flex-col gap-3 hover:shadow-xl  dark:bg-gradient-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none" noValidate>
+            <form  onSubmit = {handleSubmit} className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl  shadow-sm border border-slate-100 p-2 flex flex-col gap-3 hover:shadow-xl  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none" noValidate>
             <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-4">
-                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full dark:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20">
+                <div className="bg-linear-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full dark:bg-linear-to-br dark:from-slate-900 dark:to-green-950/20">
                     <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-5 bg-indigo-500 rounded-full" />
                     <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">Avatar</h2>
@@ -290,7 +291,7 @@ function handleFileChange(e:any){
                     <button type="submit"
                     className="
                         px-6 py-2.5
-                        bg-gradient-to-r from-indigo-600 to-violet-600
+                        bg-linear-to-r from-indigo-600 to-violet-600
                         text-white font-semibold text-sm
                         rounded-xl
                         shadow-lg shadow-indigo-500/30
@@ -316,7 +317,7 @@ function handleFileChange(e:any){
                 id="submit"
                 className="
                     px-6 py-2.5
-                bg-gradient-to-r from-slate-600 to-violet-200
+                bg-linear-to-r from-slate-600 to-violet-200
                 text-white font-semibold text-sm
                 rounded-xl
                 shadow-lg shadow-indigo-500/30
@@ -335,7 +336,7 @@ function handleFileChange(e:any){
                     id="edit"
                     className="
                           px-6 py-2.5
-                        bg-gradient-to-r from-indigo-600 to-violet-600
+                        bg-linear-to-r from-indigo-600 to-violet-600
                         text-white font-semibold text-sm
                         rounded-xl
                         shadow-lg shadow-indigo-500/30

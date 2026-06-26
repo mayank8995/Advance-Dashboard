@@ -10,7 +10,7 @@ function Employees(){
         const {data:cachedData}: any = queryClient.getQueryData(['employeesData']);
         setData(cachedData?.employeeList?.[0]?.employees);
     },[])
-    console.log("Employees data>>>>",data)
+    // console.log("Employees data>>>>",data)
     return(
         <>
         <CustomTable  key={data?.length} list={data} columnsData={columns_employees} headersData={headers_employees} title={EMPLOYEE_DIREC} />

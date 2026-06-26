@@ -232,14 +232,47 @@ export const stepConfig = [
 
 export const MSG_404 = "Endpoint not found"
 
-export const FILTER_TABLE_KEY = ["department", "designation", "location","workMode","employeeSatisfaction"]
+
+export const headers_filters_top_projects = [
+            {key:"projectName", value:"PROJECT NAME"},
+            {key:"riskStatus", value:"RISK STATUS"},
+            {key:"status", value:"STATUS"}
+]
+export const headers_filters_top_performers = [
+            {key:"designation", value:"DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"}
+]
+
+export const headers_filters_promotedThisYear = [
+            {key:"currentDesignation", value:"DESIGNATION"},
+            {key:"previousDesignation", value:"PREV DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"}
+]
+
+export const headers_filters_requiringReview = [
+            {key:"designation", value:"DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"},
+            {key:"reviewReason", value:"REVIEW REASON"}
+]
+
+export const headers_filters_employees = [
+            {key:"designation", value:"DESIGNATION"},
+            {key:"department", value:"DEPARTMENT"},
+            {key:"location", value:"LOCATION"},
+            {key:"workMode", value:"WORK MODE"},
+            {key:"employeeSatisfaction",value:"Employee Satisfaction"}
+]
 
 export const CORRESPONDING_FILTER_TABLE_KEY_NAME = { 
                                                       "department": "Department" , 
                                                       "designation":"Designation",
                                                       "location": "Location", 
                                                       "workMode": "Work Mode", 
-                                                      "employeeSatisfaction": "Employee Satisfaction" 
-                                                      
-                                                    }
-        
+                                                      "employeeSatisfaction": "Employee Satisfaction" ,
+                                                       "reviewReason":"REVIEW REASON",
+                                                       "currentDesignation":"DESIGNATION",
+                                                        "previousDesignation":"PREV DESIGNATION",
+                                                        "projectName":"PROJECT NAME",
+                                                        "riskStatus":"RISK STATUS",
+                                                        "status":"STATUS"
+                                                  }
