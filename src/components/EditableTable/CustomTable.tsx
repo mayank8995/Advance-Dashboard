@@ -6,7 +6,7 @@ import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 import { className, NO_RESULT_FOUND } from '../../utils/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import FilterModal from '../FilterComponent/FilterModal';
-import { deepCloneCustom, filteredTableData } from '../../services/utils.service';
+import { filteredTableData } from '../../services/utils.service';
 import SortModalComponent from '../SortModal/SortModalComponent';
 
   export default function CustomTable({list, columnsData, headersData, title}:any) {
@@ -214,7 +214,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
             <option className='text-sm font-bold outline-none' value={10}>10</option>
           </select>
         </div>          
-          {<div className='flex items-center'><div>{tableCustomFilterData.size === 0 ? <Funnel className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'><ArrowUpWideNarrow onClick={openSortModal} /> <ArrowDownWideNarrow onClick={openSortModal} /></div></div>}
+          {<div className='flex items-center'><div>{tableCustomFilterData.size === 0 ? <Funnel className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{sortConfig.direction === 'asc' ? <ArrowUpWideNarrow onClick={openSortModal} /> : <ArrowDownWideNarrow onClick={openSortModal} />}</div></div>}
         </div>
         <div className="flex justify-center items-center" >
         {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
@@ -276,7 +276,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
       {<FilterModal closeModal={closeModal} submitFilterData={submitFilterData} clearAllFilter={clearAllFilter}/>}
     </div>
     <div  className={`transition-opacity duration-300 ${showSortModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
-      {<SortModalComponent key={headersData.length} closeSortModal={closeSortModal} isOpen={showSortModal}  columnsData={columnsData} headersData={headersData} onSort={(key?: string) =>  handleSort(key)} onGetSortIcon={(key?:string) => getSortIcon(key)} />}
+      {<SortModalComponent key={headersData.length} closeSortModal={closeSortModal} isOpen={showSortModal} headersData={headersData} onSort={(key?: string) =>  handleSort(key)} sortConfig={sortConfig} />}
     </div>
     </>
   );

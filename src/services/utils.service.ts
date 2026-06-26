@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import getEmployees, { getAnalytics, getPerformanceCards, getProfileData } from "../api/admin-portal.api";
-import type { FilterQueryObject } from "../types/types";
 import { FILTER_TABLE_KEY } from "../utils/constants";
 
 declare global {
@@ -111,22 +110,7 @@ export function  performDeepSearch(obj:any, target:string){
     return false;
 }
 
-// export function  filterSearchInTable(obj:any, fliterQuery:Map<string,string | boolean | string[]>,count:number){
-//     if( obj === null || typeof obj !== 'object') return false;
-//     for(const key in obj){
-//             if(fliterQuery.has(key) && fliterQuery.get(key) === obj[key]){
-//                 count++;
-//             }
-//        if (typeof obj[key] === 'object' && obj[key] !== null) {
-//             const found = filterSearchInTable(obj[key], fliterQuery, count);
-//               if (found) return true;
-//       }
-//     }
-//     if(count === fliterQuery.size) {
-//             return true;
-//         }
-//     return false;
-// }
+
 
 
 export function  filterSearchInTable(obj:any, fliterQuery:Map<string,string | boolean | string[]>,count:number){
@@ -184,26 +168,6 @@ Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | b
   return filtered;
 }
  
-// export function  traverseObjectListofValues(obj:any,valuesMap:Map<string, any[]>,filterSet:Set<any>){
-//     for(const key in obj){
-//         const value = obj[key];
-//         if((typeof value === 'boolean' || typeof value === 'string' )){
-//                 if (filterSet.has(key)) {
-//                   if(valuesMap.has(key)){
-//                     const arr = valuesMap.get(key);
-//                     if(!arr?.includes(value)) valuesMap.get(key)?.push(value)
-//                   }else{
-//                     valuesMap.set(key,[value])
-//                   }
-//                 }
-//          }
-//     }
-//     return valuesMap;
-// }
- // {
-  //   key: "",
-  //   value: []
-  // }
 export function transformDataForFilterModalUI(list: any){
   const valuesMap = new Map(FILTER_TABLE_KEY.map(item => [item, [] as Array<string | boolean>]));
   const filterSet = new Set(FILTER_TABLE_KEY)
