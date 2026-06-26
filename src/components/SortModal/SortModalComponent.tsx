@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
 type SortConfig = {
   key: string;
@@ -35,7 +35,8 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
             setFocusedIndex(index)
         }
 
-        function getSortIcon(sortConfig:SortConfig){
+        function getSortIcon(sortConfig:SortConfig, key: string){
+          if(sortConfig.key !== key) return <ArrowUpDown size={20} />
           return sortConfig.direction === 'asc' ? <ArrowUp size={20} /> : <ArrowDown size={20}/>
         }
 
@@ -53,7 +54,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
           <button type="button" onClick={() => closeSortModal?.()} aria-label="Close sort modal">
             ×
           </button></div>
-            <div className="grid grid-cols-2 max-h-[600px] h-fit overflow-y-auto p-4 "> 
+            <div className="grid grid-cols-2 max-h-150 h-fit overflow-y-auto p-4 "> 
           {headersData?.map((header: any, index: number) => 
             // <div >                             
                         <div ref={myElementRef}  key={index + 21*index} id={focusedIndex}
@@ -83,7 +84,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
                 
                 disabled={!focusedIndex}
                 >
-                {getSortIcon(sortConfig)}
+                {getSortIcon(sortConfig,focusedIndex)}
                 </button>
             </div>
             </div>

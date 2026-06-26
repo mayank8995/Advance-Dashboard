@@ -84,7 +84,7 @@ const  FilterModal: React.FC<FilterModalComponentProps> = ({closeModal,submitFil
     return <>
         <div className="bg-white fixed z-300 left-0 right-0 bottom-0 rounded-t-2xl">
             <div className="flex flex-row justify-between items-center p-2 text-sm font-semibold border-b-2 border-b-slate-100"><h1>Filters</h1><X onClick={handleCloseModal} width={16} height={20}/></div>
-            <div className="flex justify-between max-h-[600px] h-[350px] overflow-y-auto">
+            <div className="flex justify-between max-h-150 h-87.5 overflow-y-auto">
                 <div className="flex flex-col justify-between">
                 {tabID && tabID.map((item:any,index:number) => {
                     const filterKey = item as keyof typeof CORRESPONDING_FILTER_TABLE_KEY_NAME;
@@ -97,7 +97,7 @@ const  FilterModal: React.FC<FilterModalComponentProps> = ({closeModal,submitFil
                 {tabValue && tabValue.map((item:any,index:number) => (
                     <div key={index + 2*index}> 
                     {focusedIndex === index && 
-                        <div  className="transition-all duration-200 ease-out cursor-pointer outline-none bg-white p-2 relative flex flex-wrap flex-1 items-center overflow-auto overflow-x-auto   min-h-0 h-[350px]" itemID={`${index}`}>
+                        <div  className="transition-all duration-200 ease-out cursor-pointer outline-none bg-white p-2 relative flex flex-wrap flex-1 items-center overflow-auto overflow-x-auto   min-h-0 h-87.5" itemID={`${index}`}>
                             {item[1]?.map((chipObj:any, chipId: number) => (
                                 <div key={chipId + 12*chipId}>
                                     {<div  id={`${item[0]}-${chipObj?.value}`} onClick={handleSelectedChips} 
@@ -120,7 +120,7 @@ const  FilterModal: React.FC<FilterModalComponentProps> = ({closeModal,submitFil
             </div>
             <div className="flex bg-white justify-around flex-row p-2 border-t-2 border-t-slate-100">
                 <button onClick={clearFilter}>Clear All</button>
-                <button onClick={submitModal} disabled={!selectedChips?.length} className={`px-6 py-2.5 font-semibold text-sm rounded-xl shadow-lg text-white ${selectedChips?.length ? 'bg-gradient-to-r from-indigo-600 to-violet-600  shadow-indigo-500/30 hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40 hover:enabled:from-indigo-700 hover:enabled:to-violet-700 transition-all duration-200 cursor-pointer' : 'bg-slate-300 disabled:text-gray-400 disabled:cursor-not-allowed'}
+                <button onClick={submitModal} disabled={!selectedChips?.length} className={`px-6 py-2.5 font-semibold text-sm rounded-xl shadow-lg text-white ${selectedChips?.length ? 'bg-linear-to-r from-indigo-600 to-violet-600  shadow-indigo-500/30 hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40 hover:enabled:from-indigo-700 hover:enabled:to-violet-700 transition-all duration-200 cursor-pointer' : 'bg-slate-300 disabled:text-gray-400 disabled:cursor-not-allowed'}
                     
                 `}>Apply</button>
             </div>
