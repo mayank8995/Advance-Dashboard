@@ -100,6 +100,7 @@ export function  performDeepSearch(obj:any, target:string){
     if( obj === null || typeof obj !== 'object') return false;
     for(const key in obj){
         if ((typeof obj[key] === 'number' || typeof obj[key] === 'string' || typeof obj[key] === 'boolean' )&& obj[key].toString().toLowerCase().includes(target)) {
+          console.log("ZXCZXCZXCZXCZX>>")
             return true;
         }
        if (typeof obj[key] === 'object' && obj[key] !== null) {
@@ -150,16 +151,21 @@ Array.prototype.deepSearchCustomFilter = function(query: string){
   const filtered: any[] = [];
   const cleanQuery = query.trim().replace(/\s+/g, ' ').toLowerCase();
   if(this){
-      for(let i=0;i<this.length;i++){
-        if(this[i]){
-          if(performDeepSearch(this[i], cleanQuery)){
-            filtered.push(this[i]);
+    // if(!isCustomTableFilter){
+        for(let i=0;i<this.length;i++){
+          if(this[i]){
+            if(performDeepSearch(this[i], cleanQuery)){
+              filtered.push(this[i]);
+            }
           }
         }
-      }
-      // console.log(filtered)
-  }
-  return filtered;
+        console.log(filtered,"query>>>>",query)
+        
+    // }else{
+      // return filteredTableData(this, tableCustomFilterData)
+    // }
+    }
+  return filtered;;
 }
 
 Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | boolean | string[]>){
@@ -173,7 +179,7 @@ Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | b
           }
         }
       }
-      console.log("applyFilterOnTable>",filtered)
+      // console.log("applyFilterOnTable>",filtered)
   }
   return filtered;
 }
@@ -241,6 +247,19 @@ export function deepCloneCustom(obj: any) {
 
 
 export function filteredTableData(searchList: any, queryList: any){
-
-  // searchList?.map((item: any) => item)?.filter((it: any))
+const filteredArray = [];
+let flag = 1;
+  for(const item of searchList){
+        flag = 1;
+        for (let [key, value] of queryList) {
+          if(value.length === 0) continue;
+              if(!value.includes(item[key])){
+                  flag = 0;
+                  break;
+              }
+    }
+    flag && filteredArray.push(item)
+  }
+  // console.log("filteredArray>>>>",filteredArray)
+  return filteredArray;
 }

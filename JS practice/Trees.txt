@@ -3,10 +3,90 @@
 3. Postorder left -> right -> root
 
 4. Max Depth of Binary Tree
+
 Base Case: 
-count = 1
-if  node === null return 0
-What gets smaller: tree 
-Recursive Relationship:  count += depth
-Traversal Type:
-Return Style:
+if node === null return 0
+What gets smaller: current -> child
+Recursive Relationship:  
+                    depthLeft = 1 + maxDepth(node.left);
+                    depthRight = 1  + maxDepth(node.right);
+                    return depthLeft > depthRight ? depthLeft : depthRight;
+Traversal Type: DFS
+Return Style: Child returns depth.
+Parent adds 1 for itself and returns the maximum depth.
+
+function maxDepth(node){
+  if(node === null) return 0;
+  else{
+    const depthLeft = 1 + maxDepth(node.left);
+    const depthRight = 1 + maxDepth(node.right);
+    return depthLeft > depthRight ? depthLeft : depthRight;
+  }
+  
+}
+
+5. Count Total Nodes in a Binary Tree
+
+Base Case: 
+if node === null return 0
+What gets smaller: current -> child
+Recursive Relationship:  
+                    return 1 + countNodes(node.left) + countNodes(node.right);
+Traversal Type: DFS
+Return Style: Child returns count.
+Parent adds 1 for itself and returns the count
+
+function countNodes(node){
+  if(node === null) return 0;
+  return 1 + countNodes(node.left) + countNodes(node.right);
+}
+
+6.Search a Value in a Binary Tree
+
+Return:
+
+true if value exists.
+false otherwise.
+
+Example:
+
+search(root, "E") // true
+search(root, "X") // false
+      A
+     / \
+    B   C
+   / \
+  D   E
+
+Base Case: 
+if node === null return false;
+What gets smaller: current -> child
+Recursive Relationship:  
+            if(node.value === target) return true;
+    return search(node.left,target) || search(node.right,target)
+Traversal Type: DFS
+Return Style: boolean
+
+function search(node, target){
+  if(node === null) return false;
+  if(node.value === target) return true;
+  return search(node.left,target) || search(node.right,target);
+}
+
+7.Mirror (Invert) a Binary Tree
+
+Transform:
+
+        A
+       / \
+      B   C
+     / \   \
+    D   E   F
+
+into:
+
+        A
+       / \
+      C   B
+     /   / \
+    F   E   D

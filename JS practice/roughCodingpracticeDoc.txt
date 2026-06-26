@@ -1,1 +1,9 @@
-Max Depth of Binary Tree
+Count Total Nodes in a Binary Tree
+Base Case: 
+if node === null return 0
+What gets smaller: current -> child
+Recursive Relationship:  
+                    return 1 + countNodes(node.left) + countNodes(node.right);
+Traversal Type: DFS
+Return Style: Child returns count.
+Parent adds 1 for itself and returns the count

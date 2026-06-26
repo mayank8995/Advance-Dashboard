@@ -176,7 +176,7 @@ function handleFileChange(e:any){
   
   <div className="relative">
     <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
-      <img  src={formValues?.image ?? ""} className="aspect-square w-full h-full object-cover" alt='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'/>
+      <img  src={formValues?.image || undefined} className="aspect-square w-full h-full object-cover" alt='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60'/>
     </div>
       <input ref={refForUpload} onChange={handleFileChange} type="file" style={{display: "none"}} />
   <button
