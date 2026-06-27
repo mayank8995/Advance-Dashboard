@@ -1,3 +1,30 @@
+const root = {
+  value: "A",
+  left: {
+    value: "B",
+    left: {
+      value: "D",
+      left: null,
+      right: null
+    },
+    right: {
+      value: "E",
+      left: null,
+      right: null
+    }
+  },
+  right: {
+    value: "C",
+    left: null,
+    right: {
+      value: "F",
+      left: null,
+      right: null
+    }
+  }
+};
+
+
 1. Inorder  left -> root ->right
 2. Preorder root -> left -> right
 3. Postorder left -> right -> root
@@ -138,3 +165,75 @@ function sum(node){
  
   return sum(node.left) + sum(node.right) + node.value
 }
+
+9.Count Leaf Nodes
+
+A leaf node is a node with:
+
+left === null && right === null
+
+Example:
+
+        A
+       / \
+      B   C
+     / \   \
+    D   E   F
+
+Leaf nodes are:
+
+D
+E
+F
+
+Answer:
+
+3
+
+Base Case: 
+node === null return 0
+node.left === null && node.right === null return 1;
+What gets smaller: current -> child
+Recursive Relationship: 
+return count(node.left) + count(node.right)
+Traversal Type: dfs
+Return Style: child returns count -> parent adds it.
+
+function countLeafNode(node){
+  if(node === null) return 0;
+  if(node.left === null && node.right === null) return 1;
+  return countLeafNode(node.left) + countLeafNode(node.right)
+}
+
+9.Same Tree
+
+Given two binary trees, return true if:
+
+Both have the same structure.
+Corresponding node values are equal.
+
+Otherwise return false.
+
+      A
+     / \
+    B   C
+   / \
+  D   E
+
+      A
+     / \
+    M   C
+   / \
+  D   E
+Base Case: 
+node1 === null return node1
+node2 === null return node2
+What gets smaller: current -> child
+Recursive Relationship:
+sameTree(node1.left,node2.left)
+sameTree(node1.right,node2.right)
+if(!(node1.value === node2.value)) return false;
+
+return true;
+Traversal Type: postorder dfs
+Return Style: 
