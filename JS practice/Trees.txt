@@ -237,3 +237,54 @@ if(!(node1.value === node2.value)) return false;
 return true;
 Traversal Type: postorder dfs
 Return Style: 
+
+10.Next Topic: Preorder Traversal
+
+Problem:
+
+Return the node values in preorder.
+
+Tree:
+
+        A
+       / \
+      B   C
+     / \   \
+    D   E   F
+
+Base Case: node  === null return;
+What gets smaller: current -> child
+Recursive Relationship:
+Traversal Type: perorder dfs
+Return Style:
+
+function preorder(node, arr){
+  if(node === null) return;
+        
+  arr.push(node.value);
+  console.log(node.value)
+  preorder(node.left,arr);
+  preorder(node.right,arr); 
+    return arr;
+}
+
+11. Inorder
+
+function inorder(node, arr){
+  if(node === null) return;
+        
+  inorder(node.left,arr);
+    arr.push(node.value);
+  inorder(node.right,arr); 
+    return arr;
+}
+
+12. Postorder
+function postorder(node, arr){
+  if(node === null) return;
+        
+  postorder(node.left,arr);
+  postorder(node.right,arr); 
+  arr.push(node.value);
+  return arr;
+}
