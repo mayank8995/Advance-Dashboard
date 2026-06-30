@@ -1,48 +1,35 @@
-Recursion
+Binary Search
 
-Write the design for:
+Without coding, explain:
 
-Same Tree
-Sum of Nodes
+First Occurrence - give index of first occurrence of an element in aorted array. here update high = mid - 1 when target matches and continue;
+Last Occurrence - give index of last occurrence of an element in aorted array. here update low = mid + 1 when target matches and continue;
+Lower Bound - here main condition - > if(arr[mid] >= high) high = mid-1;
+Search Insert Position --> here everything same as normal binary search except we return low as result, which gives us index where we can insert element in sorted array
 
-Use:
+Focus on:
 
-Base Case - 
-node1 === null && node2 === null return true
-node1 === null || node2 === null return false
-What gets smaller -> current -> child 
-Recursive Relationship - 
-if(node1.value ! == node2.value) return false
-return sameTree(node1.left,node2.left) && sameTree(node1.right, node2.right);
-Traversal Type - preorder dfs
-Return Style - child returns true/false -> parent evaluates and returen final value
+Candidate condition
+Which side you continue searching
+Why
 
+First Occurrence: 
+Candidate condition -  update high = mid - 1 when target matches then continue;
+Which side you continue searching - left side
+Why - because we need first occurrence of elemnt
 
+Last Occurrence:  
+Candidate condition-  update low = mid + 1 when target matches then continue;
+Which side you continue searching - right side
+Why - because we need last occurrence of elemnt
 
-Base Case - 
-node === null return 0;
-What gets smaller -> current -> child 
-Recursive Relationship - return sum(node.left) + sum(node.right) + node.value;
-Traversal Type - postorder dfs
-Return Style - child returns value -> parent adds
-
-
-
-Binary Trees
-
-Without coding, answer:
-
-Why is Max Depth a postorder DFS problem? - becoz we have to first traverse each node for calculating depth
-Why can Mirror Tree be solved using either preorder or postorder DFS? - becoz we have to change referrnce of node child
-In Preorder, when is the current node processed? -> current node -> left -> right
-In Inorder, when is the current node processed? --> left -> current node -> right
-In Postorder, when is the current node processed? --> left -> right -> current node
+Search Insert Position:
+Candidate condition  -  if(arr[mid] >= high) high = mid-1;
+Which side you continue searching - left side
+Why -because we need the index where we caould have inserted in sorted array
 
 
-Stack
-
-One sentence each:
-
-What invariant does the stack maintain in Next Greater Element? ---> useful candidate for element to the left
-Why do we pop while current >= stack.top()? ----> becoz after this condition , top will be useless and current will become useful candidate for elelmnt to the left
-What does the stack store in Daily Temperatures? ---> obj of value of eleemnt in index of the element
+Lower Bound:
+Candidate condition -  here everything same as normal binary search except we return low as result, which gives us index where we can insert element in sorted array
+Which side you continue searching - left side & right side
+Why - because we need lower bound 
