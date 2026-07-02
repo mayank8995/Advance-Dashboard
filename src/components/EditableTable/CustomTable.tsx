@@ -168,6 +168,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true })
     setTableCustomFilterData(new Map())
     setIsCustomTableFilter(false);
+    setCurrentPage(1); // Reset index on resize
   }
 
   return (
@@ -215,7 +216,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
             <option className='text-sm font-bold outline-none' value={10}>10</option>
           </select>
         </div>          
-          {<div className='pl-2 flex items-center'><div className='cursor-pointer'>{tableCustomFilterData.size === 0 ? <Funnel className="pl-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="pl-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{<ArrowUpDown className="pl-2" onClick={openSortModal} />}</div></div>}
+          {<div className='pl-2 flex items-center'><div className='cursor-pointer'>{tableCustomFilterData.size === 0 ? <Funnel className="pl-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="pl-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{<ArrowUpDown className="pl-2 text-gray-600 dark:text-gray-100" onClick={openSortModal} />}</div></div>}
         </div>
         <div className="flex justify-center items-center" >
         {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
@@ -273,11 +274,11 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         </div> 
          </div>
     </div>
-    <div  className={`transition-opacity duration-300 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
+    <div  className={`transition-opacity duration-400 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
       {<FilterModal closeModal={closeModal} submitFilterData={submitFilterData} clearAllFilter={clearAllFilter}/>}
     </div>
-    <div  className={`transition-opacity duration-300 ${showSortModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
-      {<SortModalComponent key={headersData.length} closeSortModal={closeSortModal} isOpen={showSortModal} headersData={headersData} onSort={(key?: string) =>  handleSort(key)} sortConfig={sortConfig} />}
+    <div  className={`transition-opacity duration-400 ${showSortModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
+      {<SortModalComponent key={headersData.length} closeSortModal={closeSortModal} headersData={headersData} onSort={(key?: string) =>  handleSort(key)} sortConfig={sortConfig} />}
     </div>
     </>
   );
