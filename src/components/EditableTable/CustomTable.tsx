@@ -24,13 +24,13 @@ import SortModalComponent from '../SortModal/SortModalComponent';
   const [showSortModal, setSortShowModal] = useState(false)
   
   useEffect(() => {
-          console.log("tableCustomFilterData>>>>",tableCustomFilterData.size > 0)
+          // console.log("tableCustomFilterData>>>>",tableCustomFilterData,tableCustomFilterData.size)
           setIsCustomTableFilter(false);
-          queryClient.invalidateQueries({ queryKey: ['filterKeyData'] })
+          queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true })
     },[])
 
      useEffect(() => {
-    if (!showModal || !showSortModal) return;
+    if (!showModal) return;
 
     // Save original body overflow style
     const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -42,7 +42,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
     return () => {
       document.body.style.overflow = originalStyle;
     };
-  }, [showModal,showSortModal]);
+  }, [showModal]);
 
     useEffect(() => {
     if (!showSortModal) return;
@@ -99,7 +99,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         return 0;
       });
     }
-    console.log(sortableItems,"<<<<<sortedData")
+    // console.log(sortableItems,"<<<<<sortedData")
 
     return sortableItems;
   }, [list,sortConfig,searchTable]);
@@ -109,7 +109,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
 // console.log(currentPage, "dssvsddvsdv",totalPages)
   
   const paginatedData = useMemo(() => {
-    console.log("sortedData>>>",sortedData)
+    // console.log("sortedData>>>",sortedData)
     const startIndex = (currentPage - 1) * rowsPerPage;
     return sortedData.slice(startIndex, startIndex + rowsPerPage)
   }, [sortedData, currentPage, rowsPerPage]);
@@ -164,10 +164,11 @@ import SortModalComponent from '../SortModal/SortModalComponent';
   }
 
   const clearAllFilter= () => {
-    console.log("IN hereeeeee clear filter")
-    queryClient.invalidateQueries({ queryKey: ['filterKeyData'] });
+    // console.log("IN hereeeeee clear filter")
+    queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true })
     setTableCustomFilterData(new Map())
     setIsCustomTableFilter(false);
+    setCurrentPage(1); // Reset index on resize
   }
 
   return (
@@ -188,7 +189,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         <div className='sm:hidden px-6 py-4'>
           <div className='relative'>
               <FormField style={{width:'100%'}} value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value || "")}/>
-              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+              {txtToBeSearched && <X width={18} className='cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       <div className='mt-4 flex flex-row items-center justify-between'>
@@ -197,6 +198,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         <div className='flex justify-center items-center'>
           <label className=' hidden sm:flex text-sm font-bold dark:text-slate-100 pr-2'>Rows / page </label>
           <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
+            cursor-pointer
             px-2 py-1
             border
             border-slate-300 dark:border-slate-700
@@ -214,7 +216,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
             <option className='text-sm font-bold outline-none' value={10}>10</option>
           </select>
         </div>          
-          {<div className='flex items-center'><div>{tableCustomFilterData.size === 0 ? <Funnel className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="ml-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{<ArrowUpDown onClick={openSortModal} />}</div></div>}
+          {<div className='pl-2 flex items-center'><div className='cursor-pointer'>{tableCustomFilterData.size === 0 ? <Funnel className="pl-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/> : <FunnelX className="pl-2 text-gray-600 dark:text-gray-100" onClick={openFilterModal}/>} </div><div className='flex sm:hidden'>{<ArrowUpDown className="pl-2 text-gray-600 dark:text-gray-100" onClick={openSortModal} />}</div></div>}
         </div>
         <div className="flex justify-center items-center" >
         {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
@@ -244,7 +246,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
       <div className='hidden sm:flex px-6 pb-4'>
           <div className='relative'>
               <FormField  value={txtToBeSearched} className={className} type={"text"} name={"search"} placeholder={"Search..."}  onChange={(e:any) => setTextToBeSearched(e?.target?.value||"")}/>
-              {txtToBeSearched && <X width={18} className='absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
+              {txtToBeSearched && <X width={18} className='cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300' onClick={() => setTextToBeSearched("")}/>}
           </div>
         </div>
       </div>
@@ -263,7 +265,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
           }
         </thead>
         <tbody className='divide-y divide-slate-200'>
-          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(columnsData).map((columnsData,id) => <td key={id+6*id} className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[columnsData]) && row[columnsData]?.length > 0 ? row[columnsData][0] : row[columnsData]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800 flex flex-row justify-center items-center'><TextSearch className='pr-1'/><span>{NO_RESULT_FOUND}</span></h1></td></tr>}
+          {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(columnsData).map((columnsData,id) => <td key={id+6*id} className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[columnsData]) && row[columnsData]?.length > 0 ? row[columnsData].map((item:string, ix:number) => <div key={ix+row[columnsData].length}>{item}</div>) : row[columnsData]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800 flex flex-row justify-center items-center'><TextSearch className='pr-1'/><span>{NO_RESULT_FOUND}</span></h1></td></tr>}
         </tbody>
       </table>
         <div className='sm:hidden pl-2 pr-2'>
@@ -272,11 +274,11 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         </div> 
          </div>
     </div>
-    <div  className={`transition-opacity duration-300 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
+    <div  className={`transition-opacity duration-400 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
       {<FilterModal closeModal={closeModal} submitFilterData={submitFilterData} clearAllFilter={clearAllFilter}/>}
     </div>
-    <div  className={`transition-opacity duration-300 ${showSortModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
-      {<SortModalComponent key={headersData.length} closeSortModal={closeSortModal} isOpen={showSortModal} headersData={headersData} onSort={(key?: string) =>  handleSort(key)} sortConfig={sortConfig} />}
+    <div  className={`transition-opacity duration-400 ${showSortModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
+      {<SortModalComponent key={headersData.length} closeSortModal={closeSortModal} headersData={headersData} onSort={(key?: string) =>  handleSort(key)} sortConfig={sortConfig} />}
     </div>
     </>
   );

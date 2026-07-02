@@ -3,6 +3,7 @@ import { getTopProjects } from "../../services/utils.service";
 import { bgColors, CARD_CONTENT_LIMIT_TO_SCROLL, gradients, PROJECT_DETAILS, RISK_STATUS, VIEW_MORE, VIEW_MORE_ROUTES_VALUES } from "../../utils/constants";
 import { ArrowRight, Briefcase, Medal, Star, Target, TriangleAlert, Trophy, UserStar } from "lucide-react";
 import { Link } from "react-router-dom";
+import React from "react";
 
 
 export default function Card({topProjects, topPerformersList, promotedThisYear, meetingKPIs, requiringReview, title, cardToShow}: any) {
@@ -22,11 +23,12 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
       },[])
 
   return (
-    <>
+    <React.Fragment>
+      
         {cardToShow?.topProjects &&
         <div
         // ref={containerRef} 
-         className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none"
+         className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none"
         >
           <div className="mb-4 flex items-center justify-between gap-4">
             <div className="flex items-center justify-center">
@@ -34,7 +36,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">{title}</h1>
           </div>
           </div>
-          <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
+          <div className="flex-1 flex flex-col justify-evenly">
           {Array.isArray(topProj) && topProj?.map((value: any, index: number) => {
            return <>
             {index < CARD_CONTENT_LIMIT_TO_SCROLL && value?.priorityRanking === "*" && <div key={index} className="flex flex-row mb-2">
@@ -51,7 +53,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
                 </span>
               </div>
               <div className="items-center flex justify-end">
-               <span className={`${RISK_STATUS.AT_RISK ===  value?.riskStatus ? "bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400" :"bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400"}`}>
+               <span className={`whitespace-nowrap ${RISK_STATUS.AT_RISK ===  value?.riskStatus ? "bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400" :"bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400"}`}>
                    {value?.riskStatus}
                 </span>
               </div>
@@ -64,22 +66,21 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           )
          }
           </div>
-        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects" state={{name:VIEW_MORE_ROUTES_VALUES.top_projects}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+        {Array.isArray(topProj) && topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topProjects" state={{name:VIEW_MORE_ROUTES_VALUES.top_projects}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
         </div>
         }
-         {cardToShow?.topPerformers &&<div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-yellow-950/20 dark:border-none">
+         {cardToShow?.topPerformers &&<div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-yellow-950/20 dark:border-none">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center justify-center">
             <div className="mr-2 w-8 h-8 rounded-lg flex items-center justify-center"> <UserStar className="text-amber-500 dark:text-amber-100"/></div>
             <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">{topPerformers?.title}</h1>
           </div>
-            <span className=" bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {topPerformers?.trendValue}%</span>
+            <span className="whitespace-nowrap bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {topPerformers?.trendValue}%</span>
           </div>
-           <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
+           <div className="flex-1 flex flex-col justify-evenly">
           {Array.isArray(topPerformers?.employees) && topPerformers?.employees?.map((value: any, index: number) => {
            return <>
-          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid  grid-cols-3 gap-6 mb-2" key={value?.id}>
-             <div className="col-span-2">
+          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex items-center justify-between mb-2" key={value?.id}>
               <div  className="inline-flex items-center gap-6 text-sm">
                 {index >=0 && index <=2 && <Medal className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0
               ${index === 0 ? 'text-yellow-400' :
@@ -93,8 +94,6 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
                 <h2 className="flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">{value?.designation}</h2>
               </div>
               </div>
-            
-              </div>
               <div className="flex gap-1 text-sm font-bold items-center">
                   <Star size={14} className="text-amber-200" fill="#FFEA00"/>
                   <h1 className="dark:text-slate-100">{value?.rating}</h1>
@@ -103,21 +102,20 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </>
           })}
           </div>
-          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers" state={{name:VIEW_MORE_ROUTES_VALUES.top_performers}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+          { Array.isArray(topPerformers?.employees) && topPerformers?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=topPerformers" state={{name:VIEW_MORE_ROUTES_VALUES.top_performers}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
-          {cardToShow?.promotedThisYear &&<div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 darK:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20 dark:border-none">
+          {cardToShow?.promotedThisYear &&<div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 darK:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20 dark:border-none">
           <div className="mb-4 flex items-center justify-between gap-4">
             <div className="flex items-center justify-center">
               <div className="mr-2 w-8 h-8 rounded-lg  flex items-center justify-center"><Trophy className="text-amber-500 dark:text-amber-100"/></div>
             <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">{promoted?.title}</h1>
           </div>
-            <h2 className=" bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {promoted?.trendValue}%</h2>
+            <h2 className="whitespace-nowrap bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {promoted?.trendValue}%</h2>
           </div>
-           <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
+           <div className="flex-1 flex flex-col justify-evenly">
           {Array.isArray(promoted?.employees) && promoted?.employees?.map((value: any, index: number) => {
            return <>
-          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid grid-cols-3 gap-6 mb-2" key={value?.id}>            
-            <div className="col-span-2">
+          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex flex-row justify-between mb-2" key={value?.id}>            
               <div>
               <div className="inline-flex items-center gap-3"> 
               <h1 className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}>
@@ -130,8 +128,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
               </div>          
               </div>
               </div>
-            </div>
-              <div className="col-span-1">
+              <div>
                  <h2 className="flex items-center text-xs font-bold dark:text-slate-100">↑ Promoted On</h2>
                  <h2 className="flex items-center text-xs font-bold dark:text-slate-100"> {value?.promotedOn}</h2>
               </div>
@@ -141,18 +138,18 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>}
           </>})}
           </div>
-           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear" state={{name:VIEW_MORE_ROUTES_VALUES.promotedThisYear}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+           { Array.isArray(promoted?.employees) && promoted?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=promotedThisYear" state={{name:VIEW_MORE_ROUTES_VALUES.promotedThisYear}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
           {cardToShow?.meetingKPIs &&
-          <div className=" relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-indigo-950/20 dark:border-none">
+          <div className=" h-full  bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-indigo-950/20 dark:border-none">
           <div className="mb-4 flex flex-row items-center justify-between">
             <div className="flex items-center justify-center">
               <div className="mr-2 w-8 h-8 rounded-lg  flex items-center justify-center"><Target  className="text-amber-500 dark:text-amber-100"/></div>
             <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">{meeting?.title}</h1>
           </div>
-            <h2 className=" bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {meeting?.trendValue}%</h2>
+            <h2 className="whitespace-nowrap bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">↑ {meeting?.trendValue}%</h2>
           </div>
-          <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col justify-evenly">
           <div className="mb-2">
             <h1 className="flex items-center text-sm font-bold dark:text-slate-100">{meeting?.percentage} / 100 employees</h1>
           </div>
@@ -163,7 +160,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
               <h1 className="flex items-center text-xs font-bold dark:text-slate-100">Exceeding ({meeting?.breakdown?.exceeding?.ratingRange})</h1>
             </div>
             <div className={`h-6 w-full bg-gray-200`}>
-            <div style={{width: `${meeting?.breakdown?.exceeding?.percentage}% ` }} className={`h-6  bg-gradient-to-r from-emerald-400 to-green-600 dark:bg-gradient-to-r from-emerald-400 to-green-600`}></div>
+            <div style={{width: `${meeting?.breakdown?.exceeding?.percentage}% ` }} className={`h-6  bg-linear-to-r from-emerald-400 to-green-600 dark:bg-linear-to-r `}></div>
             </div>
           </div>
             <div>
@@ -177,7 +174,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             <h1 className="flex items-center text-xs font-bold dark:text-slate-100">Meeting ({meeting?.breakdown?.meeting?.ratingRange})</h1>
             </div>
             <div className={`h-6 w-full bg-gray-200`}>
-            <div style={{width: `${meeting?.breakdown?.meeting?.percentage}%`}} className={`h-6 bg-gradient-to-r from-violet-600 to-indigo-700 dark:bg-gradient-to-r from-violet-600 to-indigo-700`}></div>
+            <div style={{width: `${meeting?.breakdown?.meeting?.percentage}%`}} className={`h-6 bg-linear-to-r  dark:bg-linear-to-r from-violet-600 to-indigo-700`}></div>
             </div>
           </div>
           <div>
@@ -191,7 +188,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             <h1 className="flex items-center text-xs font-bold dark:text-slate-100">Not Meeting ({meeting?.breakdown?.notMeeting?.ratingRange})</h1>
             </div>
             <div className={`h-6 w-full bg-gray-200`}>
-            <div style={{width: `${meeting?.breakdown?.notMeeting?.percentage}%`}} className={`h-6 bg-gradient-to-r from-red-500 to-orange-500 dark:bg-gradient-to-r from-red-500 to-orange-500`}></div>
+            <div style={{width: `${meeting?.breakdown?.notMeeting?.percentage}%`}} className={`h-6 bg-linear-to-r  dark:bg-linear-to-r from-red-500 to-orange-500`}></div>
             </div>
           </div>
           <div>
@@ -201,20 +198,18 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
           </div>
         </div>
          }
-         {cardToShow?.requiringReview &&<div className="relative bg-gradient-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-gradient-to-br dark:from-slate-900 dark:to-red-950/20 dark:border-none">
+         {cardToShow?.requiringReview &&<div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-red-950/20 dark:border-none">
           <div className=" mb-4 flex flex-row items-center justify-between">
             <div className="flex items-center justify-center">
               <div className="mr-2 w-8 h-8 rounded-lg  flex items-center justify-center"><TriangleAlert   className="text-amber-500 dark:text-amber-100"/></div>
             <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">{requiringReview?.title}</h1>
           </div>
-            <h2 className="bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">↓ {requiringReview?.trendValue}%</h2>
+            <h2 className="whitespace-nowrap bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">↓ {requiringReview?.trendValue}%</h2>
           </div>
-          <div className="overflow-y-auto min-h-0 max-h-[350px] flex-1">
+          <div className="flex-1 flex flex-col justify-evenly">
           {Array.isArray(requiring?.employees) && requiring?.employees?.map((value: any, index: number) => {
            return <>
-          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="grid grid-cols-3 gap-6" key={index+1}>
-             <div className="col-span-2">
-              <div>
+          {index < CARD_CONTENT_LIMIT_TO_SCROLL && <div className="flex flex-row justify-between mb-2" key={index+1}>
               <div className="inline-flex items-center gap-3"> 
               <h1 className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}>
                 {value.name.split(' ').map((n: any) => n[0]).join('')}
@@ -225,8 +220,6 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
                 
               </div>          
               </div>
-              </div>
-            </div>
             <div className="flex flex-col items-end gap-1">
           <span className={`flex items-center text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap
             ${value.reviewReason[0] === 'Low Rating'       ? 'bg-orange-100 text-orange-600 dark:bg-emerald-900/40 dark:text-orange-400' : ''}
@@ -235,13 +228,11 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
             ${value.reviewReason[0] === 'Low Satisfaction' ? 'bg-purple-100 text-purple-600 dark:bg-emerald-900/40 dark:text-purple-400' : ''}
           `}>{value.reviewReason[0]}</span>
         </div>
-          <div>
-          </div>
           </div>}
           </>})}
           </div>
-          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className=" bottom-[8px] right-[8px] flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview" state={{name:VIEW_MORE_ROUTES_VALUES.requiringReview}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
+          {  Array.isArray(requiring?.employees) && requiring?.employees?.length > CARD_CONTENT_LIMIT_TO_SCROLL && <div className="bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold"><Link className="items-center flex flex-row text-blue-700" to="/home/dashboard/viewmore?target=requiringReview" state={{name:VIEW_MORE_ROUTES_VALUES.requiringReview}}><span>{VIEW_MORE}</span><ArrowRight className=" text-blue-700" /></Link></div>}
          </div>}
-    </>
+    </React.Fragment>
   );
 }
