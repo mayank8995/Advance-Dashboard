@@ -368,3 +368,88 @@ function peakElement(arr){
      console.log(low,high,mid);
   }
 }
+
+10.Binary Search on Answer
+
+This is the last major binary search pattern.
+
+Unlike previous problems, the array is not what you're searching.
+
+Instead, you're searching for the smallest or largest answer that satisfies a condition.
+
+Problem: Koko Eating Bananas
+
+There are n piles of bananas.
+
+piles = [3,6,7,11]
+
+Koko can choose an eating speed of k bananas per hour.
+
+Rules:
+
+She chooses one pile per hour.
+If the pile has fewer than k bananas, she finishes it and waits for the next hour.
+She cannot switch to another pile during the same hour.
+
+She has:
+
+h = 8 hours
+
+Find the minimum integer k so she can finish all the bananas within h hours.
+
+Example
+piles = [3,6,7,11]
+h = 8
+
+If:
+
+k = 4
+
+Hours needed:
+
+3  -> 1 hour
+6  -> 2 hours
+7  -> 2 hours
+11 -> 3 hours
+
+Total = 8 hours
+
+So k = 4 works.
+
+If:
+
+k = 3
+
+Hours:
+
+3  -> 1
+6  -> 2
+7  -> 3
+11 -> 4
+
+Total = 10
+
+Too slow.
+
+function CanKokoEatKBananasWithInHHours(piles,h){
+  let low = 1;
+  let high = Math.max(...piles);
+  let mid;
+  let ans = -1;
+  while(low<=high){
+      mid = low + Math.floor((high - low) / 2);
+      let sum = 0;
+      let i = 0;
+     while(i < piles.length){
+         sum += Math.ceil(piles[i]/mid);
+         i++;
+     }
+      if(sum <= h){
+         ans = mid;
+         high = mid - 1;
+      }else{
+         low = mid + 1;
+      }   
+  }
+  return ans;
+}

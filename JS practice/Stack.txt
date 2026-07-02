@@ -61,27 +61,6 @@ Input:
 Output:
 [3,3,5,-1,-1]
 
-
-// naive working but not proper approach
-function nextGreaterElement(arr){
-    let slow = 0;
-    let stack = [];
-    let result = [];
-    for(let fast = 0; fast < arr.length; fast++){
-        if(fast === arr.length-1) result.push(-1)
-        if(arr[fast] < arr[slow]) {
-            stack.push(arr[fast])
-        }
-        while(arr[fast] > arr[slow] && slow < fast){
-            result.push(arr[fast]);
-            slow++;
-            stack.pop()
-        }
-    }
-    stack.forEach(() => result.push(-1));
-  return result;
-}
-
 function nextGreaterElement(arr){
     let stack = [];
     let result = [];
