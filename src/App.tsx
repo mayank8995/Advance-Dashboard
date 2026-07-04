@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 import Login from './pages/login/Login'
@@ -10,7 +10,9 @@ import { CheckCircle } from 'lucide-react';
 function App() {
 
   const [show , setShow] = useState<boolean>(true);
-
+  useEffect(()=>{
+    localStorage.setItem("theme","dark")
+  },[])
 
   return (
     <>
