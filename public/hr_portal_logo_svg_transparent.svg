@@ -1,0 +1,6 @@
+<svg width="40" height="40" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HR Portal icon">
+  <rect x="0" y="0" width="56" height="56" rx="14" fill="#534AB7"/>
+  <path d="M16 16V40M16 28H28M28 16V40" stroke="#EEEDFE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="40" cy="20" r="5" fill="#AFA9EC"/>
+  <path d="M33 34C33 30 36 28 40 28C44 28 47 30 47 34V36H33V34Z" fill="#AFA9EC"/>
+</svg>

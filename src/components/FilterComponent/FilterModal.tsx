@@ -92,7 +92,7 @@ const  FilterModal: React.FC<FilterModalComponentProps> = ({closeModal,submitFil
     }
 
     return <>
-        <div className="grid grid-cols-1 bg-linear-to-br from-white to-indigo-100 shadow-sm border border-slate-100 dark:bg-linear-to-br dark:from-slate-950 dark:to-indigo-950 dark:border-slate-900/50 fixed z-300 left-0 right-0 bottom-0 md:absolute md:top-[50%] md:left-[50%] md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-t-2xl md:rounded-2xl">
+        <div className="flex flex-col max-h-[85vh] md:max-h-150 bg-linear-to-br from-white to-indigo-100 shadow-sm border border-slate-100 dark:bg-linear-to-br dark:from-slate-950 dark:to-indigo-950 dark:border-slate-900/50 fixed z-300 left-0 right-0 bottom-0 md:absolute md:top-[50%] md:left-[50%] md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-t-2xl md:rounded-2xl">
             <div className="flex flex-row justify-between items-center p-2 text-sm font-bold border-b-2 border-b-slate-400/50 dark:text-slate-200/50"><h1 className="dark:text-slate-200">Filters</h1><X className={'text-slate-950 cursor-pointer dark:text-slate-200'} onClick={handleCloseModal} width={16} height={20}/></div>
             
             <div className="flex flex-1 min-h-0 overflow-y-auto">

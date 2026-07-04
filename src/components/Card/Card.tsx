@@ -49,7 +49,7 @@ export default function Card({topProjects, topPerformersList, promotedThisYear, 
                   {value?.projectName}
                   </span>
                 <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
-                  {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.name && value?.name}
+                  {PROJECT_DETAILS.MANAGER}:&nbsp;{value?.name && value?.name.length > 20 ? value.name.split(' ').map((n: any) => n[0]).join('') : value.name}
                 </span>
               </div>
               <div className="items-center flex justify-end">

@@ -9,6 +9,7 @@ import { TailSpin } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 
+
 // LoginCard.jsx
 function Login({onCustomEvent}:any) {
 
@@ -89,8 +90,7 @@ function checkFormValidity(){
     }
   }
   return (
-    <div className="flex items-center justify-center">
-      <div className="max-h-150 h-127.5 bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-8 w-full max-w-md">
+      <div className="h-100 md:max-h-150 md:h-127.5 bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
 
         {/* Header */}
         <div className="mb-6">
@@ -176,7 +176,6 @@ function checkFormValidity(){
 </p>
 
       </div>
-     </div>
   );
 }
 export default Login
