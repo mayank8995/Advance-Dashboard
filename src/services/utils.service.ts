@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import getEmployees, { getAnalytics, getPerformanceCards, getProfileData } from "../api/admin-portal.api";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import getEmployees, { getAnalytics, getPaginatedEmployees, getPerformanceCards, getProfileData } from "../api/admin-portal.api";
+import type { QueryParams } from "../types/types";
 
 declare global {
   interface Array<T> {
@@ -16,6 +17,17 @@ export function useGetData(){
                 staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
 }
+
+ export function useEmployeeData(params: QueryParams){
+    // console.log("params 1 2 3>>",params)
+   return useQuery({
+      queryKey: ['employees', params.page, params.limit], 
+      queryFn: () => getPaginatedEmployees(params),
+      placeholderData: keepPreviousData, // Smooth transitions
+      staleTime: 5000, 
+    });
+ }
+
 export function useAnalyticsData(){
     return useQuery({
                 queryKey: ['analyticsData'],
@@ -170,7 +182,7 @@ Array.prototype.applyFilterOnTable = function(fliterQuery: Map<string,string | b
 export function transformDataForFilterModalUI(relevantData: Function){
   const {data, headers} = relevantData();
   const valuesMap = new Map<string, Array<string | boolean | string[]>>(headers.map((data: any) => data.key)?.map((item: any) => [item, [] as Array<string | boolean | string[]>]));
-  console.log("valuesMap",valuesMap, relevantData())
+  // console.log("valuesMap",valuesMap, relevantData())
   const filterSet = new Set(headers.map((data: any) => data.key))
   // console.log("list>>>",data,FILTER_TABLE_KEY,valuesMap,filterSet)
       for(let i=0;i<data.length;i++){
@@ -228,7 +240,7 @@ let flag = 1;
           if(value.length === 0) continue;
           if(Array.isArray(item[key])){
               // to be coded for array
-              console.log(item[key])
+              // console.log(item[key])
               const match = value.filter((it: string) => item[key].includes(it))
               if(match.length === 0){
                 flag = 0;

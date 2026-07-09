@@ -1,9 +1,21 @@
 import apiClient from "../services/http-common.service";
-import type { LoginForm, ProfileForm, SignUpForm } from "../types/types";
+import type { LoginForm, ProfileForm, QueryParams, SignUpForm } from "../types/types";
 
 export default async function getEmployees() {
   try {
     const response = await apiClient.get('/employeeList');
+         return response;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+
+export async function getPaginatedEmployees(params: QueryParams) {
+  try {
+    const response = await apiClient.get('/paginatedEmployeeList', {
+      params
+    });
          return response;
   } catch (error) {
     console.error('Error fetching data:', error);

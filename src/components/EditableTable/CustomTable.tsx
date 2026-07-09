@@ -6,28 +6,54 @@ import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 import { className, NO_RESULT_FOUND } from '../../utils/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import FilterModal from '../FilterComponent/FilterModal';
-import { filteredTableData } from '../../services/utils.service';
+import { filteredTableData, useEmployeeData } from '../../services/utils.service';
 import SortModalComponent from '../SortModal/SortModalComponent';
+import { getPaginatedEmployees } from '../../api/admin-portal.api';
+import type { Pagination } from '../../types/types';
 
-  export default function CustomTable({list, columnsData, headersData, title}:any) {
-    // State configuration
-  const queryClient = useQueryClient();
-  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [txtToBeSearched, setTextToBeSearched] = useState('');
-  // const [searchList, setSearchList] = useState(list);
-  //
-  const [showModal, setShowModal] = useState(false)
-  const [isCustomTableFilter, setIsCustomTableFilter] = useState(false)
-  const [tableCustomFilterData, setTableCustomFilterData] = useState(queryClient.getQueryData(['filterKeyData']) || new Map())
-  const [showSortModal, setSortShowModal] = useState(false)
-  
+  export default function CustomTable({columnsData, headersData, title}:any) {
+
+    
+    const queryClient = useQueryClient();
+    const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
+    const [txtToBeSearched, setTextToBeSearched] = useState('');
+    const [showModal, setShowModal] = useState(false)
+    const [isCustomTableFilter, setIsCustomTableFilter] = useState(false)
+    const [tableCustomFilterData, setTableCustomFilterData] = useState(queryClient.getQueryData(['filterKeyData']) || new Map())
+    const [showSortModal, setSortShowModal] = useState(false)
+    
+    const [pagination, setPagination] = useState<Pagination>({page:1, limit: 5, totalItems: 0, totalPages: 0});
+    const { data} = useEmployeeData({page:pagination.page, limit: pagination.limit});
+    const  list = data?.['data']?.['employees'] || [];
+
   useEffect(() => {
-          // console.log("tableCustomFilterData>>>>",tableCustomFilterData,tableCustomFilterData.size)
+    // if (data?.hasMore) {
+      queryClient.prefetchQuery({
+         queryKey: ['employees', pagination.page, pagination.limit], 
+        queryFn: () => getPaginatedEmployees({page: pagination.page, limit: pagination.limit}),
+      });
+    // }
+  }, [list, pagination, queryClient]);
+
+  useEffect(() => {
+    if(data?.['data']?.['pagination']){
+      const {page, limit, totalItems,totalPages} = data?.['data']?.['pagination'];
+      setPagination((prev) => ({...prev, page, limit,totalItems,totalPages}))
+    }
+  },[])
+
+  useEffect(() => {
           setIsCustomTableFilter(false);
           queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true })
     },[])
+
+    function handleNext(){
+      setPagination((prev) => ({...prev, page:Math.min(prev.page + 1, prev.totalPages)}))
+    }
+
+    function handlePrevious(){
+      setPagination((prev) => ({...prev, page:prev.page - 1}))
+    }
 
      useEffect(() => {
     if (!showModal) return;
@@ -65,7 +91,8 @@ import SortModalComponent from '../SortModal/SortModalComponent';
     const timerId = setTimeout(() => {
       // setIsCustomTableFilter(false)
       setDebouncedQuery(txtToBeSearched)
-      setCurrentPage(1);
+      // setCurrentPage(1);
+      setPagination((prev) => ({...prev, page:1}))
     }, 300)
     return () => clearTimeout(timerId)
   },[txtToBeSearched])
@@ -105,14 +132,10 @@ import SortModalComponent from '../SortModal/SortModalComponent';
   }, [list,sortConfig,searchTable]);
 
   // Pagination computation 
-  const totalPages = Math.ceil((sortedData.length) / rowsPerPage);
+  // const totalPages = Math.ceil((sortedData.length) / rowsPerPage);
 // console.log(currentPage, "dssvsddvsdv",totalPages)
   
-  const paginatedData = useMemo(() => {
-    // console.log("sortedData>>>",sortedData)
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    return sortedData.slice(startIndex, startIndex + rowsPerPage)
-  }, [sortedData, currentPage, rowsPerPage]);
+  const paginatedData = useMemo(() => sortedData , [list,sortedData, pagination.page, pagination.limit]);
  
   // Handler functions
   const handleSort = (key: any) => {
@@ -121,12 +144,14 @@ import SortModalComponent from '../SortModal/SortModalComponent';
       direction = 'desc';
     }
     setSortConfig({ key, direction });
-    setCurrentPage(1); // Reset index on sort
+    // setCurrentPage(1); // Reset index on sort
+      setPagination((prev) => ({...prev, page:1}))
   };
 
   const handleRowsPerPageChange = (e: any) => {
-    setRowsPerPage(Number(e?.target?.value));
-    setCurrentPage(1); // Reset index on resize
+    // setRowsPerPage(Number(e?.target?.value));
+    // setCurrentPage(1); // Reset index on resize
+    setPagination((prev) => ({...prev, page:1, limit: Number(e?.target?.value)}))
   };
 
   const getSortIcon = (key: any) => {
@@ -168,8 +193,14 @@ import SortModalComponent from '../SortModal/SortModalComponent';
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true })
     setTableCustomFilterData(new Map())
     setIsCustomTableFilter(false);
-    setCurrentPage(1); // Reset index on resize
+    // setCurrentPage(1); // Reset index on resize
+    setPagination((prev) => ({...prev, page:1}))
+
   }
+
+  // if (isPending) return <div>Loading...</div>;
+  // if (isError) return <div>Error...</div>;
+
 
   return (
     <>    
@@ -197,7 +228,7 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         <div className='flex flex-row items-center'>
         <div className='flex justify-center items-center'>
           <label className=' hidden sm:flex text-sm font-bold dark:text-slate-100 pr-2'>Rows / page </label>
-          <select value={rowsPerPage} onChange={handleRowsPerPageChange}  className="
+          <select value={pagination.limit} onChange={handleRowsPerPageChange}  className="
             cursor-pointer
             px-2 py-1
             border
@@ -220,21 +251,21 @@ import SortModalComponent from '../SortModal/SortModalComponent';
         </div>
         <div className="flex justify-center items-center" >
         {/* <span className='text-xs md:text-sm font-bold dark:text-slate-100 '>{currentPage} / {totalPages || 1}</span> */}
-        <button disabled={currentPage === 1}
-        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+        <button disabled={pagination.page === 1}
+        onClick={handlePrevious} 
         className={`p-2 transition-colors ${
-        currentPage === 1 
+        pagination.page === 1 
           ? 'opacity-40 cursor-not-allowed pointer-events-none  disabled:text-gray-400 dark:disabled:text-gray-100' 
           : 'cursor-pointer text-gray-600 dark:text-gray-100'
       }`}
         >
         <SquareChevronLeft />
         </button>
-        <span className='text-xs md:text-sm font-bold  dark:text-slate-100'>{currentPage} / {totalPages || 1}</span>
-          <button disabled={currentPage === totalPages || totalPages === 0} 
-          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+        <span className='text-xs md:text-sm font-bold  dark:text-slate-100'>{pagination.page} / {pagination.totalPages || 1}</span>
+          <button disabled={pagination.page === pagination.totalPages || pagination.totalPages === 0} 
+          onClick={handleNext} 
            className={`p-2 transition-colors ${
-        (currentPage === totalPages || totalPages === 0)
+        (pagination.page === pagination.totalPages || pagination.totalPages === 0)
           ? 'opacity-40 cursor-not-allowed pointer-events-none  disabled:text-gray-400 dark:disabled:text-gray-100' 
           : 'cursor-pointer text-gray-600 dark:text-gray-100'
       }`}
@@ -264,9 +295,9 @@ import SortModalComponent from '../SortModal/SortModalComponent';
           </tr>
           }
         </thead>
-        <tbody className='divide-y divide-slate-200'>
+       <tbody className='divide-y divide-slate-200'>
           {paginatedData?.length > 0 ? paginatedData.map((row,index) =>  <tr key={index+4*index} className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800" >{Object.keys(columnsData).map((columnsData,id) => <td key={id+6*id} className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400" >{Array.isArray(row[columnsData]) && row[columnsData]?.length > 0 ? row[columnsData].map((item:string, ix:number) => <div key={ix+row[columnsData].length}>{item}</div>) : row[columnsData]}</td>)}</tr>): <tr><td colSpan={8} className="col-span-8  text-center py-8"><h1 className='dark:text-slate-100 text-slate-800 flex flex-row justify-center items-center'><TextSearch className='pr-1'/><span>{NO_RESULT_FOUND}</span></h1></td></tr>}
-        </tbody>
+        </tbody> 
       </table>
         <div className='sm:hidden pl-2 pr-2'>
            { paginatedData?.length > 0 ? <MobileViewCardForTable key={paginatedData.length} list={paginatedData} headersData={headersData} /> : <div className='bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2   dark:border-slate-900/50'><h1 className='dark:text-slate-100 text-slate-800'><span className='flex items-center justify-center'><TextSearch className='pr-1'/>{NO_RESULT_FOUND}</span></h1></div>}

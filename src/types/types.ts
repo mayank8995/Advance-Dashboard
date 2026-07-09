@@ -65,3 +65,18 @@ export type FilterQueryObject = {
   key: string; 
   value: string | string[] | boolean
 }
+
+export type QueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  filter?: string;
+}
+
+export type Pagination = {
+  limit : number
+  page : number
+  totalItems : number
+  totalPages : number;
+
+}
