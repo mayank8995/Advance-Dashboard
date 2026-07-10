@@ -1,5 +1,5 @@
 import apiClient from "../services/http-common.service";
-import type { LoginForm, ProfileForm, QueryParams, SignUpForm } from "../types/types";
+import type { LoginForm, ProfileForm, SignUpForm, TableQueryParams } from "../types/types";
 
 export default async function getEmployees() {
   try {
@@ -11,7 +11,7 @@ export default async function getEmployees() {
   }
 }
 
-export async function getPaginatedEmployees(params: QueryParams) {
+export async function getTableEmployees(params: TableQueryParams) {
   try {
     const response = await apiClient.get('/paginatedEmployeeList', {
       params

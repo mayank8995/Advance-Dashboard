@@ -1,4 +1,4 @@
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 // Define the shape of the component's props
 interface Props {
@@ -26,7 +26,11 @@ class ErrorBoundary extends Component<Props, State> {
 
   // Catch errors in any components below and log them
   public componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error("Uncaught error captured by ErrorBoundary:", error, errorInfo);
+    console.error(
+      'Uncaught error captured by ErrorBoundary:',
+      error,
+      errorInfo
+    );
     // You can also log the error to an external service like Sentry or LogRocket here
   }
 
@@ -39,7 +43,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError && this.state.error) {
       // If a fallback prop is provided, check if it's a function or standard node
       if (this.props.fallback) {
-        if (typeof this.props.fallback === "function") {
+        if (typeof this.props.fallback === 'function') {
           return this.props.fallback(this.state.error, this.handleReset);
         }
         return this.props.fallback;
@@ -47,12 +51,21 @@ class ErrorBoundary extends Component<Props, State> {
 
       // Default fallback UI if no fallback prop is supplied
       return (
-        <div style={{ padding: "20px", border: "1px solid red", borderRadius: "5px" }}>
+        <div
+          style={{
+            padding: '20px',
+            border: '1px solid red',
+            borderRadius: '5px',
+          }}
+        >
           <h2>Something went wrong.</h2>
-          <details style={{ whiteSpace: "pre-wrap", marginTop: "10px" }}>
+          <details style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>
             {this.state.error.toString()}
           </details>
-          <button onClick={this.handleReset} style={{ marginTop: "15px", padding: "8px 16px" }}>
+          <button
+            onClick={this.handleReset}
+            style={{ marginTop: '15px', padding: '8px 16px' }}
+          >
             Try Again
           </button>
         </div>

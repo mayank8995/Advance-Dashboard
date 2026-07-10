@@ -276,3 +276,29 @@ export const CORRESPONDING_FILTER_TABLE_KEY_NAME = {
                                                         "riskStatus":"RISK STATUS",
                                                         "status":"STATUS"
                                                   }
+
+export const TABLE_CONFIG = {
+    [VIEW_MORE_ROUTES.top_projects]: {
+        headers: headers_top_projects,
+        columns: columns_top_projects,
+        title: TOP_PROJECTS,
+        tableType: VIEW_MORE_ROUTES.top_projects
+    },
+      [VIEW_MORE_ROUTES.top_performers]: {
+        headers: headers_top_performers,
+        columns: columns_top_performers,
+        title: '',
+        tableType: VIEW_MORE_ROUTES.top_performers
+    },
+      [VIEW_MORE_ROUTES.promotedThisYear]: {
+        headers: headers_promotedThisYear,
+        columns: columns_promotedThisYear,
+        title: '',
+        tableType: VIEW_MORE_ROUTES.promotedThisYear
+    },  [VIEW_MORE_ROUTES.requiringReview]: {
+        headers: headers_requiringReview,
+        columns: columns_requiringReview,
+        title: '',
+        tableType: VIEW_MORE_ROUTES.requiringReview
+    },
+}
