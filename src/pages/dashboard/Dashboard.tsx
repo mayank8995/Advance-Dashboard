@@ -7,13 +7,21 @@ import TopPerformersCard from '../../components/Card/TopPerformersCard';
 import PromotedCard from '../../components/Card/PromotedCard';
 import MeetingKPIsCard from '../../components/Card/MeetingKPIsCard';
 import RequiringReviewCard from '../../components/Card/RequiringReviewCard';
+import type { TableQueryParams } from '../../types/types';
+import { usePerFormanceTableData } from '../../services/utils.service';
 
 function Dashboard() {
+  const { data: topProjects } = usePerFormanceTableData({
+    tableType: 'topProjects',
+    page: 1,
+    limit: 5,
+  } as TableQueryParams);
   const queryClient = useQueryClient();
   const { data: cachedData }: any = queryClient.getQueryData(['employeesData']);
   const { data: cachedPerformanceCardData }: any = queryClient.getQueryData([
     'performanceCardsData',
   ]);
+
   return (
     <div className="flex flex-col flex-auto">
       <KeyMetricCard>
@@ -21,7 +29,10 @@ function Dashboard() {
       </KeyMetricCard>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
         {/* <Card topProjects={cachedData} title={TOP_PROJECTS} cardToShow={{topProjects: true}}></Card> */}
-        <TopProjectsCard topProjects={cachedData} title={TOP_PROJECTS} />
+        <TopProjectsCard
+          topProjects={topProjects?.['data']}
+          title={TOP_PROJECTS}
+        />
         <TopPerformersCard
           topPerformersList={cachedPerformanceCardData?.topPerformers}
         ></TopPerformersCard>

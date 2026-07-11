@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomTable from '../../components/EditableTable/CustomTable';
 import {
   columns_employees,
@@ -7,8 +7,10 @@ import {
 } from '../../utils/constants';
 import { useTableData } from '../../services/utils.service';
 import type { TableQueryParams } from '../../types/types';
+import { useAuth } from '../../context/AuthContext';
 
 function Employees() {
+  // const data = useAuth();
   const [query, setQuery] = useState<TableQueryParams>({
     page: 1,
     limit: 5,
@@ -21,7 +23,7 @@ function Employees() {
   const list = tableQuery?.['data']?.['employees'] || [];
 
   function handleTableQuery(queryData: TableQueryParams) {
-    setQuery(queryData);
+    setQuery((prev) => ({ ...prev, ...queryData }));
   }
   return (
     <CustomTable
@@ -39,6 +41,7 @@ function Employees() {
       columnsData={columns_employees}
       headersData={headers_employees}
       title={EMPLOYEE_DIREC}
+      setQuery={setQuery}
     />
   );
 }

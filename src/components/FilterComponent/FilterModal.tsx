@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import {
-  deepCloneCustom,
-  transformDataForFilterModalUI,
-} from '../../services/utils.service';
 import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
-import { useGetTableData } from '../../hooks/useGetTableData';
 import { TailSpin } from 'react-loader-spinner';
+import type { TableQueryParams } from '../../types/types';
 
 interface FilterModalComponentProps {
+  tableType?: string;
   closeModal: () => void;
   submitFilterData: (chipID: any) => void;
   clearAllFilter: () => void;
+  filterList: any;
+  tableQueryParams?: TableQueryParams;
+  setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 }
 
 const FilterModal: React.FC<FilterModalComponentProps> = ({
   closeModal,
   submitFilterData,
   clearAllFilter,
+  filterList,
+  setQuery,
 }: FilterModalComponentProps) => {
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [tabID, setTabID] = useState<any[]>();
@@ -26,19 +28,15 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   const [seeMore, setSeeMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { getAllData } = useGetTableData();
-
-  console.log('getAllData>>>', getAllData());
-
   useEffect(() => {
-    const data = deepCloneCustom([
-      ...transformDataForFilterModalUI(getAllData),
-    ]);
-    if (data) {
+    if (filterList) {
+      // console.log('filterList>>>', filterList);
+      const data: any = filterList['data']?.list;
+      // console.log('data>>', data);
       let tabIdArr: any = [];
       let finalModified: any = [];
       data?.forEach((item: any) => {
-        tabIdArr.push(item[0]);
+        item[1].length && tabIdArr.push(item[0]);
       });
       setTabID(tabIdArr);
       data?.forEach((item: any) => {
@@ -51,8 +49,8 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       });
       setTabValue(finalModified);
     }
-  }, []);
-
+  }, [filterList]);
+  // console.log('tabValue>>', tabValue);
   useEffect(() => {
     // const result = tabValue?.flatMap((item:any) => item[1])?.filter((it: any) => it.selected === true);
     const result = tabValue?.flatMap((item: any) => {
@@ -79,17 +77,25 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
 
   function submitModal() {
     setLoading(true);
+    const filters = selectedChips
+      .filter((obj: any) => obj)
+      .map((it) => ({ [it.key]: it?.value?.join(',') }))
+      .reduce(
+        (accumulator, currentItem) => ({ ...accumulator, ...currentItem }),
+        {} as Record<string, any>
+      );
     setTimeout(() => {
       setLoading(false);
-      submitFilterData(selectedChips);
+      setQuery((prev) => ({ ...prev, ...filters }));
     }, 500);
+    submitFilterData(selectedChips);
   }
   function handleCloseModal() {
     closeModal();
   }
 
   function handleSelectedChips(e: any) {
-    console.log('tabID>>>', tabID, tabValue);
+    // console.log('tabID>>>', tabID, tabValue);
 
     const tab = e?.target?.id && e?.target?.id?.split('-');
     setTabValue((prev) =>
@@ -167,7 +173,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                       itemID={`${index}`}
                     >
                       {item[1]?.map((chipObj: any, chipId: number) => (
-                        <React.Fragment key={`${item[0]}-${chipObj?.value}`}>
+                        <React.Fragment key={`${chipId}-${chipObj?.value}`}>
                           {
                             <div
                               id={`${item[0]}-${chipObj?.value}`}

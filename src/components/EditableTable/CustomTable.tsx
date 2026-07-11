@@ -1,8 +1,6 @@
-import { ArrowDown, ArrowUp, ArrowUpDown, TextSearch } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import MobileViewCardForTable from './MobileViewCardForTable';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
-import { NO_RESULT_FOUND } from '../../utils/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import FilterModal from '../FilterComponent/FilterModal';
 import SortModalComponent from '../SortModal/SortModalComponent';
@@ -10,6 +8,7 @@ import TableToolbar from './TableToolbar';
 import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
+import { useFilterList } from '../../services/utils.service';
 
 export default function CustomTable({
   list,
@@ -18,19 +17,21 @@ export default function CustomTable({
   columnsData,
   headersData,
   title,
+  setQuery,
 }: any) {
+  const { data: filterList } = useFilterList({
+    tableType: tableQueryParams.tableType,
+  });
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTextToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [tableCustomFilterData, setTableCustomFilterData] = useState(
-    queryClient.getQueryData(['filterKeyData']) || new Map()
-  );
+  const [tableCustomFilterData, setTableCustomFilterData] = useState(new Map());
   const [showSortModal, setSortShowModal] = useState(false);
 
-  useEffect(() => {
-    queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
-  }, []);
-
+  // useEffect(() => {
+  //   queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
+  // }, []);
+  console.log('list>>>>>', list);
   useLockBodyScroll(showModal);
   useLockBodyScroll(showSortModal);
 
@@ -118,14 +119,14 @@ export default function CustomTable({
 
   const submitFilterData = (data: any) => {
     console.log('In here customtable!!!!!', data);
-    queryClient.setQueryData(['filterKeyData'], data);
+    // queryClient.setQueryData(['filterKeyData'], data);
     const hashMap = new Map(data.map((obj: any) => [obj.key, obj.value]));
     setTableCustomFilterData(hashMap);
     closeModal();
   };
 
   const clearAllFilter = () => {
-    queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
+    // queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
     setTableCustomFilterData(new Map());
     handleTableQuery({ ...tableQueryParams, page: 1 });
   };
@@ -181,6 +182,9 @@ export default function CustomTable({
             closeModal={closeModal}
             submitFilterData={submitFilterData}
             clearAllFilter={clearAllFilter}
+            filterList={filterList}
+            tableQueryParams={tableQueryParams}
+            setQuery={setQuery}
           />
         }
       </div>

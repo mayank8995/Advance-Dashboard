@@ -70,19 +70,16 @@ export type FilterQueryObject = {
   value: string | string[] | boolean;
 };
 
-type filter = {
-  [key: string]: string;
-};
 export type TableQueryParams = {
   page: number;
   limit: number;
   search?: string;
-  filter?: filter;
   totalItems?: number;
   totalPages?: number;
   sortBy?: string;
   order?: string;
   tableType?: string;
+  [key: string]: any;
 };
 
 export type TopPerformersList = {
@@ -130,4 +127,8 @@ export type DesktopTableProps = {
 export type MobileTableProps = {
   list: any;
   headersData: any;
+};
+
+export type FilterList = {
+  tableType: string;
 };

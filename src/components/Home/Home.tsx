@@ -12,6 +12,7 @@ import { Puff } from 'react-loader-spinner';
 
 function Home() {
   // Queries
+
   const { isLoading: userLoading, error: userError } = useGetData();
   const { isLoading: performanceDataLoading, error: performanceCardError } =
     usePerformanceCardData();

@@ -4,8 +4,9 @@ import getEmployees, {
   getTableEmployees,
   getPerformanceCards,
   getProfileData,
+  getFilterList,
 } from '../api/admin-portal.api';
-import type { TableQueryParams } from '../types/types';
+import type { FilterList, TableQueryParams } from '../types/types';
 
 declare global {
   interface Array<T> {
@@ -24,6 +25,14 @@ export function useGetData() {
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
 }
+export function useFilterList(params: FilterList) {
+  console.log('useFilterList', params);
+  return useQuery({
+    queryKey: ['filterList', params.tableType],
+    queryFn: () => getFilterList(params),
+    staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+  });
+}
 
 export function useTableData(params: TableQueryParams) {
   // console.log("params 1 2 3>>",params)
@@ -32,25 +41,30 @@ export function useTableData(params: TableQueryParams) {
     'tableType' in updatedParams
       ? updatedParams
       : { ...updatedParams, tableType: 'employees' };
-  console.log('FSDFSDF', 'tableType' in queryParams, queryParams);
+
   return useQuery({
     queryKey: ['employees', ...Object.values(queryParams)],
     queryFn: () => getTableEmployees(queryParams),
-    placeholderData: keepPreviousData, // Smooth transitions
-    staleTime: 5000,
+    // placeholderData: keepPreviousData, // Smooth transitions,
+    staleTime: Infinity,
   });
 }
 
-//   export function usePerformanceTableData(params: TableQueryParams){
-//     // console.log("params 1 2 3>>",params)
-// const { totalPages, totalItems, ...updatedParams } = params;
-//    return useQuery({
-//       queryKey: ['performanceTable', ...Object.values(updatedParams)],
-//       queryFn: () => getPaginatedEmployees(updatedParams),
-//       placeholderData: keepPreviousData, // Smooth transitions
-//       staleTime: 5000,
-//     });
-//  }
+export function usePerFormanceTableData(params: TableQueryParams) {
+  // console.log("params 1 2 3>>",params)
+  const { totalPages, totalItems, ...updatedParams } = params;
+  const queryParams =
+    'tableType' in updatedParams
+      ? updatedParams
+      : { ...updatedParams, tableType: 'employees' };
+
+  return useQuery({
+    queryKey: ['performance', ...Object.values(queryParams)],
+    queryFn: () => getTableEmployees(queryParams),
+    // placeholderData: keepPreviousData, // Smooth transitions,
+    staleTime: Infinity,
+  });
+}
 
 export function useAnalyticsData() {
   return useQuery({
@@ -82,7 +96,7 @@ export function getAvgEmployeeSatisfaction(data: Array<any>) {
     data.map((value) => {
       totalSum += value?.rating || 0;
     });
-  return data.length > 0 && (totalSum / data.length).toFixed(1);
+  return data?.length > 0 && (totalSum / data.length).toFixed(1);
 }
 
 export function getNumberofActiveProjects(data: Array<any>) {
@@ -218,6 +232,7 @@ Array.prototype.applyFilterOnTable = function (
 
 export function transformDataForFilterModalUI(relevantData: Function) {
   const { data, headers } = relevantData();
+  // console.log('SADASDA', data, headers);
   const valuesMap = new Map<string, Array<string | boolean | string[]>>(
     headers
       .map((data: any) => data.key)
@@ -240,10 +255,14 @@ export function transformDataForFilterModalUI(relevantData: Function) {
             if (valuesMap.has(key)) {
               const content = valuesMap.get(key);
               if (Array.isArray(value)) {
+                console.log('iniased>>>', value);
+
                 const val = valuesMap.get(key) as string[];
                 const newSet = new Set([...val, ...value]);
                 valuesMap.set(key, [...newSet]);
               } else {
+                console.log('content>>>', content);
+
                 if (!content?.includes(value)) {
                   valuesMap.get(key)?.push(value);
                 }
@@ -259,7 +278,7 @@ export function transformDataForFilterModalUI(relevantData: Function) {
     }
   }
 
-  // console.log("valuesMap>>>>>",valuesMap)
+  // console.log('valuesMap>>>>>', valuesMap);
   return valuesMap;
 }
 

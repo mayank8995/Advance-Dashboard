@@ -19,7 +19,11 @@ function ViewMore() {
   const tableQuery = useTableData({ ...query, tableType: target as string });
   const list = tableQuery?.data?.['data']?.['employees'] || [];
   function handleTableQuery(queryData: TableQueryParams) {
-    setQuery({ ...queryData, tableType: target as string });
+    setQuery((prev) => ({
+      ...prev,
+      ...queryData,
+      tableType: target as string,
+    }));
   }
   return (
     <CustomTable

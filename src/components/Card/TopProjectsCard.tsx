@@ -8,12 +8,11 @@ import {
 } from '../../utils/constants';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getTopProjects } from '../../services/utils.service';
 import type { TopProjectsList } from '../../types/types';
 
 export const TopProjectsCard = ({ topProjects, title }: TopProjectsList) => {
-  const topProj = getTopProjects(topProjects?.employeeList?.[0]?.employees);
-
+  const topProj = topProjects?.employees;
+  console.log('topProj>>>', topProj);
   return (
     <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -31,60 +30,58 @@ export const TopProjectsCard = ({ topProjects, title }: TopProjectsList) => {
           topProj?.map((value: any, index: number) => {
             return (
               <React.Fragment key={value.name + index}>
-                {index < CARD_CONTENT_LIMIT_TO_SCROLL &&
-                  value?.priorityRanking === '*' && (
-                    <div className="flex flex-row mb-2">
-                      {RISK_STATUS.COMPLETED === value?.riskStatus && (
-                        <div className="h-auto bg-green-700 w-2 rounded-full "></div>
-                      )}
-                      {RISK_STATUS.AT_RISK === value?.riskStatus && (
-                        <div className="h-auto bg-red-700 w-2 rounded-full"></div>
-                      )}
-                      {RISK_STATUS.ON_TRACK === value?.riskStatus && (
-                        <div className="h-auto bg-green-500 w-2 rounded-full"></div>
-                      )}
-                      <div className="p-2 flex flex-row justify-between w-full">
-                        <div className="flex flex-col">
-                          <span className="text-gray-950 font-bold text-sm dark:text-slate-100">
-                            {value?.projectName}
-                          </span>
-                          <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
-                            {PROJECT_DETAILS.MANAGER}:&nbsp;
-                            {value?.name && value?.name.length > 20
-                              ? value.name
-                                  .split(' ')
-                                  .map((n: any) => n[0])
-                                  .join('')
-                              : value.name}
-                          </span>
-                        </div>
-                        <div className="items-center flex justify-end">
-                          <span
-                            className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
-                          >
-                            {value?.riskStatus}
-                          </span>
-                        </div>
+                {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
+                  <div className="flex flex-row mb-2">
+                    {RISK_STATUS.COMPLETED === value?.riskStatus && (
+                      <div className="h-auto bg-green-700 w-2 rounded-full "></div>
+                    )}
+                    {RISK_STATUS.AT_RISK === value?.riskStatus && (
+                      <div className="h-auto bg-red-700 w-2 rounded-full"></div>
+                    )}
+                    {RISK_STATUS.ON_TRACK === value?.riskStatus && (
+                      <div className="h-auto bg-green-500 w-2 rounded-full"></div>
+                    )}
+                    <div className="p-2 flex flex-row justify-between w-full">
+                      <div className="flex flex-col">
+                        <span className="text-gray-950 font-bold text-sm dark:text-slate-100">
+                          {value?.projectName}
+                        </span>
+                        <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
+                          {PROJECT_DETAILS.MANAGER}:&nbsp;
+                          {value?.name && value?.name.length > 20
+                            ? value.name
+                                .split(' ')
+                                .map((n: any) => n[0])
+                                .join('')
+                            : value.name}
+                        </span>
+                      </div>
+                      <div className="items-center flex justify-end">
+                        <span
+                          className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
+                        >
+                          {value?.riskStatus}
+                        </span>
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
               </React.Fragment>
             );
           })}
       </div>
-      {Array.isArray(topProj) &&
-        topProj?.length > CARD_CONTENT_LIMIT_TO_SCROLL && (
-          <div className=" bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold">
-            <Link
-              className="items-center flex flex-row text-blue-700"
-              to="/home/dashboard/viewmore?target=topProjects"
-              state={{ name: VIEW_MORE_ROUTES_VALUES.top_projects }}
-            >
-              <span>{VIEW_MORE}</span>
-              <ArrowRight className=" text-blue-700" />
-            </Link>
-          </div>
-        )}
+      {Array.isArray(topProj) && (
+        <div className=" bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold">
+          <Link
+            className="items-center flex flex-row text-blue-700"
+            to="/home/dashboard/viewmore?target=topProjects"
+            state={{ name: VIEW_MORE_ROUTES_VALUES.top_projects }}
+          >
+            <span>{VIEW_MORE}</span>
+            <ArrowRight className=" text-blue-700" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
