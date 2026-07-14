@@ -8,16 +8,17 @@ import {
 } from 'recharts';
 import { useTheme } from '../../hooks/useTheme';
 
-export default function BarChartComponent({ data, title, X, Y }: any) {
+export default function MultiCityBarChartComponent({ title, X, Y, data }: any) {
+  console.log('dataaa>>>', data);
   const { theme: themeMode } = useTheme();
-
   return (
     <>
       <div className="overflow-hidden bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
         <div className="flex items-center justify-between text-lg font-bold dark:text-slate-100">
           {title}
         </div>
-        <div className="overflow-y-auto min-h-0 max-h-87.5 overflow-hidden">
+
+        <div className="overflow-y-auto min-h-0 max-h-87.5 w-full overflow-hidden">
           <ResponsiveContainer width="100%" height={350}>
             {/* Crucial: layout="vertical" makes the chart horizontal */}
             <BarChart
@@ -36,14 +37,11 @@ export default function BarChartComponent({ data, title, X, Y }: any) {
 
               {/* YAxis displays the text labels */}
               <YAxis
-                dataKey={Y}
+                dataKey={X}
                 type="category"
                 axisLine={false}
                 tickLine={false}
-                // tick={{
-                //   fill: themeMode === 'dark' ? '#f3f4f6' : '#333',
-                //   fontSize: 12,
-                // }}
+                // width={80}
                 width={100}
                 className="flex items-center justify-between text-sm font-bold outline-0"
               />
@@ -91,14 +89,14 @@ export default function BarChartComponent({ data, title, X, Y }: any) {
 
               {/* The Bar component renders the horizontal bars */}
               <Bar
-                isAnimationActive={true}
-                dataKey={X}
+                isAnimationActive={false}
+                dataKey={Y}
                 fill="#3b82f6"
-                radius={[10, 10, 10, 10]} // Gives the bars rounded pill ends
+                radius={[0, 10, 10, 0]} // Gives the bars rounded pill ends
                 barSize={10} // Controls the thickness of the bars
                 label={{
                   position: 'right',
-                  fill: themeMode === 'dark' ? '#f3f4f6' : '#333',
+                  fill: themeMode === 'dark' ? '#8884d8' : '#333',
                   fontSize: 12,
                   fontWeight: '500',
                   //   formatter: (value) => value.toLocaleString() // Adds commas to numbers

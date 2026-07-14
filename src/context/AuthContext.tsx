@@ -1,30 +1,46 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import type { Login } from "../types/types";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
+import { type Login, type TableQueryParams } from '../types/types';
 
 interface AuthContextType {
-  user: Login | null
+  user: Login | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: ({email, name, id }: Login) => Promise<void>;
+  login: ({ email, name, id }: Login) => Promise<void>;
   logout: () => void;
+  tableQueryParams: TableQueryParams;
+  setQueryParamsData: (data: TableQueryParams) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({children}: any) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<Login | null>(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() =>{
+  const [tableQueryParams, setTableQueryParams] = useState<TableQueryParams>({
+    page: 1,
+    limit: 5,
+    search: '',
+    sortBy: 'id',
+    order: 'asc',
+  });
+
+  useEffect(() => {
     setIsLoading(false);
-  },[])
-  
-  const login = async ({email,id,name}:Login) => {
-    localStorage.setItem('user',JSON.stringify({email,id,name}));
-    setUser({email,id,name});
+  }, []);
+
+  const login = async ({ email, id, name }: Login) => {
+    localStorage.setItem('user', JSON.stringify({ email, id, name }));
+    setUser({ email, id, name });
   };
 
   const logout = () => {
@@ -32,26 +48,29 @@ export const AuthProvider = ({children}: any) => {
     localStorage.removeItem('user');
   };
 
-    const value = {
+  const setQueryParamsData = (data: TableQueryParams) => {
+    setTableQueryParams(data);
+  };
+
+  const value = {
     user,
     isAuthenticated: !!user,
     isLoading,
     login,
     logout,
+    tableQueryParams,
+    setQueryParamsData,
   };
 
-
-
-  return (<AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>)
-  
-}
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be executed within an AuthProvider structural tree');
+    throw new Error(
+      'useAuth must be executed within an AuthProvider structural tree'
+    );
   }
   return context;
 };
