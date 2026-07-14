@@ -109,7 +109,7 @@ export type TableToolbarProps = {
   setTextToBeSearched: (e: string) => void;
   tableQueryParams: TableQueryParams;
   handleRowsPerPageChange: (e: any) => void;
-  tableCustomFilterData: any;
+  tableCustomFilterData?: any;
   openFilterModal: () => void;
   openSortModal: () => void;
   handlePrevious: () => void;
@@ -120,6 +120,7 @@ export type DesktopTableProps = {
   list: any;
   headersData: any;
   columnsData: any;
+  rowsPerPage: number;
   handleSort: (e?: any) => void;
   getSortIcon: (e?: any) => void;
 };
@@ -127,8 +128,14 @@ export type DesktopTableProps = {
 export type MobileTableProps = {
   list: any;
   headersData: any;
+  rowsPerPage: number;
 };
 
 export type FilterList = {
   tableType: string;
+};
+
+export type DonutChartProps = {
+  data: any;
+  title: string;
 };

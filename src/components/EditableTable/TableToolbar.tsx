@@ -10,18 +10,21 @@ import {
 } from 'lucide-react';
 import { className } from '../../utils/constants';
 import type { TableToolbarProps } from '../../types/types';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const TableToolbar = ({
   txtToBeSearched,
   setTextToBeSearched,
   tableQueryParams,
   handleRowsPerPageChange,
-  tableCustomFilterData,
   openFilterModal,
   openSortModal,
   handlePrevious,
   handleNext,
 }: TableToolbarProps) => {
+  const queryClient = useQueryClient();
+  const isfilterAvailable: any =
+    queryClient.getQueryData(['filterKeyData']) || [];
   return (
     <React.Fragment>
       <div className="sm:hidden px-6 py-4">
@@ -85,7 +88,7 @@ export const TableToolbar = ({
             {
               <div className="pl-2 flex items-center">
                 <div className="cursor-pointer">
-                  {tableCustomFilterData.size === 0 ? (
+                  {isfilterAvailable?.length === 0 ? (
                     <Funnel
                       className="pl-2 text-gray-600 dark:text-gray-100"
                       onClick={openFilterModal}
@@ -95,7 +98,7 @@ export const TableToolbar = ({
                       className="pl-2 text-gray-600 dark:text-gray-100"
                       onClick={openFilterModal}
                     />
-                  )}{' '}
+                  )}
                 </div>
                 <div className="flex sm:hidden">
                   {

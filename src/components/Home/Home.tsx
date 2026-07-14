@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import {
@@ -7,28 +7,25 @@ import {
   usePerformanceCardData,
 } from '../../services/utils.service';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
-import { useEffect, useState } from 'react';
-import { Puff } from 'react-loader-spinner';
+import { useEffect } from 'react';
 
 function Home() {
   // Queries
 
-  const { isLoading: userLoading, error: userError } = useGetData();
-  const { isLoading: performanceDataLoading, error: performanceCardError } =
-    usePerformanceCardData();
-  const { isLoading: analyticsDataLoading, error: analyticsDataError } =
-    useAnalyticsData();
+  useAnalyticsData();
+  useGetData();
+  usePerformanceCardData();
   // Fires every single time the route path changes
-  const location = useLocation();
-  const [isVisualLoading, setIsVisualLoading] = useState(false);
+  // const location = useLocation();
+  // const [isVisualLoading, setIsVisualLoading] = useState(false);
 
-  useEffect(() => {
-    // Trigger your global visual loading/spinner progress bar here
-    setIsVisualLoading(true);
+  // useEffect(() => {
+  //   // Trigger your global visual loading/spinner progress bar here
+  //   setIsVisualLoading(true);
 
-    const timer = setTimeout(() => setIsVisualLoading(false), 300); // smooth transition out
-    return () => clearTimeout(timer);
-  }, [location.pathname]);
+  //   const timer = setTimeout(() => setIsVisualLoading(false), 300); // smooth transition out
+  //   return () => clearTimeout(timer);
+  // }, [location.pathname]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -39,8 +36,8 @@ function Home() {
     // console.log("combinedResponse>>>>",combinedResponse)
   }, []);
 
-  if (userError || performanceCardError || analyticsDataError)
-    return <>Error occurred...</>;
+  // if (userError || performanceCardError || analyticsDataError)
+  //   return <>Error occurred...</>;
 
   return (
     <ErrorBoundary fallback={<div>Failed to load</div>}>
@@ -54,7 +51,7 @@ function Home() {
         >
           <Navigation />
           <div className="flex-1 overflow-y-auto dark:bg-gray-800">
-            {isVisualLoading ||
+            {/* {isVisualLoading ||
             userLoading ||
             performanceDataLoading ||
             analyticsDataLoading ? (
@@ -71,7 +68,8 @@ function Home() {
               </div>
             ) : (
               <Outlet />
-            )}
+            )} */}
+            <Outlet />
           </div>
         </div>
         {/* <Footer/> */}

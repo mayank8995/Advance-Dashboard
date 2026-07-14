@@ -17,15 +17,15 @@ function Dashboard() {
     limit: 5,
   } as TableQueryParams);
   const queryClient = useQueryClient();
-  const { data: cachedData }: any = queryClient.getQueryData(['employeesData']);
-  const { data: cachedPerformanceCardData }: any = queryClient.getQueryData([
-    'performanceCardsData',
-  ]);
+  const { data: metricData }: any =
+    queryClient.getQueryData(['analyticsData']) || {};
+  const { data: cachedPerformanceCardData }: any =
+    queryClient.getQueryData(['performanceCardsData']) || {};
 
   return (
     <div className="flex flex-col flex-auto">
       <KeyMetricCard>
-        <KeyMetric newData={cachedData}></KeyMetric>
+        <KeyMetric metricData={metricData}></KeyMetric>
       </KeyMetricCard>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
         {/* <Card topProjects={cachedData} title={TOP_PROJECTS} cardToShow={{topProjects: true}}></Card> */}

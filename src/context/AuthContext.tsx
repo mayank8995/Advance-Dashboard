@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 import { type Login, type TableQueryParams } from '../types/types';
 
 interface AuthContextType {
@@ -13,7 +19,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<Login | null>(() => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;

@@ -17,11 +17,16 @@ export default async function getEmployees() {
   }
 }
 
-export async function getTableEmployees(params: TableQueryParams) {
+export async function getTableEmployees(
+  params: TableQueryParams,
+  setIsLoading?: (loading: boolean) => void
+) {
   try {
+    setIsLoading?.(true);
     const response = await apiClient.get('/paginatedEmployeeList', {
       params,
     });
+    setIsLoading?.(false);
     return response;
   } catch (error) {
     console.error('Error fetching data:', error);

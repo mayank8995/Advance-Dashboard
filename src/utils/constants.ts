@@ -5,15 +5,20 @@ import {
 
 export const KEY_TRACK_METRIC = {
   TOTAL_EMPLOYEES: 'Total Employees',
-  NOTICE_PERIOD_EMP: 'Employees on notice period',
-  AVG_EMP_SAT: 'Average Employees Satisfaction',
-  ACTV_PROJ: 'Active Projects',
+  ATTRITION_RATE: 'Attrition Rate',
+  PROFIT_MARGIN: 'Profit Margin',
+  REVENUE_IN_QR_CR: 'Revenue in this quarter',
+  TOTAL_PROJECTS: 'Total Projects',
 } as const;
 export const KEY_TRACK_METRIC_ICON = {
   STAR: 'STAR',
   USER: 'USER',
   MONITER_CHECK: 'MONITER_CHECK',
   FLAG: 'FLAG',
+  USER_MINUS: 'USER_MINUS',
+  INDIAN_RUPEE: 'INDIAN_RUPEE',
+  CIRCLE_PERCENT: 'CIRCLE_PERCENT',
+  FOLDER_DOT: 'FOLDER_DOT',
 };
 export const gradients = [
   'bg-gradient-to-br from-pink-400 to-rose-500',
@@ -47,6 +52,7 @@ export const TOP_CLIENTS = 'Top clients';
 export const TOP_PERFORMERS = 'Top performers';
 export const PROMOTED_THIS_YEAR = 'PROMOTED_THIS_Year';
 export const EMPLOYEE_DIREC = 'Employee Directory';
+export const TOTAL_PROJECTS = 'Total Projects';
 
 export const NAV_ITEMS = {
   DASHBOARD: '/home/dashboard',
@@ -307,4 +313,12 @@ export const TABLE_CONFIG = {
     title: '',
     tableType: VIEW_MORE_ROUTES.requiringReview,
   },
+};
+
+export const DEFAULT_TABLE_QUERY_PARAMS = {
+  page: 1,
+  limit: 5,
+  search: '',
+  sortBy: 'id',
+  order: 'asc',
 };

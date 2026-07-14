@@ -1,6 +1,10 @@
+import type { MobileTableProps } from '../../types/types';
 import { bgColors, gradients } from '../../utils/constants';
 
-export default function MobileViewCardForTable({ list, headersData }: any) {
+export default function MobileViewCardForTable({
+  list,
+  headersData,
+}: MobileTableProps) {
   function getRowCss(value: string) {
     let initialCss = `grid grid-cols-2 gap-y-2 text-xs`;
     if (value === 'id') return 'hidden';
@@ -9,12 +13,12 @@ export default function MobileViewCardForTable({ list, headersData }: any) {
 
   return (
     <>
-      {list.map((row: any, index: number) => (
+      {list?.map((row: any, index: number) => (
         <div
-          key={row.id}
+          key={`${row.id}-${index}`}
           className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 "
         >
-          {headersData.map((header: any, id: number) => {
+          {headersData?.map((header: any) => {
             return (
               <div key={header.key}>
                 {header?.key === 'name' && (

@@ -34,8 +34,10 @@ export function useFilterList(params: FilterList) {
   });
 }
 
-export function useTableData(params: TableQueryParams) {
-  // console.log("params 1 2 3>>",params)
+export function useTableData(
+  params: TableQueryParams,
+  setIsLoading: (loading: boolean) => void
+) {
   const { totalPages, totalItems, ...updatedParams } = params;
   const queryParams =
     'tableType' in updatedParams
@@ -44,14 +46,13 @@ export function useTableData(params: TableQueryParams) {
 
   return useQuery({
     queryKey: ['employees', ...Object.values(queryParams)],
-    queryFn: () => getTableEmployees(queryParams),
-    // placeholderData: keepPreviousData, // Smooth transitions,
+    queryFn: () => getTableEmployees(queryParams, setIsLoading),
+    placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
   });
 }
 
 export function usePerFormanceTableData(params: TableQueryParams) {
-  // console.log("params 1 2 3>>",params)
   const { totalPages, totalItems, ...updatedParams } = params;
   const queryParams =
     'tableType' in updatedParams
@@ -61,7 +62,7 @@ export function usePerFormanceTableData(params: TableQueryParams) {
   return useQuery({
     queryKey: ['performance', ...Object.values(queryParams)],
     queryFn: () => getTableEmployees(queryParams),
-    // placeholderData: keepPreviousData, // Smooth transitions,
+    placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
   });
 }

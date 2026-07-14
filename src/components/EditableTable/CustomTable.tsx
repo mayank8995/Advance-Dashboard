@@ -8,7 +8,6 @@ import TableToolbar from './TableToolbar';
 import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
-import { useFilterList } from '../../services/utils.service';
 
 export default function CustomTable({
   list,
@@ -19,19 +18,14 @@ export default function CustomTable({
   title,
   setQuery,
 }: any) {
-  const { data: filterList } = useFilterList({
-    tableType: tableQueryParams.tableType,
-  });
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTextToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [tableCustomFilterData, setTableCustomFilterData] = useState(new Map());
   const [showSortModal, setSortShowModal] = useState(false);
-
-  // useEffect(() => {
-  //   queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
-  // }, []);
-  console.log('list>>>>>', list);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  useEffect(() => {
+    queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
+  }, []);
   useLockBodyScroll(showModal);
   useLockBodyScroll(showSortModal);
 
@@ -80,6 +74,7 @@ export default function CustomTable({
   };
 
   const handleRowsPerPageChange = (e: any) => {
+    setRowsPerPage(Number(e?.target?.value));
     handleTableQuery({
       ...tableQueryParams,
       page: 1,
@@ -119,15 +114,13 @@ export default function CustomTable({
 
   const submitFilterData = (data: any) => {
     console.log('In here customtable!!!!!', data);
-    // queryClient.setQueryData(['filterKeyData'], data);
-    const hashMap = new Map(data.map((obj: any) => [obj.key, obj.value]));
-    setTableCustomFilterData(hashMap);
+    queryClient.setQueryData(['filterKeyData'], data);
     closeModal();
+    handleTableQuery({ ...tableQueryParams, page: 1 });
   };
 
   const clearAllFilter = () => {
-    // queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
-    setTableCustomFilterData(new Map());
+    queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
     handleTableQuery({ ...tableQueryParams, page: 1 });
   };
 
@@ -156,7 +149,7 @@ export default function CustomTable({
             setTextToBeSearched={setTextToBeSearched}
             tableQueryParams={tableQueryParams}
             handleRowsPerPageChange={handleRowsPerPageChange}
-            tableCustomFilterData={tableCustomFilterData}
+            // tableCustomFilterData={tableCustomFilterData}
             openFilterModal={openFilterModal}
             openSortModal={openSortModal}
             handlePrevious={handlePrevious}
@@ -169,8 +162,13 @@ export default function CustomTable({
               columnsData={columnsData}
               handleSort={handleSort}
               getSortIcon={getSortIcon}
+              rowsPerPage={rowsPerPage}
             />
-            <MobileTable list={list} headersData={headersData} />
+            <MobileTable
+              rowsPerPage={rowsPerPage}
+              list={list}
+              headersData={headersData}
+            />
           </div>
         </div>
       </div>
@@ -182,7 +180,6 @@ export default function CustomTable({
             closeModal={closeModal}
             submitFilterData={submitFilterData}
             clearAllFilter={clearAllFilter}
-            filterList={filterList}
             tableQueryParams={tableQueryParams}
             setQuery={setQuery}
           />

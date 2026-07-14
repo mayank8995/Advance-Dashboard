@@ -70,7 +70,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
           </button>
         </div>
         <div className="grid grid-cols-2 max-h-150 h-fit overflow-y-auto p-4 ">
-          {headersData?.map((header: any, index: number) => (
+          {headersData?.map((header: any) => (
             // <div >
             <div
               ref={myElementRef}
@@ -134,4 +134,4 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
   );
 };
 
-export default SortModalComponent;
+export default React.memo(SortModalComponent);

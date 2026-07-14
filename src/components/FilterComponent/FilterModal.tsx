@@ -3,13 +3,15 @@ import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
 import type { TableQueryParams } from '../../types/types';
+import { useFilterList } from '../../services/utils.service';
+import { useSearchParams } from 'react-router-dom';
 
 interface FilterModalComponentProps {
   tableType?: string;
   closeModal: () => void;
   submitFilterData: (chipID: any) => void;
   clearAllFilter: () => void;
-  filterList: any;
+  filterList?: any;
   tableQueryParams?: TableQueryParams;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 }
@@ -18,21 +20,24 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   closeModal,
   submitFilterData,
   clearAllFilter,
-  filterList,
   setQuery,
 }: FilterModalComponentProps) => {
+  const [searchParams] = useSearchParams();
+  const target = searchParams?.get('target');
+  const { data: filterList } = useFilterList({
+    tableType: target || 'employees',
+  });
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [tabID, setTabID] = useState<any[]>();
   const [tabValue, setTabValue] = useState<any[]>();
   const [selectedChips, setSelectedChips] = useState<any[]>([]);
+
   const [seeMore, setSeeMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (filterList) {
-      // console.log('filterList>>>', filterList);
       const data: any = filterList['data']?.list;
-      // console.log('data>>', data);
       let tabIdArr: any = [];
       let finalModified: any = [];
       data?.forEach((item: any) => {
@@ -52,7 +57,6 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   }, [filterList]);
   // console.log('tabValue>>', tabValue);
   useEffect(() => {
-    // const result = tabValue?.flatMap((item:any) => item[1])?.filter((it: any) => it.selected === true);
     const result = tabValue?.flatMap((item: any) => {
       return [
         {
@@ -65,9 +69,10 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         },
       ];
     });
-    const chekcIfEmpty: any =
+    const checkIfEmpty: any =
       result && result?.filter((res: any) => res.value.length > 0);
-    if (chekcIfEmpty && chekcIfEmpty.length === 0) setSelectedChips([]);
+    console.log('checkIfEmpty>>', checkIfEmpty);
+    if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
     else setSelectedChips(result as any[]);
   }, [tabValue]);
 
@@ -86,17 +91,20 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       );
     setTimeout(() => {
       setLoading(false);
-      setQuery((prev) => ({ ...prev, ...filters }));
+      setQuery((prev) => ({
+        ...prev,
+        tableType: target || 'employees',
+        ...filters,
+      }));
+      submitFilterData(selectedChips);
     }, 500);
-    submitFilterData(selectedChips);
   }
+
   function handleCloseModal() {
     closeModal();
   }
 
   function handleSelectedChips(e: any) {
-    // console.log('tabID>>>', tabID, tabValue);
-
     const tab = e?.target?.id && e?.target?.id?.split('-');
     setTabValue((prev) =>
       prev?.map((item: any) =>
@@ -115,6 +123,14 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   }
 
   function clearFilter() {
+    setQuery((prev) => ({
+      page: prev.page,
+      limit: prev.limit,
+      search: prev.search,
+      sortBy: prev.sortBy,
+      order: prev.order,
+      tableType: prev.tableType,
+    }));
     setTabValue((prev) =>
       prev?.map((item: any) => [
         item[0],
@@ -241,4 +257,4 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   );
 };
 
-export default FilterModal;
+export default React.memo(FilterModal);
