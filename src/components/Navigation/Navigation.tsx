@@ -78,7 +78,7 @@ import { useAuth } from "../../context/AuthContext";
 
         {/* Nav Links */}
         <nav className="flex-1 p-4 space-y-2 h-full overflow-y-auto">
-          {navItems.map((item) => (
+          {navItems?.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}

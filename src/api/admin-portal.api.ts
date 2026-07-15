@@ -19,12 +19,14 @@ export default async function getEmployees() {
 
 export async function getTableEmployees(
   params: TableQueryParams,
-  setIsLoading?: (loading: boolean) => void
+  setIsLoading?: (loading: boolean) => void,
+  signal?: AbortSignal
 ) {
   try {
     setIsLoading?.(true);
     const response = await apiClient.get('/paginatedEmployeeList', {
       params,
+      signal,
     });
     setIsLoading?.(false);
     return response;

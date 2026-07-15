@@ -21,7 +21,7 @@ export default function PieChartComponent({ data, title, X, Y }: any) {
     return (
       <div className="grid grid-cols-2">
         {data?.length > 0 &&
-          data.map((entry: any, index: any) => {
+          data?.map((entry: any, index: any) => {
             const itemColor = PIE_COLORS[index % PIE_COLORS.length];
             return (
               <div

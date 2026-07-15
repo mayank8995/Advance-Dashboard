@@ -84,7 +84,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     setLoading(true);
     const filters = selectedChips
       .filter((obj: any) => obj)
-      .map((it) => ({ [it.key]: it?.value?.join(',') }))
+      ?.map((it) => ({ [it.key]: it?.value?.join(',') }))
       .reduce(
         (accumulator, currentItem) => ({ ...accumulator, ...currentItem }),
         {} as Record<string, any>
@@ -161,7 +161,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         <div className="flex flex-1 min-h-0 overflow-y-auto">
           <div className="flex flex-col">
             {tabID &&
-              tabID.map((item: any, index: number) => {
+              tabID?.map((item: any, index: number) => {
                 const filterKey =
                   item as keyof typeof CORRESPONDING_FILTER_TABLE_KEY_NAME;
 
@@ -181,7 +181,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
           </div>
           <div className="flex flex-col">
             {tabValue &&
-              tabValue.map((item: any, index: number) => (
+              tabValue?.map((item: any, index: number) => (
                 <React.Fragment key={index + item[1]}>
                   {focusedIndex === index && (
                     <div

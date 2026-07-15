@@ -6,6 +6,7 @@ import {
   type ReactNode,
 } from 'react';
 import { type Login, type TableQueryParams } from '../types/types';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthContextType {
   user: Login | null;
@@ -20,6 +21,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<Login | null>(() => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
@@ -46,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    queryClient.clear();
   };
 
   const setQueryParamsData = (data: TableQueryParams) => {

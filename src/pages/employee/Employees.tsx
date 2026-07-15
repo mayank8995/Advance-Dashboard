@@ -12,16 +12,18 @@ import { useLoader } from '../../context/Loadercontext';
 
 function Employees() {
   const { setIsLoading } = useLoader();
+  const [signal, setSignal] = useState<AbortSignal>();
 
   const [query, setQuery] = useState<TableQueryParams>(
     DEFAULT_TABLE_QUERY_PARAMS
   );
-  const { data: tableQuery } = useTableData({ ...query }, setIsLoading);
+  const { data: tableQuery } = useTableData({ ...query }, setIsLoading, signal);
 
   const list = tableQuery?.['data']?.['employees'] || [];
 
-  function handleTableQuery(queryData: TableQueryParams) {
+  function handleTableQuery(queryData: TableQueryParams, signal?: AbortSignal) {
     setQuery((prev) => ({ ...prev, ...queryData }));
+    setSignal(signal);
   }
   return (
     <CustomTable
