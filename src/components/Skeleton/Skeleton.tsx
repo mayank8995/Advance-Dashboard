@@ -45,7 +45,7 @@ export const Skeleton = () => {
                   </div>
                   <div className="flex-1 flex flex-col justify-evenly">
                     {[1, 2, 3, 4, 5]?.map((_, index) => (
-                      <React.Fragment>
+                      <React.Fragment key={`w-9-${index}`}>
                         <div className="flex flex-row mb-2">
                           <div className="w-9 h-9 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 rounded-full ">
                             <h1

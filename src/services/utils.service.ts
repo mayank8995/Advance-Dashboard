@@ -1,5 +1,5 @@
 import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query';
-import getEmployees, {
+import {
   getAnalytics,
   getTableEmployees,
   getPerformanceCards,
