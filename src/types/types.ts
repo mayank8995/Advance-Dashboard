@@ -1,3 +1,5 @@
+import type { QueryClientConfig } from '@tanstack/react-query';
+
 export interface Login {
   name: string;
   email: string;
@@ -138,4 +140,12 @@ export type FilterList = {
 export type DonutChartProps = {
   data: any;
   title: string;
+};
+
+export type SkeletonProps = {
+  target?: string | null;
+};
+
+export type QueryClientConfigProps = QueryClientConfig & {
+  refetchAll: () => void;
 };

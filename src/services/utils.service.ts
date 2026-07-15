@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query';
 import getEmployees, {
   getAnalytics,
   getTableEmployees,
@@ -18,13 +18,13 @@ declare global {
   }
 }
 
-export function useGetData() {
-  return useQuery({
-    queryKey: ['employeesData'],
-    queryFn: getEmployees,
-    staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-  });
-}
+// export function useGetData() {
+//   return useQuery({
+//     queryKey: ['employeesData'],
+//     queryFn: getEmployees,
+//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+//   });
+// }
 export function useFilterList(params: FilterList) {
   console.log('useFilterList', params);
   return useQuery({
@@ -36,7 +36,8 @@ export function useFilterList(params: FilterList) {
 
 export function useTableData(
   params: TableQueryParams,
-  setIsLoading: (loading: boolean) => void
+  setIsLoading: (loading: boolean) => void,
+  signal?: AbortSignal
 ) {
   const { totalPages, totalItems, ...updatedParams } = params;
   const queryParams =
@@ -46,7 +47,7 @@ export function useTableData(
 
   return useQuery({
     queryKey: ['employees', ...Object.values(queryParams)],
-    queryFn: () => getTableEmployees(queryParams, setIsLoading),
+    queryFn: () => getTableEmployees(queryParams, setIsLoading, signal),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
   });
@@ -67,21 +68,38 @@ export function usePerFormanceTableData(params: TableQueryParams) {
   });
 }
 
-export function useAnalyticsData() {
-  return useQuery({
-    queryKey: ['analyticsData'],
-    queryFn: getAnalytics,
-    staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+export function useAllData() {
+  return useQueries({
+    queries: [
+      {
+        queryKey: ['analyticsData'],
+        queryFn: getAnalytics,
+        staleTime: Infinity,
+      },
+      {
+        queryKey: ['performanceCardsData'],
+        queryFn: getPerformanceCards,
+        staleTime: Infinity,
+      },
+    ],
   });
 }
 
-export function usePerformanceCardData() {
-  return useQuery({
-    queryKey: ['performanceCardsData'],
-    queryFn: getPerformanceCards,
-    staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-  });
-}
+// export function useAnalyticsData() {
+//   return useQuery({
+//     queryKey: ['analyticsData'],
+//     queryFn: getAnalytics,
+//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+//   });
+// }
+
+// export function usePerformanceCardData() {
+//   return useQuery({
+//     queryKey: ['performanceCardsData'],
+//     queryFn: getPerformanceCards,
+//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+//   });
+// }
 
 export function useProfileData() {
   return useQuery({
@@ -94,7 +112,7 @@ export function useProfileData() {
 export function getAvgEmployeeSatisfaction(data: Array<any>) {
   let totalSum = 0;
   data?.length > 0 &&
-    data.map((value) => {
+    data?.map((value) => {
       totalSum += value?.rating || 0;
     });
   return data?.length > 0 && (totalSum / data.length).toFixed(1);
@@ -103,7 +121,7 @@ export function getAvgEmployeeSatisfaction(data: Array<any>) {
 export function getNumberofActiveProjects(data: Array<any>) {
   let count = 0;
   data?.length > 0 &&
-    data.map((value) => {
+    data?.map((value) => {
       let projectsArr: any[] = value?.projects || [];
       for (let proj of projectsArr) {
         if (proj?.status === 'Active') count++;
@@ -236,11 +254,11 @@ export function transformDataForFilterModalUI(relevantData: Function) {
   // console.log('SADASDA', data, headers);
   const valuesMap = new Map<string, Array<string | boolean | string[]>>(
     headers
-      .map((data: any) => data.key)
+      ?.map((data: any) => data.key)
       ?.map((item: any) => [item, [] as Array<string | boolean | string[]>])
   );
   // console.log("valuesMap",valuesMap, relevantData())
-  const filterSet = new Set(headers.map((data: any) => data.key));
+  const filterSet = new Set(headers?.map((data: any) => data.key));
   // console.log("list>>>",data,FILTER_TABLE_KEY,valuesMap,filterSet)
   for (let i = 0; i < data.length; i++) {
     if (data[i]) {

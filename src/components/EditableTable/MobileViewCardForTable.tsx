@@ -75,7 +75,7 @@ export default function MobileViewCardForTable({
                         <h2 className="pl-2 text-slate-800 dark:text-slate-300">
                           {Array.isArray(row[header?.key]) &&
                           row[header?.key]?.length > 0
-                            ? row[header?.key].map(
+                            ? row[header?.key]?.map(
                                 (item: string, index: number) => (
                                   <div key={index + row[header?.key].length}>
                                     {item}

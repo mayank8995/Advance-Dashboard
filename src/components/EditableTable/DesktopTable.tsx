@@ -42,19 +42,19 @@ export const DesktopTable = ({
         {!isLoading ? (
           <tbody className="divide-y divide-slate-200">
             {list?.length > 0 ? (
-              list.map((row: any, index: number) => (
+              list?.map((row: any, index: number) => (
                 <tr
                   key={`${row.id}-${index}`}
                   className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800"
                 >
-                  {Object.keys(columnsData).map((columnsData, id) => (
+                  {Object.keys(columnsData)?.map((columnsData, id) => (
                     <td
                       key={id}
                       className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400"
                     >
                       {Array.isArray(row[columnsData]) &&
                       row[columnsData]?.length > 0
-                        ? row[columnsData].map((item: string) => (
+                        ? row[columnsData]?.map((item: string) => (
                             <div key={row[columnsData] + item}>{item}</div>
                           ))
                         : row[columnsData]}
@@ -89,7 +89,7 @@ export const DesktopTable = ({
                           className="px-6 py-4"
                         >
                           <div className="flex items-center gap-3">
-                            <div className="h-8 w-24 rounded bg-gray-200"></div>
+                            <div className="h-8 w-24 rounded bg-gray-200 dark:bg-gray-700"></div>
                           </div>
                         </td>
                       );

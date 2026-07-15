@@ -29,6 +29,8 @@ function Analytics() {
   const queryClient = useQueryClient();
   const { data: metricData }: any =
     queryClient.getQueryData(['analyticsData']) || {};
+
+  console.log('metricData>', metricData);
   return (
     <div className="flex flex-col flex-auto">
       <KeyMetricCard>

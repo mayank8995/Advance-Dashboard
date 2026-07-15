@@ -1,7 +1,10 @@
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import type { DonutChartProps } from '../../types/types';
+import { useTheme } from '../../hooks/useTheme';
 
 export const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
+  const { theme: themeMode } = useTheme();
+
   const data = [
     { name: 'On Track', value: rawData?.onTrack, color: '#4CAF50' },
     { name: 'At Risk', value: rawData?.atRisk, color: '#FF9800' },
@@ -27,7 +30,7 @@ export const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
             outerRadius={100}
             dataKey="value"
           >
-            {data.map((entry, index) => (
+            {data?.map((entry, index) => (
               <Cell key={index} fill={entry?.color} />
             ))}
           </Pie>
@@ -76,8 +79,21 @@ export const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
             zIndex: 0,
           }}
         >
-          <h2 style={{ margin: 0 }}>{rawData?.totalProjects}</h2>
-          <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>
+          <h2
+            style={{
+              margin: 0,
+              color: themeMode === 'dark' ? '#f3f4f6' : '#333',
+            }}
+          >
+            {rawData?.totalProjects}
+          </h2>
+          <p
+            style={{
+              margin: 0,
+              fontSize: '12px',
+              color: themeMode === 'dark' ? '#f3f4f6' : '#333',
+            }}
+          >
             Total Projects
           </p>
         </div>

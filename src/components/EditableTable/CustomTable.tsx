@@ -49,14 +49,21 @@ export default function CustomTable({
   }
 
   useEffect(() => {
+    const controller = new AbortController();
     const timerId = setTimeout(() => {
-      handleTableQuery({
-        ...tableQueryParams,
-        page: 1,
-        search: txtToBeSearched,
-      });
+      handleTableQuery(
+        {
+          ...tableQueryParams,
+          page: 1,
+          search: txtToBeSearched,
+        },
+        controller.signal
+      );
     }, 300);
-    return () => clearTimeout(timerId);
+    return () => {
+      clearTimeout(timerId);
+      controller.abort();
+    };
   }, [txtToBeSearched]);
 
   // Handler functions

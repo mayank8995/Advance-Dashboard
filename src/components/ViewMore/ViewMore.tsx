@@ -11,6 +11,7 @@ import { useLoader } from '../../context/Loadercontext';
 
 function ViewMore() {
   const { setIsLoading } = useLoader();
+  const [signal, setSignal] = useState<AbortSignal>();
 
   const [searchParams] = useSearchParams();
   const target = searchParams?.get('target');
@@ -20,15 +21,17 @@ function ViewMore() {
   );
   const tableQuery = useTableData(
     { ...query, tableType: target as string },
-    setIsLoading
+    setIsLoading,
+    signal
   );
   const list = tableQuery?.data?.['data']?.['employees'] || [];
-  function handleTableQuery(queryData: TableQueryParams) {
+  function handleTableQuery(queryData: TableQueryParams, signal?: AbortSignal) {
     setQuery((prev) => ({
       ...prev,
       ...queryData,
       tableType: target as string,
     }));
+    setSignal(signal);
   }
   return (
     <CustomTable
