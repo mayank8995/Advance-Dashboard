@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import CustomTable from '../../components/EditableTable/CustomTable';
 import {
-  columns_employees,
   DEFAULT_TABLE_QUERY_PARAMS,
   EMPLOYEE_DIREC,
   headers_employees,
@@ -9,6 +8,7 @@ import {
 import { useTableData } from '../../services/utils.service';
 import type { TableQueryParams } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
+import { columns_employees } from '../../components/EditableTable/CustomCellRenderer';
 
 function Employees() {
   const { setIsLoading } = useLoader();

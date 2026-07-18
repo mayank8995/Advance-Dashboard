@@ -13,11 +13,11 @@ export const DesktopTable = ({
   rowsPerPage,
 }: DesktopTableProps) => {
   const { isLoading } = useLoader();
-  console.log('isloading>>', isLoading);
+
   return (
     <React.Fragment>
       <table
-        className="hidden sm:table rounded-2xl
+        className="hidden lg:table rounded-2xl
   shadow-lg
   border
   border-slate-200 m-2.5 dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50 "
@@ -29,7 +29,7 @@ export const DesktopTable = ({
                 return (
                   <th
                     key={header.key}
-                    className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400"
+                    className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-600 dark:text-slate-400"
                     onClick={() => handleSort(header?.key)}
                   >
                     {header?.value} {getSortIcon(header?.key)}
@@ -47,7 +47,7 @@ export const DesktopTable = ({
                   key={`${row.id}-${index}`}
                   className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800"
                 >
-                  {Object.keys(columnsData)?.map((columnsData, id) => (
+                  {/* {Object.keys(columnsData)?.map((columnsData, id) => (
                     <td
                       key={id}
                       className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400"
@@ -58,6 +58,32 @@ export const DesktopTable = ({
                             <div key={row[columnsData] + item}>{item}</div>
                           ))
                         : row[columnsData]}
+                    </td>
+                  ))} */}
+                  {columnsData?.map((coloumn: any, id: number) => (
+                    <td
+                      key={id}
+                      className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400"
+                    >
+                      {Array.isArray(row[coloumn?.key]) &&
+                      row[coloumn?.key]?.length > 0 ? (
+                        row[coloumn?.key]?.map((item: string) => (
+                          <>
+                            {!coloumn?.render ? (
+                              <div key={row[coloumn?.key] + item}>{item}</div>
+                            ) : (
+                              coloumn?.render(item)
+                            )}
+                          </>
+                        ))
+                      ) : (
+                        <>
+                          {' '}
+                          {!coloumn?.render
+                            ? row[coloumn?.key]
+                            : coloumn?.render(row[coloumn?.key])}{' '}
+                        </>
+                      )}
                     </td>
                   ))}
                 </tr>
