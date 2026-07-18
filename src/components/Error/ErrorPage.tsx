@@ -20,12 +20,14 @@ export const ErrorPage = ({ refetchAll }: QueryClientConfigProps) => {
         try again.
       </p>
 
-      <button
-        onClick={() => refetchAll()}
-        className="cursor-pointer py-2.5 px-5 rounded-lg bg-[#534ab7] text-white text-sm font-medium hover:bg-[#463f9e] transition"
-      >
-        Retry
-      </button>
+      {refetchAll && (
+        <button
+          onClick={() => refetchAll?.()}
+          className="cursor-pointer py-2.5 px-5 rounded-lg bg-[#534ab7] text-white text-sm font-medium hover:bg-[#463f9e] transition"
+        >
+          Retry
+        </button>
+      )}
     </div>
   );
 };

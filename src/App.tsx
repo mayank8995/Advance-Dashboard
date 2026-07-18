@@ -29,7 +29,9 @@ function App() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-xl font-bold text-white">HR Portal</span>
+                <span className="text-xl font-bold text-white">
+                  Admin Portal
+                </span>
               </div>
               <h2 className="text-3xl font-bold text-white leading-tight">
                 Manage your entire workforce, in one place.
@@ -60,7 +62,7 @@ function App() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="text-lg font-bold text-white">HR Portal</span>
+              <span className="text-lg font-bold text-white">Admin Portal</span>
             </div>
             {show ? (
               <Login onCustomEvent={(flag: boolean) => setShow(flag)} />

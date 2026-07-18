@@ -13,7 +13,7 @@ export const DesktopTable = ({
   rowsPerPage,
 }: DesktopTableProps) => {
   const { isLoading } = useLoader();
-  console.log('isloading>>', isLoading);
+
   return (
     <React.Fragment>
       <table

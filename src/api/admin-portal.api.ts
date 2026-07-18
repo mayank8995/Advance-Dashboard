@@ -32,6 +32,7 @@ export async function getTableEmployees(
     return response;
   } catch (error) {
     console.error('Error fetching data:', error);
+    setIsLoading?.(false);
     throw error;
   }
 }

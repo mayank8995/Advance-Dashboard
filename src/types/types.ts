@@ -147,5 +147,5 @@ export type SkeletonProps = {
 };
 
 export type QueryClientConfigProps = QueryClientConfig & {
-  refetchAll: () => void;
+  refetchAll?: () => void;
 };
