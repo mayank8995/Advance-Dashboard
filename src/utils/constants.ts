@@ -1,4 +1,10 @@
 import {
+  columns_promotedThisYear,
+  columns_requiringReview,
+  columns_top_performers,
+  columns_top_projects,
+} from '../components/EditableTable/CustomCellRenderer';
+import {
   validateFormOne,
   validateFormTwo,
 } from '../services/form-validation.service';
@@ -135,65 +141,43 @@ export const PROFILE_SUBHEAD =
 export const VIEW_MORE = 'View More';
 
 export const headers_top_projects = [
-  { key: 'name', value: 'MANAGER' },
-  { key: 'projectName', value: 'PROJECT NAME' },
-  { key: 'riskStatus', value: 'RISK STATUS' },
-  { key: 'status', value: 'PROJECT STATUS' },
+  { key: 'name', value: 'Manager' },
+  { key: 'projectName', value: 'Project Name' },
+  { key: 'riskStatus', value: 'Risk Status' },
+  { key: 'status', value: 'Project Status' },
 ];
-export const columns_top_projects = {
-  name: 'name',
-  projectName: 'projectName',
-  riskStatus: 'riskStatus',
-  status: 'status',
-};
+// export const columns_top_projects = {
+//   name: 'name',
+//   projectName: 'projectName',
+//   riskStatus: 'riskStatus',
+//   status: 'status',
+// };
 
 export const headers_top_performers = [
-  { key: 'id', value: 'ID' },
-  { key: 'name', value: 'NAME' },
-  { key: 'designation', value: 'DESIGNATION' },
-  { key: 'department', value: 'DEPARTMENT' },
-  { key: 'rating', value: 'RATING' },
+  { key: 'id', value: 'Id' },
+  { key: 'name', value: 'Name' },
+  { key: 'designation', value: 'Designation' },
+  { key: 'department', value: 'Department' },
+  { key: 'rating', value: 'Rating' },
 ];
-export const columns_top_performers = {
-  id: 'id',
-  name: 'name',
-  designation: 'designation',
-  department: 'department',
-  rating: 'rating',
-};
+
 export const headers_promotedThisYear = [
-  { key: 'id', value: 'ID' },
-  { key: 'name', value: 'NAME' },
-  { key: 'currentDesignation', value: 'DESIGNATION' },
-  { key: 'previousDesignation', value: 'PREV DESIGNATION' },
-  { key: 'department', value: 'DEPARTMENT' },
-  { key: 'promotedOn', value: 'PROMOTED ON' },
+  { key: 'id', value: 'Id' },
+  { key: 'name', value: 'Name' },
+  { key: 'currentDesignation', value: 'Current Designation' },
+  { key: 'previousDesignation', value: 'Previous Designation' },
+  { key: 'department', value: 'Department' },
+  { key: 'promotedOn', value: 'Promoted On' },
 ];
-export const columns_promotedThisYear = {
-  id: 'id',
-  name: 'name',
-  currentDesignation: 'designation',
-  previousDesignation: 'previousDesignation',
-  department: 'department',
-  promotedOn: 'promotedOn',
-};
 
 export const headers_requiringReview = [
-  { key: 'id', value: 'ID' },
-  { key: 'name', value: 'NAME' },
-  { key: 'designation', value: 'DESIGNATION' },
-  { key: 'department', value: 'DEPARTMENT' },
-  { key: 'reviewReason', value: 'REVIEW REASON' },
-  { key: 'rating', value: 'RATING' },
+  { key: 'id', value: 'Id' },
+  { key: 'name', value: 'Name' },
+  { key: 'designation', value: 'Designation' },
+  { key: 'department', value: 'Department' },
+  { key: 'reviewReason', value: 'Review Reason' },
+  { key: 'rating', value: 'Rating' },
 ];
-export const columns_requiringReview = {
-  id: 'id',
-  name: 'name',
-  designation: 'designation',
-  department: 'department',
-  reviewReason: 'reviewReason',
-  rating: 'rating',
-};
 
 export const CARD_CONTENT_LIMIT_TO_SCROLL = 5;
 
@@ -212,25 +196,15 @@ export const VIEW_MORE_ROUTES_VALUES = {
 };
 
 export const headers_employees = [
-  { key: 'id', value: 'ID' },
-  { key: 'name', value: 'NAME' },
-  { key: 'designation', value: 'DESIGNATION' },
-  { key: 'department', value: 'DEPARTMENT' },
-  { key: 'yearsOfExperience', value: 'YEARS EXP' },
-  { key: 'location', value: 'LOCATION' },
-  { key: 'workMode', value: 'WORK MODE' },
-  { key: 'rating', value: 'RATING' },
+  { key: 'id', value: 'Id' },
+  { key: 'name', value: 'Name' },
+  { key: 'designation', value: 'Designation' },
+  { key: 'department', value: 'Department' },
+  { key: 'yearsOfExperience', value: 'Years of Experience' },
+  { key: 'location', value: 'Location' },
+  { key: 'workMode', value: 'Work Mode' },
+  { key: 'rating', value: 'Ratng' },
 ];
-export const columns_employees = {
-  id: 'id',
-  name: 'name',
-  designation: 'designation',
-  department: 'department',
-  yearsOfExperience: 'yearsOfExperience',
-  location: 'location',
-  workMode: 'workMode',
-  rating: 'workMode',
-};
 
 export const ADMIN_PORTAL = 'Admin Portal';
 
@@ -266,13 +240,13 @@ export const headers_filters_requiringReview = [
   { key: 'reviewReason', value: 'REVIEW REASON' },
 ];
 
-export const headers_filters_employees = [
-  { key: 'designation', value: 'DESIGNATION' },
-  { key: 'department', value: 'DEPARTMENT' },
-  { key: 'location', value: 'LOCATION' },
-  { key: 'workMode', value: 'WORK MODE' },
-  { key: 'employeeSatisfaction', value: 'Employee Satisfaction' },
-];
+// export const headers_filters_employees = [
+//   { key: 'designation', value: 'Designation' },
+//   { key: 'department', value: 'Department' },
+//   { key: 'location', value: 'Location' },
+//   { key: 'workMode', value: 'Work Mode' },
+//   { key: 'employeeSatisfaction', value: 'Employee Satisfaction' },
+// ];
 
 export const CORRESPONDING_FILTER_TABLE_KEY_NAME = {
   department: 'DEPARTMENT',
@@ -321,4 +295,68 @@ export const DEFAULT_TABLE_QUERY_PARAMS = {
   search: '',
   sortBy: 'id',
   order: 'asc',
+};
+
+export const statusColors: Record<string, string> = {
+  'on track': 'bg-emerald-400',
+  completed: 'bg-[#534ab7]/20',
+  'at risk': 'bg-orange-400',
+  active: 'bg-green-100',
+  dead: 'bg-slate-500/20',
+  support: 'bg-fuchsia-500/20',
+};
+
+export const textColors: Record<string, string> = {
+  'on track': `text-white`,
+  completed: `text-emerald-500`,
+  'at risk': `text-white`,
+  active: `text-green-700`,
+  dead: `text-slate-600`,
+  support: `text-amber-500`,
+};
+
+export const statusColorsDark: Record<string, string> = {
+  'on track': 'bg-emerald-900/40',
+  completed: 'bg-[#534ab7]/20',
+  'at risk': 'bg-emerald-900/40',
+  active: 'bg-green-100',
+  dead: 'bg-slate-500/20',
+  support: 'bg-fuchsia-500/20',
+};
+
+export const textColorsDark: Record<string, string> = {
+  'on track': `text-emerald-400`,
+  completed: `text-emerald-500`,
+  'at risk': `text-orange-400`,
+  active: `text-green-700`,
+  dead: `text-slate-600`,
+  support: `text-amber-500`,
+};
+
+export const reviewColors: Record<string, string> = {
+  'low rating': 'bg-orange-100',
+  'low attendance': 'bg-yellow-100',
+  'on notice period': 'bg-red-100',
+  'low satisfaction': 'bg-purple-100',
+};
+
+export const reviewtextColors: Record<string, string> = {
+  'low rating': 'text-orange-600',
+  'low attendance': 'text-yellow-600',
+  'on notice period': 'text-red-600',
+  'low satisfaction': 'text-purple-600',
+};
+
+export const reviewColorsDark: Record<string, string> = {
+  'low rating': 'bg-emerald-900/40',
+  'low attendance': 'bg-[#534ab7]/20',
+  'on notice period': 'bg-orange-400',
+  'low satisfaction': 'bg-green-100',
+};
+
+export const reviewtextColorsDark: Record<string, string> = {
+  'low rating': 'text-orange-400',
+  'low attendance': 'text-yellow-600',
+  'on notice period': 'text-red-400',
+  'low satisfaction': 'text-purple-400',
 };

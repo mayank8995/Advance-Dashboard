@@ -7,8 +7,8 @@ export const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
 
   const data = [
     { name: 'On Track', value: rawData?.onTrack, color: '#4CAF50' },
-    { name: 'At Risk', value: rawData?.atRisk, color: '#FF9800' },
-    { name: 'Delayed', value: rawData?.delayed, color: '#F44336' },
+    { name: 'At Risk', value: rawData?.atRisk, color: '#F44336' },
+    { name: 'Delayed', value: rawData?.delayed, color: '#FF9800' },
     { name: 'Completed', value: rawData?.completed, color: '#2196F3' },
   ];
 

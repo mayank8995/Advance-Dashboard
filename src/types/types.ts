@@ -129,8 +129,8 @@ export type DesktopTableProps = {
 
 export type MobileTableProps = {
   list: any;
-  headersData: any;
   rowsPerPage: number;
+  columnsData: any;
 };
 
 export type FilterList = {
@@ -148,4 +148,24 @@ export type SkeletonProps = {
 
 export type QueryClientConfigProps = QueryClientConfig & {
   refetchAll?: () => void;
+};
+
+export type BadgeProps = {
+  value: string;
+};
+
+export type RatingProps = {
+  value: string;
+};
+
+export type StatusBadgeProps = {
+  value: string;
+};
+
+export type NameBadgeProps = {
+  value: string;
+};
+
+export type ReviewReasonBadgeProps = {
+  value: string;
 };

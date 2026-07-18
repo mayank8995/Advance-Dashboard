@@ -174,7 +174,7 @@ export default function CustomTable({
             <MobileTable
               rowsPerPage={rowsPerPage}
               list={list}
-              headersData={headersData}
+              columnsData={columnsData}
             />
           </div>
         </div>

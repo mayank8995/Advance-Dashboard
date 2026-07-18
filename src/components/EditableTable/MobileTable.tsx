@@ -6,20 +6,20 @@ import { useLoader } from '../../context/Loadercontext';
 
 export const MobileTable = ({
   list,
-  headersData,
   rowsPerPage,
+  columnsData,
 }: MobileTableProps) => {
   const { isLoading } = useLoader();
   return (
-    <div className="sm:hidden pl-2 pr-2">
+    <div className="lg:hidden pl-2 pr-2">
       <>
         {!isLoading ? (
           <>
             {list?.length > 0 ? (
               <MobileViewCardForTable
                 list={list}
-                headersData={headersData}
                 rowsPerPage={rowsPerPage}
+                columnsData={columnsData}
               />
             ) : (
               <div className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2   dark:border-slate-900/50">
@@ -48,7 +48,7 @@ export const MobileTable = ({
                       </div>
                     </div>
                     {Array.from(
-                      { length: headersData?.length },
+                      { length: columnsData?.length },
                       (_, index) => index + 1
                     )?.map((_, i) => {
                       return (

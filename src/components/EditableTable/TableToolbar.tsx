@@ -27,7 +27,7 @@ export const TableToolbar = ({
     queryClient.getQueryData(['filterKeyData']) || [];
   return (
     <React.Fragment>
-      <div className="sm:hidden px-6 py-4">
+      <div className="lg:hidden px-6 py-4">
         <div className="relative">
           <FormField
             style={{ width: '100%' }}
@@ -143,7 +143,7 @@ export const TableToolbar = ({
             </button>
           </div>
         </div>
-        <div className="hidden sm:flex px-6 pb-4">
+        <div className="hidden lg:flex px-6 pb-4">
           <div className="relative">
             <FormField
               value={txtToBeSearched}
