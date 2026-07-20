@@ -1,16 +1,33 @@
+import { useEffect } from 'react';
+import { useCheckBox } from '../../hooks/useCheckBox';
 import type { MobileTableProps } from '../../types/types';
 import { bgColors, gradients } from '../../utils/constants';
+import FormField from '../Form/FormField';
 
 export default function MobileViewCardForTable({
   list,
   columnsData,
+  tableQueryParams,
 }: MobileTableProps) {
+  const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
+
+  // to do - uses cases of when checkbox should be selected or not.
+  /** const {
+    search: _search,
+    limit: _limit,
+    ...restParams
+  } = tableQueryParams || {};
+  const restParamsKeys = JSON.stringify(restParams);*/
+  console.log('Mobile selectedRow', selectedRow);
+  useEffect(() => {
+    setSelectedRow(new Set());
+  }, [tableQueryParams]);
+
   function getRowCss(value: string) {
     let initialCss = `grid grid-cols-2 gap-y-2 text-xs`;
     if (value === 'id') return 'hidden';
     return initialCss;
   }
-  console.log('collll>>', columnsData);
   return (
     <>
       {list?.map((row: any, index: number) => (
@@ -22,21 +39,31 @@ export default function MobileViewCardForTable({
             return (
               <div key={coloumn.key}>
                 {coloumn?.key === 'name' && (
-                  <div className="flex items-center gap-3">
-                    <h1
-                      className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}
-                    >
-                      {row[coloumn?.key]
-                        ?.split(' ')
-                        .map((n: any) => n[0])
-                        .join('')}
-                    </h1>
-                    <h2 className="pl-2 text-slate-800 dark:text-slate-300">
-                      {Array.isArray(row[coloumn?.key]) &&
-                      row[coloumn?.key]?.length > 0
-                        ? row[coloumn?.key][0]
-                        : row[coloumn?.key]}
-                    </h2>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 shrink-0">
+                      <h1
+                        className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}
+                      >
+                        {row[coloumn?.key]
+                          ?.split(' ')
+                          .map((n: any) => n[0])
+                          .join('')}
+                      </h1>
+                      <h2 className="pl-2 text-slate-800 dark:text-slate-300">
+                        {Array.isArray(row[coloumn?.key]) &&
+                        row[coloumn?.key]?.length > 0
+                          ? row[coloumn?.key][0]
+                          : row[coloumn?.key]}
+                      </h2>
+                    </div>
+                    <FormField
+                      className="w-auto"
+                      name={row?.id}
+                      type={'checkbox'}
+                      id={row?.id}
+                      checked={selectedRow.has(String(row?.id))}
+                      onChange={handleOnChange}
+                    />
                   </div>
                 )}
                 <>

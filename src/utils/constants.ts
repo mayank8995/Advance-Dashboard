@@ -8,6 +8,14 @@ import {
   validateFormOne,
   validateFormTwo,
 } from '../services/form-validation.service';
+import type {
+  Employee,
+  EmployeeRequiringReview,
+  PromotedEmployee,
+  TableHeader,
+  TopPerformer,
+  TopProject,
+} from '../types/types';
 
 export const KEY_TRACK_METRIC = {
   TOTAL_EMPLOYEES: 'Total Employees',
@@ -140,20 +148,14 @@ export const PROFILE_SUBHEAD =
 
 export const VIEW_MORE = 'View More';
 
-export const headers_top_projects = [
+export const headers_top_projects: TableHeader<TopProject>[] = [
   { key: 'name', value: 'Manager' },
   { key: 'projectName', value: 'Project Name' },
   { key: 'riskStatus', value: 'Risk Status' },
   { key: 'status', value: 'Project Status' },
 ];
-// export const columns_top_projects = {
-//   name: 'name',
-//   projectName: 'projectName',
-//   riskStatus: 'riskStatus',
-//   status: 'status',
-// };
 
-export const headers_top_performers = [
+export const headers_top_performers: TableHeader<TopPerformer>[] = [
   { key: 'id', value: 'Id' },
   { key: 'name', value: 'Name' },
   { key: 'designation', value: 'Designation' },
@@ -161,7 +163,7 @@ export const headers_top_performers = [
   { key: 'rating', value: 'Rating' },
 ];
 
-export const headers_promotedThisYear = [
+export const headers_promotedThisYear: TableHeader<PromotedEmployee>[] = [
   { key: 'id', value: 'Id' },
   { key: 'name', value: 'Name' },
   { key: 'currentDesignation', value: 'Current Designation' },
@@ -170,7 +172,7 @@ export const headers_promotedThisYear = [
   { key: 'promotedOn', value: 'Promoted On' },
 ];
 
-export const headers_requiringReview = [
+export const headers_requiringReview: TableHeader<EmployeeRequiringReview>[] = [
   { key: 'id', value: 'Id' },
   { key: 'name', value: 'Name' },
   { key: 'designation', value: 'Designation' },
@@ -195,7 +197,7 @@ export const VIEW_MORE_ROUTES_VALUES = {
   requiringReview: 'Requiring Review',
 };
 
-export const headers_employees = [
+export const headers_employees: TableHeader<Employee>[] = [
   { key: 'id', value: 'Id' },
   { key: 'name', value: 'Name' },
   { key: 'designation', value: 'Designation' },
@@ -239,14 +241,6 @@ export const headers_filters_requiringReview = [
   { key: 'department', value: 'DEPARTMENT' },
   { key: 'reviewReason', value: 'REVIEW REASON' },
 ];
-
-// export const headers_filters_employees = [
-//   { key: 'designation', value: 'Designation' },
-//   { key: 'department', value: 'Department' },
-//   { key: 'location', value: 'Location' },
-//   { key: 'workMode', value: 'Work Mode' },
-//   { key: 'employeeSatisfaction', value: 'Employee Satisfaction' },
-// ];
 
 export const CORRESPONDING_FILTER_TABLE_KEY_NAME = {
   department: 'DEPARTMENT',

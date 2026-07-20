@@ -94,30 +94,34 @@ function Login({ onCustomEvent }: any) {
       </div>
 
       {/* Email */}
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit} onChange={handleOnChange} noValidate>
         <div>
           <div className="mb-4 flex flex-col">
-            <label className={loginLabelclassNAme}>Username/Admin ID</label>
+            <label htmlFor="email" className={loginLabelclassNAme}>
+              Username/Admin ID
+            </label>
             <FormField
               errors={errors}
               value={form?.email}
               name={'email'}
               type={'email'}
               placeholder={'you@example.com'}
-              onChange={handleOnChange}
               className={loginClassName}
+              id={'email'}
             />
           </div>
           <div className="mb-4 flex flex-col">
-            <label className={loginLabelclassNAme}>Password</label>
+            <label htmlFor="password" className={loginLabelclassNAme}>
+              Password
+            </label>
             <FormField
               errors={errors}
               value={form?.password}
               name={'password'}
               type={'password'}
               placeholder={'••••••••'}
-              onChange={handleOnChange}
               className={loginClassName}
+              id={'password'}
             />
             {/* <a href="#" className="text-sm text-blue-500">Forgot password?</a> */}
           </div>

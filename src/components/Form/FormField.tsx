@@ -13,6 +13,7 @@ function FormField({
   data,
   checked,
   onClick,
+  id,
 }: {
   type?: string;
   placeholder?: string;
@@ -26,6 +27,7 @@ function FormField({
   data?: any;
   checked?: boolean;
   onClick?: any;
+  id?: any;
 }) {
   function handleOnchange(e: any) {
     name && data
@@ -45,6 +47,7 @@ function FormField({
         placeholder={placeholder}
         checked={checked}
         onClick={onClick}
+        id={id}
       />
       {name && errors && errors[name] && (
         <span className="text-red-400 px-2" style={{ fontSize: '12px' }}>

@@ -94,6 +94,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       setQuery((prev) => ({
         ...prev,
         tableType: target || 'employees',
+        // dynamicFilters: { ...prev?.dynamicFilters, ...filters },
         ...filters,
       }));
       submitFilterData(selectedChips);
