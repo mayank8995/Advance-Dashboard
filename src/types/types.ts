@@ -1,5 +1,5 @@
 import type { QueryClientConfig } from '@tanstack/react-query';
-import type { ChangeEvent, ComponentProps, ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
 export interface Login {
   name: string;
