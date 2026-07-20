@@ -1,8 +1,10 @@
 import { TextSearch } from 'lucide-react';
-import React from 'react';
-import { NO_RESULT_FOUND } from '../../utils/constants';
+import React, { useEffect } from 'react';
+import { className, NO_RESULT_FOUND } from '../../utils/constants';
 import type { DesktopTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
+import FormField from '../Form/FormField';
+import { useCheckBox } from '../../hooks/useCheckBox';
 
 export const DesktopTable = ({
   list,
@@ -11,8 +13,20 @@ export const DesktopTable = ({
   handleSort,
   getSortIcon,
   rowsPerPage,
+  tableQueryParams,
 }: DesktopTableProps) => {
   const { isLoading } = useLoader();
+  const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
+  // to do - uses cases of when checkbox should be selected or not.
+  /** const {
+    search: _search,
+    limit: _limit,
+    ...restParams
+  } = tableQueryParams || {};
+  const restParamsKeys = JSON.stringify(restParams);*/
+  useEffect(() => {
+    setSelectedRow(new Set());
+  }, [tableQueryParams]);
 
   return (
     <React.Fragment>
@@ -25,11 +39,21 @@ export const DesktopTable = ({
         <thead className="bg-slate-100">
           {headersData?.length > 0 && (
             <tr className="cursor-pointer dark:bg-slate-800 dark:border-slate-700">
+              <th className="px-4 py-4 text-left text-xs font-semibold tracking-wider text-slate-600 dark:text-slate-400">
+                <FormField
+                  name={'selectAll'}
+                  type={'checkbox'}
+                  id={'selectAll'}
+                  checked={selectedRow.has('selectAll')}
+                  onChange={handleOnChange}
+                  className={`${className} cursor-pointer`}
+                />
+              </th>
               {headersData?.map((header: any) => {
                 return (
                   <th
                     key={header.key}
-                    className="px-6 py-4 text-left text-xs font-semibold tracking-wider text-slate-600 dark:text-slate-400"
+                    className="px-4 py-4 text-left text-xs font-semibold tracking-wider text-slate-600 dark:text-slate-400"
                     onClick={() => handleSort(header?.key)}
                   >
                     {header?.value} {getSortIcon(header?.key)}
@@ -45,7 +69,7 @@ export const DesktopTable = ({
               list?.map((row: any, index: number) => (
                 <tr
                   key={`${row.id}-${index}`}
-                  className=" hover:bg-blue-50 hover:transition-colors hover:duration-200 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800"
+                  className={`hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
                 >
                   {/* {Object.keys(columnsData)?.map((columnsData, id) => (
                     <td
@@ -60,10 +84,24 @@ export const DesktopTable = ({
                         : row[columnsData]}
                     </td>
                   ))} */}
+                  {/* {Hooking checkboxlist into list as checkbox list is derived from list} */}
+                  <td
+                    id={row?.id}
+                    className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
+                  >
+                    <FormField
+                      name={row?.id}
+                      type={'checkbox'}
+                      id={row?.id}
+                      checked={selectedRow.has(String(row?.id))}
+                      onChange={handleOnChange}
+                      className={`${className} cursor-pointer`}
+                    />
+                  </td>
                   {columnsData?.map((coloumn: any, id: number) => (
                     <td
                       key={id}
-                      className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400"
+                      className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
                     >
                       {Array.isArray(row[coloumn?.key]) &&
                       row[coloumn?.key]?.length > 0 ? (
@@ -112,7 +150,7 @@ export const DesktopTable = ({
                       return (
                         <td
                           key={`${i + 1 + id + rowsPerPage}`}
-                          className="px-6 py-4"
+                          className="px-4 py-4"
                         >
                           <div className="flex items-center gap-3">
                             <div className="h-8 w-24 rounded bg-gray-200 dark:bg-gray-700"></div>

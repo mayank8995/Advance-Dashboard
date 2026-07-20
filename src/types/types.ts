@@ -1,4 +1,5 @@
 import type { QueryClientConfig } from '@tanstack/react-query';
+import type { ChangeEvent, ComponentProps, ReactNode } from 'react';
 
 export interface Login {
   name: string;
@@ -125,12 +126,14 @@ export type DesktopTableProps = {
   rowsPerPage: number;
   handleSort: (e?: any) => void;
   getSortIcon: (e?: any) => void;
+  tableQueryParams?: TableQueryParams;
 };
 
 export type MobileTableProps = {
   list: any;
   rowsPerPage: number;
   columnsData: any;
+  tableQueryParams?: TableQueryParams;
 };
 
 export type FilterList = {
@@ -168,4 +171,119 @@ export type NameBadgeProps = {
 
 export type ReviewReasonBadgeProps = {
   value: string;
+};
+
+export type InputFieldType = ComponentProps<'input'> & {
+  label?: string;
+  type: string;
+  name: string;
+  placeholder: string;
+  errors?: any;
+  maxlength?: number | undefined;
+  data?: any;
+  // onChange?: (e: any, name?: any) => any;
+};
+
+export type CheckBox = Record<string, boolean>;
+
+interface Project {
+  projectName: string;
+  status: ProjectStatus;
+  riskStatus: RiskStatus;
+  priorityRanking: number;
+}
+type WorkMode = 'Remote' | 'Hybrid' | 'On-site';
+type ProjectStatus = 'Active' | 'Support' | 'On Hold' | 'Completed';
+type RiskStatus = 'On Track' | 'At Risk' | 'Delayed';
+type SatisfactionLevel = 'Low' | 'Medium' | 'High';
+
+export interface Employee {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  department: string;
+  designation: string;
+  manager: string;
+  joiningDate: string;
+  yearsOfExperience: number;
+  salary: number;
+  location: string;
+  workMode: WorkMode;
+  projects: Project[];
+  skills: string[];
+  rating: number;
+  attendancePercentage: number;
+  employeeSatisfaction: SatisfactionLevel;
+  onNoticePeriod: boolean;
+}
+
+export type EmployeeProps = {
+  list: Employee[];
+};
+
+export type Column<T> = {
+  [K in keyof T]: {
+    key: K;
+    header: string;
+    render?: (value: string) => ReactNode;
+  };
+}[keyof T];
+
+export interface TopPerformer {
+  id: number;
+  name: string;
+  designation: string;
+  department: string;
+  rating: number;
+}
+
+export interface TopProject {
+  name: string;
+  projectName: string;
+  riskStatus: string;
+  status: string;
+}
+
+export interface PromotedEmployee {
+  id: number;
+  name: string;
+  currentDesignation: string;
+  previousDesignation: string;
+  department: string;
+  promotedOn: string;
+}
+
+export interface EmployeeRequiringReview {
+  id: number;
+  name: string;
+  designation: string;
+  department: string;
+  reviewReason: string;
+  rating: number;
+}
+
+export type TableHeader<T> = {
+  key: keyof T;
+  value: string;
+};
+
+export type CustomTableProps = {
+  list: Employee;
+  tableQueryParams: TableQueryParams;
+  handleTableQuery: (data: TableQueryParams, signal?: AbortSignal) => void;
+  columnsData:
+    | Column<Employee>[]
+    | Column<TopPerformer>[]
+    | Column<TopProject>[]
+    | Column<PromotedEmployee>[]
+    | Column<EmployeeRequiringReview>[];
+  headersData:
+    | TableHeader<Employee>[]
+    | TableHeader<TopPerformer>[]
+    | TableHeader<TopProject>[]
+    | TableHeader<PromotedEmployee>[]
+    | TableHeader<EmployeeRequiringReview>[];
+  title: string;
+  setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 };

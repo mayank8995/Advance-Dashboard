@@ -198,7 +198,9 @@ export function StepOneForm({
         <span className="pl-2">Back to Login</span>
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Name</label>
+        <label htmlFor="name" className={loginLabelclassNAme}>
+          Name
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -208,10 +210,13 @@ export function StepOneForm({
           placeholder={'Enter your name'}
           onChange={onChange}
           className={loginClassName}
+          id={'name'}
         />
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Email</label>
+        <label htmlFor="email" className={loginLabelclassNAme}>
+          Email
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -221,10 +226,13 @@ export function StepOneForm({
           placeholder={'you@example.com'}
           onChange={onChange}
           className={loginClassName}
+          id={'email'}
         />
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Password</label>
+        <label htmlFor="password" className={loginLabelclassNAme}>
+          Password
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -234,10 +242,13 @@ export function StepOneForm({
           placeholder={'••••••••'}
           onChange={onChange}
           className={loginClassName}
+          id={'password'}
         />
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Confirm Password</label>
+        <label htmlFor="confirmPassword" className={loginLabelclassNAme}>
+          Confirm Password
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -247,6 +258,7 @@ export function StepOneForm({
           placeholder={'••••••••'}
           onChange={onChange}
           className={loginClassName}
+          id={'confirmPassword'}
         />
       </div>
     </>
@@ -274,7 +286,9 @@ export function StepTwoForm({
         <span className="pl-1">Back</span>
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Department</label>
+        <label htmlFor="department" className={loginLabelclassNAme}>
+          Department
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -284,10 +298,13 @@ export function StepTwoForm({
           placeholder={'Enter your department'}
           onChange={onChange}
           className={loginClassName}
+          id={'department'}
         />
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Designation</label>
+        <label htmlFor="designation" className={loginLabelclassNAme}>
+          Designation
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -297,10 +314,13 @@ export function StepTwoForm({
           placeholder={'Enter your designation'}
           onChange={onChange}
           className={loginClassName}
+          id={'designation'}
         />
       </div>
       <div className="mb-2 flex flex-col">
-        <label className={loginLabelclassNAme}>Employee Id</label>
+        <label htmlFor="empId" className={loginLabelclassNAme}>
+          Employee Id
+        </label>
         <FormField
           data={data}
           errors={errors}
@@ -310,6 +330,7 @@ export function StepTwoForm({
           placeholder={'B/XXXX..'}
           onChange={onChange}
           className={loginClassName}
+          id={'empId'}
         />
       </div>
       {/* <button  type="button" className=" w-full bg-gray-900   hover:bg-gray-700  mb-2  px-6 py-2.5

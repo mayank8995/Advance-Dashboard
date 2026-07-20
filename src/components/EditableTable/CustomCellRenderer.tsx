@@ -1,13 +1,21 @@
+import type {
+  Column,
+  Employee,
+  EmployeeRequiringReview,
+  PromotedEmployee,
+  TopPerformer,
+  TopProject,
+} from '../../types/types';
 import { Badge } from '../UtilComponents/Badge';
 import NameBadge from '../UtilComponents/NameBadge';
 import { Rating } from '../UtilComponents/Rating';
 import ReviewReasonBadge from '../UtilComponents/ReviewReasonBadge';
 import StatusBadge from '../UtilComponents/StatusBadge';
 
-export const columns_employees = [
+export const columns_employees: Column<Employee>[] = [
   {
     key: 'id',
-    header: 'id',
+    header: 'Id',
   },
   {
     key: 'name',
@@ -42,10 +50,10 @@ export const columns_employees = [
   },
 ];
 
-export const columns_top_performers = [
+export const columns_top_performers: Column<TopPerformer>[] = [
   {
     key: 'id',
-    header: 'id',
+    header: 'Id',
   },
   {
     key: 'name',
@@ -66,7 +74,7 @@ export const columns_top_performers = [
     render: (value: string) => <Rating value={value} />,
   },
 ];
-export const columns_top_projects = [
+export const columns_top_projects: Column<TopProject>[] = [
   {
     key: 'name',
     header: 'Name',
@@ -87,7 +95,7 @@ export const columns_top_projects = [
     render: (value: string) => <StatusBadge value={value} />,
   },
 ];
-export const columns_promotedThisYear = [
+export const columns_promotedThisYear: Column<PromotedEmployee>[] = [
   {
     key: 'id',
     header: 'id',
@@ -115,7 +123,7 @@ export const columns_promotedThisYear = [
   },
 ];
 
-export const columns_requiringReview = [
+export const columns_requiringReview: Column<EmployeeRequiringReview>[] = [
   {
     key: 'id',
     header: 'id',

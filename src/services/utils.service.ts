@@ -40,6 +40,8 @@ export function useTableData(
   signal?: AbortSignal
 ) {
   const { totalPages, totalItems, ...updatedParams } = params;
+
+  // const reqParams = {};
   const queryParams =
     'tableType' in updatedParams
       ? updatedParams

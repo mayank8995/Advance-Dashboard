@@ -8,6 +8,7 @@ import TableToolbar from './TableToolbar';
 import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
+import type { CustomTableProps } from '../../types/types';
 
 export default function CustomTable({
   list,
@@ -17,7 +18,7 @@ export default function CustomTable({
   headersData,
   title,
   setQuery,
-}: any) {
+}: CustomTableProps) {
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTextToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -156,7 +157,6 @@ export default function CustomTable({
             setTextToBeSearched={setTextToBeSearched}
             tableQueryParams={tableQueryParams}
             handleRowsPerPageChange={handleRowsPerPageChange}
-            // tableCustomFilterData={tableCustomFilterData}
             openFilterModal={openFilterModal}
             openSortModal={openSortModal}
             handlePrevious={handlePrevious}
@@ -170,11 +170,13 @@ export default function CustomTable({
               handleSort={handleSort}
               getSortIcon={getSortIcon}
               rowsPerPage={rowsPerPage}
+              tableQueryParams={tableQueryParams}
             />
             <MobileTable
               rowsPerPage={rowsPerPage}
               list={list}
               columnsData={columnsData}
+              tableQueryParams={tableQueryParams}
             />
           </div>
         </div>
@@ -201,8 +203,8 @@ export default function CustomTable({
             headersData={headersData}
             onSort={(key?: string) => handleSort(key)}
             sortConfig={{
-              key: tableQueryParams.sortBy,
-              direction: tableQueryParams.order,
+              key: tableQueryParams.sortBy as string,
+              direction: tableQueryParams.order as string,
             }}
           />
         }

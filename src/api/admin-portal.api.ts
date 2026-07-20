@@ -23,6 +23,7 @@ export async function getTableEmployees(
   signal?: AbortSignal
 ) {
   try {
+    console.log('parsmasasas in get table>>', params);
     setIsLoading?.(true);
     const response = await apiClient.get('/paginatedEmployeeList', {
       params,
