@@ -2,6 +2,7 @@ import React from 'react';
 import FormField from '../Form/FormField';
 import {
   ArrowUpDown,
+  Download,
   Funnel,
   FunnelX,
   SquareChevronLeft,
@@ -110,6 +111,7 @@ export const TableToolbar = ({
                 </div>
               </div>
             }
+            {<Download />}
           </div>
           <div className="flex justify-center items-center">
             <button

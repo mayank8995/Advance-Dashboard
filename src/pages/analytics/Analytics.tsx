@@ -11,6 +11,7 @@ import {
 } from '../../utils/constants';
 import React, { Suspense } from 'react';
 import { DonutCharts } from '../../components/Charts/DonutCharts';
+import type { AnalyticsCard } from '../../types/types';
 const PieChartComponent = React.lazy(
   () => import('../../components/Charts/PieChartComponent')
 );
@@ -27,7 +28,7 @@ const MultiCityBarChartComponent = React.lazy(
 
 function Analytics() {
   const queryClient = useQueryClient();
-  const { data: metricData }: any =
+  const { data: metricData }: AnalyticsCard =
     queryClient.getQueryData(['analyticsData']) || {};
 
   console.log('metricData>', metricData);

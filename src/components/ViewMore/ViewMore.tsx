@@ -44,6 +44,9 @@ function ViewMore() {
       columnsData={config.columns || []}
       headersData={config.headers || []}
       title={config.title || tableQuery?.data?.['data']?.title}
+      isError={tableQuery?.isError}
+      isLoading={tableQuery?.isLoading}
+      refetch={tableQuery?.refetch}
     />
   );
 }

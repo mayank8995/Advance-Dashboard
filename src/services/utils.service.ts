@@ -6,7 +6,13 @@ import {
   getProfileData,
   getFilterList,
 } from '../api/admin-portal.api';
-import type { FilterList, TableQueryParams } from '../types/types';
+import type {
+  ExportHeader,
+  FilterList,
+  ListType,
+  TableQueryParams,
+} from '../types/types';
+import type { HeadersType } from '../utils/constants';
 
 declare global {
   interface Array<T> {
@@ -83,6 +89,22 @@ export function useAllData() {
         queryFn: getPerformanceCards,
         staleTime: Infinity,
       },
+      // {
+      //   queryKey: [
+      //     'performance',
+      //     Object.values({
+      //       ...DEFAULT_TABLE_QUERY_PARAMS,
+      //       tableType: 'topProjects',
+      //     }),
+      //   ],
+      //   queryFn: () =>
+      //     getTableEmployees({
+      //       ...DEFAULT_TABLE_QUERY_PARAMS,
+      //       tableType: 'topProjects',
+      //     }),
+      //   placeholderData: keepPreviousData, // Smooth transitions,
+      //   staleTime: Infinity,
+      // },
     ],
   });
 }
@@ -342,4 +364,64 @@ export function filteredTableData(searchList: any, queryList: any) {
   }
   // console.log("filteredArray>>>>",filteredArray)
   return filteredArray;
+}
+
+export function exportSelected(
+  selectedRow: Set<unknown>,
+  data: ListType[],
+  headers: ExportHeader<HeadersType>[],
+  fileName: string
+) {
+  console.log('list in export>>', data, selectedRow);
+  const rows = data?.filter((item) => {
+    console.log(
+      item?.id,
+      'selectedRow.has(String(item?.id))>>',
+      selectedRow.has(String(item?.id))
+    );
+    if (selectedRow.has(String(item?.id))) return true;
+    return false;
+  }) as ListType[];
+  console.log('rows in export>>', rows);
+
+  const headerRow = headers.map((header) => header.value);
+
+  const dataRows = rows.map((row: ListType) =>
+    headers.map((header) => {
+      const value = row[header.key as keyof ListType];
+      return escapeCSVValue(value);
+    })
+  );
+  console.log('dataRows in export>>', dataRows);
+
+  const csvRows = [headerRow, ...dataRows];
+
+  const csvContent = csvRows.map((row) => row.join(',')).join('\n');
+
+  const blob = new Blob([csvContent], {
+    type: 'text/csv;charset=utf-8;',
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+
+  link.href = url;
+  link.download = `${fileName}.csv`;
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function escapeCSVValue(value: unknown): string {
+  if (value === null || value === undefined) {
+    return '';
+  }
+
+  const stringValue = String(value);
+
+  const escapedValue = stringValue.replace(/"/g, '""');
+
+  return `"${escapedValue}"`;
 }

@@ -9,10 +9,17 @@ import {
 import React from 'react';
 import { Link } from 'react-router-dom';
 import type { TopProjectsList } from '../../types/types';
+import ErrorPage from '../Error/ErrorPage';
 
-export const TopProjectsCard = ({ topProjects, title }: TopProjectsList) => {
+export const TopProjectsCard = ({
+  topProjects,
+  title,
+  isError,
+  isLoading,
+  refetch,
+}: TopProjectsList) => {
   const topProj = topProjects?.employees;
-  console.log('topProj>>>', topProj);
+
   return (
     <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -25,51 +32,88 @@ export const TopProjectsCard = ({ topProjects, title }: TopProjectsList) => {
           </h1>
         </div>
       </div>
-      <div className="flex-1 flex flex-col justify-evenly">
-        {Array.isArray(topProj) &&
-          topProj?.map((value: any, index: number) => {
-            return (
-              <React.Fragment key={value.name + index}>
-                {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
+      <>
+        {!isLoading ? (
+          <>
+            {!isError ? (
+              <div className="flex-1 flex flex-col justify-evenly">
+                {Array.isArray(topProj) &&
+                  topProj?.map((value: any, index: number) => {
+                    return (
+                      <React.Fragment key={value.name + index}>
+                        {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
+                          <div className="flex flex-row mb-2">
+                            {RISK_STATUS.COMPLETED === value?.riskStatus && (
+                              <div className="h-auto bg-green-700 w-2 rounded-full "></div>
+                            )}
+                            {RISK_STATUS.AT_RISK === value?.riskStatus && (
+                              <div className="h-auto bg-red-700 w-2 rounded-full"></div>
+                            )}
+                            {RISK_STATUS.ON_TRACK === value?.riskStatus && (
+                              <div className="h-auto bg-green-500 w-2 rounded-full"></div>
+                            )}
+                            <div className="p-2 flex flex-row justify-between w-full">
+                              <div className="flex flex-col">
+                                <span className="text-gray-950 font-bold text-sm dark:text-slate-100">
+                                  {value?.projectName}
+                                </span>
+                                <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
+                                  {PROJECT_DETAILS.MANAGER}:&nbsp;
+                                  {value?.name && value?.name.length > 20
+                                    ? value.name
+                                        .split(' ')
+                                        .map((n: any) => n[0])
+                                        .join('')
+                                    : value.name}
+                                </span>
+                              </div>
+                              <div className="items-center flex justify-end">
+                                <span
+                                  className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
+                                >
+                                  {value?.riskStatus}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+              </div>
+            ) : (
+              <ErrorPage refetchAll={() => refetch?.()} />
+            )}
+          </>
+        ) : (
+          <div className="flex-1 flex flex-col justify-evenly">
+            {Array.from({ length: 5 }, (_, index) => index + 1)?.map(
+              (_, index) => (
+                <React.Fragment key={`w-9-${index}`}>
                   <div className="flex flex-row mb-2">
-                    {RISK_STATUS.COMPLETED === value?.riskStatus && (
-                      <div className="h-auto bg-green-700 w-2 rounded-full "></div>
-                    )}
-                    {RISK_STATUS.AT_RISK === value?.riskStatus && (
-                      <div className="h-auto bg-red-700 w-2 rounded-full"></div>
-                    )}
-                    {RISK_STATUS.ON_TRACK === value?.riskStatus && (
-                      <div className="h-auto bg-green-500 w-2 rounded-full"></div>
-                    )}
+                    <div className="w-2 h-9 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 rounded-full ">
+                      <h1
+                        className={`animate-pulse w-2 h-9 rounded-full bg-gray-200 dark:bg-gray-700 dark:border-gray-700 text-white font-bold text-sm flex items-center justify-center  col-span-0`}
+                      ></h1>
+                    </div>
                     <div className="p-2 flex flex-row justify-between w-full">
-                      <div className="flex flex-col">
-                        <span className="text-gray-950 font-bold text-sm dark:text-slate-100">
-                          {value?.projectName}
-                        </span>
-                        <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
-                          {PROJECT_DETAILS.MANAGER}:&nbsp;
-                          {value?.name && value?.name.length > 20
-                            ? value.name
-                                .split(' ')
-                                .map((n: any) => n[0])
-                                .join('')
-                            : value.name}
-                        </span>
+                      <div className="flex flex-col justify-between">
+                        <span className=" animate-pulse h-2 w-10 font-bold text-sm bg-gray-200 dark:bg-gray-700 dark:border-gray-700 mb-2"></span>
+                        <span className=" animate-pulse h-2 w-10 mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 "></span>
                       </div>
                       <div className="items-center flex justify-end">
                         <span
-                          className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
-                        >
-                          {value?.riskStatus}
-                        </span>
+                          className={`animate-pulse h-2 w-10 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 `}
+                        ></span>
                       </div>
                     </div>
                   </div>
-                )}
-              </React.Fragment>
-            );
-          })}
-      </div>
+                </React.Fragment>
+              )
+            )}
+          </div>
+        )}
+      </>
       {Array.isArray(topProj) && (
         <div className=" bottom-2 right-2 flex flex-col items-end text-sm text-blue-700 font-bold">
           <Link

@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { ProtectedRoute } from './pages/protected-routes/ProtectedRoutes.tsx';
 import { LoaderFlagProvider } from './context/Loadercontext.tsx';
-import ErrorPage from './components/Error/ErrorPage.tsx';
+import ErrorBoundaryPage from './components/Error/ErrorBoundaryPage.tsx';
 const Home = React.lazy(() => import('./components/Home/Home.tsx'));
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard.tsx'));
 const Employees = React.lazy(() => import('./pages/employee/Employees.tsx'));
@@ -39,16 +39,17 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorBoundaryPage />,
   },
   {
     path: '',
     element: <ProtectedRoute />,
+    errorElement: <ErrorBoundaryPage />,
     children: [
       {
         path: '/home',
         element: <Home />,
-
+        errorElement: <ErrorBoundaryPage />,
         handle: { breadcrumb: 'Home' },
         children: [
           {

@@ -9,6 +9,8 @@ import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
 import type { CustomTableProps } from '../../types/types';
+import EmployeeTableSkeleton from '../Skeleton/EmployeeTableSkeleton';
+import ErrorPage from '../Error/ErrorPage';
 
 export default function CustomTable({
   list,
@@ -18,6 +20,9 @@ export default function CustomTable({
   headersData,
   title,
   setQuery,
+  isError,
+  isLoading,
+  refetch,
 }: CustomTableProps) {
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTextToBeSearched] = useState('');
@@ -134,53 +139,61 @@ export default function CustomTable({
 
   return (
     <>
-      <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
-        <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
-          <div className="flex items-center justify-between px-6 py-4 pb-0">
-            <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base  items-center gap-2">
-              <Breadcrumb />
-              {title}
-            </h2>
-            <span
-              className="px-3 py-1
+      {!isLoading ? (
+        <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
+          <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
+            <div className="flex items-center justify-between px-6 py-4 pb-0">
+              <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base  items-center gap-2">
+                <Breadcrumb />
+                {title}
+              </h2>
+              <span
+                className="px-3 py-1
                               rounded-full
                               bg-green-100
                               text-green-700
                                text-xs
                               font-semibold dark:bg-emerald-900/40 dark:text-emerald-400"
-            >
-              Total: {tableQueryParams?.totalItems || 0}
-            </span>
-          </div>
-          <TableToolbar
-            txtToBeSearched={txtToBeSearched}
-            setTextToBeSearched={setTextToBeSearched}
-            tableQueryParams={tableQueryParams}
-            handleRowsPerPageChange={handleRowsPerPageChange}
-            openFilterModal={openFilterModal}
-            openSortModal={openSortModal}
-            handlePrevious={handlePrevious}
-            handleNext={handleNext}
-          />
-          <div className="flex flex-col justify-center">
-            <DesktopTable
-              list={list}
-              headersData={headersData}
-              columnsData={columnsData}
-              handleSort={handleSort}
-              getSortIcon={getSortIcon}
-              rowsPerPage={rowsPerPage}
+              >
+                Total: {tableQueryParams?.totalItems || 0}
+              </span>
+            </div>
+            <TableToolbar
+              txtToBeSearched={txtToBeSearched}
+              setTextToBeSearched={setTextToBeSearched}
               tableQueryParams={tableQueryParams}
+              handleRowsPerPageChange={handleRowsPerPageChange}
+              openFilterModal={openFilterModal}
+              openSortModal={openSortModal}
+              handlePrevious={handlePrevious}
+              handleNext={handleNext}
             />
-            <MobileTable
-              rowsPerPage={rowsPerPage}
-              list={list}
-              columnsData={columnsData}
-              tableQueryParams={tableQueryParams}
-            />
+            {!isError ? (
+              <div className="flex flex-col justify-center">
+                <DesktopTable
+                  list={list}
+                  headersData={headersData}
+                  columnsData={columnsData}
+                  handleSort={handleSort}
+                  getSortIcon={getSortIcon}
+                  rowsPerPage={rowsPerPage}
+                  tableQueryParams={tableQueryParams}
+                />
+                <MobileTable
+                  rowsPerPage={rowsPerPage}
+                  list={list}
+                  columnsData={columnsData}
+                  tableQueryParams={tableQueryParams}
+                />
+              </div>
+            ) : (
+              <ErrorPage refetchAll={() => refetch?.()} />
+            )}
           </div>
         </div>
-      </div>
+      ) : (
+        <EmployeeTableSkeleton />
+      )}
       <div
         className={`transition-opacity duration-400 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
       >
