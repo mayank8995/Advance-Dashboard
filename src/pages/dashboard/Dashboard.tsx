@@ -7,19 +7,28 @@ import TopPerformersCard from '../../components/Card/TopPerformersCard';
 import PromotedCard from '../../components/Card/PromotedCard';
 import MeetingKPIsCard from '../../components/Card/MeetingKPIsCard';
 import RequiringReviewCard from '../../components/Card/RequiringReviewCard';
-import type { TableQueryParams } from '../../types/types';
+import type {
+  AnalyticsCard,
+  KeyMetricCards,
+  TableQueryParams,
+} from '../../types/types';
 import { usePerFormanceTableData } from '../../services/utils.service';
 
 function Dashboard() {
-  const { data: topProjects } = usePerFormanceTableData({
+  const {
+    data: topProjects,
+    isError,
+    isLoading,
+    refetch,
+  } = usePerFormanceTableData({
     tableType: 'topProjects',
     page: 1,
     limit: 5,
   } as TableQueryParams);
   const queryClient = useQueryClient();
-  const { data: metricData }: any =
+  const { data: metricData }: AnalyticsCard =
     queryClient.getQueryData(['analyticsData']) || {};
-  const { data: cachedPerformanceCardData }: any =
+  const { data: cachedPerformanceCardData }: KeyMetricCards =
     queryClient.getQueryData(['performanceCardsData']) || {};
 
   return (
@@ -32,6 +41,9 @@ function Dashboard() {
         <TopProjectsCard
           topProjects={topProjects?.['data']}
           title={TOP_PROJECTS}
+          isError={isError}
+          isLoading={isLoading}
+          refetch={refetch}
         />
         <TopPerformersCard
           topPerformersList={cachedPerformanceCardData?.topPerformers}
@@ -39,12 +51,12 @@ function Dashboard() {
         <PromotedCard
           promotedThisYear={cachedPerformanceCardData?.promotedThisYear}
         ></PromotedCard>
-        <MeetingKPIsCard
-          meetingKPIs={cachedPerformanceCardData?.meetingKPIs}
-        ></MeetingKPIsCard>
         <RequiringReviewCard
           requiringReview={cachedPerformanceCardData?.requiringReview}
         ></RequiringReviewCard>
+        <MeetingKPIsCard
+          meetingKPIs={cachedPerformanceCardData?.meetingKPIs}
+        ></MeetingKPIsCard>
       </div>
     </div>
   );

@@ -1,0 +1,50 @@
+<svg width="330" height="235" viewBox="180 85 330 235" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>UI error illustration, bordered style</title>
+<desc>A bordered, line-based illustration of a browser window with a broken layout and an alert triangle, adapting to light and dark themes.</desc>
+<style>
+  :root {
+    --err-bg: #ffffff;
+    --err-border: #d3d1c7;
+    --err-border-strong: #b4b2a9;
+    --err-line: #888780;
+    --err-accent-border: #D85A30;
+    --err-accent-fill: #ffffff;
+    --err-accent-text: #D85A30;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --err-bg: #1a2236;
+      --err-border: #3c3489;
+      --err-border-strong: #534AB7;
+      --err-line: #7F77DD;
+      --err-accent-border: #F0997B;
+      --err-accent-fill: #1a2236;
+      --err-accent-text: #F0997B;
+    }
+  }
+  .win { fill: var(--err-bg); stroke: var(--err-border-strong); stroke-width: 1; }
+  .bar { fill: var(--err-bg); stroke: var(--err-border-strong); stroke-width: 1; }
+  .dot { fill: none; stroke: var(--err-border); stroke-width: 1.5; }
+  .ln { stroke: var(--err-line); stroke-width: 3; stroke-linecap: round; }
+  .card { fill: var(--err-bg); stroke: var(--err-border); stroke-width: 1; }
+  .tri { fill: var(--err-accent-fill); stroke: var(--err-accent-border); stroke-width: 2.5; }
+  .mark { fill: none; stroke: var(--err-accent-text); stroke-width: 3; stroke-linecap: round; }
+</style>
+
+<rect x="190" y="110" width="300" height="200" rx="12" class="win"/>
+<rect x="190" y="110" width="300" height="34" rx="12" class="bar"/>
+<line x1="190" y1="144" x2="490" y2="144" stroke="var(--err-border)" stroke-width="1"/>
+<circle cx="210" cy="127" r="5" class="dot"/>
+<circle cx="228" cy="127" r="5" class="dot"/>
+<circle cx="246" cy="127" r="5" class="dot"/>
+
+<line x1="215" y1="170" x2="465" y2="170" class="ln" transform="rotate(-2 340 170)"/>
+<line x1="215" y1="195" x2="400" y2="195" class="ln" transform="rotate(1 340 195)"/>
+<line x1="215" y1="220" x2="440" y2="220" class="ln" transform="rotate(-1 340 220)"/>
+<rect x="215" y="245" width="90" height="40" rx="4" class="card" transform="rotate(4 260 265)"/>
+<rect x="330" y="240" width="120" height="45" rx="4" class="card" transform="rotate(-3 390 262)"/>
+
+<path d="M470 96L500 142H440Z" class="tri" stroke-linejoin="round"/>
+<line x1="470" y1="112" x2="470" y2="126" class="mark"/>
+<circle cx="470" cy="134" r="2.2" fill="var(--err-accent-text)"/>
+</svg>

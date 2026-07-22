@@ -17,7 +17,12 @@ function Employees() {
   const [query, setQuery] = useState<TableQueryParams>(
     DEFAULT_TABLE_QUERY_PARAMS
   );
-  const { data: tableQuery } = useTableData({ ...query }, setIsLoading, signal);
+  const {
+    data: tableQuery,
+    isError,
+    isLoading,
+    refetch,
+  } = useTableData({ ...query }, setIsLoading, signal);
 
   const list = tableQuery?.['data']?.['employees'] || [];
 
@@ -36,6 +41,9 @@ function Employees() {
       headersData={headers_employees}
       title={EMPLOYEE_DIREC}
       setQuery={setQuery}
+      isError={isError}
+      isLoading={isLoading}
+      refetch={refetch}
     />
   );
 }

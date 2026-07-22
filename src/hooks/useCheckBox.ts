@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from 'react';
-import type { Employee } from '../types/types';
+import type { ListType } from '../types/types';
 
-export function useCheckBox(list: Employee[]) {
+export function useCheckBox(list: ListType[]) {
   const [selectedRow, setSelectedRow] = useState(new Set());
   const handleOnChange = function (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
@@ -13,9 +13,9 @@ export function useCheckBox(list: Employee[]) {
         setSelectedRow(new Set());
       } else {
         console.log('llist>>>>', list);
-        const Ids = list.map((item: Employee) => {
+        const Ids = list.map((item: ListType) => {
           if (!item) return;
-          return String(item.id);
+          return String(item?.id);
         });
         setSelectedRow(new Set(['selectAll', ...Ids]));
       }

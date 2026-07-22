@@ -110,6 +110,7 @@ export const TableToolbar = ({
                 </div>
               </div>
             }
+            {/* {<Download />} */}
           </div>
           <div className="flex justify-center items-center">
             <button

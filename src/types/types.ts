@@ -84,12 +84,16 @@ export type TableQueryParams = {
   tableType?: string;
   [key: string]: any;
 };
-
+type ErrorPageProps = {
+  isLoading?: boolean;
+  isError?: boolean;
+  refetch?: () => void;
+};
 export type TopPerformersList = {
   topPerformersList: any;
   title?: string;
 };
-export type TopProjectsList = {
+export type TopProjectsList = ErrorPageProps & {
   topProjects: any;
   title?: string;
 };
@@ -117,10 +121,11 @@ export type TableToolbarProps = {
   openSortModal: () => void;
   handlePrevious: () => void;
   handleNext: () => void;
+  bulkAction?: () => void;
 };
 
 export type DesktopTableProps = {
-  list: any;
+  list: ListType[];
   headersData: any;
   columnsData: any;
   rowsPerPage: number;
@@ -239,6 +244,7 @@ export interface TopPerformer {
 }
 
 export interface TopProject {
+  id: string;
   name: string;
   projectName: string;
   riskStatus: string;
@@ -267,9 +273,15 @@ export type TableHeader<T> = {
   key: keyof T;
   value: string;
 };
+export type ListType =
+  | Employee
+  | TopPerformer
+  | TopProject
+  | PromotedEmployee
+  | EmployeeRequiringReview;
 
-export type CustomTableProps = {
-  list: Employee;
+export type CustomTableProps = ErrorPageProps & {
+  list: ListType[];
   tableQueryParams: TableQueryParams;
   handleTableQuery: (data: TableQueryParams, signal?: AbortSignal) => void;
   columnsData:
@@ -286,4 +298,197 @@ export type CustomTableProps = {
     | TableHeader<EmployeeRequiringReview>[];
   title: string;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
+};
+
+type Trend = 'up' | 'down';
+
+type EmployeeBase = {
+  id: number;
+  name: string;
+  department: string;
+};
+
+type PerformanceCardBase = {
+  title: string;
+  icon: string;
+  count: number;
+  percentage: number;
+  trend: Trend;
+  trendValue: number;
+  description: string;
+};
+
+type TopPerformersCard = PerformanceCardBase & {
+  employees: TopPerformer[];
+};
+
+type PromotedThisYearCard = PerformanceCardBase & {
+  employees: PromotedEmployee[];
+};
+
+type KPIBreakdownItem = {
+  label: string;
+  count: number;
+  percentage: number;
+  ratingRange: string;
+};
+
+type KPITrendHistoryItem = {
+  month: string;
+  percentage: number;
+};
+
+type MeetingKPIsCard = PerformanceCardBase & {
+  breakdown: {
+    exceeding: KPIBreakdownItem;
+    meeting: KPIBreakdownItem;
+    notMeeting: KPIBreakdownItem;
+  };
+  trend_history: KPITrendHistoryItem[];
+};
+
+type ReviewReasonItem = {
+  label: string;
+  count: number;
+};
+
+type EmployeeSatisfaction = 'Low' | 'Medium' | 'High';
+
+type ReviewReason =
+  | 'Low Rating'
+  | 'Low Attendance'
+  | 'On Notice Period'
+  | 'Low Satisfaction';
+
+type ReviewEmployee = EmployeeBase & {
+  designation: string;
+  rating: number;
+  attendancePercentage: number;
+  employeeSatisfaction: EmployeeSatisfaction;
+  onNoticePeriod: boolean;
+  reviewReason: ReviewReason[];
+};
+
+type RequiringReviewCard = PerformanceCardBase & {
+  reasons: {
+    lowRating: ReviewReasonItem;
+    lowAttendance: ReviewReasonItem;
+    onNoticePeriod: ReviewReasonItem;
+    lowSatisfaction: ReviewReasonItem;
+  };
+  employees: ReviewEmployee[];
+};
+
+export type PerformanceCards = {
+  topPerformers: TopPerformersCard;
+  promotedThisYear: PromotedThisYearCard;
+  meetingKPIs: MeetingKPIsCard;
+  requiringReview: RequiringReviewCard;
+};
+
+export type KeyMetricCards = {
+  data?: PerformanceCards;
+};
+
+type AnalyticsSummary = {
+  totalEmployees: number;
+  activeProjects: number;
+  revenueThisQuarterCr: number;
+  profitMargin: number;
+  attritionRate: number;
+};
+
+type HeadcountByLocation = {
+  city: string;
+  employeeCount: number;
+};
+
+type RevenueTrendItem = {
+  month: string;
+  revenueCr: number;
+};
+
+type ProjectStatusDistribution = {
+  totalProjects: number;
+  onTrack: number;
+  atRisk: number;
+  delayed: number;
+  completed: number;
+};
+
+type DepartmentHeadcount = {
+  department: string;
+  count: number;
+};
+
+type UtilizationTrendItem = {
+  month: string;
+  utilization: number;
+};
+
+type AttritionTrendItem = {
+  month: string;
+  rate: number;
+};
+
+type AttritionInsights = {
+  thisMonth: number;
+  lastMonth: number;
+  employeesOnNoticePeriod: number;
+  yearlyAttritionRate: number;
+  trend: AttritionTrendItem[];
+};
+
+type TopClient = {
+  client: string;
+  industry: string;
+  revenueCr: number;
+  contributionPercentage: number;
+};
+
+type SkillInDemand = {
+  skill: string;
+  employeeCount: number;
+};
+
+type AlertSeverity = 'warning' | 'success' | 'info';
+
+type AnalyticsAlert = {
+  id: number;
+  severity: AlertSeverity;
+  message: string;
+  timestamp: string;
+};
+
+export type Analytics = {
+  summary: AnalyticsSummary;
+  headcountByLocation: HeadcountByLocation[];
+  revenueTrend: RevenueTrendItem[];
+  projectStatusDistribution: ProjectStatusDistribution;
+  departmentHeadcount: DepartmentHeadcount[];
+  utilizationTrend: UtilizationTrendItem[];
+  attritionInsights: AttritionInsights;
+  topClients: TopClient[];
+  skillsInDemand: SkillInDemand[];
+  alerts: AnalyticsAlert[];
+};
+
+export type AnalyticsCard = {
+  data?: Analytics;
+};
+
+export type KeyMetricCardsProps = {
+  metricData?: Analytics;
+};
+
+export type KeyMetricCardsConfig = {
+  [key: string]: {
+    value: number;
+    icon: string;
+  };
+};
+
+export type ExportHeader<T> = {
+  key: keyof T;
+  value: string;
 };

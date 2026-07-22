@@ -208,6 +208,12 @@ export const headers_employees: TableHeader<Employee>[] = [
   { key: 'rating', value: 'Ratng' },
 ];
 
+export type HeadersType =
+  | TableHeader<Employee>
+  | TableHeader<TopPerformer>
+  | TableHeader<TopProject>
+  | TableHeader<PromotedEmployee>
+  | TableHeader<EmployeeRequiringReview>;
 export const ADMIN_PORTAL = 'Admin Portal';
 
 export const NO_RESULT_FOUND = 'No match found';

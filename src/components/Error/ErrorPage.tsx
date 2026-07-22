@@ -2,7 +2,7 @@ import type { QueryClientConfigProps } from '../../types/types';
 
 export const ErrorPage = ({ refetchAll }: QueryClientConfigProps) => {
   return (
-    <div className="p-6 sm:p-0  flex flex-col justify-center items-center">
+    <div className="m-10 p-6 sm:p-0  flex flex-col justify-center items-center h-fit">
       <div className="w-15 h-15 rounded-lg mb-2">
         <img
           src={'/connection_error_icon.svg'}
