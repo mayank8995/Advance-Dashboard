@@ -4,7 +4,6 @@ import { className, NO_RESULT_FOUND } from '../../utils/constants';
 import type { DesktopTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
-import { useCheckBox } from '../../hooks/useCheckBox';
 
 export const DesktopTable = ({
   list,
@@ -14,9 +13,12 @@ export const DesktopTable = ({
   getSortIcon,
   rowsPerPage,
   tableQueryParams,
+  selectedRow,
+  setSelectedRow,
+  handleOnChange,
 }: DesktopTableProps) => {
   const { isLoading } = useLoader();
-  const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
+  // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
   // to do - uses cases of when checkbox should be selected or not.
   /** const {
     search: _search,

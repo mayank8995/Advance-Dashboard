@@ -1,5 +1,5 @@
 import type { QueryClientConfig } from '@tanstack/react-query';
-import type { ComponentProps, ReactNode } from 'react';
+import type { ChangeEvent, ComponentProps, ReactNode } from 'react';
 
 export interface Login {
   name: string;
@@ -122,6 +122,10 @@ export type TableToolbarProps = {
   handlePrevious: () => void;
   handleNext: () => void;
   bulkAction?: () => void;
+  selectedRow: Set<unknown>;
+  handleOnChange: (
+    event: ChangeEvent<HTMLInputElement, HTMLInputElement>
+  ) => void;
 };
 
 export type DesktopTableProps = {
@@ -132,6 +136,11 @@ export type DesktopTableProps = {
   handleSort: (e?: any) => void;
   getSortIcon: (e?: any) => void;
   tableQueryParams?: TableQueryParams;
+  selectedRow: Set<unknown>;
+  setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
+  handleOnChange: (
+    event: ChangeEvent<HTMLInputElement, HTMLInputElement>
+  ) => void;
 };
 
 export type MobileTableProps = {
@@ -139,6 +148,11 @@ export type MobileTableProps = {
   rowsPerPage: number;
   columnsData: any;
   tableQueryParams?: TableQueryParams;
+  selectedRow: Set<unknown>;
+  setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
+  handleOnChange: (
+    event: ChangeEvent<HTMLInputElement, HTMLInputElement>
+  ) => void;
 };
 
 export type FilterList = {

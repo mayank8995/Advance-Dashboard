@@ -11,6 +11,8 @@ import useLockBodyScroll from '../../hooks/useLockBodyScroll';
 import type { CustomTableProps } from '../../types/types';
 import EmployeeTableSkeleton from '../Skeleton/EmployeeTableSkeleton';
 import ErrorPage from '../Error/ErrorPage';
+import { useCheckBox } from '../../hooks/useCheckBox';
+import { exportSelected } from '../../services/utils.service';
 
 export default function CustomTable({
   list,
@@ -24,6 +26,8 @@ export default function CustomTable({
   isLoading,
   refetch,
 }: CustomTableProps) {
+  const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
+
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTextToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +49,6 @@ export default function CustomTable({
       limit: tableQueryParams.limit,
     });
   }
-
   function handlePrevious() {
     handleTableQuery({
       ...tableQueryParams,
@@ -137,6 +140,19 @@ export default function CustomTable({
     handleTableQuery({ ...tableQueryParams, page: 1 });
   };
 
+  const bulkAction = () => {
+    console.log(
+      'selectedRow in custom>>>>>>',
+      selectedRow,
+      tableQueryParams?.tableType
+    );
+    exportSelected(
+      selectedRow,
+      list,
+      headersData,
+      tableQueryParams?.tableType ?? 'employee'
+    );
+  };
   return (
     <>
       {!isLoading ? (
@@ -167,6 +183,9 @@ export default function CustomTable({
               openSortModal={openSortModal}
               handlePrevious={handlePrevious}
               handleNext={handleNext}
+              bulkAction={bulkAction}
+              selectedRow={selectedRow}
+              handleOnChange={handleOnChange}
             />
             {!isError ? (
               <div className="flex flex-col justify-center">
@@ -178,12 +197,18 @@ export default function CustomTable({
                   getSortIcon={getSortIcon}
                   rowsPerPage={rowsPerPage}
                   tableQueryParams={tableQueryParams}
+                  selectedRow={selectedRow}
+                  setSelectedRow={setSelectedRow}
+                  handleOnChange={handleOnChange}
                 />
                 <MobileTable
                   rowsPerPage={rowsPerPage}
                   list={list}
                   columnsData={columnsData}
                   tableQueryParams={tableQueryParams}
+                  selectedRow={selectedRow}
+                  setSelectedRow={setSelectedRow}
+                  handleOnChange={handleOnChange}
                 />
               </div>
             ) : (
