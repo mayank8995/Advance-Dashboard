@@ -2,6 +2,7 @@ import React from 'react';
 import FormField from '../Form/FormField';
 import {
   ArrowUpDown,
+  Download,
   Funnel,
   FunnelX,
   SquareChevronLeft,
@@ -21,6 +22,9 @@ export const TableToolbar = ({
   openSortModal,
   handlePrevious,
   handleNext,
+  bulkAction,
+  selectedRow,
+  handleOnChange,
 }: TableToolbarProps) => {
   const queryClient = useQueryClient();
   const isfilterAvailable: any =
@@ -49,7 +53,7 @@ export const TableToolbar = ({
       </div>
       <div className="mt-4 flex flex-row items-center justify-between">
         <div className="flex-1 justify-between  flex items-center px-6 pb-4">
-          <div className="flex flex-row items-center">
+          <div className="gap-2 flex flex-row items-center">
             <div className="flex justify-center items-center">
               <label className=" hidden sm:flex text-sm font-bold dark:text-slate-100 pr-2">
                 Rows / page{' '}
@@ -86,31 +90,63 @@ export const TableToolbar = ({
               </select>
             </div>
             {
-              <div className="pl-2 flex items-center">
-                <div className="cursor-pointer">
-                  {isfilterAvailable?.length === 0 ? (
-                    <Funnel
-                      className="pl-2 text-gray-600 dark:text-gray-100"
-                      onClick={openFilterModal}
-                    />
-                  ) : (
-                    <FunnelX
-                      className="pl-2 text-gray-600 dark:text-gray-100"
-                      onClick={openFilterModal}
-                    />
-                  )}
-                </div>
-                <div className="flex sm:hidden">
+              <div className="gap-2 flex items-center">
+                <button className="cursor-pointer">
+                  <span title="Filter">
+                    {isfilterAvailable?.length === 0 ? (
+                      <Funnel
+                        size={20}
+                        className=" text-gray-600 dark:text-gray-100"
+                        onClick={openFilterModal}
+                      />
+                    ) : (
+                      <FunnelX
+                        size={20}
+                        className=" text-gray-600 dark:text-gray-100"
+                        onClick={openFilterModal}
+                      />
+                    )}
+                  </span>
+                </button>
+                <button className="cursor-pointer flex lg:hidden">
                   {
-                    <ArrowUpDown
-                      className="pl-2 text-gray-600 dark:text-gray-100"
-                      onClick={openSortModal}
-                    />
+                    <span title="Sort">
+                      <ArrowUpDown
+                        size={20}
+                        className=" text-gray-600 dark:text-gray-100"
+                        onClick={openSortModal}
+                      />
+                    </span>
                   }
+                </button>
+                <button
+                  disabled={selectedRow.size === 0}
+                  className={`${selectedRow.size === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                  onClick={bulkAction}
+                >
+                  <span title="Download csv">
+                    <Download
+                      size={20}
+                      color={selectedRow.size === 0 ? '#9ca3af' : '#2563eb'}
+                      className={`text-gray-600 dark:text-gray-100`}
+                    />
+                  </span>
+                </button>
+                <div
+                  title="Select All"
+                  className="flex lg:hidden items-center justify-center border-2 border-slate-950 border-dotted dark:border-slate-100 w-5 h-5"
+                >
+                  <FormField
+                    name={'selectAll'}
+                    type={'checkbox'}
+                    id={'selectAll'}
+                    checked={selectedRow.has('selectAll')}
+                    onChange={handleOnChange}
+                    className={`m-0 cursor-pointer`}
+                  />
                 </div>
               </div>
             }
-            {/* {<Download />} */}
           </div>
           <div className="flex justify-center items-center">
             <button

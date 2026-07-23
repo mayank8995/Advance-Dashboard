@@ -7,7 +7,6 @@ import {
   getFilterList,
 } from '../api/admin-portal.api';
 import type {
-  ExportHeader,
   FilterList,
   ListType,
   TableQueryParams,
@@ -369,7 +368,7 @@ export function filteredTableData(searchList: any, queryList: any) {
 export function exportSelected(
   selectedRow: Set<unknown>,
   data: ListType[],
-  headers: ExportHeader<HeadersType>[],
+  headers: HeadersType[],
   fileName: string
 ) {
   console.log('list in export>>', data, selectedRow);

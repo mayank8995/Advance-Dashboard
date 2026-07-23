@@ -9,6 +9,9 @@ export const MobileTable = ({
   rowsPerPage,
   columnsData,
   tableQueryParams,
+  selectedRow,
+  setSelectedRow,
+  handleOnChange,
 }: MobileTableProps) => {
   const { isLoading } = useLoader();
   return (
@@ -22,6 +25,9 @@ export const MobileTable = ({
                 rowsPerPage={rowsPerPage}
                 columnsData={columnsData}
                 tableQueryParams={tableQueryParams}
+                selectedRow={selectedRow}
+                setSelectedRow={setSelectedRow}
+                handleOnChange={handleOnChange}
               />
             ) : (
               <div className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2   dark:border-slate-900/50">

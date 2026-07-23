@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useCheckBox } from '../../hooks/useCheckBox';
 import type { MobileTableProps } from '../../types/types';
 import { bgColors, gradients } from '../../utils/constants';
 import FormField from '../Form/FormField';
@@ -8,8 +7,11 @@ export default function MobileViewCardForTable({
   list,
   columnsData,
   tableQueryParams,
+  selectedRow,
+  setSelectedRow,
+  handleOnChange,
 }: MobileTableProps) {
-  const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
+  // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
 
   // to do - uses cases of when checkbox should be selected or not.
   /** const {
@@ -57,7 +59,7 @@ export default function MobileViewCardForTable({
                       </h2>
                     </div>
                     <FormField
-                      className="w-auto"
+                      className={`cursor-pointer w-auto`}
                       name={row?.id}
                       type={'checkbox'}
                       id={row?.id}

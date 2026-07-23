@@ -48,6 +48,10 @@ function FormField({
         checked={checked}
         onClick={onClick}
         id={id}
+        autoCapitalize="off"
+        autoComplete="off"
+        autoCorrect="off"
+        spellCheck="false"
       />
       {name && errors && errors[name] && (
         <span className="text-red-400 px-2" style={{ fontSize: '12px' }}>

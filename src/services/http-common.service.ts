@@ -42,14 +42,7 @@ apiClient.interceptors.response.use(
   },
   function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    const status = Number(error.response?.status);
-    if (status === 401) {
-      handleUnauthorized();
-    }
-    if (status >= 500) {
-      reportError(error);
-    }
-    return Promise.reject(normalizeApiError(error));
+    return normalizeApiError(error);
   }
 );
 
@@ -59,10 +52,6 @@ function normalizeApiError(error: AxiosError) {
     statusText: error?.response?.statusText ?? 'Something went wrong!',
     data: error?.response?.data,
   };
-}
-
-function handleUnauthorized() {
-  //to do
 }
 
 export default apiClient;
