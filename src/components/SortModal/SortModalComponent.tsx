@@ -100,9 +100,9 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
             </button>
           ))}
           <div className="p-2 flex flex-row items-center">
-            <label className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase">
+            <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase">
               Direction:
-            </label>
+            </span>
             <button
               onClick={handleSort}
               type="button"

@@ -84,7 +84,7 @@ function ProfileSettings() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    e.stopPropagation();
+    // e.stopPropagation();
     console.log('START SUBMIT', formValues, e);
     try {
       if (checkFormValidity()) {
@@ -126,7 +126,7 @@ function ProfileSettings() {
     }
   };
 
-  function onCancel() {
+  function formReset() {
     if (
       window.confirm(
         'Are you sure you want to cancel? All unsaved changes will be lost.'
@@ -201,6 +201,7 @@ function ProfileSettings() {
           </div>
           <form
             onSubmit={handleSubmit}
+            onReset={formReset}
             className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl  shadow-sm border border-slate-100 p-2 flex flex-col gap-3 hover:shadow-xl  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none"
             noValidate
           >
@@ -264,8 +265,11 @@ function ProfileSettings() {
                     placeholder={'Enter your name'}
                     onChange={onInputChange}
                     className={className}
+                    id={'name'}
                   />
-                  <label className={labelclassName}>Name</label>
+                  <label htmlFor="name" className={labelclassName}>
+                    Name
+                  </label>
                 </div>
                 <div className="flex flex-col-reverse">
                   <FormField
@@ -277,8 +281,11 @@ function ProfileSettings() {
                     placeholder={'Enter your phone number'}
                     onChange={onInputChange}
                     className={className}
+                    id={'phone'}
                   />
-                  <label className={labelclassName}>Phone Number</label>
+                  <label htmlFor="phone" className={labelclassName}>
+                    Phone Number
+                  </label>
                 </div>
                 <div className="flex flex-col-reverse">
                   <FormField
@@ -289,8 +296,11 @@ function ProfileSettings() {
                     placeholder={'Enter your email'}
                     onChange={onInputChange}
                     className={className}
+                    id={'email'}
                   />
-                  <label className={labelclassName}>Email</label>
+                  <label htmlFor="email" className={labelclassName}>
+                    Email
+                  </label>
                 </div>
                 <div className="flex flex-col-reverse">
                   <FormField
@@ -301,8 +311,11 @@ function ProfileSettings() {
                     placeholder={'Enter your department'}
                     onChange={onInputChange}
                     className={className}
+                    id={'department'}
                   />
-                  <label className={labelclassName}>Department</label>
+                  <label htmlFor="department" className={labelclassName}>
+                    Department
+                  </label>
                 </div>
                 <div className="flex flex-col-reverse">
                   <FormField
@@ -313,8 +326,11 @@ function ProfileSettings() {
                     placeholder={'Enter your designation'}
                     onChange={onInputChange}
                     className={className}
+                    id={'designation'}
                   />
-                  <label className={labelclassName}>Designation</label>
+                  <label htmlFor="designation" className={labelclassName}>
+                    Designation
+                  </label>
                 </div>
               </div>
             </div>
@@ -335,8 +351,11 @@ function ProfileSettings() {
                   placeholder={'Enter your ID'}
                   onChange={onInputChange}
                   className={className}
+                  id={'empId'}
                 />
-                <label className={labelclassName}>Employee ID</label>
+                <label htmlFor="empId" className={labelclassName}>
+                  Employee ID
+                </label>
               </div>
               <div className="flex flex-col-reverse">
                 <FormField
@@ -347,8 +366,11 @@ function ProfileSettings() {
                   placeholder={'Enter your joining date'}
                   onChange={onInputChange}
                   className={className}
+                  id={'jdate'}
                 />
-                <label className={labelclassName}>Joining Date</label>
+                <label htmlFor="jdate" className={labelclassName}>
+                  Joining Date
+                </label>
               </div>
               <div className="flex flex-col-reverse">
                 <FormField
@@ -359,8 +381,11 @@ function ProfileSettings() {
                   placeholder={'Hybrid/Remote/Onsite'}
                   onChange={onInputChange}
                   className={className}
+                  id={'wmode'}
                 />
-                <label className={labelclassName}>Work Mode</label>
+                <label htmlFor="wmode" className={labelclassName}>
+                  Work Mode
+                </label>
               </div>
               <div className="flex flex-col-reverse">
                 <FormField
@@ -371,8 +396,11 @@ function ProfileSettings() {
                   placeholder={'Enter your location'}
                   onChange={onInputChange}
                   className={className}
+                  id={'location'}
                 />
-                <label className={labelclassName}>Location</label>
+                <label htmlFor="location" className={labelclassName}>
+                  Location
+                </label>
               </div>
             </div>
             <hr className="border-t-2  border-gray-300 border-dotted dark:border-gray-600"></hr>
@@ -409,8 +437,8 @@ function ProfileSettings() {
                 </button>
 
                 <button
-                  type="button"
-                  id="submit"
+                  type="reset"
+                  id="reset"
                   className="
                     px-6 py-2.5
                 bg-linear-to-r from-slate-600 to-violet-200
@@ -422,9 +450,8 @@ function ProfileSettings() {
                 transition-all duration-200
                 cursor-pointer
                 "
-                  onClick={onCancel}
                 >
-                  Cancel
+                  Reset
                 </button>
               </div>
             )}
