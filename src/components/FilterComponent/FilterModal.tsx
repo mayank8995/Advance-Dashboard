@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
@@ -56,29 +56,53 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     }
   }, [filterList]);
   // console.log('tabValue>>', tabValue);
-  useEffect(() => {
+  const tabValueMemoized = useMemo(() => {
     const result = tabValue?.flatMap((item: any) => {
       return [
         {
-          key: item[0],
+          key: item?.[0],
           value: [
-            ...item[1]
-              ?.filter((it: any) => it.selected === true)
+            ...item?.[1]
+              ?.filter((it: any) => it?.selected === true)
               ?.map((i: any) => i?.value),
           ],
         },
       ];
     });
     const checkIfEmpty: any =
-      result && result?.filter((res: any) => res.value.length > 0);
+      result && result?.filter((res: any) => res?.value?.length > 0);
     console.log('checkIfEmpty>>', checkIfEmpty);
     if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
     else setSelectedChips(result as any[]);
+
+    return tabValue;
   }, [tabValue]);
 
-  function handleTabs(e: any) {
-    setFocusedIndex(e.currentTarget?.tabIndex);
-  }
+  /** do not remove this commented code*/
+  // useEffect(() => {
+  //   // const result = tabValue?.flatMap((item: any) => {
+  //   //   return [
+  //   //     {
+  //   //       key: item[0],
+  //   //       value: [
+  //   //         ...item[1]
+  //   //           ?.filter((it: any) => it.selected === true)
+  //   //           ?.map((i: any) => i?.value),
+  //   //       ],
+  //   //     },
+  //   //   ];
+  //   // });
+  //   const checkIfEmpty: any =
+  //     result &&
+  //     result?.filter((res: any) => res.value.length > 0);
+  //   console.log('checkIfEmpty>>', checkIfEmpty);
+  //   if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
+  //   else setSelectedChips(result as any[]);
+  // }, [tabValue]);
+
+  // function handleTabs(e: any) {
+  //   setFocusedIndex(e.currentTarget?.tabIndex);
+  // }
 
   function submitModal() {
     setLoading(true);
@@ -151,12 +175,13 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       <div className="flex flex-col max-h-[85vh] md:max-h-150 bg-linear-to-br from-white to-indigo-100 shadow-sm border border-slate-100 dark:bg-linear-to-br dark:from-slate-950 dark:to-indigo-950 dark:border-slate-900/50 fixed z-300 left-0 right-0 bottom-0 md:absolute md:top-[50%] md:left-[50%] md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-t-2xl md:rounded-2xl">
         <div className="flex flex-row justify-between items-center p-2 text-sm font-bold border-b-2 border-b-slate-400/50 dark:text-slate-200/50">
           <h1 className="dark:text-slate-200">Filters</h1>
-          <X
-            className={'text-slate-950 cursor-pointer dark:text-slate-200'}
-            onClick={handleCloseModal}
-            width={16}
-            height={20}
-          />
+          <button onClick={handleCloseModal}>
+            <X
+              className={'text-slate-950 cursor-pointer dark:text-slate-200'}
+              width={16}
+              height={20}
+            />
+          </button>
         </div>
 
         <div className="flex flex-1 min-h-0 overflow-y-auto">
@@ -167,22 +192,24 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                   item as keyof typeof CORRESPONDING_FILTER_TABLE_KEY_NAME;
 
                 return (
-                  <div
+                  <button
                     tabIndex={index}
-                    onClick={handleTabs}
+                    onClick={(event) =>
+                      setFocusedIndex(event.currentTarget?.tabIndex)
+                    }
                     key={index + filterKey}
                     className={`flex-1 min-h-0  cursor-pointer text-xs basis-28 w-28 wrap-anywhere flex items-center justify-center  ${focusedIndex === index ? ' text-indigo-700  border-l-4 border-r-0 border-indigo-600 dark:text-indigo-300 dark:border-indigo-400/50 font-semibold' : 'border-r-2 border-slate-400/50 text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'} ${index === 0 ? 'border-t-0' : focusedIndex === index ? 'border-t-2 border-t-slate-400 ' : 'border-t-2 '}`}
                   >
                     <h1 className="text-center">
                       {CORRESPONDING_FILTER_TABLE_KEY_NAME[filterKey]}
                     </h1>
-                  </div>
+                  </button>
                 );
               })}
           </div>
           <div className="flex flex-col">
-            {tabValue &&
-              tabValue?.map((item: any, index: number) => (
+            {tabValueMemoized &&
+              tabValueMemoized?.map((item: any, index: number) => (
                 <React.Fragment key={index + item[1]}>
                   {focusedIndex === index && (
                     <div
@@ -192,7 +219,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                       {item[1]?.map((chipObj: any, chipId: number) => (
                         <React.Fragment key={`${chipId}-${chipObj?.value}`}>
                           {
-                            <div
+                            <button
                               id={`${item[0]}-${chipObj?.value}`}
                               onClick={handleSelectedChips}
                               className={`cursor-pointer m-1 inline-flex items-center gap-1.5 
@@ -206,7 +233,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                                                 }`}
                             >
                               {chipObj?.value}
-                            </div>
+                            </button>
                           }
                         </React.Fragment>
                       ))}
@@ -250,7 +277,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
           </button>
         </div>
       </div>
-      <div
+      <button
         className="fixed inset-0 bg-black/50 z-200"
         onClick={handleCloseModal}
       />

@@ -43,11 +43,12 @@ export const TableToolbar = ({
             onChange={(e: any) => setTextToBeSearched(e?.target?.value || '')}
           />
           {txtToBeSearched && (
-            <X
-              width={18}
-              className="cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300"
-              onClick={() => setTextToBeSearched('')}
-            />
+            <button onClick={() => setTextToBeSearched('')}>
+              <X
+                width={18}
+                className="cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300"
+              />
+            </button>
           )}
         </div>
       </div>
@@ -91,30 +92,30 @@ export const TableToolbar = ({
             </div>
             {
               <div className="gap-2 flex items-center">
-                <button className="cursor-pointer">
+                <button className="cursor-pointer" onClick={openFilterModal}>
                   <span title="Filter">
                     {isfilterAvailable?.length === 0 ? (
                       <Funnel
                         size={20}
                         className=" text-gray-600 dark:text-gray-100"
-                        onClick={openFilterModal}
                       />
                     ) : (
                       <FunnelX
                         size={20}
                         className=" text-gray-600 dark:text-gray-100"
-                        onClick={openFilterModal}
                       />
                     )}
                   </span>
                 </button>
-                <button className="cursor-pointer flex lg:hidden">
+                <button
+                  className="cursor-pointer flex lg:hidden"
+                  onClick={openSortModal}
+                >
                   {
                     <span title="Sort">
                       <ArrowUpDown
                         size={20}
                         className=" text-gray-600 dark:text-gray-100"
-                        onClick={openSortModal}
                       />
                     </span>
                   }
@@ -191,11 +192,12 @@ export const TableToolbar = ({
               onChange={(e: any) => setTextToBeSearched(e?.target?.value || '')}
             />
             {txtToBeSearched && (
-              <X
-                width={18}
-                className="cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300"
-                onClick={() => setTextToBeSearched('')}
-              />
+              <button onClick={() => setTextToBeSearched('')}>
+                <X
+                  width={18}
+                  className="cursor-pointer absolute bottom-0 right-1.5 top-2.5 dark:text-slate-300"
+                />
+              </button>
             )}
           </div>
         </div>
