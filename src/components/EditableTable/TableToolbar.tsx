@@ -37,7 +37,7 @@ export const TableToolbar = ({
             style={{ width: '100%' }}
             value={txtToBeSearched}
             className={className}
-            type={'text'}
+            type={'search'}
             name={'search'}
             placeholder={'Search...'}
             onChange={(e: any) => setTextToBeSearched(e?.target?.value || '')}
@@ -188,7 +188,7 @@ export const TableToolbar = ({
             <FormField
               value={txtToBeSearched}
               className={className}
-              type={'text'}
+              type={'search'}
               name={'search'}
               placeholder={'Search...'}
               onChange={(e: any) => setTextToBeSearched(e?.target?.value || '')}

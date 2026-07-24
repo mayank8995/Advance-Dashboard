@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown, X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
+import FormField from '../Form/FormField';
 
 type SortConfig = {
   key: string;
@@ -88,10 +89,20 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
                                                 }`}
               onClick={() => handleRadio(header.key)}
             >
-              <input
+              {/* {Dont remove this for now} */}
+              {/* <input
                 type="radio"
                 name={header.value}
                 value={header.value}
+                checked={focusedIndex === header.key}
+                onChange={() => handleRadio(header.key)}
+                className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
+              /> */}
+              <FormField
+                name={header.value}
+                value={header.value}
+                type={'radio'}
+                id={header.value}
                 checked={focusedIndex === header.key}
                 onChange={() => handleRadio(header.key)}
                 className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
