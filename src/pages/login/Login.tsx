@@ -183,12 +183,12 @@ function Login({ onCustomEvent }: any) {
         </p> */}
       <p className="text-center text-slate-400 text-sm">
         Don't have an account?{' '}
-        <span
+        <button
           onClick={() => onCustomEvent(false)}
           className="text-[#9d8df1] cursor-pointer"
         >
           Create one
-        </span>
+        </button>
       </p>
     </div>
   );

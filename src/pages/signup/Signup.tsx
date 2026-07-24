@@ -107,13 +107,13 @@ export default function Signup({ onCustomEvent }: any) {
         <div>
           {isLastStep ? (
             <div className="mt-4 sm:mt-0 flex flex-row justify-between items-end">
-              <div
+              <button
                 className="mb-2 md:hidden flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
                 onClick={handleBack}
               >
                 <ChevronLeft className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
                 <span className="pl-1">Back</span>
-              </div>
+              </button>
               <button
                 type="button"
                 onClick={handleFinalSubmit}
@@ -142,20 +142,20 @@ export default function Signup({ onCustomEvent }: any) {
             </div>
           ) : (
             <div className="mt-4 sm:mt-0 flex flex-row justify-between items-end">
-              <div
+              <button
                 className="md:hidden mb-2 flex flex-row text-slate-400 font-medium cursor-pointer"
                 onClick={onCustomEvent}
               >
                 <StepBack className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
                 <span className="pl-2">Back to Login</span>
-              </div>
-              <div
+              </button>
+              <button
                 className="md:hidden mb-2 flex flex-row-reverse text-slate-400 font-medium cursor-pointer"
                 onClick={handleNext}
               >
                 <StepForward className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
                 <span className="pr-2">Next</span>
-              </div>
+              </button>
               <button
                 type="button"
                 className="hidden sm:flex justify-center w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-0 md:mt-4  px-6 
@@ -190,13 +190,13 @@ export function StepOneForm({
 }) {
   return (
     <>
-      <div
+      <button
         className="hidden sm:flex mb-2 flex-row text-slate-400 font-medium cursor-pointer"
         onClick={onCustomEvent}
       >
         <StepBack className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
         <span className="pl-2">Back to Login</span>
-      </div>
+      </button>
       <div className="mb-2 flex flex-col">
         <label htmlFor="name" className={loginLabelclassNAme}>
           Name
@@ -278,13 +278,13 @@ export function StepTwoForm({
 }) {
   return (
     <>
-      <div
+      <button
         className="mb-2 hidden sm:flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
         onClick={handleBack}
       >
         <ChevronLeft className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
         <span className="pl-1">Back</span>
-      </div>
+      </button>
       <div className="mb-2 flex flex-col">
         <label htmlFor="department" className={loginLabelclassNAme}>
           Department

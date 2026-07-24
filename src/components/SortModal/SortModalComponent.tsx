@@ -72,11 +72,11 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
         <div className="grid grid-cols-2 max-h-150 h-fit overflow-y-auto p-4 ">
           {headersData?.map((header: any) => (
             // <div >
-            <div
+            <button
               ref={myElementRef}
               key={header.key}
               id={focusedIndex}
-              className={`m-1 h-10 inline-flex items-center gap-1.5 
+              className={`cursor-pointer m-1 h-10 inline-flex items-center gap-1.5 
                                                 px-2 py-2 rounded-b-xl font-medium whitespace-nowrap 
                                                 border  
                                                 text-xs
@@ -97,7 +97,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
                 className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
               />
               {header.value}
-            </div>
+            </button>
           ))}
           <div className="p-2 flex flex-row items-center">
             <label className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase">
@@ -126,7 +126,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
           </div>
         </div>
       </div>
-      <div
+      <button
         className="fixed inset-0 bg-black/50 z-200"
         onClick={() => closeSortModal?.()}
       />

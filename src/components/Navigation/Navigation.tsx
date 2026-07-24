@@ -43,7 +43,7 @@ function Navigation() {
 
       {/* Overlay */}
       {isOpen && (
-        <div
+        <button
           className="fixed inset-0 bg-black/50 z-40 sm:z-0 md:hidden"
           // className="fixed inset-0 bg-black/50 z-40 sm:z-0 md:hidden"
           onClick={() => navigateToPage(false)}
@@ -72,12 +72,13 @@ function Navigation() {
         {/* Nav Links */}
         <nav className="flex-1 p-4 space-y-2 h-full overflow-y-auto">
           {navItems?.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              onClick={() => navigateToPage(false, item)}
-              className={({ isActive }) =>
-                `flex
+            <button className={`w-full max-w-full`}>
+              <NavLink
+                key={item.name}
+                to={item.path}
+                onClick={() => navigateToPage(false, item)}
+                className={({ isActive }) =>
+                  `flex
               items-center
               gap-3
               px-4
@@ -92,43 +93,44 @@ function Navigation() {
                   ? 'bg-linear-to-r from-indigo-600 to-violet-500 rounded-xl text-white shadow-lg shadow-indigo-500/300'
                   : 'text-slate-300 hover:bg-slate-800 hover:text-white'
               }`
-              }
-            >
-              {/* { `${item.name}` === SIDE_BAR_ITEMS.DASHBOARD && <Home className="h-5 w-5"/>}
+                }
+              >
+                {/* { `${item.name}` === SIDE_BAR_ITEMS.DASHBOARD && <Home className="h-5 w-5"/>}
               { `${item.name}` === SIDE_BAR_ITEMS.EMPLOYEES && <Users className="h-5 w-5"/>}
               { `${item.name}` === SIDE_BAR_ITEMS.ANALYTICS && <BarChart3 className="h-5 w-5"/>}
               { `${item.name}` === SIDE_BAR_ITEMS.SETTINGS && <Settings className="h-5 w-5" />} */}
-              {item.name === SIDE_BAR_ITEMS.DASHBOARD && (
-                <>
-                  <Home className="h-5 w-5" size={18} />
-                  {item.name}
-                </>
-              )}
-              {item.name === SIDE_BAR_ITEMS.EMPLOYEES && (
-                <>
-                  <Users className="h-5 w-5" size={18} />
-                  {item.name}
-                </>
-              )}
-              {item.name === SIDE_BAR_ITEMS.ANALYTICS && (
-                <>
-                  <BarChart3 className="h-5 w-5" size={18} />
-                  {item.name}
-                </>
-              )}
-              {item.name === SIDE_BAR_ITEMS.SETTINGS && (
-                <>
-                  <Settings className="h-5 w-5" size={18} />
-                  {item.name}
-                </>
-              )}
-              {item.name === SIDE_BAR_ITEMS.LOGOUT && (
-                <>
-                  <LogOut className="h-5 w-5" size={18} />
-                  {item.name}
-                </>
-              )}
-            </NavLink>
+                {item.name === SIDE_BAR_ITEMS.DASHBOARD && (
+                  <>
+                    <Home className="h-5 w-5" size={18} />
+                    {item.name}
+                  </>
+                )}
+                {item.name === SIDE_BAR_ITEMS.EMPLOYEES && (
+                  <>
+                    <Users className="h-5 w-5" size={18} />
+                    {item.name}
+                  </>
+                )}
+                {item.name === SIDE_BAR_ITEMS.ANALYTICS && (
+                  <>
+                    <BarChart3 className="h-5 w-5" size={18} />
+                    {item.name}
+                  </>
+                )}
+                {item.name === SIDE_BAR_ITEMS.SETTINGS && (
+                  <>
+                    <Settings className="h-5 w-5" size={18} />
+                    {item.name}
+                  </>
+                )}
+                {item.name === SIDE_BAR_ITEMS.LOGOUT && (
+                  <>
+                    <LogOut className="h-5 w-5" size={18} />
+                    {item.name}
+                  </>
+                )}
+              </NavLink>
+            </button>
           ))}
         </nav>
 
