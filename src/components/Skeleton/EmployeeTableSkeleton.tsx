@@ -9,7 +9,7 @@ export const EmployeeTableSkeleton = () => {
   return (
     <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
-        <div className="sm:hidden px-6 py-4">
+        <div className="lg:hidden px-6 py-4">
           <div className="relative bg-gray-200 dark:bg-gray-700 w-full h-6"></div>
         </div>
         <div className="mt-4 flex flex-row items-center justify-between">
@@ -23,7 +23,7 @@ export const EmployeeTableSkeleton = () => {
                   <div className="cursor-pointer">
                     <Funnel className="pl-2 text-gray-600 dark:text-gray-100" />
                   </div>
-                  <div className="flex sm:hidden">
+                  <div className="flex lg:hidden">
                     {
                       <ArrowUpDown className="pl-2 text-gray-600 dark:text-gray-100" />
                     }
@@ -48,7 +48,7 @@ export const EmployeeTableSkeleton = () => {
           </div>
         </div>
         <div className="flex flex-col justify-center">
-          <table className="hidden sm:table rounded-2xl shadow-lg border border-slate-200 m-2.5 dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50">
+          <table className="hidden lg:table rounded-2xl shadow-lg border border-slate-200 m-2.5 dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50">
             <thead className=" bg-slate-100">
               <tr className="cursor-pointer bg-gray-200 dark:bg-gray-700 dark:border-slate-700">
                 {Array.from({ length: 8 }, (_, index) => index + 1)?.map(
@@ -86,7 +86,7 @@ export const EmployeeTableSkeleton = () => {
               )}
             </tbody>
           </table>
-          <div className="sm:hidden pl-2 pr-2">
+          <div className="lg:hidden pl-2 pr-2">
             {Array.from({ length: 5 }, (_, index) => index + 1)?.map(
               (_, id) => {
                 return (

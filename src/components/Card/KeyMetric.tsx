@@ -88,7 +88,7 @@ export default function KeyMetric({ metricData }: KeyMetricCardsProps) {
                     <div className="hidden sm:flex items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100 w-50 truncate">
                       {key.length > 25 ? `${key.substring(0, 25)}...` : key}
                     </div>
-                    <div className="sm:hidden items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100">
+                    <div className="lg:hidden items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100">
                       {key}
                     </div>
                     <h2 className="text-xl font-bold text-indigo-600 drop-shadow-sm ">
