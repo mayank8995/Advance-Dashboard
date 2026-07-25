@@ -1,1 +1,2 @@
 # Run linting first, then type checking
+npm run lint && npm run type-check
