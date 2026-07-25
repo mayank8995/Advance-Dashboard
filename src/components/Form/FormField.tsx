@@ -1,3 +1,4 @@
+import type { InputFieldType } from '../../types/types';
 import { className as defaultClass } from '../../utils/constants';
 
 function FormField({
@@ -14,21 +15,7 @@ function FormField({
   checked,
   onClick,
   id,
-}: {
-  type?: string;
-  placeholder?: string;
-  name?: string;
-  onChange?: any;
-  className?: string;
-  value?: any;
-  errors?: any;
-  maxlength?: number;
-  style?: any;
-  data?: any;
-  checked?: boolean;
-  onClick?: any;
-  id?: any;
-}) {
+}: InputFieldType) {
   function handleOnchange(e: any) {
     name && data
       ? onChange?.({ ...data, [name]: e.target.value }, name)

@@ -23,7 +23,7 @@ export default function Signup({ onCustomEvent }: any) {
     data: FormData[K],
     activeKey: string
   ) => {
-    // console.log(key," <><><> ",data,activeKey);
+    console.log(key, '<><><>', data);
     setFormData((prev) => ({ ...prev, [key]: data }));
     let field = activeKey as keyof typeof data;
     let msg = validateField(activeKey, data && data[field]);
@@ -82,7 +82,6 @@ export default function Signup({ onCustomEvent }: any) {
       setIsLoading(false);
     }
   };
-
   const steps = [
     <StepOneForm
       onCustomEvent={onCustomEvent}
@@ -108,6 +107,7 @@ export default function Signup({ onCustomEvent }: any) {
           {isLastStep ? (
             <div className="mt-4 sm:mt-0 flex flex-row justify-between items-end">
               <button
+                type="button"
                 className="mb-2 md:hidden flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
                 onClick={handleBack}
               >
@@ -143,6 +143,7 @@ export default function Signup({ onCustomEvent }: any) {
           ) : (
             <div className="mt-4 sm:mt-0 flex flex-row justify-between items-end">
               <button
+                type="button"
                 className="md:hidden mb-2 flex flex-row text-slate-400 font-medium cursor-pointer"
                 onClick={onCustomEvent}
               >
@@ -150,6 +151,7 @@ export default function Signup({ onCustomEvent }: any) {
                 <span className="pl-2">Back to Login</span>
               </button>
               <button
+                type="button"
                 className="md:hidden mb-2 flex flex-row-reverse text-slate-400 font-medium cursor-pointer"
                 onClick={handleNext}
               >
@@ -191,6 +193,7 @@ export function StepOneForm({
   return (
     <>
       <button
+        type="button"
         className="hidden sm:flex mb-2 flex-row text-slate-400 font-medium cursor-pointer"
         onClick={onCustomEvent}
       >
@@ -208,7 +211,7 @@ export function StepOneForm({
           name={'name'}
           type={'text'}
           placeholder={'Enter your name'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'name'}
         />
@@ -224,7 +227,7 @@ export function StepOneForm({
           name={'email'}
           type={'email'}
           placeholder={'you@example.com'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'email'}
         />
@@ -240,7 +243,7 @@ export function StepOneForm({
           name={'password'}
           type={'password'}
           placeholder={'••••••••'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'password'}
         />
@@ -256,7 +259,7 @@ export function StepOneForm({
           name={'confirmPassword'}
           type={'password'}
           placeholder={'••••••••'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'confirmPassword'}
         />
@@ -279,6 +282,7 @@ export function StepTwoForm({
   return (
     <>
       <button
+        type="button"
         className="mb-2 hidden sm:flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
         onClick={handleBack}
       >
@@ -296,7 +300,7 @@ export function StepTwoForm({
           name={'department'}
           type={'text'}
           placeholder={'Enter your department'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'department'}
         />
@@ -312,7 +316,7 @@ export function StepTwoForm({
           name={'designation'}
           type={'text'}
           placeholder={'Enter your designation'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'designation'}
         />
@@ -328,7 +332,7 @@ export function StepTwoForm({
           name={'empId'}
           type={'text'}
           placeholder={'B/XXXX..'}
-          onChange={onChange}
+          onChange={onChange as any}
           className={loginClassName}
           id={'empId'}
         />

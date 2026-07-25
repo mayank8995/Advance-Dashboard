@@ -196,11 +196,11 @@ export type InputFieldType = ComponentProps<'input'> & {
   label?: string;
   type: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   errors?: any;
   maxlength?: number | undefined;
   data?: any;
-  // onChange?: (e: any, name?: any) => any;
+  onChange?: (e: any, name?: any) => any;
 };
 
 export type CheckBox = Record<string, boolean>;

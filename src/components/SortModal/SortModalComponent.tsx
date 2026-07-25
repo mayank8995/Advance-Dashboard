@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown, X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
+import FormField from '../Form/FormField';
 
 type SortConfig = {
   key: string;
@@ -88,10 +89,20 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
                                                 }`}
               onClick={() => handleRadio(header.key)}
             >
-              <input
+              {/* {Dont remove this for now} */}
+              {/* <input
                 type="radio"
                 name={header.value}
                 value={header.value}
+                checked={focusedIndex === header.key}
+                onChange={() => handleRadio(header.key)}
+                className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
+              /> */}
+              <FormField
+                name={header.value}
+                value={header.value}
+                type={'radio'}
+                id={header.value}
                 checked={focusedIndex === header.key}
                 onChange={() => handleRadio(header.key)}
                 className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
@@ -100,9 +111,9 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
             </button>
           ))}
           <div className="p-2 flex flex-row items-center">
-            <label className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase">
+            <span className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase">
               Direction:
-            </label>
+            </span>
             <button
               onClick={handleSort}
               type="button"
