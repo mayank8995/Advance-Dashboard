@@ -3,12 +3,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { NAV_ITEMS, SIDE_BAR_ITEMS } from '../../utils/constants';
 import { BarChart3, Home, LogOut, Settings, Users } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import type { NavItems } from '../../types/types';
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const context = useAuth();
-  const navItems = [
+  const navItems: NavItems[] = [
     { name: SIDE_BAR_ITEMS.DASHBOARD, path: NAV_ITEMS.DASHBOARD },
     { name: SIDE_BAR_ITEMS.EMPLOYEES, path: NAV_ITEMS.EMPLOYEES },
     { name: SIDE_BAR_ITEMS.ANALYTICS, path: NAV_ITEMS.ANALYTICS },
@@ -16,7 +17,11 @@ function Navigation() {
     { name: SIDE_BAR_ITEMS.LOGOUT, path: NAV_ITEMS.LOGOUT },
   ];
 
-  function navigateToPage(isOpen: boolean, navItem?: any, isMobile?: boolean) {
+  function navigateToPage(
+    isOpen: boolean,
+    navItem?: NavItems,
+    isMobile?: boolean
+  ) {
     if (isMobile) setIsOpen(!isOpen);
     else setIsOpen(isOpen);
     if (navItem && navItem.path === NAV_ITEMS.LOGOUT) {
@@ -72,7 +77,7 @@ function Navigation() {
         {/* Nav Links */}
         <nav className="flex-1 p-4 space-y-2 h-full overflow-y-auto">
           {navItems?.map((item) => (
-            <button className={`w-full max-w-full`}>
+            <button key={item.name} className={`w-full max-w-full`}>
               <NavLink
                 key={item.name}
                 to={item.path}

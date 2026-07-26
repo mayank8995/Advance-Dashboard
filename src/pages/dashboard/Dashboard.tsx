@@ -10,7 +10,11 @@ import RequiringReviewCard from '../../components/Card/RequiringReviewCard';
 import type {
   AnalyticsCard,
   KeyMetricCards,
+  MeetingKPIsCardProps,
+  PromotedThisYearCardProps,
+  RequiringReviewCardProps,
   TableQueryParams,
+  TopPerformersCardProps,
 } from '../../types/types';
 import { usePerFormanceTableData } from '../../services/utils.service';
 
@@ -46,16 +50,24 @@ function Dashboard() {
           refetch={refetch}
         />
         <TopPerformersCard
-          topPerformersList={cachedPerformanceCardData?.topPerformers}
+          topPerformersList={
+            cachedPerformanceCardData?.topPerformers as TopPerformersCardProps
+          }
         ></TopPerformersCard>
         <PromotedCard
-          promotedThisYear={cachedPerformanceCardData?.promotedThisYear}
+          promotedThisYear={
+            cachedPerformanceCardData?.promotedThisYear as PromotedThisYearCardProps
+          }
         ></PromotedCard>
         <RequiringReviewCard
-          requiringReview={cachedPerformanceCardData?.requiringReview}
+          requiringReview={
+            cachedPerformanceCardData?.requiringReview as RequiringReviewCardProps
+          }
         ></RequiringReviewCard>
         <MeetingKPIsCard
-          meetingKPIs={cachedPerformanceCardData?.meetingKPIs}
+          meetingKPIs={
+            cachedPerformanceCardData?.meetingKPIs as MeetingKPIsCardProps
+          }
         ></MeetingKPIsCard>
       </div>
     </div>

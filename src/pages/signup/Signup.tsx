@@ -160,7 +160,7 @@ export default function Signup({ onCustomEvent }: any) {
               </button>
               <button
                 type="button"
-                className="hidden sm:flex justify-center w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-0 md:mt-4  px-6 
+                className="hidden md:flex justify-center w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-0 md:mt-4  px-6 
                          text-sm
                         shadow-lg shadow-indigo-500/30
                         hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
@@ -194,7 +194,7 @@ export function StepOneForm({
     <>
       <button
         type="button"
-        className="hidden sm:flex mb-2 flex-row text-slate-400 font-medium cursor-pointer"
+        className="hidden md:flex mb-2 flex-row text-slate-400 font-medium cursor-pointer"
         onClick={onCustomEvent}
       >
         <StepBack className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
@@ -283,7 +283,7 @@ export function StepTwoForm({
     <>
       <button
         type="button"
-        className="mb-2 hidden sm:flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
+        className="mb-2 hidden md:flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
         onClick={handleBack}
       >
         <ChevronLeft className="text-slate-400 text-xs font-medium tracking-wide" />{' '}

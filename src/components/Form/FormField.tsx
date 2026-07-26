@@ -1,3 +1,4 @@
+import type { ChangeEvent } from 'react';
 import type { InputFieldType } from '../../types/types';
 import { className as defaultClass } from '../../utils/constants';
 
@@ -16,7 +17,7 @@ function FormField({
   onClick,
   id,
 }: InputFieldType) {
-  function handleOnchange(e: any) {
+  function handleOnchange(e: ChangeEvent<HTMLInputElement>) {
     name && data
       ? onChange?.({ ...data, [name]: e.target.value }, name)
       : onChange?.(e);
