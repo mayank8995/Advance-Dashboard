@@ -122,7 +122,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         ...filters,
       }));
       submitFilterData(selectedChips);
-    }, 500);
+    }, 300);
   }
 
   function handleCloseModal() {

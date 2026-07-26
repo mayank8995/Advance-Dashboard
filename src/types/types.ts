@@ -53,11 +53,12 @@ export const initialFormData: FormData = {
 };
 
 export interface ResponseObject {
-  data: any;
+  data: ListType[];
   status: number;
   statusText: string;
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ErrorResponseObject {
   data: any;
   status: number;
@@ -67,6 +68,7 @@ export interface ErrorResponseObject {
   request?: any;
   response?: any;
 }
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export type FilterQueryObject = {
   key: string;
@@ -82,6 +84,7 @@ export type TableQueryParams = {
   sortBy?: string;
   order?: string;
   tableType?: string;
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 type ErrorPageProps = {
@@ -90,24 +93,25 @@ type ErrorPageProps = {
   refetch?: () => void;
 };
 export type TopPerformersList = {
-  topPerformersList: any;
+  topPerformersList: TopPerformersCardProps;
   title?: string;
 };
 export type TopProjectsList = ErrorPageProps & {
-  topProjects: any;
+  topProjects: TopProject;
   title?: string;
 };
+
 export type MeetingKPIList = {
-  meetingKPIs: any;
+  meetingKPIs: MeetingKPIsCardProps;
   title?: string;
 };
 export type PromotedList = {
-  promotedThisYear: any;
+  promotedThisYear: PromotedThisYearCardProps;
   title?: string;
 };
 
 export type ReviewList = {
-  requiringReview: any;
+  requiringReview: RequiringReviewCardProps;
   title?: string;
 };
 
@@ -115,8 +119,7 @@ export type TableToolbarProps = {
   txtToBeSearched: string;
   setTextToBeSearched: (e: string) => void;
   tableQueryParams: TableQueryParams;
-  handleRowsPerPageChange: (e: any) => void;
-  tableCustomFilterData?: any;
+  handleRowsPerPageChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   openFilterModal: () => void;
   openSortModal: () => void;
   handlePrevious: () => void;
@@ -127,14 +130,26 @@ export type TableToolbarProps = {
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
   ) => void;
 };
+export type HeaderType =
+  | TableHeader<Employee>[]
+  | TableHeader<TopPerformer>[]
+  | TableHeader<TopProject>[]
+  | TableHeader<PromotedEmployee>[]
+  | TableHeader<EmployeeRequiringReview>[];
+export type ColumnType =
+  | Column<Employee>[]
+  | Column<TopPerformer>[]
+  | Column<TopProject>[]
+  | Column<PromotedEmployee>[]
+  | Column<EmployeeRequiringReview>[];
 
 export type DesktopTableProps = {
   list: ListType[];
-  headersData: any;
-  columnsData: any;
+  columnsData: ColumnType;
+  headersData: HeaderType;
   rowsPerPage: number;
-  handleSort: (e?: any) => void;
-  getSortIcon: (e?: any) => void;
+  handleSort: (e: string) => void;
+  getSortIcon: (e: string) => void;
   tableQueryParams?: TableQueryParams;
   selectedRow: Set<unknown>;
   setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
@@ -144,9 +159,14 @@ export type DesktopTableProps = {
 };
 
 export type MobileTableProps = {
-  list: any;
+  list: ListType[];
   rowsPerPage: number;
-  columnsData: any;
+  columnsData:
+    | Column<Employee>[]
+    | Column<TopPerformer>[]
+    | Column<TopProject>[]
+    | Column<PromotedEmployee>[]
+    | Column<EmployeeRequiringReview>[];
   tableQueryParams?: TableQueryParams;
   selectedRow: Set<unknown>;
   setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
@@ -160,7 +180,7 @@ export type FilterList = {
 };
 
 export type DonutChartProps = {
-  data: any;
+  data: ProjectStatusDistribution;
   title: string;
 };
 
@@ -192,16 +212,18 @@ export type ReviewReasonBadgeProps = {
   value: string;
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type InputFieldType = ComponentProps<'input'> & {
   label?: string;
   type: string;
   name: string;
   placeholder?: string;
   errors?: any;
-  maxlength?: number | undefined;
   data?: any;
+  maxlength?: number | undefined;
   onChange?: (e: any, name?: any) => any;
 };
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export type CheckBox = Record<string, boolean>;
 
@@ -332,15 +354,15 @@ type PerformanceCardBase = {
   description: string;
 };
 
-type TopPerformersCard = PerformanceCardBase & {
+export type TopPerformersCardProps = PerformanceCardBase & {
   employees: TopPerformer[];
 };
 
-type PromotedThisYearCard = PerformanceCardBase & {
+export type PromotedThisYearCardProps = PerformanceCardBase & {
   employees: PromotedEmployee[];
 };
 
-type KPIBreakdownItem = {
+export type KPIBreakdownItem = {
   label: string;
   count: number;
   percentage: number;
@@ -352,7 +374,7 @@ type KPITrendHistoryItem = {
   percentage: number;
 };
 
-type MeetingKPIsCard = PerformanceCardBase & {
+export type MeetingKPIsCardProps = PerformanceCardBase & {
   breakdown: {
     exceeding: KPIBreakdownItem;
     meeting: KPIBreakdownItem;
@@ -383,7 +405,7 @@ type ReviewEmployee = EmployeeBase & {
   reviewReason: ReviewReason[];
 };
 
-type RequiringReviewCard = PerformanceCardBase & {
+export type RequiringReviewCardProps = PerformanceCardBase & {
   reasons: {
     lowRating: ReviewReasonItem;
     lowAttendance: ReviewReasonItem;
@@ -394,10 +416,10 @@ type RequiringReviewCard = PerformanceCardBase & {
 };
 
 export type PerformanceCards = {
-  topPerformers: TopPerformersCard;
-  promotedThisYear: PromotedThisYearCard;
-  meetingKPIs: MeetingKPIsCard;
-  requiringReview: RequiringReviewCard;
+  topPerformers: TopPerformersCardProps;
+  promotedThisYear: PromotedThisYearCardProps;
+  meetingKPIs: MeetingKPIsCardProps;
+  requiringReview: RequiringReviewCardProps;
 };
 
 export type KeyMetricCards = {
@@ -422,7 +444,7 @@ type RevenueTrendItem = {
   revenueCr: number;
 };
 
-type ProjectStatusDistribution = {
+export type ProjectStatusDistribution = {
   totalProjects: number;
   onTrack: number;
   atRisk: number;
@@ -505,4 +527,9 @@ export type KeyMetricCardsConfig = {
 export type ExportHeader<T> = {
   key: keyof T;
   value: string;
+};
+
+export type NavItems = {
+  name: string;
+  path: string;
 };

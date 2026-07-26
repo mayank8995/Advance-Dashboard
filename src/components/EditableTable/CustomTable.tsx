@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 import { useQueryClient } from '@tanstack/react-query';
 import FilterModal from '../FilterComponent/FilterModal';
@@ -76,7 +76,7 @@ export default function CustomTable({
   }, [txtToBeSearched]);
 
   // Handler functions
-  const handleSort = (key: any) => {
+  const handleSort = (key: string) => {
     let direction = 'asc';
     if (tableQueryParams.sortBy === key && tableQueryParams.order === 'asc') {
       direction = 'desc';
@@ -89,7 +89,7 @@ export default function CustomTable({
     });
   };
 
-  const handleRowsPerPageChange = (e: any) => {
+  const handleRowsPerPageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e?.target?.value));
     handleTableQuery({
       ...tableQueryParams,
@@ -98,7 +98,7 @@ export default function CustomTable({
     });
   };
 
-  const getSortIcon = (key: any) => {
+  const getSortIcon = (key: string) => {
     if (tableQueryParams.sortBy !== key)
       return (
         <ArrowUpDown className="w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400" />
@@ -239,7 +239,7 @@ export default function CustomTable({
           <SortModalComponent
             closeSortModal={closeSortModal}
             headersData={headersData}
-            onSort={(key?: string) => handleSort(key)}
+            onSort={(key: string) => handleSort(key)}
             sortConfig={{
               key: tableQueryParams.sortBy as string,
               direction: tableQueryParams.order as string,

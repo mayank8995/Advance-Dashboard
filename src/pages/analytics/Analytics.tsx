@@ -11,7 +11,10 @@ import {
 } from '../../utils/constants';
 import React, { Suspense } from 'react';
 import { DonutCharts } from '../../components/Charts/DonutCharts';
-import type { AnalyticsCard } from '../../types/types';
+import type {
+  AnalyticsCard,
+  ProjectStatusDistribution,
+} from '../../types/types';
 const PieChartComponent = React.lazy(
   () => import('../../components/Charts/PieChartComponent')
 );
@@ -94,7 +97,9 @@ function Analytics() {
           />
           <DonutCharts
             title={TOTAL_PROJECTS}
-            data={metricData?.projectStatusDistribution}
+            data={
+              metricData?.projectStatusDistribution as ProjectStatusDistribution
+            }
           />
           <MultiCityBarChartComponent
             name={'Head Count by Location'}

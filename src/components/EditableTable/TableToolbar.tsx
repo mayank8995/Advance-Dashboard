@@ -56,7 +56,7 @@ export const TableToolbar = ({
         <div className="flex-1 justify-between  flex items-center px-6 pb-4">
           <div className="gap-2 flex flex-row items-center">
             <div className="flex justify-center items-center">
-              <span className=" hidden sm:flex text-sm font-bold dark:text-slate-100 pr-2">
+              <span className=" hidden lg:flex text-sm font-bold dark:text-slate-100 pr-2">
                 Rows / page{' '}
               </span>
               <select

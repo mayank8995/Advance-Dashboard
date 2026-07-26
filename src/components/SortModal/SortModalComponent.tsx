@@ -49,7 +49,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
       setTimeout(() => {
         setLoading(false);
         onSort && onSort(myElementRef?.current?.id);
-      }, 500);
+      }, 300);
     }
   }
 
