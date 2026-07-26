@@ -66,9 +66,15 @@ function App() {
               <span className="text-lg font-bold text-white">Admin Portal</span>
             </div>
             {show ? (
-              <Login onCustomEvent={(flag: boolean) => setShow(flag)} />
+              <Login
+                key={'login'}
+                onCustomEvent={(flag: boolean) => setShow(flag)}
+              />
             ) : (
-              <Signup onCustomEvent={() => setShow((flag) => !flag)} />
+              <Signup
+                key={'signup'}
+                onCustomEvent={() => setShow((flag) => !flag)}
+              />
             )}
           </div>
         </div>

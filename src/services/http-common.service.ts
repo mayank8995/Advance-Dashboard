@@ -33,18 +33,24 @@ apiClient.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    const responseObject: ResponseObject = {
-      data: response.data,
-      status: response.status,
-      statusText: response.statusText,
-    };
-    return responseObject as unknown as AxiosResponse;
+    return normalizeApiResponse(response);
   },
   function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    return normalizeApiError(error);
+    reportError(error);
+    return Promise.reject(normalizeApiError(error));
+    // return normalizeApiError(error);
   }
 );
+
+function normalizeApiResponse(response: AxiosResponse): AxiosResponse {
+  return {
+    ...response,
+    data: response.data,
+    status: response.status,
+    statusText: response.statusText,
+  };
+}
 
 function normalizeApiError(error: AxiosError) {
   return {

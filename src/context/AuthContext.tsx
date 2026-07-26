@@ -12,7 +12,7 @@ interface AuthContextType {
   user: Login | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: ({ email, name, id }: Login) => Promise<void>;
+  login: ({ name, id }: Login) => Promise<void>;
   logout: () => void;
   tableQueryParams: TableQueryParams;
   setQueryParamsData: (data: TableQueryParams) => void;
@@ -40,9 +40,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const login = async ({ email, id, name }: Login) => {
-    localStorage.setItem('user', JSON.stringify({ email, id, name }));
-    setUser({ email, id, name });
+  const login = async ({ id, name }: Login) => {
+    localStorage.setItem('user', JSON.stringify({ id, name }));
+    setUser({ id, name });
   };
 
   const logout = () => {
