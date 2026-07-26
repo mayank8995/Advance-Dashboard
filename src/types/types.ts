@@ -96,8 +96,11 @@ export type TopPerformersList = {
   topPerformersList: TopPerformersCardProps;
   title?: string;
 };
+export type TopProjectProps = {
+  employees: TopProject[];
+};
 export type TopProjectsList = ErrorPageProps & {
-  topProjects: TopProject;
+  topProjects: TopProjectProps;
   title?: string;
 };
 
