@@ -6,7 +6,7 @@ import {
   PROFILE_SUBHEAD,
   SIDE_BAR_ITEMS,
 } from '../../utils/constants';
-import type { ProfileForm } from '../../types/types';
+import type { LoginProfile, ProfileForm } from '../../types/types';
 import {
   editProfileData,
   postSubmitProfileSettings,
@@ -16,8 +16,11 @@ import { TailSpin } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { useProfileData } from '../../services/utils.service';
 import { useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '../../context/AuthContext';
 
 function ProfileSettings() {
+  const { user } = useAuth();
+  console.log('user>>>', user);
   const [formValues, setFormValues] = useState<ProfileForm | null>({
     name: '',
     phone: '',
@@ -34,12 +37,13 @@ function ProfileSettings() {
   const [errors, setErrors] = useState({});
   const [formDisabled, setFormDisabled] = useState<boolean>(false);
   const [isLoading, setIsDataLoading] = useState(false);
-  const { data: profileData } = useProfileData();
+  const { data: profileData } = useProfileData(user as LoginProfile);
   const queryClient = useQueryClient();
-  const [isEditing, setIsEditing] = useState(profileData ?? false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     if (profileData?.data && Object.keys(profileData)?.length > 0) {
+      setIsEditing(true);
       setFormValues(profileData.data);
     }
   }, [profileData]);
@@ -93,7 +97,10 @@ function ProfileSettings() {
         setFormDisabled(false);
         let res;
         if (!isEditing) {
-          res = await postSubmitProfileSettings(formValues);
+          res = await postSubmitProfileSettings({
+            ...formValues,
+            id: user?.id,
+          } as ProfileForm);
           if (res.status === 201) {
             toast.success(res.data.message, {});
             setIsEditing(true);
@@ -102,7 +109,10 @@ function ProfileSettings() {
           }
           setIsDataLoading(false);
         } else {
-          res = await editProfileData(formValues);
+          res = await editProfileData({
+            ...formValues,
+            id: user?.id,
+          } as ProfileForm);
           if (res.status === 201) {
             toast.success(res.data.message, {});
             setIsEditing(true);
@@ -218,9 +228,9 @@ function ProfileSettings() {
                   <div className="relative">
                     <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
                       <img
-                        src={formValues?.image || undefined}
+                        src={formValues?.image || '/avatar_fallback.svg'}
                         className="aspect-square w-full h-full object-cover"
-                        alt="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                        alt="User Profile"
                       />
                     </div>
                     <input

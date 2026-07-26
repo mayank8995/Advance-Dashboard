@@ -2,6 +2,7 @@ import apiClient from '../services/http-common.service';
 import type {
   FilterList,
   LoginForm,
+  LoginProfile,
   ProfileForm,
   SignUpForm,
   TableQueryParams,
@@ -85,9 +86,9 @@ export const postSubmitProfileSettings = async (form: ProfileForm | null) => {
   }
 };
 
-export const getProfileData = async () => {
+export const getProfileData = async (params: LoginProfile) => {
   try {
-    const res = await apiClient.get('/profile');
+    const res = await apiClient.get('/profile', { params });
     // console.log("got:", res.data);
     return res;
   } catch (err: any) {

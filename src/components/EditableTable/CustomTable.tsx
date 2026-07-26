@@ -27,7 +27,7 @@ export default function CustomTable({
   refetch,
 }: CustomTableProps) {
   const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
-
+  console.log(isError, 'dfsdfsdsd', isLoading);
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTextToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);

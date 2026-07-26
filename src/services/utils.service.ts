@@ -9,6 +9,7 @@ import {
 import type {
   FilterList,
   ListType,
+  LoginProfile,
   TableQueryParams,
 } from '../types/types';
 import type { HeadersType } from '../utils/constants';
@@ -124,10 +125,10 @@ export function useAllData() {
 //   });
 // }
 
-export function useProfileData() {
+export function useProfileData(user: LoginProfile) {
   return useQuery({
     queryKey: ['profileData'],
-    queryFn: getProfileData,
+    queryFn: () => getProfileData(user),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
   });
 }

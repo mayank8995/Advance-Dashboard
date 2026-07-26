@@ -3,11 +3,11 @@ import type { ChangeEvent, ComponentProps, ReactNode } from 'react';
 
 export interface Login {
   name: string;
-  email: string;
   id: string;
 }
 
 export interface ProfileForm {
+  id?: string | undefined;
   name: string;
   phone?: string;
   email?: string;
@@ -532,4 +532,9 @@ export type ExportHeader<T> = {
 export type NavItems = {
   name: string;
   path: string;
+};
+
+export type LoginProfile = {
+  id: string;
+  name: string;
 };
