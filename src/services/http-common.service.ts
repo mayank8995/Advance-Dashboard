@@ -37,6 +37,10 @@ apiClient.interceptors.response.use(
   function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     reportError(error);
+    // const status = Number(error.response?.status);
+    // if (error && status >= 400) {
+    //   normalizeApiError(error);
+    // }
     return Promise.reject(normalizeApiError(error));
     // return normalizeApiError(error);
   }

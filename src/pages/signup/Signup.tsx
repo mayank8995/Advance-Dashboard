@@ -11,6 +11,7 @@ import { validateField } from '../../services/form-validation.service';
 import { doSignup } from '../../api/admin-portal.api';
 import { toast } from 'react-toastify';
 import { ChevronLeft, StepBack, StepForward } from 'lucide-react';
+import { getErrorMessage } from '../../services/utils.service';
 
 export default function Signup({ onCustomEvent }: any) {
   const [step, setStep] = useState(0);
@@ -78,6 +79,7 @@ export default function Signup({ onCustomEvent }: any) {
       }
       setIsLoading(false);
     } catch (err) {
+      toast.error(getErrorMessage(err), {});
       console.error('POST FAILED', err);
       setIsLoading(false);
     }

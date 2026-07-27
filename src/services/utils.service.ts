@@ -425,3 +425,11 @@ function escapeCSVValue(value: unknown): string {
 
   return `"${escapedValue}"`;
 }
+
+export function getErrorMessage(error: any): string {
+  return (
+    error?.data?.message ??
+    (error instanceof Error ? error.message : 'Something Went Wrong!') ??
+    'Unknown Error'
+  );
+}

@@ -12,6 +12,7 @@ import { doLogin } from '../../api/admin-portal.api';
 import { TailSpin } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
+import { getErrorMessage } from '../../services/utils.service';
 
 // LoginCard.jsx
 function Login({ onCustomEvent }: any) {
@@ -64,6 +65,7 @@ function Login({ onCustomEvent }: any) {
         setIsLoading(false);
       }
     } catch (err) {
+      toast.error(getErrorMessage(err), {});
       console.error('POST FAILED', err);
       setIsLoading(false);
     }
