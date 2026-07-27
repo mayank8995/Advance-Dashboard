@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import FormField from '../../components/Form/FormField';
 import {
   className,
@@ -14,7 +14,7 @@ import {
 import { validateField } from '../../services/form-validation.service';
 import { TailSpin } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
-import { useProfileData } from '../../services/utils.service';
+import { getErrorMessage, useProfileData } from '../../services/utils.service';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../../context/AuthContext';
 
@@ -88,14 +88,12 @@ function ProfileSettings() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // e.stopPropagation();
-    console.log('START SUBMIT', formValues, e);
     try {
       if (checkFormValidity()) {
         setIsDataLoading(true);
         // console.log("inside herer")
         setFormDisabled(false);
-        let res;
+        let res = null;
         if (!isEditing) {
           res = await postSubmitProfileSettings({
             ...formValues,
@@ -131,6 +129,7 @@ function ProfileSettings() {
         setIsDataLoading(false);
       }
     } catch (err) {
+      toast.error(getErrorMessage(err), {});
       console.error('POST FAILED', err);
       setIsDataLoading(false);
     }
@@ -160,12 +159,13 @@ function ProfileSettings() {
   function handleUpload() {
     try {
       refForUpload?.current && refForUpload?.current?.click();
-    } catch (e: any) {
+    } catch (e) {
+      toast.error(getErrorMessage(e), {});
       console.error('Upload error:', e);
     }
   }
-  function handleFileChange(e: any) {
-    const file = e.target.files[0];
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e?.target?.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
