@@ -16,7 +16,7 @@ function App() {
     <ErrorBoundary fallback={<ErrorBoundaryPage />}>
       <div className="h-screen max-h-full relative">
         <div
-          className={`absolute z-200 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 `}
+          className={`absolute z-200 top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 `}
         >
           {/* {show ? <Login onCustomEvent={(flag:boolean) => setShow(flag)}/> : <Signup onCustomEvent={() => setShow((flag) => !flag)}/>} */}
           <div
