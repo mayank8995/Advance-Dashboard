@@ -21,7 +21,7 @@ export const TopProjectsCard = ({
   const topProj = topProjects?.employees;
 
   return (
-    <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
+    <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between gap-4">
         <div className="flex items-center justify-center">
           <div className="mr-2 w-8 h-8 rounded-lg flex items-center justify-center">
