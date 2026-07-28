@@ -22,7 +22,6 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
   onSort,
   closeSortModal,
 }) => {
-  console.log('headersData>>>>', headersData);
   const [focusedIndex, setFocusedIndex] = useState('');
 
   const myElementRef: any = useRef(null);
@@ -30,7 +29,6 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
   const [loading, setLoading] = useState(false);
 
   function handleRadio(index: string) {
-    console.log('index>>>>', index);
     setFocusedIndex(index);
   }
 
@@ -55,16 +53,18 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
 
   return (
     <>
-      <div className="bg-linear-to-br from-white to-indigo-100 shadow-sm border border-slate-100 dark:bg-linear-to-br dark:from-slate-950 dark:to-slate-950  dark:border-slate-800 fixed z-300 left-0 right-0 bottom-0 rounded-t-2xl">
-        <div className="flex flex-row justify-between items-center p-2 text-sm font-semibold border-b-2 border-b-slate-400/50 dark:border-b-2 dark:border-b-white/10">
-          <h2 className="dark:text-slate-200">Sorting</h2>
+      <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10  fixed z-300 left-0 right-0 bottom-0 rounded-t-2xl">
+        <div className="flex flex-row justify-between items-center p-2 text-sm font-semibold border-b border-b-slate-200 dark:border-b-white/10">
+          <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+            Sorting
+          </h2>
           <button
             type="button"
             onClick={() => closeSortModal?.()}
             aria-label="Close sort modal"
           >
             <X
-              className="text-slate-950 cursor-pointer dark:text-slate-200"
+              className="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 cursor-pointer"
               width={16}
               height={20}
             />
@@ -78,14 +78,14 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
               key={header.key}
               id={focusedIndex}
               className={`cursor-pointer m-1 h-10 inline-flex items-center gap-1.5 
-                                                px-2 py-2 rounded-b-xl font-medium whitespace-nowrap 
+                                                px-2 py-2  font-medium whitespace-nowrap 
                                                 border  
                                                 text-xs
                                                 outline-none
                                                 ${
                                                   !(focusedIndex === header.key)
-                                                    ? 'border-slate-400 dark:border-slate-600 bg-white dark:bg-indigo-950/30 text-slate-600 dark:text-slate-300 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50 dark:hover:bg-indigo-950/30'
-                                                    : 'border-indigo-600 dark:border-indigo-400 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 font-semibold'
+                                                    ? 'border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-white/25'
+                                                    : 'bg-[#534ab7] text-white hover:bg-[#7f77dd]'
                                                 }`}
               onClick={() => handleRadio(header.key)}
             >

@@ -13,7 +13,11 @@ import { toast } from 'react-toastify';
 import { ChevronLeft, StepBack, StepForward } from 'lucide-react';
 import { getErrorMessage } from '../../services/utils.service';
 
-export default function Signup({ onCustomEvent }: any) {
+export default function Signup({
+  onCustomEvent,
+}: {
+  onCustomEvent: (flag: boolean) => void;
+}) {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Errors>({});
@@ -24,10 +28,9 @@ export default function Signup({ onCustomEvent }: any) {
     data: FormData[K],
     activeKey: string
   ) => {
-    console.log(key, '<><><>', data);
     setFormData((prev) => ({ ...prev, [key]: data }));
-    let field = activeKey as keyof typeof data;
-    let msg = validateField(activeKey, data && data[field]);
+    const field = activeKey as keyof typeof data;
+    const msg = validateField(activeKey, data && data[field]);
     setErrors((prevErrors) => ({
       ...prevErrors,
       [field]: msg,

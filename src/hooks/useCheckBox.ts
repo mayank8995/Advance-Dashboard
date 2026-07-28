@@ -6,15 +6,18 @@ export function useCheckBox(list: ListType[]) {
   const handleOnChange = function (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
   ) {
-    if (!event.target?.id) return;
+    if (!event.target?.id) {
+      return;
+    }
     const id = event.target.id;
     if (event.target.id === 'selectAll') {
       if (!event.target.checked) {
         setSelectedRow(new Set());
       } else {
-        console.log('llist>>>>', list);
         const Ids = list.map((item: ListType) => {
-          if (!item) return;
+          if (!item) {
+            return;
+          }
           return String(item?.id);
         });
         setSelectedRow(new Set(['selectAll', ...Ids]));

@@ -12,7 +12,7 @@ interface AuthContextType {
   user: Login | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: ({ name, id }: Login) => Promise<void>;
+  login: ({ name, id }: Login) => void;
   logout: () => void;
   tableQueryParams: TableQueryParams;
   setQueryParamsData: (data: TableQueryParams) => void;
@@ -24,7 +24,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const [user, setUser] = useState<Login | null>(() => {
     const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+    if (!storedUser) {
+      return null;
+    }
+    return JSON.parse(storedUser) as Login;
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -40,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const login = async ({ id, name }: Login) => {
+  const login = ({ id, name }: Login) => {
     localStorage.setItem('user', JSON.stringify({ id, name }));
     setUser({ id, name });
   };
@@ -65,11 +68,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setQueryParamsData,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext value={value}>{children}</AuthContext>;
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+  const context = useContext<AuthContextType | null>(AuthContext);
   if (!context) {
     throw new Error(
       'useAuth must be executed within an AuthProvider structural tree'

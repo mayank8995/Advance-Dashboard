@@ -9,7 +9,6 @@ import {
 import { useTheme } from '../../hooks/useTheme';
 
 export default function MultiCityBarChartComponent({ title, X, Y, data }: any) {
-  console.log('dataaa>>>', data);
   const { theme: themeMode } = useTheme();
   return (
     <>

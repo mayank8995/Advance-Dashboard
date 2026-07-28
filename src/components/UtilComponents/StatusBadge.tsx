@@ -7,11 +7,9 @@ import {
 } from '../../utils/constants';
 
 export const StatusBadge = ({ value }: StatusBadgeProps) => {
-  if (!value) return;
-  console.log(
-    value.toLocaleLowerCase(),
-    statusColors[value.toLocaleLowerCase()]
-  );
+  if (!value) {
+    return;
+  }
   return (
     <div className="flex flex-col items-start">
       <div

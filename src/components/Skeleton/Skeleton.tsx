@@ -4,7 +4,6 @@ import EmployeeTableSkeleton from './EmployeeTableSkeleton';
 
 export const Skeleton = () => {
   const location = useLocation();
-  console.log(location, location?.search?.includes('target'));
   return (
     <div className="flex flex-col flex-auto dark:bg-gray-800">
       {(location?.pathname?.includes('dashboard') ||

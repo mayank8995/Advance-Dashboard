@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import axios, {
   AxiosError,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-
+interface ApiError extends AxiosError{
+  status: number;
+  data: unknown;
+  statusText: string
+}
 const apiClient = axios.create({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
   timeout: 5000,
   headers: {
@@ -49,18 +55,19 @@ apiClient.interceptors.response.use(
 function normalizeApiResponse(response: AxiosResponse): AxiosResponse {
   return {
     ...response,
-    data: response.data,
+    data: response?.data as unknown,
     status: response.status,
     statusText: response.statusText,
   };
 }
 
-function normalizeApiError(error: AxiosError) {
-  return {
-    status: Number(error.response?.status) ?? null,
-    statusText: error?.response?.statusText ?? 'Something went wrong!',
-    data: error?.response?.data,
-  };
+function normalizeApiError(error: AxiosError): ApiError {
+  console.error('normalizeApiError', error?.response);
+  const normalizedError = error as ApiError;
+  normalizedError.status = Number(error.response?.status);
+  normalizedError.statusText = error?.response?.statusText ?? 'Something went wrong!';
+  normalizedError.data = error?.response?.data;
+  return normalizedError;
 }
 
 export default apiClient;

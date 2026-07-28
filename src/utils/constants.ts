@@ -205,7 +205,7 @@ export const headers_employees: TableHeader<Employee>[] = [
   { key: 'yearsOfExperience', value: 'Years of Experience' },
   { key: 'location', value: 'Location' },
   { key: 'workMode', value: 'Work Mode' },
-  { key: 'rating', value: 'Ratng' },
+  { key: 'rating', value: 'Rating' },
 ];
 
 export type HeadersType =

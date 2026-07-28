@@ -10,9 +10,9 @@ const LoaderContext = createContext<LoaderContextType | null>(null);
 export const LoaderFlagProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   return (
-    <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
+    <LoaderContext value={{ isLoading, setIsLoading }}>
       {children}
-    </LoaderContext.Provider>
+    </LoaderContext>
   );
 };
 

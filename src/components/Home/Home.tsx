@@ -17,7 +17,6 @@ function Home() {
   };
   useEffect(() => {
     const root = document.documentElement;
-    console.log('Localstirage>>>', localStorage.getItem('theme'));
     if (localStorage.getItem('theme') === 'dark') {
       root.setAttribute('data-theme', 'dark');
     }
