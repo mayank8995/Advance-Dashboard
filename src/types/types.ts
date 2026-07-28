@@ -1,7 +1,7 @@
 import type { QueryClientConfig } from '@tanstack/react-query';
 import type { ChangeEvent, ComponentProps, ReactNode } from 'react';
 
-export interface Login {
+export interface LoginData {
   name: string;
   id: string;
 }
@@ -35,14 +35,20 @@ export interface SignUpForm {
   confirmPassword: string;
 }
 
+export type FormOne = {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+export type FormTwo = {
+  designation: string;
+  department: string;
+  empId: string;
+};
 export interface FormData {
-  formOne: {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  };
-  formTwo: { designation: string; department: string; empId: string };
+  formOne: FormOne;
+  formTwo: FormTwo;
 }
 
 export type Errors = Partial<Record<string, string>>;
@@ -552,4 +558,9 @@ export type NavItems = {
 export type LoginProfile = {
   id: string;
   name: string;
+};
+
+export type SelectedChip = {
+  key: string;
+  value: string[];
 };

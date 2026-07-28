@@ -26,7 +26,9 @@ export default function MobileViewCardForTable({
 
   function getRowCss(value: string) {
     const initialCss = `grid grid-cols-2 gap-y-2 text-xs`;
-    if (value === 'id') {return 'hidden';}
+    if (value === 'id') {
+      return 'hidden';
+    }
     return initialCss;
   }
   return (
@@ -36,7 +38,7 @@ export default function MobileViewCardForTable({
           key={`${row.id}-${index}`}
           className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 "
         >
-          {columnsData?.map((coloumn: any) => {
+          {columnsData?.map((coloumn) => {
             return (
               <div key={coloumn.key}>
                 {coloumn?.key === 'name' && (
@@ -47,7 +49,7 @@ export default function MobileViewCardForTable({
                       >
                         {row[coloumn?.key]
                           ?.split(' ')
-                          .map((n: any) => n[0])
+                          .map((n: string) => n[0])
                           .join('')}
                       </h1>
                       <h2 className="pl-2 text-slate-800 dark:text-slate-300">
@@ -73,7 +75,9 @@ export default function MobileViewCardForTable({
                       <h2 className="text-slate-500">
                         {coloumn?.header
                           ?.split(' ')
-                          .map((n: any) => n[0] + n.substring(1).toLowerCase())
+                          .map(
+                            (n: string) => n[0] + n.substring(1).toLowerCase()
+                          )
                           .join(' ')}
                       </h2>
                       <h2 className="pl-2 text-slate-800 dark:text-slate-300">
