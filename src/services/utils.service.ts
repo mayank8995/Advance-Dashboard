@@ -13,16 +13,7 @@ import type {
   TableQueryParams,
 } from '../types/types';
 import type { HeadersType } from '../utils/constants';
-
-declare global {
-  interface Array<T> {
-    customFilter(predicate: (item: T) => boolean, obj: any): T[];
-    deepSearchCustomFilter(txtTobeSearched: string): T[];
-    applyFilterOnTable(
-      fliterQuery: Map<string, string | boolean | Array<T>>
-    ): T[];
-  }
-}
+import axios from 'axios';
 
 // export function useGetData() {
 //   return useQuery({
@@ -32,7 +23,6 @@ declare global {
 //   });
 // }
 export function useFilterList(params: FilterList) {
-  console.log('useFilterList', params);
   return useQuery({
     queryKey: ['filterList', params.tableType],
     queryFn: () => getFilterList(params),
@@ -45,16 +35,20 @@ export function useTableData(
   setIsLoading: (loading: boolean) => void,
   signal?: AbortSignal
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { totalPages, totalItems, ...updatedParams } = params;
 
   // const reqParams = {};
-  const queryParams =
+  const queryParams: TableQueryParams =
     'tableType' in updatedParams
       ? updatedParams
       : { ...updatedParams, tableType: 'employees' };
 
   return useQuery({
-    queryKey: ['employees', ...Object.values(queryParams)],
+    queryKey: [
+      'employees',
+      ...Object.values(queryParams).map((v) => String(v)),
+    ],
     queryFn: () => getTableEmployees(queryParams, setIsLoading, signal),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
@@ -62,6 +56,7 @@ export function useTableData(
 }
 
 export function usePerFormanceTableData(params: TableQueryParams) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { totalPages, totalItems, ...updatedParams } = params;
   const queryParams =
     'tableType' in updatedParams
@@ -69,7 +64,10 @@ export function usePerFormanceTableData(params: TableQueryParams) {
       : { ...updatedParams, tableType: 'employees' };
 
   return useQuery({
-    queryKey: ['performance', ...Object.values(queryParams)],
+    queryKey: [
+      'performance',
+      ...Object.values(queryParams).map((v) => String(v)),
+    ],
     queryFn: () => getTableEmployees(queryParams),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
@@ -133,256 +131,18 @@ export function useProfileData(user: LoginProfile) {
   });
 }
 
-export function getAvgEmployeeSatisfaction(data: Array<any>) {
-  let totalSum = 0;
-  data?.length > 0 &&
-    data?.map((value) => {
-      totalSum += value?.rating || 0;
-    });
-  return data?.length > 0 && (totalSum / data.length).toFixed(1);
-}
-
-export function getNumberofActiveProjects(data: Array<any>) {
-  let count = 0;
-  data?.length > 0 &&
-    data?.map((value) => {
-      let projectsArr: any[] = value?.projects || [];
-      for (let proj of projectsArr) {
-        if (proj?.status === 'Active') count++;
-      }
-    });
-  return count;
-}
-
-Array.prototype.customFilter = function (fn: any, obj: any) {
-  const filtered = [];
-  for (let i = 0; i < this.length; i++) {
-    if (fn(this[i])) {
-      // console.log("obj>>>>",obj)
-      const topProjectsObj = { name: obj?.manager || '', ...this[i] };
-      filtered.push(topProjectsObj);
-    }
-  }
-
-  return filtered;
-};
-export function getTopProjects(data: Array<any>) {
-  let topProjectsArray: any[] = [];
-  if (data && data?.length > 0) {
-    for (let proj of data) {
-      let filterArray = proj?.projects?.customFilter((p: any) => {
-        if (p?.priorityRanking === '*') return p;
-      }, proj);
-      filterArray &&
-        filterArray?.length &&
-        topProjectsArray.push(...filterArray);
-    }
-  }
-  // console.log("topProjectsArray>>>>>",topProjectsArray)
-  return topProjectsArray;
-}
-
-export function getTop6ArrayElement(data: any) {
-  const modifiedObj = {
-    ...data,
-    employees:
-      data?.employees?.length > 5
-        ? data?.employees?.slice(0, 5)
-        : data?.employees,
-  };
-  return modifiedObj;
-}
-
-export function performDeepSearch(obj: any, target: string) {
-  if (obj === null || typeof obj !== 'object') return false;
-  for (const key in obj) {
-    if (
-      (typeof obj[key] === 'number' ||
-        typeof obj[key] === 'string' ||
-        typeof obj[key] === 'boolean') &&
-      obj[key].toString().toLowerCase().includes(target)
-    ) {
-      // console.log("ZXCZXCZXCZXCZX>>")
-      return true;
-    }
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      const found = performDeepSearch(obj[key], target);
-      if (found) return true;
-    }
-  }
-  return false;
-}
-
-export function filterSearchInTable(
-  obj: any,
-  fliterQuery: Map<string, string | boolean | string[]>,
-  count: number
-) {
-  if (obj === null || typeof obj !== 'object') return false;
-  for (const key in obj) {
-    if (fliterQuery.has(key)) {
-      // console.log("get key>>>>",fliterQuery.get(key))
-    }
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      const found = filterSearchInTable(obj[key], fliterQuery, count);
-      if (found) return true;
-    }
-  }
-  if (count === fliterQuery.size) {
-    return true;
-  }
-  return false;
-}
-
-Array.prototype.deepSearchCustomFilter = function (query: string) {
-  const filtered: any[] = [];
-  const cleanQuery = query.trim().replace(/\s+/g, ' ').toLowerCase();
-  if (this) {
-    // if(!isCustomTableFilter){
-    for (let i = 0; i < this.length; i++) {
-      if (this[i]) {
-        if (performDeepSearch(this[i], cleanQuery)) {
-          filtered.push(this[i]);
-        }
-      }
-    }
-    // console.log(filtered,"query>>>>",query)
-
-    // }else{
-    // return filteredTableData(this, tableCustomFilterData)
-    // }
-  }
-  return filtered;
-};
-
-Array.prototype.applyFilterOnTable = function (
-  fliterQuery: Map<string, string | boolean | string[]>
-) {
-  const filtered: any[] = [];
-  if (this) {
-    for (let i = 0; i < this.length; i++) {
-      if (this[i]) {
-        if (filterSearchInTable(this[i], fliterQuery, 0)) {
-          // console.log("in if applyFilterOnTabl")
-          filtered.push(this[i]);
-        }
-      }
-    }
-    // console.log("applyFilterOnTable>",filtered)
-  }
-  return filtered;
-};
-
-export function transformDataForFilterModalUI(relevantData: Function) {
-  const { data, headers } = relevantData();
-  // console.log('SADASDA', data, headers);
-  const valuesMap = new Map<string, Array<string | boolean | string[]>>(
-    headers
-      ?.map((data: any) => data.key)
-      ?.map((item: any) => [item, [] as Array<string | boolean | string[]>])
-  );
-  // console.log("valuesMap",valuesMap, relevantData())
-  const filterSet = new Set(headers?.map((data: any) => data.key));
-  // console.log("list>>>",data,FILTER_TABLE_KEY,valuesMap,filterSet)
-  for (let i = 0; i < data.length; i++) {
-    if (data[i]) {
-      for (const key in data[i]) {
-        const value = data[i][key];
-
-        if (
-          typeof value === 'boolean' ||
-          typeof value === 'string' ||
-          Array.isArray(value)
-        ) {
-          if (filterSet.has(key)) {
-            if (valuesMap.has(key)) {
-              const content = valuesMap.get(key);
-              if (Array.isArray(value)) {
-                console.log('iniased>>>', value);
-
-                const val = valuesMap.get(key) as string[];
-                const newSet = new Set([...val, ...value]);
-                valuesMap.set(key, [...newSet]);
-              } else {
-                console.log('content>>>', content);
-
-                if (!content?.includes(value)) {
-                  valuesMap.get(key)?.push(value);
-                }
-              }
-            } else {
-              !Array.isArray(value)
-                ? valuesMap.set(key, [value])
-                : valuesMap.set(key, [...value]);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  // console.log('valuesMap>>>>>', valuesMap);
-  return valuesMap;
-}
-
-export function deepCloneCustom(obj: any) {
-  if (obj === null || typeof obj !== 'object') return obj;
-  if (obj instanceof Date) return new Date(obj.getTime());
-
-  const newObject: any = Array.isArray(obj) ? [] : {};
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      newObject[key] = deepCloneCustom(obj[key]);
-    }
-  }
-  return newObject;
-}
-
-export function filteredTableData(searchList: any, queryList: any) {
-  const filteredArray = [];
-  let flag = 1;
-  for (const item of searchList) {
-    flag = 1;
-    for (let [key, value] of queryList) {
-      if (value.length === 0) continue;
-      if (Array.isArray(item[key])) {
-        // to be coded for array
-        // console.log(item[key])
-        const match = value.filter((it: string) => item[key].includes(it));
-        if (match.length === 0) {
-          flag = 0;
-          break;
-        }
-      } else {
-        if (!value.includes(item[key])) {
-          flag = 0;
-          break;
-        }
-      }
-    }
-    flag && filteredArray.push(item);
-  }
-  // console.log("filteredArray>>>>",filteredArray)
-  return filteredArray;
-}
-
 export function exportSelected(
   selectedRow: Set<unknown>,
   data: ListType[],
   headers: HeadersType[],
   fileName: string
 ) {
-  console.log('list in export>>', data, selectedRow);
   const rows = data?.filter((item) => {
-    console.log(
-      item?.id,
-      'selectedRow.has(String(item?.id))>>',
-      selectedRow.has(String(item?.id))
-    );
-    if (selectedRow.has(String(item?.id))) return true;
+    if (selectedRow.has(String(item?.id))) {
+      return true;
+    }
     return false;
-  }) as ListType[];
-  console.log('rows in export>>', rows);
+  });
 
   const headerRow = headers.map((header) => header.value);
 
@@ -392,7 +152,6 @@ export function exportSelected(
       return escapeCSVValue(value);
     })
   );
-  console.log('dataRows in export>>', dataRows);
 
   const csvRows = [headerRow, ...dataRows];
 
@@ -419,6 +178,7 @@ function escapeCSVValue(value: unknown): string {
     return '';
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const stringValue = String(value);
 
   const escapedValue = stringValue.replace(/"/g, '""');
@@ -426,10 +186,26 @@ function escapeCSVValue(value: unknown): string {
   return `"${escapedValue}"`;
 }
 
-export function getErrorMessage(error: any): string {
-  return (
-    error?.data?.message ??
-    (error instanceof Error ? error.message : 'Something Went Wrong!') ??
-    'Unknown Error'
-  );
+export function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  if (typeof error === 'object' && error !== null && 'data' in error) {
+    const errorObj = error as { data?: { message?: string } };
+    if (errorObj.data?.message) {
+      return errorObj.data.message;
+    }
+  }
+  return 'Something Went Wrong!';
 }
+
+export const getApiErrorDetails = (err: unknown) => {
+  const message = err instanceof Error ? err.message : String(err);
+  const axiosError = axios.isAxiosError(err) ? err : undefined;
+
+  return {
+    message,
+    status: axiosError?.response?.status,
+    url: axiosError?.config?.url,
+  };
+};

@@ -27,11 +27,10 @@ export default function CustomTable({
   refetch,
 }: CustomTableProps) {
   const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
-  console.log(isError, 'dfsdfsdsd', isLoading);
   const queryClient = useQueryClient();
-  const [txtToBeSearched, setTextToBeSearched] = useState('');
+  const [txtToBeSearched, setTxtToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [showSortModal, setSortShowModal] = useState(false);
+  const [showSortModal, setShowSortModal] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
@@ -99,10 +98,11 @@ export default function CustomTable({
   };
 
   const getSortIcon = (key: string) => {
-    if (tableQueryParams.sortBy !== key)
+    if (tableQueryParams.sortBy !== key) {
       return (
         <ArrowUpDown className="w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400" />
       );
+    }
     return tableQueryParams.order === 'asc' ? (
       <ArrowUp className="w-4 h-4 text-slate-400 dark:text-slate-500 dark:hover:text-indigo-400" />
     ) : (
@@ -116,7 +116,7 @@ export default function CustomTable({
   };
 
   const openSortModal = () => {
-    setSortShowModal(true);
+    setShowSortModal(true);
     queryClient.setQueryData(['opensortmodal'], true);
   };
 
@@ -125,11 +125,10 @@ export default function CustomTable({
   };
 
   const closeSortModal = () => {
-    setSortShowModal(false);
+    setShowSortModal(false);
   };
 
   const submitFilterData = (data: any) => {
-    console.log('In here customtable!!!!!', data);
     queryClient.setQueryData(['filterKeyData'], data);
     closeModal();
     handleTableQuery({ ...tableQueryParams, page: 1 });
@@ -141,11 +140,6 @@ export default function CustomTable({
   };
 
   const bulkAction = () => {
-    console.log(
-      'selectedRow in custom>>>>>>',
-      selectedRow,
-      tableQueryParams?.tableType
-    );
     exportSelected(
       selectedRow,
       list,
@@ -176,7 +170,7 @@ export default function CustomTable({
             </div>
             <TableToolbar
               txtToBeSearched={txtToBeSearched}
-              setTextToBeSearched={setTextToBeSearched}
+              setTextToBeSearched={setTxtToBeSearched}
               tableQueryParams={tableQueryParams}
               handleRowsPerPageChange={handleRowsPerPageChange}
               openFilterModal={openFilterModal}

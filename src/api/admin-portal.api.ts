@@ -1,4 +1,5 @@
 import apiClient from '../services/http-common.service';
+import { getApiErrorDetails } from '../services/utils.service';
 import type {
   FilterList,
   LoginForm,
@@ -24,7 +25,6 @@ export async function getTableEmployees(
   signal?: AbortSignal
 ) {
   try {
-    console.log('parsmasasas in get table>>', params);
     setIsLoading?.(true);
     const response = await apiClient.get('/paginatedEmployeeList', {
       params,
@@ -39,7 +39,6 @@ export async function getTableEmployees(
   }
 }
 export async function getFilterList(params: FilterList) {
-  console.log('params>>', params);
   try {
     const response = await apiClient.get('/getFilterList', {
       params,
@@ -78,10 +77,11 @@ export const postSubmitProfileSettings = async (form: ProfileForm | null) => {
     const res = await apiClient.post('/profile', form);
     // console.log("Created:", res);
     return res;
-  } catch (err: any) {
-    console.error('API Error:', err.message); // ← this will tell you exactly what's wrong
-    console.error('Status:', err.response?.status);
-    console.error('URL:', err.config?.url);
+  } catch (err: unknown) {
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
     throw err;
   }
 };
@@ -91,10 +91,11 @@ export const getProfileData = async (params: LoginProfile) => {
     const res = await apiClient.get('/profile', { params });
     // console.log("got:", res.data);
     return res;
-  } catch (err: any) {
-    console.error('API Error:', err.message); // ← this will tell you exactly what's wrong
-    console.error('Status:', err.response?.status);
-    console.error('URL:', err.config?.url);
+  } catch (err: unknown) {
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
     throw err;
   }
 };
@@ -104,10 +105,11 @@ export const editProfileData = async (payload: ProfileForm | null) => {
     const res = await apiClient.patch('/profile', payload);
     // console.log("Edited:", res.data);
     return res;
-  } catch (err: any) {
-    console.error('API Error:', err.message); // ← this will tell you exactly what's wrong
-    console.error('Status:', err.response?.status);
-    console.error('URL:', err.config?.url);
+  } catch (err: unknown) {
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
     throw err;
   }
 };
@@ -118,10 +120,11 @@ export const doLogin = async (form: LoginForm) => {
     const res = await apiClient.post('/login', JSON.stringify(form));
     // console.log("Created:", res);
     return res;
-  } catch (err: any) {
-    console.error('API Error:', err.message); // ← this will tell you exactly what's wrong
-    console.error('Status:', err.response?.status);
-    console.error('URL:', err.config?.url);
+  } catch (err: unknown) {
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
     throw err;
   }
 };
@@ -132,10 +135,11 @@ export const doSignup = async (form: SignUpForm) => {
     const res = await apiClient.post('/signup', JSON.stringify(form));
     // console.log("Created:", res);
     return res;
-  } catch (err: any) {
-    console.error('API Error:', err.message); // ← this will tell you exactly what's wrong
-    console.error('Status:', err.response?.status);
-    console.error('URL:', err.config?.url);
+  } catch (err: unknown) {
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
     throw err;
   }
 };

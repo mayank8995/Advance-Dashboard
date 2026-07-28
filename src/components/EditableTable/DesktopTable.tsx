@@ -51,7 +51,7 @@ export const DesktopTable = ({
                   className={`${className} cursor-pointer`}
                 />
               </th>
-              {headersData?.map((header: any) => {
+              {headersData?.map((header) => {
                 return (
                   <th
                     key={header.key}
@@ -70,7 +70,7 @@ export const DesktopTable = ({
             {list?.length > 0 ? (
               list?.map((row: any, index: number) => (
                 <tr
-                  key={`${row.id}-${index}`}
+                  key={`${row.id}-${index * 2}`}
                   className={`hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
                 >
                   {/* {Object.keys(columnsData)?.map((columnsData, id) => (
@@ -100,7 +100,7 @@ export const DesktopTable = ({
                       className={`${className} cursor-pointer`}
                     />
                   </td>
-                  {columnsData?.map((coloumn: any, id: number) => (
+                  {columnsData?.map((coloumn, id: number) => (
                     <td
                       key={id}
                       className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"

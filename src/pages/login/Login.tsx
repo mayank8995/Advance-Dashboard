@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent, type SubmitEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   loginClassName,
@@ -15,7 +15,7 @@ import { useAuth } from '../../context/AuthContext';
 import { getErrorMessage } from '../../services/utils.service';
 
 // LoginCard.jsx
-function Login({ onCustomEvent }: any) {
+function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
   const navigate = useNavigate();
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -24,14 +24,16 @@ function Login({ onCustomEvent }: any) {
   const [errors, setErrors] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
-  const context = useAuth();
+  const { login } = useAuth();
   // console.log("context>>>>",context)
 
   function checkFormValidity() {
     let valid: boolean = true;
     for (const key of Object.keys(form) as Array<keyof LoginForm>) {
-      let msg = validateField(key, form[key]);
-      if (msg) valid = false;
+      const msg = validateField(key, form[key]);
+      if (msg) {
+        valid = false;
+      }
       // console.log("msg>>>",msg)
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -40,24 +42,22 @@ function Login({ onCustomEvent }: any) {
     }
     return valid;
   }
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     // console.log("Form submitted smoothly without a reload!");
     try {
       if (checkFormValidity()) {
         // console.log("inside herer")
-        let res;
         setIsLoading(true);
-        res = await doLogin(form);
+        const res = await doLogin(form);
         if (res.status === 200) {
           setIsLoading(false);
           toast.success(res.data.message, {});
-          context.login({ ...res.data.user });
+          login({ ...res.data.user });
           navigate(NAV_ITEMS.DASHBOARD);
         } else {
           toast.error(res.data.message, {});
-          console.log('in else POST SUCCESS', res);
           setIsLoading(false);
         }
       } else {
@@ -71,21 +71,23 @@ function Login({ onCustomEvent }: any) {
     }
   };
 
-  const handleOnChange = (e: any) => {
+  const handleOnChange = (e: ChangeEvent<HTMLFormElement>) => {
     const { name, value } = e.target;
     // console.log("onchange data",name, value);
     try {
-      setForm((prevData: any) => ({
+      setForm((prevData) => ({
         ...prevData,
         [name]: value,
       }));
-      let msg = validateField(name, value);
+      const msg = validateField(name, value);
       // console.log("msg>>>",msg)
       setErrors((prevErrors) => ({
         ...prevErrors,
         [name]: msg,
       }));
-    } catch (e: any) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
   return (
     <div className="h-100 md:max-h-150 md:h-127.5 bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">

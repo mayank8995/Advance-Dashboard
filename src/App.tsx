@@ -15,12 +15,10 @@ function App() {
   return (
     <ErrorBoundary fallback={<ErrorBoundaryPage />}>
       <div className="h-screen max-h-full relative">
-        <div
-          className={`absolute z-200 top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4 `}
-        >
+        <div className={` w-full px-4 `}>
           {/* {show ? <Login onCustomEvent={(flag:boolean) => setShow(flag)}/> : <Signup onCustomEvent={() => setShow((flag) => !flag)}/>} */}
           <div
-            className={`flex flex-1 flex-col md:flex-row justify-evenly items-center transition-opacity duration-300`}
+            className={`relative z-10 h-screen  flex flex-1 flex-col md:flex-row justify-evenly items-center transition-opacity duration-300`}
           >
             <div className="hidden md:flex flex-col justify-center gap-6 p-12">
               <div className="flex items-center gap-2">

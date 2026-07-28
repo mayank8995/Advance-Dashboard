@@ -43,9 +43,9 @@ export default function KeyMetric({ metricData }: KeyMetricCardsProps) {
       {!isLoading ? (
         <React.Fragment>
           {data &&
-            Object?.keys(data)?.map((key, i) => (
+            Object?.keys(data)?.map((key) => (
               <div
-                key={i}
+                key={key}
                 className={`items-start bg-linear-to-br from-white to-indigo-50/40 border border-slate-200 rounded-xl flex flex-col gap-3 p-2 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-blue-950/20 dark:border-none
             ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-l-4 border-l-blue-500 dark:border-l-blue-400'}
               ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FOLDER_DOT'] && 'border-l-4 border-l-green-500 dark:border-l-green-400'}
@@ -103,7 +103,7 @@ export default function KeyMetric({ metricData }: KeyMetricCardsProps) {
         <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
           {Array.from({ length: 4 }, (_, index) => index + 1)?.map((_, i) => (
             <div
-              key={`items-start-${i}`}
+              key={`items-start-${i * 2}`}
               className="items-start flex flex-col gap-3 p-2 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 bg-white border border-gray-200 rounded-xl shadow animate-pulse dark:bg-gray-800 dark:border-gray-700 dark:border-none"
             >
               <div className="items-center flex flex-row ">

@@ -4,16 +4,13 @@ import {
   reviewColorsDark,
   reviewtextColors,
   reviewtextColorsDark,
-  statusColors,
 } from '../../utils/constants';
 
 export const ReviewReasonBadge = ({ value }: ReviewReasonBadgeProps) => {
-  console.log('value>>>', value);
-  if (!value) return;
-  console.log(
-    value.toLocaleLowerCase(),
-    statusColors[value.toLocaleLowerCase()]
-  );
+  if (!value) {
+    return;
+  }
+
   return (
     <div className="flex flex-col items-start p-1">
       <div

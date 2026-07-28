@@ -13,7 +13,6 @@ import type {
   MeetingKPIsCardProps,
   PromotedThisYearCardProps,
   RequiringReviewCardProps,
-  TableQueryParams,
   TopPerformersCardProps,
 } from '../../types/types';
 import { usePerFormanceTableData } from '../../services/utils.service';
@@ -28,7 +27,7 @@ function Dashboard() {
     tableType: 'topProjects',
     page: 1,
     limit: 5,
-  } as TableQueryParams);
+  });
   const queryClient = useQueryClient();
   const { data: metricData }: AnalyticsCard =
     queryClient.getQueryData(['analyticsData']) || {};

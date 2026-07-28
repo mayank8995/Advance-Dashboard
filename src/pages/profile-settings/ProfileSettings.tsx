@@ -20,7 +20,6 @@ import { useAuth } from '../../context/AuthContext';
 
 function ProfileSettings() {
   const { user } = useAuth();
-  console.log('user>>>', user);
   const [formValues, setFormValues] = useState<ProfileForm | null>({
     name: '',
     phone: '',
@@ -33,10 +32,10 @@ function ProfileSettings() {
     location: '',
     image: null,
   });
-  const refForUpload = useRef<HTMLInputElement>(null); // separate ref for image upload
+  const uploadRef = useRef<HTMLInputElement>(null); // separate ref for image upload
   const [errors, setErrors] = useState({});
   const [formDisabled, setFormDisabled] = useState<boolean>(false);
-  const [isLoading, setIsDataLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { data: profileData } = useProfileData(user as LoginProfile);
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
@@ -54,7 +53,7 @@ function ProfileSettings() {
       ...prevData,
       [name]: value,
     }));
-    let msg = validateField(name, value);
+    const msg = validateField(name, value);
     // console.log("msg>>>",msg)
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -90,7 +89,7 @@ function ProfileSettings() {
     e.preventDefault();
     try {
       if (checkFormValidity()) {
-        setIsDataLoading(true);
+        setIsLoading(true);
         // console.log("inside herer")
         setFormDisabled(false);
         let res = null;
@@ -105,7 +104,7 @@ function ProfileSettings() {
           } else {
             toast.error(res.data.message, {});
           }
-          setIsDataLoading(false);
+          setIsLoading(false);
         } else {
           res = await editProfileData({
             ...formValues,
@@ -121,17 +120,17 @@ function ProfileSettings() {
           } else {
             toast.error(res.data.message, {});
           }
-          setIsDataLoading(false);
+          setIsLoading(false);
         }
         // console.log("POST SUCCESS", res);
       } else {
         // console.log("ELSE SUBMIT");
-        setIsDataLoading(false);
+        setIsLoading(false);
       }
     } catch (err) {
       toast.error(getErrorMessage(err), {});
       console.error('POST FAILED', err);
-      setIsDataLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -158,7 +157,7 @@ function ProfileSettings() {
 
   function handleUpload() {
     try {
-      refForUpload?.current && refForUpload?.current?.click();
+      uploadRef?.current && uploadRef?.current?.click();
     } catch (e) {
       toast.error(getErrorMessage(e), {});
       console.error('Upload error:', e);
@@ -234,7 +233,7 @@ function ProfileSettings() {
                       />
                     </div>
                     <input
-                      ref={refForUpload}
+                      ref={uploadRef}
                       onChange={handleFileChange}
                       type="file"
                       style={{ display: 'none' }}

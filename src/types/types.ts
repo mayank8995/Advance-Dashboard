@@ -152,7 +152,7 @@ export type DesktopTableProps = {
   headersData: HeaderType;
   rowsPerPage: number;
   handleSort: (e: string) => void;
-  getSortIcon: (e: string) => void;
+  getSortIcon: (e: string) => ReactNode;
   tableQueryParams?: TableQueryParams;
   selectedRow: Set<unknown>;
   setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
@@ -338,6 +338,18 @@ export type CustomTableProps = ErrorPageProps & {
   title: string;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 };
+export type ColumnsData =
+  | Column<Employee>[]
+  | Column<TopPerformer>[]
+  | Column<TopProject>[]
+  | Column<PromotedEmployee>[]
+  | Column<EmployeeRequiringReview>[];
+export type HeadersData =
+  | TableHeader<Employee>[]
+  | TableHeader<TopPerformer>[]
+  | TableHeader<TopProject>[]
+  | TableHeader<PromotedEmployee>[]
+  | TableHeader<EmployeeRequiringReview>[];
 
 type Trend = 'up' | 'down';
 

@@ -71,7 +71,6 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     });
     const checkIfEmpty: any =
       result && result?.filter((res: any) => res?.value?.length > 0);
-    console.log('checkIfEmpty>>', checkIfEmpty);
     if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
     else setSelectedChips(result as any[]);
 
@@ -172,20 +171,24 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
 
   return (
     <>
-      <div className="flex flex-col max-h-[85vh] md:max-h-150 bg-linear-to-br from-white to-indigo-100 shadow-sm border border-slate-100 dark:bg-linear-to-br dark:from-slate-950 dark:to-indigo-950 dark:border-slate-900/50 fixed z-300 left-0 right-0 bottom-0 md:absolute md:top-[50%] md:left-[50%] md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-t-2xl md:rounded-2xl">
-        <div className="flex flex-row justify-between items-center p-2 text-sm font-bold border-b-2 border-b-slate-400/50 dark:text-slate-200/50">
-          <h1 className="dark:text-slate-200">Filters</h1>
+      <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10 flex flex-col max-h-[85vh] md:h-125 md:max-h-125 shadow-sm  fixed z-300 left-0 right-0 bottom-0 md:absolute md:top-[50%] md:left-[50%] md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-t-2xl md:rounded-2xl">
+        <div className="flex flex-row justify-between items-center p-4 border-b border-b-slate-200 dark:border-b-white/10">
+          <h1 className="text-sm font-bold text-slate-900 dark:text-white">
+            Filters
+          </h1>
           <button onClick={handleCloseModal}>
             <X
-              className={'text-slate-950 cursor-pointer dark:text-slate-200'}
+              className={
+                'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 cursor-pointer'
+              }
               width={16}
               height={20}
             />
           </button>
         </div>
 
-        <div className="flex flex-1 min-h-0 overflow-y-auto">
-          <div className="flex flex-col">
+        <div className="flex flex-1 overflow-y-auto">
+          <div className="flex flex-col border-r border-r-slate-200 dark:border-r-white/10">
             {tabID &&
               tabID?.map((item: any, index: number) => {
                 const filterKey =
@@ -198,7 +201,12 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                       setFocusedIndex(event.currentTarget?.tabIndex)
                     }
                     key={index + filterKey}
-                    className={`flex-1 min-h-0  cursor-pointer text-xs basis-28 w-28 wrap-anywhere flex items-center justify-center  ${focusedIndex === index ? ' text-indigo-700  border-l-4 border-r-0 border-indigo-600 dark:text-indigo-300 dark:border-indigo-400/50 font-semibold' : 'border-r-2 border-slate-400/50 text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'} ${index === 0 ? 'border-t-0' : focusedIndex === index ? 'border-t-2 border-t-slate-400 ' : 'border-t-2 '}`}
+                    className={`h-10.5 cursor-pointer text-xs w-28 wrap-anywhere flex items-center justify-center border-slate-200 dark:border-white/10  ${
+                      focusedIndex === index
+                        ? 'bg-[#534ab7] text-white'
+                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5'
+                    }
+                     `}
                   >
                     <h1 className="text-center">
                       {CORRESPONDING_FILTER_TABLE_KEY_NAME[filterKey]}
@@ -213,7 +221,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                 <React.Fragment key={index + item[1]}>
                   {focusedIndex === index && (
                     <div
-                      className="flex-1 min-h-0 transition-all duration-200 ease-out outline-none  p-2 relative flex flex-wrap items-center overflow-auto overflow-x-auto   "
+                      className="transition-all duration-200 ease-out outline-none  p-2 relative flex flex-wrap items-center overflow-auto overflow-x-auto   "
                       itemID={`${index}`}
                     >
                       {item[1]?.map((chipObj: any, chipId: number) => (
@@ -228,8 +236,8 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                                                 text-xs
                                                 ${
                                                   !chipObj?.selected
-                                                    ? 'bg-indigo-100 border-slate-300 dark:border-slate-600  dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:bg-indigo-50 dark:hover:bg-indigo-950/30'
-                                                    : 'border-indigo-600 dark:border-indigo-400 bg-red-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-semibold'
+                                                    ? 'border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-white/25'
+                                                    : 'bg-[#534ab7] text-white hover:bg-[#7f77dd]'
                                                 }`}
                             >
                               {chipObj?.value}
@@ -246,17 +254,17 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
               ))}
           </div>
         </div>
-        <div className="flex  justify-around flex-row p-2 border-t-2 border-t-slate-400/50 ">
+        <div className="flex  justify-between flex-row p-4 border-t border-t-slate-200 dark:border-t-white/10 ">
           <button
             onClick={clearFilter}
-            className="text-indigo-600 font-semibold text-sm cursor-pointer"
+            className="text-rose-600 dark:text-rose-400 hover:underline font-semibold text-sm cursor-pointer"
           >
             Clear All
           </button>
           <button
             onClick={submitModal}
             disabled={!selectedChips?.length}
-            className={`px-6 py-2.5 font-semibold text-sm rounded-xl shadow-lg text-white ${selectedChips?.length ? 'bg-linear-to-r from-indigo-600 to-violet-600  shadow-indigo-500/30 hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40 hover:enabled:from-indigo-700 hover:enabled:to-violet-700 transition-all duration-200 cursor-pointer' : 'bg-slate-300 disabled:text-gray-500 disabled:cursor-not-allowed'}
+            className={`px-6 py-2.5 font-semibold text-sm rounded-xl shadow-lg text-white ${selectedChips?.length ? 'bg-[#534ab7] text-white hover:bg-[#7f77dd] hover:enabled:shadow-xl transition-all duration-200 cursor-pointer' : 'bg-slate-300 text-slate-500 dark:bg-white/5 dark:text-slate-600 cursor-not-allowed'}
                     
                 `}
           >
@@ -278,7 +286,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         </div>
       </div>
       <button
-        className="fixed inset-0 bg-black/50 z-200"
+        className="fixed inset-0 bg-black/40 dark:bg-black/60 z-200"
         onClick={handleCloseModal}
       />
     </>

@@ -20,14 +20,13 @@ export default function MobileViewCardForTable({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  console.log('Mobile selectedRow', selectedRow);
   useEffect(() => {
     setSelectedRow(new Set());
   }, [tableQueryParams]);
 
   function getRowCss(value: string) {
-    let initialCss = `grid grid-cols-2 gap-y-2 text-xs`;
-    if (value === 'id') return 'hidden';
+    const initialCss = `grid grid-cols-2 gap-y-2 text-xs`;
+    if (value === 'id') {return 'hidden';}
     return initialCss;
   }
   return (

@@ -22,8 +22,11 @@ function Navigation() {
     navItem?: NavItems,
     isMobile?: boolean
   ) {
-    if (isMobile) setIsOpen(!isOpen);
-    else setIsOpen(isOpen);
+    if (isMobile) {
+      setIsOpen(!isOpen);
+    } else {
+      setIsOpen(isOpen);
+    }
     if (navItem && navItem.path === NAV_ITEMS.LOGOUT) {
       context?.logout();
     } else if (navItem && navItem.path === NAV_ITEMS.ANALYTICS) {

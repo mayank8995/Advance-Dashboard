@@ -34,7 +34,6 @@ function Analytics() {
   const { data: metricData }: AnalyticsCard =
     queryClient.getQueryData(['analyticsData']) || {};
 
-  console.log('metricData>', metricData);
   return (
     <div className="flex flex-col flex-auto">
       <KeyMetricCard>
