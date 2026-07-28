@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type SubmitEvent,
+} from 'react';
 import FormField from '../../components/Form/FormField';
 import {
   className,
@@ -13,8 +19,11 @@ import {
 } from '../../api/admin-portal.api';
 import { validateField } from '../../services/form-validation.service';
 import { TailSpin } from 'react-loader-spinner';
-import { toast } from 'react-toastify';
-import { getErrorMessage, useProfileData } from '../../services/utils.service';
+import { toast, type ToastContent } from 'react-toastify';
+import {
+  getApiErrorDetails,
+  useProfileData,
+} from '../../services/utils.service';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../../context/AuthContext';
 import ProfileSettingSkeleton from '../../components/Skeleton/ProfileSettingSkeleton';
@@ -80,8 +89,10 @@ function ProfileSettings() {
         key === 'jdate'
       ) {
         // console.log("VZXVXZVXXZ",formValues[key])
-        let msg = validateField(key, formValues[key]);
-        if (msg) valid = false;
+        const msg = validateField(key, formValues[key]);
+        if (msg) {
+          valid = false;
+        }
         // console.log("msg>>>",msg)
         setErrors((prevErrors) => ({
           ...prevErrors,
@@ -92,24 +103,27 @@ function ProfileSettings() {
     return valid;
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (checkFormValidity()) {
         setIsLoading(true);
         // console.log("inside herer")
         setFormDisabled(false);
-        let res = null;
+        let res: {
+          status?: number;
+          data?: { message?: ToastContent<unknown> };
+        } | null = null;
         if (!isEditing) {
           res = await postSubmitProfileSettings({
             ...formValues,
             id: user?.id,
           } as ProfileForm);
           if (res.status === 201) {
-            toast.success(res.data.message, {});
+            toast.success(res?.data?.message);
             setIsEditing(true);
           } else {
-            toast.error(res.data.message, {});
+            toast.error(res?.data?.message);
           }
           setIsLoading(false);
         } else {
@@ -118,14 +132,14 @@ function ProfileSettings() {
             id: user?.id,
           } as ProfileForm);
           if (res.status === 201) {
-            toast.success(res.data.message, {});
+            toast.success(res?.data?.message);
             setIsEditing(true);
             queryClient.removeQueries({
               queryKey: ['profileData'],
               exact: true,
             });
           } else {
-            toast.error(res.data.message, {});
+            toast.error(res?.data?.message);
           }
           setIsLoading(false);
         }
@@ -135,7 +149,8 @@ function ProfileSettings() {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error(getErrorMessage(err), {});
+      const { message } = getApiErrorDetails(err);
+      toast.error(message, {});
       console.error('POST FAILED', err);
       setIsLoading(false);
     }
@@ -166,13 +181,16 @@ function ProfileSettings() {
     try {
       uploadRef?.current && uploadRef?.current?.click();
     } catch (e) {
-      toast.error(getErrorMessage(e), {});
+      const { message } = getApiErrorDetails(e);
+      toast.error(message, {});
       console.error('Upload error:', e);
     }
   }
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e?.target?.files?.[0];
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     if (!file.type.startsWith('image/')) {
       alert('Please upload an image file');
@@ -188,7 +206,11 @@ function ProfileSettings() {
     const reader = new FileReader();
     // Fires once the file is fully read as a Base64 Data URL string
     reader.onload = () => {
-      const base64String: any = reader.result;
+      const base64String = reader.result;
+      if (typeof base64String !== 'string') {
+        alert('Failed to read image file.');
+        return;
+      }
       try {
         setFormValues((prevData) => ({
           ...prevData,

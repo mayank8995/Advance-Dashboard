@@ -121,6 +121,7 @@ export const doLogin = async (form: LoginForm) => {
     // console.log("Created:", res);
     return res;
   } catch (err: unknown) {
+    console.error('err>>>', err);
     const { message, status, url } = getApiErrorDetails(err);
     console.error('API Error:', message);
     console.error('Status:', status);

@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown, X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
 import FormField from '../Form/FormField';
+import type { HeadersData } from '../../types/types';
 
 type SortConfig = {
   key: string;
@@ -10,7 +11,7 @@ type SortConfig = {
 
 interface SortModalComponentProps {
   isOpen?: boolean;
-  headersData: any;
+  headersData: HeadersData;
   sortConfig: SortConfig;
   onSort: (value: string) => void;
   closeSortModal: () => void;
@@ -71,7 +72,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
           </button>
         </div>
         <div className="grid grid-cols-2 max-h-150 h-fit overflow-y-auto p-4 ">
-          {headersData?.map((header: any) => (
+          {headersData?.map((header) => (
             // <div >
             <button
               ref={myElementRef}

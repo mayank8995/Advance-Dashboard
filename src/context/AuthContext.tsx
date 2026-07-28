@@ -5,14 +5,14 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { type Login, type TableQueryParams } from '../types/types';
+import { type LoginData, type TableQueryParams } from '../types/types';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthContextType {
-  user: Login | null;
+  user: LoginData | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: ({ name, id }: Login) => void;
+  login: ({ name, id }: LoginData) => void;
   logout: () => void;
   tableQueryParams: TableQueryParams;
   setQueryParamsData: (data: TableQueryParams) => void;
@@ -22,12 +22,12 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
-  const [user, setUser] = useState<Login | null>(() => {
+  const [user, setUser] = useState<LoginData | null>(() => {
     const storedUser = localStorage.getItem('user');
     if (!storedUser) {
       return null;
     }
-    return JSON.parse(storedUser) as Login;
+    return JSON.parse(storedUser) as LoginData;
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const login = ({ id, name }: Login) => {
+  const login = ({ id, name }: LoginData) => {
     localStorage.setItem('user', JSON.stringify({ id, name }));
     setUser({ id, name });
   };

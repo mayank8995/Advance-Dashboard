@@ -9,9 +9,9 @@ import FormField from '../../components/Form/FormField';
 import { TailSpin } from 'react-loader-spinner';
 import { validateField } from '../../services/form-validation.service';
 import { doSignup } from '../../api/admin-portal.api';
-import { toast } from 'react-toastify';
+import { toast, type ToastContent } from 'react-toastify';
 import { ChevronLeft, StepBack, StepForward } from 'lucide-react';
-import { getErrorMessage } from '../../services/utils.service';
+import { getApiErrorDetails } from '../../services/utils.service';
 
 export default function Signup({
   onCustomEvent,
@@ -69,20 +69,26 @@ export default function Signup({
       return;
     }
     try {
-      let res;
       setIsLoading(true);
 
-      res = await doSignup({ ...formData['formOne'], ...formData['formTwo'] });
+      const res: {
+        status?: number;
+        data?: { message?: ToastContent<unknown> };
+      } | null = await doSignup({
+        ...formData['formOne'],
+        ...formData['formTwo'],
+      });
       if (res.status === 201) {
-        toast.success(res.data.message, {});
+        toast.success(res?.data?.message, {});
         onCustomEvent();
       } else {
-        toast.error(res.data.message, {});
+        toast.error(res?.data?.message, {});
         //   console.log("in else POST SUCCESS", res);
       }
       setIsLoading(false);
     } catch (err) {
-      toast.error(getErrorMessage(err), {});
+      const { message } = getApiErrorDetails(err);
+      toast.error(message, {});
       console.error('POST FAILED', err);
       setIsLoading(false);
     }

@@ -27,7 +27,7 @@ export const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
       </div>
       <div className="flex-1 flex flex-col justify-evenly">
         {Array.isArray(topPerformersList?.employees) &&
-          topPerformersList?.employees?.map((value: any, index: number) => {
+          topPerformersList?.employees?.map((value, index: number) => {
             return (
               <React.Fragment key={value.id}>
                 {index < CARD_CONTENT_LIMIT_TO_SCROLL && (

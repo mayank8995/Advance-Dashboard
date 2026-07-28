@@ -2,16 +2,22 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
-import type { TableQueryParams } from '../../types/types';
+import type { SelectedChip, TableQueryParams } from '../../types/types';
 import { useFilterList } from '../../services/utils.service';
 import { useSearchParams } from 'react-router-dom';
 
+type FilterListItem = [string, string[]];
+interface FilterListResponse {
+  data?: {
+    list?: FilterListItem[];
+  };
+}
 interface FilterModalComponentProps {
   tableType?: string;
   closeModal: () => void;
-  submitFilterData: (chipID: any) => void;
+  submitFilterData: (chips: SelectedChip[]) => void;
   clearAllFilter: () => void;
-  filterList?: any;
+  filterList?: FilterListResponse;
   tableQueryParams?: TableQueryParams;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 }
@@ -28,51 +34,58 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     tableType: target || 'employees',
   });
   const [focusedIndex, setFocusedIndex] = useState(0);
-  const [tabID, setTabID] = useState<any[]>();
-  const [tabValue, setTabValue] = useState<any[]>();
-  const [selectedChips, setSelectedChips] = useState<any[]>([]);
+  const [tabID, setTabID] = useState<string[]>();
+  const [tabValue, setTabValue] =
+    useState<Array<[string, Array<{ selected: boolean; value: string }>]>>();
+  const [selectedChips, setSelectedChips] = useState<SelectedChip[]>([]);
 
   const [seeMore, setSeeMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (filterList) {
-      const data: any = filterList['data']?.list;
-      let tabIdArr: any = [];
-      let finalModified: any = [];
-      data?.forEach((item: any) => {
-        item[1].length && tabIdArr.push(item[0]);
+    const dataList = (filterList as FilterListResponse | undefined)?.data?.list;
+    if (dataList) {
+      const tabIdArr: string[] = [];
+      const finalModified: Array<
+        [string, Array<{ selected: boolean; value: string }>]
+      > = [];
+      dataList.forEach(([key, values]) => {
+        if (values.length) {
+          tabIdArr.push(key);
+        }
       });
       setTabID(tabIdArr);
-      data?.forEach((item: any) => {
-        let tabIdValue: any = [];
-        item[1].forEach((val: any) => {
-          let obj = { selected: false, value: val };
-          tabIdValue.push(obj);
-        });
-        finalModified.push([item[0], tabIdValue]);
+      dataList.forEach(([key, values]) => {
+        const tabIdValue = values.map((val) => ({
+          selected: false,
+          value: val,
+        }));
+        finalModified.push([key, tabIdValue]);
       });
       setTabValue(finalModified);
     }
   }, [filterList]);
   // console.log('tabValue>>', tabValue);
   const tabValueMemoized = useMemo(() => {
-    const result = tabValue?.flatMap((item: any) => {
-      return [
-        {
-          key: item?.[0],
-          value: [
-            ...item?.[1]
-              ?.filter((it: any) => it?.selected === true)
-              ?.map((i: any) => i?.value),
-          ],
-        },
-      ];
-    });
-    const checkIfEmpty: any =
-      result && result?.filter((res: any) => res?.value?.length > 0);
-    if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
-    else setSelectedChips(result as any[]);
+    const result: SelectedChip[] =
+      tabValue?.flatMap((item) => {
+        const values = item?.[1]
+          ?.filter((it) => it?.selected === true)
+          ?.map((i) => i?.value);
+        return [
+          {
+            key: item?.[0],
+            value: [...values],
+          },
+        ];
+      }) ?? [];
+    const checkIfEmpty =
+      result && result?.filter((res) => res?.value?.length > 0);
+    if (checkIfEmpty && checkIfEmpty.length === 0) {
+      setSelectedChips([]);
+    } else {
+      setSelectedChips(result);
+    }
 
     return tabValue;
   }, [tabValue]);
@@ -106,7 +119,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   function submitModal() {
     setLoading(true);
     const filters = selectedChips
-      .filter((obj: any) => obj)
+      .filter((obj) => obj)
       ?.map((it) => ({ [it.key]: it?.value?.join(',') }))
       .reduce(
         (accumulator, currentItem) => ({ ...accumulator, ...currentItem }),
@@ -131,11 +144,11 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   function handleSelectedChips(e: any) {
     const tab = e?.target?.id && e?.target?.id?.split('-');
     setTabValue((prev) =>
-      prev?.map((item: any) =>
+      prev?.map((item) =>
         item[0] === tab[0]
           ? [
               item[0],
-              item[1]?.map((chip: any) =>
+              item[1]?.map((chip) =>
                 chip.value === tab[1]
                   ? { ...chip, selected: !chip.selected }
                   : chip
@@ -156,9 +169,9 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       tableType: prev.tableType,
     }));
     setTabValue((prev) =>
-      prev?.map((item: any) => [
+      prev?.map((item) => [
         item[0],
-        item[1]?.map((chip: any) => ({ ...chip, selected: false })),
+        item[1]?.map((chip) => ({ ...chip, selected: false })),
       ])
     );
     setSelectedChips([]);
@@ -190,7 +203,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         <div className="flex flex-1 overflow-y-auto">
           <div className="flex flex-col border-r border-r-slate-200 dark:border-r-white/10">
             {tabID &&
-              tabID?.map((item: any, index: number) => {
+              tabID?.map((item, index: number) => {
                 const filterKey =
                   item as keyof typeof CORRESPONDING_FILTER_TABLE_KEY_NAME;
 

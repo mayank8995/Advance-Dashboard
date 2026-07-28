@@ -8,7 +8,7 @@ import TableToolbar from './TableToolbar';
 import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
-import type { CustomTableProps } from '../../types/types';
+import type { CustomTableProps, SelectedChip } from '../../types/types';
 import EmployeeTableSkeleton from '../Skeleton/EmployeeTableSkeleton';
 import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
@@ -128,7 +128,7 @@ export default function CustomTable({
     setShowSortModal(false);
   };
 
-  const submitFilterData = (data: any) => {
+  const submitFilterData = (data: SelectedChip[]) => {
     queryClient.setQueryData(['filterKeyData'], data);
     closeModal();
     handleTableQuery({ ...tableQueryParams, page: 1 });

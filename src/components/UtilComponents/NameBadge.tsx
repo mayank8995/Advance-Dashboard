@@ -15,7 +15,7 @@ export const NameBadge = ({ value }: NameBadgeProps) => {
       >
         {value
           ?.split(' ')
-          .map((n: any) => n[0])
+          .map((n: string) => n[0])
           .join('')}
       </h1>
       <h2 className="pl-2 text-slate-800 dark:text-slate-300">{value}</h2>

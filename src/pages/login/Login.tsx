@@ -7,12 +7,12 @@ import {
 } from '../../utils/constants';
 import FormField from '../../components/Form/FormField';
 import { validateField } from '../../services/form-validation.service';
-import type { LoginForm } from '../../types/types';
+import type { LoginData, LoginForm } from '../../types/types';
 import { doLogin } from '../../api/admin-portal.api';
 import { TailSpin } from 'react-loader-spinner';
-import { toast } from 'react-toastify';
+import { toast, type ToastContent } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
-import { getErrorMessage } from '../../services/utils.service';
+import { getApiErrorDetails } from '../../services/utils.service';
 
 // LoginCard.jsx
 function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
@@ -50,14 +50,17 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
       if (checkFormValidity()) {
         // console.log("inside herer")
         setIsLoading(true);
-        const res = await doLogin(form);
+        const res: {
+          status?: number;
+          data?: { user?: LoginData; message?: ToastContent<unknown> };
+        } | null = await doLogin(form);
         if (res.status === 200) {
           setIsLoading(false);
-          toast.success(res.data.message, {});
-          login({ ...res.data.user });
+          toast.success(res?.data?.message, {});
+          login({ ...res?.data?.user } as LoginData);
           navigate(NAV_ITEMS.DASHBOARD);
         } else {
-          toast.error(res.data.message, {});
+          toast.error(res?.data?.message, {});
           setIsLoading(false);
         }
       } else {
@@ -65,14 +68,15 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
         setIsLoading(false);
       }
     } catch (err) {
-      toast.error(getErrorMessage(err), {});
+      const { message } = getApiErrorDetails(err);
+      toast.error(message, {});
       console.error('POST FAILED', err);
       setIsLoading(false);
     }
   };
 
-  const handleOnChange = (e: ChangeEvent<HTMLFormElement>) => {
-    const { name, value } = e.target;
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value }: { name: string; value: string } = e.target;
     // console.log("onchange data",name, value);
     try {
       setForm((prevData) => ({
@@ -98,7 +102,7 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
       </div>
 
       {/* Email */}
-      <form onSubmit={handleSubmit} onChange={handleOnChange} noValidate>
+      <form onSubmit={handleSubmit} noValidate>
         <div>
           <div className="mb-4 flex flex-col">
             <label htmlFor="email" className={loginLabelclassNAme}>
@@ -112,6 +116,7 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
               placeholder={'you@example.com'}
               className={loginClassName}
               id={'email'}
+              onChange={handleOnChange}
             />
           </div>
           <div className="mb-4 flex flex-col">
@@ -126,6 +131,7 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
               placeholder={'••••••••'}
               className={loginClassName}
               id={'password'}
+              onChange={handleOnChange}
             />
             {/* <a href="#" className="text-sm text-blue-500">Forgot password?</a> */}
           </div>

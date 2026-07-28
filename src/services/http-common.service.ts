@@ -4,10 +4,10 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-interface ApiError extends AxiosError{
+interface ApiError extends AxiosError {
   status: number;
   data: unknown;
-  statusText: string
+  statusText: string;
 }
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -65,7 +65,8 @@ function normalizeApiError(error: AxiosError): ApiError {
   console.error('normalizeApiError', error?.response);
   const normalizedError = error as ApiError;
   normalizedError.status = Number(error.response?.status);
-  normalizedError.statusText = error?.response?.statusText ?? 'Something went wrong!';
+  normalizedError.statusText =
+    error?.response?.statusText ?? 'Something went wrong!';
   normalizedError.data = error?.response?.data;
   return normalizedError;
 }

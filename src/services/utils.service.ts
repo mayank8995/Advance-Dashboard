@@ -200,7 +200,16 @@ export function getErrorMessage(error: unknown) {
 }
 
 export const getApiErrorDetails = (err: unknown) => {
-  const message = err instanceof Error ? err.message : String(err);
+  let message = null;
+  if (err instanceof Error) {
+    message = err.message;
+  }
+  if (typeof err === 'object' && err !== null && 'data' in err) {
+    const errorObj = err as { data?: { message?: string } };
+    if (errorObj.data?.message) {
+      message = errorObj.data.message;
+    }
+  }
   const axiosError = axios.isAxiosError(err) ? err : undefined;
 
   return {

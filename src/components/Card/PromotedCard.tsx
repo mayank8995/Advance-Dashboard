@@ -28,7 +28,7 @@ export const PromotedCard = ({ promotedThisYear }: PromotedList) => {
       </div>
       <div className="flex-1 flex flex-col justify-evenly">
         {Array.isArray(promotedThisYear?.employees) &&
-          promotedThisYear?.employees?.map((value: any, index: number) => {
+          promotedThisYear?.employees?.map((value, index: number) => {
             return (
               <React.Fragment key={value.id}>
                 {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
@@ -40,7 +40,7 @@ export const PromotedCard = ({ promotedThisYear }: PromotedList) => {
                         >
                           {value.name
                             .split(' ')
-                            .map((n: any) => n[0])
+                            .map((n: string) => n[0])
                             .join('')}
                         </h1>
                         <div>

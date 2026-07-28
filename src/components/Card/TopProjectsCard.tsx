@@ -38,7 +38,7 @@ export const TopProjectsCard = ({
             {!isError ? (
               <div className="flex-1 flex flex-col justify-evenly">
                 {Array.isArray(topProj) &&
-                  topProj?.map((value: any, index: number) => {
+                  topProj?.map((value, index: number) => {
                     return (
                       <React.Fragment key={value.name + index}>
                         {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
@@ -62,7 +62,7 @@ export const TopProjectsCard = ({
                                   {value?.name && value?.name.length > 20
                                     ? value.name
                                         .split(' ')
-                                        .map((n: any) => n[0])
+                                        .map((n: string) => n[0])
                                         .join('')
                                     : value.name}
                                 </span>

@@ -10,7 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import { className } from '../../utils/constants';
-import type { TableToolbarProps } from '../../types/types';
+import type { SelectedChip, TableToolbarProps } from '../../types/types';
 import { useQueryClient } from '@tanstack/react-query';
 
 export const TableToolbar = ({
@@ -27,7 +27,7 @@ export const TableToolbar = ({
   handleOnChange,
 }: TableToolbarProps) => {
   const queryClient = useQueryClient();
-  const isfilterAvailable: any =
+  const isfilterAvailable: SelectedChip[] =
     queryClient.getQueryData(['filterKeyData']) || [];
   return (
     <React.Fragment>
@@ -40,7 +40,7 @@ export const TableToolbar = ({
             type={'text'}
             name={'search'}
             placeholder={'Search...'}
-            onChange={(e: any) => setTextToBeSearched(e?.target?.value || '')}
+            onChange={(e) => setTextToBeSearched(e?.target?.value || '')}
           />
           {txtToBeSearched && (
             <button onClick={() => setTextToBeSearched('')}>
@@ -191,7 +191,7 @@ export const TableToolbar = ({
               type={'text'}
               name={'search'}
               placeholder={'Search...'}
-              onChange={(e: any) => setTextToBeSearched(e?.target?.value || '')}
+              onChange={(e) => setTextToBeSearched(e?.target?.value || '')}
             />
             {txtToBeSearched && (
               <button onClick={() => setTextToBeSearched('')}>
