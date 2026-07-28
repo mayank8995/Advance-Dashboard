@@ -46,7 +46,7 @@ export default function KeyMetric({ metricData }: KeyMetricCardsProps) {
             Object?.keys(data)?.map((key) => (
               <div
                 key={key}
-                className={`items-start bg-linear-to-br from-white to-indigo-50/40 border border-slate-200 rounded-xl flex flex-col gap-3 p-2 hover:shadow-xl hover:shadow-indigo-100/50 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-blue-950/20 dark:border-none
+                className={`items-start bg-linear-to-br from-white to-indigo-50/40 border border-slate-200 rounded-xl flex flex-col gap-3 p-2 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40 hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-blue-950/20 dark:border-none
             ${data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && 'border-l-4 border-l-blue-500 dark:border-l-blue-400'}
               ${data[key]?.icon === KEY_TRACK_METRIC_ICON['FOLDER_DOT'] && 'border-l-4 border-l-green-500 dark:border-l-green-400'}
               ${data[key]?.icon === KEY_TRACK_METRIC_ICON['INDIAN_RUPEE'] && 'border-l-4 border-l-orange-500 dark:border-l-orange-400'}
