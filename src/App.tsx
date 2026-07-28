@@ -18,7 +18,7 @@ function App() {
         <div className={` w-full px-4 `}>
           {/* {show ? <Login onCustomEvent={(flag:boolean) => setShow(flag)}/> : <Signup onCustomEvent={() => setShow((flag) => !flag)}/>} */}
           <div
-            className={`relative z-10 h-screen  flex flex-1 flex-col md:flex-row justify-evenly items-center transition-opacity duration-300`}
+            className={`relative z-10 h-screen  flex flex-1 flex-col md:flex-row justify-center items-center transition-opacity duration-300`}
           >
             <div className="hidden md:flex flex-col justify-center gap-6 p-12">
               <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ function App() {
                 ))}
               </div>
             </div>
-            <div className="flex md:hidden flex-col items-center gap-2 mb-2">
+            <div className="flex md:hidden flex-col items-center mb-2">
               <div className="w-15 h-15 rounded-lg ">
                 <img
                   src={'/admin_portal_logo.svg'}
