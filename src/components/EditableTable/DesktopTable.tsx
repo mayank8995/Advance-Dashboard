@@ -68,7 +68,7 @@ export const DesktopTable = ({
         {!isLoading ? (
           <tbody className="divide-y divide-slate-200">
             {list?.length > 0 ? (
-              list?.map((row, index: number) => (
+              list?.map((row: any, index: number) => (
                 <tr
                   key={`${row.id}-${index * 2}`}
                   className={`hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}

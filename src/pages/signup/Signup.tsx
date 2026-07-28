@@ -16,7 +16,7 @@ import { getErrorMessage } from '../../services/utils.service';
 export default function Signup({
   onCustomEvent,
 }: {
-  onCustomEvent: (flag: boolean) => void;
+  onCustomEvent: () => void;
 }) {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialFormData);
