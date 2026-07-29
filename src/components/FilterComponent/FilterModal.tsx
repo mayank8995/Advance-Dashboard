@@ -284,7 +284,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         </div>
       </div>
       <button
-        className="fixed inset-0 bg-black/40 dark:bg-black/60 z-200"
+        className="fixed inset-0 bg-black/40 dark:bg-black/60 z-30"
         onClick={handleCloseModal}
       />
     </>

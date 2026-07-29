@@ -4,8 +4,9 @@ import {
   SquareChevronLeft,
   SquareChevronRight,
 } from 'lucide-react';
+import React from 'react';
 
-export const EmployeeTableSkeleton = () => {
+const EmployeeTableSkeleton = React.memo(() => {
   return (
     <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
@@ -124,6 +125,6 @@ export const EmployeeTableSkeleton = () => {
       </div>
     </div>
   );
-};
+});
 
 export default EmployeeTableSkeleton;

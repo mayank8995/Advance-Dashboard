@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query';
 import {
   getAnalytics,
@@ -131,46 +132,51 @@ export function useProfileData(user: LoginProfile) {
   });
 }
 
-export function exportSelected(
+export async function exportSelected(
   selectedRow: Set<unknown>,
   data: ListType[],
   headers: HeadersType[],
   fileName: string
 ) {
-  const rows = data?.filter((item) => {
-    if (selectedRow.has(String(item?.id))) {
-      return true;
-    }
-    return false;
-  });
+  try {
+    const rows = data?.filter((item) => {
+      if (selectedRow.has(String(item?.id))) {
+        return true;
+      }
+      return false;
+    });
 
-  const headerRow = headers.map((header) => header.value);
+    const headerRow = headers.map((header) => header.value);
 
-  const dataRows = rows.map((row: ListType) =>
-    headers.map((header) => {
-      const value = row[header.key as keyof ListType];
-      return escapeCSVValue(value);
-    })
-  );
+    const dataRows = rows.map((row: ListType) =>
+      headers.map((header) => {
+        const value = row[header.key as keyof ListType];
+        return escapeCSVValue(value);
+      })
+    );
 
-  const csvRows = [headerRow, ...dataRows];
+    const csvRows = [headerRow, ...dataRows];
 
-  const csvContent = csvRows.map((row) => row.join(',')).join('\n');
+    const csvContent = csvRows.map((row) => row.join(',')).join('\n');
 
-  const blob = new Blob([csvContent], {
-    type: 'text/csv;charset=utf-8;',
-  });
+    const blob = new Blob([csvContent], {
+      type: 'text/csv;charset=utf-8;',
+    });
 
-  const url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
 
-  const link = document.createElement('a');
+    const link = document.createElement('a');
 
-  link.href = url;
-  link.download = `${fileName}.csv`;
+    link.href = url;
+    link.download = `${fileName}.csv`;
 
-  link.click();
+    link.click();
+    URL.revokeObjectURL(url);
 
-  URL.revokeObjectURL(url);
+    return Promise.resolve({ message: 'Downloading successful' });
+  } catch (error) {
+    throw error;
+  }
 }
 
 function escapeCSVValue(value: unknown): string {

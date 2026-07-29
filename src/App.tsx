@@ -25,6 +25,7 @@ function App() {
                   <img
                     src={'/admin_portal_logo.svg'}
                     className="w-full h-full object-cover"
+                    alt="admin portal logo"
                   />
                 </div>
                 <span className="text-xl font-bold text-white">
@@ -58,6 +59,7 @@ function App() {
                 <img
                   src={'/admin_portal_logo.svg'}
                   className="w-full h-full object-cover"
+                  alt="admin portal logo"
                 />
               </div>
               <span className="text-lg font-bold text-white">Admin Portal</span>

@@ -262,6 +262,7 @@ function ProfileSettings() {
                       <div className="relative">
                         <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
                           <img
+                            loading="eager"
                             src={formValues?.image || '/avatar_fallback.svg'}
                             className="aspect-square w-full h-full object-cover"
                             alt="User Profile"

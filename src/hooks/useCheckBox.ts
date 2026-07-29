@@ -1,8 +1,20 @@
-import { useState, type ChangeEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import type { ListType } from '../types/types';
 
 export function useCheckBox(list: ListType[]) {
   const [selectedRow, setSelectedRow] = useState(() => new Set());
+  const ref = useRef<HTMLInputElement | null>(null);
+  useEffect(() => {
+    if (ref.current && ref.current.id === 'selectAll') {
+      const total = list.length;
+      const selected = selectedRow.size;
+      if (selected > 0 && selected < total) {
+        ref.current.indeterminate = true;
+      } else {
+        ref.current.indeterminate = false;
+      }
+    }
+  }, [selectedRow, list.length]);
   const handleOnChange = function (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
   ) {
@@ -20,7 +32,7 @@ export function useCheckBox(list: ListType[]) {
           }
           return String(item?.id);
         });
-        setSelectedRow(new Set(['selectAll', ...Ids]));
+        setSelectedRow(new Set([...Ids]));
       }
     } else {
       setSelectedRow((prev) => {
@@ -38,5 +50,6 @@ export function useCheckBox(list: ListType[]) {
     selectedRow,
     handleOnChange,
     setSelectedRow,
+    ref,
   };
 }

@@ -10,11 +10,11 @@ import {
   TOTAL_PROJECTS,
 } from '../../utils/constants';
 import React, { Suspense } from 'react';
-import { DonutCharts } from '../../components/Charts/DonutCharts';
 import type {
   AnalyticsCard,
   ProjectStatusDistribution,
 } from '../../types/types';
+import DonutCharts from '../../components/Charts/DonutCharts';
 const PieChartComponent = React.lazy(
   () => import('../../components/Charts/PieChartComponent')
 );

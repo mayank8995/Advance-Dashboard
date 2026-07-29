@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { startTransition, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { NAV_ITEMS, SIDE_BAR_ITEMS } from '../../utils/constants';
@@ -52,7 +53,7 @@ function Navigation() {
       {/* Overlay */}
       {isOpen && (
         <button
-          className="fixed inset-0 bg-black/50 z-40 lg:z-0 md:hidden"
+          className="fixed inset-0 bg-black/50 z-10 lg:z-0 md:hidden"
           // className="fixed inset-0 bg-black/50 z-40 sm:z-0 md:hidden"
           onClick={() => navigateToPage(false)}
         />
@@ -63,7 +64,7 @@ function Navigation() {
         /*fixed top-0 left-0 z-50 sm:z-0 w-64  text-white*/
         className={`
           bg-linear-to-br from-slate-900 to-indigo-950
-          fixed top-0 left-0 z-50 lg:z-0 w-64 text-white
+          fixed top-0 left-0 z-20 lg:z-0 w-64 text-white
           transform transition-transform duration-300 md:shrink-0 h-full md:h-auto overflow-y-auto
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           md:translate-x-0 md:static md:flex

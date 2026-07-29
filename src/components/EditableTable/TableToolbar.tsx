@@ -12,6 +12,7 @@ import {
 import { className } from '../../utils/constants';
 import type { SelectedChip, TableToolbarProps } from '../../types/types';
 import { useQueryClient } from '@tanstack/react-query';
+import { TailSpin } from 'react-loader-spinner';
 
 const TableToolbar = ({
   txtToBeSearched,
@@ -25,6 +26,9 @@ const TableToolbar = ({
   bulkAction,
   selectedRow,
   handleOnChange,
+  downloading,
+  ref,
+  listSize,
 }: TableToolbarProps) => {
   const queryClient = useQueryClient();
   const isfilterAvailable: SelectedChip[] =
@@ -36,7 +40,7 @@ const TableToolbar = ({
           <FormField
             style={{ width: '100%' }}
             value={txtToBeSearched}
-            className={className}
+            className={`${className}`}
             type={'text'}
             name={'search'}
             placeholder={'Search...'}
@@ -56,15 +60,17 @@ const TableToolbar = ({
         <div className="flex-1 justify-between  flex items-center px-6 pb-4">
           <div className="gap-2 flex flex-row items-center">
             <div className="flex justify-center items-center">
-              <span className=" hidden lg:flex text-sm font-bold dark:text-slate-100 pr-2">
+              <label
+                htmlFor="limit"
+                className=" hidden lg:flex gap-2 text-sm items-center font-bold dark:text-slate-100 pr-2"
+              >
                 Rows / page{' '}
-              </span>
-              <select
-                id="limit"
-                name="limit"
-                value={tableQueryParams.limit}
-                onChange={handleRowsPerPageChange}
-                className="
+                <select
+                  id="limit"
+                  name="limit"
+                  value={tableQueryParams.limit}
+                  onChange={handleRowsPerPageChange}
+                  className="
             cursor-pointer
             px-2 py-1
             border
@@ -77,20 +83,21 @@ const TableToolbar = ({
             focus:ring-blue-500 dark:text-slate-300
             dark:outline-none dark:focus:outline-none
             "
-              >
-                <option className="text-sm font-bold outline-none" value={2}>
-                  2
-                </option>
-                <option className="text-sm font-bold outline-none" value={3}>
-                  3
-                </option>
-                <option className="text-sm font-bold outline-none" value={5}>
-                  5
-                </option>
-                <option className="text-sm font-bold outline-none" value={10}>
-                  10
-                </option>
-              </select>
+                >
+                  <option className="text-sm font-bold outline-none" value={2}>
+                    2
+                  </option>
+                  <option className="text-sm font-bold outline-none" value={3}>
+                    3
+                  </option>
+                  <option className="text-sm font-bold outline-none" value={5}>
+                    5
+                  </option>
+                  <option className="text-sm font-bold outline-none" value={10}>
+                    10
+                  </option>
+                </select>
+              </label>
             </div>
             {
               <div className="gap-2 flex items-center">
@@ -127,12 +134,25 @@ const TableToolbar = ({
                   className={`${selectedRow.size === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                   onClick={bulkAction}
                 >
-                  <span title="Download csv">
+                  <span title="Download csv" className="flex gap-2">
                     <Download
                       size={20}
                       color={selectedRow.size === 0 ? '#9ca3af' : '#2563eb'}
                       className={`text-gray-600 dark:text-gray-100`}
                     />
+                    {downloading && (
+                      <TailSpin
+                        visible={true}
+                        height={20}
+                        width={20}
+                        color={'#2563eb'}
+                        ariaLabel="tail-spin-loading"
+                        radius="1"
+                        strokeWidth="4"
+                        wrapperStyle={{}}
+                        wrapperClass="flex items-center justify-center"
+                      />
+                    )}
                   </span>
                 </button>
                 <div
@@ -140,10 +160,14 @@ const TableToolbar = ({
                   className="flex lg:hidden items-center justify-center border-2 border-slate-950 border-dotted dark:border-slate-100 w-5 h-5"
                 >
                   <FormField
+                    ref={ref}
                     name={'selectAll'}
                     type={'checkbox'}
                     id={'selectAll'}
-                    checked={selectedRow.has('selectAll')}
+                    checked={
+                      // selectedRow.has('selectAll') ||
+                      selectedRow.size === listSize
+                    }
                     onChange={handleOnChange}
                     className={`m-0 cursor-pointer`}
                   />

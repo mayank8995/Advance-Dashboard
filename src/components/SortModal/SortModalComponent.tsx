@@ -144,7 +144,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
         </div>
       </div>
       <button
-        className="fixed inset-0 bg-black/50 z-200"
+        className="fixed inset-0 bg-black/50 z-30"
         onClick={() => closeSortModal?.()}
       />
     </>

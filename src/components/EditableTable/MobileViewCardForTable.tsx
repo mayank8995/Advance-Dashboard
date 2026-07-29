@@ -33,7 +33,7 @@ function MobileViewCardForTable({
   }
   return (
     <>
-      {list?.map((row, index: number) => (
+      {list?.map((row: any, index: number) => (
         <div
           key={`${row.id}-data`}
           className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 "

@@ -16,6 +16,7 @@ function FormField({
   checked,
   onClick,
   id,
+  ref,
 }: InputFieldType) {
   function handleOnchange(e: ChangeEvent<HTMLInputElement>) {
     onChange?.(e);
@@ -38,9 +39,16 @@ function FormField({
         autoComplete="off"
         autoCorrect="off"
         spellCheck="false"
+        aria-describedby={`${name}-error-message`}
+        ref={ref}
       />
       {name && errors && errors[name] && (
-        <span className="text-red-400 px-2" style={{ fontSize: '12px' }}>
+        <span
+          id={`${name}-error-message`}
+          aria-live="assertive"
+          className="text-red-400 px-2"
+          style={{ fontSize: '12px' }}
+        >
           {errors[name]}
         </span>
       )}
