@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
@@ -66,51 +66,27 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     }
   }, [filterList]);
   // console.log('tabValue>>', tabValue);
-  const tabValueMemoized = useMemo(() => {
-    const result: SelectedChip[] =
-      tabValue?.flatMap((item) => {
-        const values = item?.[1]
-          ?.filter((it) => it?.selected === true)
-          ?.map((i) => i?.value);
-        return [
-          {
-            key: item?.[0],
-            value: [...values],
-          },
-        ];
-      }) ?? [];
-    const checkIfEmpty =
-      result && result?.filter((res) => res?.value?.length > 0);
-    if (checkIfEmpty && checkIfEmpty.length === 0) {
-      setSelectedChips([]);
-    } else {
-      setSelectedChips(result);
-    }
-
-    return tabValue;
-  }, [tabValue]);
 
   /** do not remove this commented code*/
-  // useEffect(() => {
-  //   // const result = tabValue?.flatMap((item: any) => {
-  //   //   return [
-  //   //     {
-  //   //       key: item[0],
-  //   //       value: [
-  //   //         ...item[1]
-  //   //           ?.filter((it: any) => it.selected === true)
-  //   //           ?.map((i: any) => i?.value),
-  //   //       ],
-  //   //     },
-  //   //   ];
-  //   // });
-  //   const checkIfEmpty: any =
-  //     result &&
-  //     result?.filter((res: any) => res.value.length > 0);
-  //   console.log('checkIfEmpty>>', checkIfEmpty);
-  //   if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
-  //   else setSelectedChips(result as any[]);
-  // }, [tabValue]);
+  useEffect(() => {
+    const result = tabValue?.flatMap((item: any) => {
+      return [
+        {
+          key: item[0],
+          value: [
+            ...item[1]
+              ?.filter((it: any) => it.selected === true)
+              ?.map((i: any) => i?.value),
+          ],
+        },
+      ];
+    });
+    const checkIfEmpty: any =
+      result && result?.filter((res: any) => res.value.length > 0);
+    console.log('checkIfEmpty>>', checkIfEmpty);
+    if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
+    else setSelectedChips(result as any[]);
+  }, [tabValue]);
 
   // function handleTabs(e: any) {
   //   setFocusedIndex(e.currentTarget?.tabIndex);
@@ -229,8 +205,8 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
               })}
           </div>
           <div className="flex flex-col">
-            {tabValueMemoized &&
-              tabValueMemoized?.map((item: any, index: number) => (
+            {tabValue &&
+              tabValue?.map((item: any, index: number) => (
                 <React.Fragment key={index + item[1]}>
                   {focusedIndex === index && (
                     <div
