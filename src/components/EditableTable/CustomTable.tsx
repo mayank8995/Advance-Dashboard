@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
-import { useState, useEffect, type ChangeEvent } from 'react';
+import React, { useState, useEffect, type ChangeEvent } from 'react';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 import { useQueryClient } from '@tanstack/react-query';
 import FilterModal from '../FilterComponent/FilterModal';
@@ -14,7 +14,7 @@ import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
 import { exportSelected } from '../../services/utils.service';
 
-export default function CustomTable({
+function CustomTable({
   list,
   tableQueryParams,
   handleTableQuery,
@@ -244,3 +244,5 @@ export default function CustomTable({
     </>
   );
 }
+
+export default React.memo(CustomTable);

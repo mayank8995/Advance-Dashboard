@@ -8,14 +8,15 @@ import {
 } from 'recharts';
 import { PIE_COLORS } from '../../utils/constants';
 import { useTheme } from '../../hooks/useTheme';
+import React from 'react';
 
-const MyCustomPie = (props: PieSectorShapeProps) => {
+const MyCustomPie = React.memo((props: PieSectorShapeProps) => {
   return (
     <Sector {...props} fill={PIE_COLORS[props.index % PIE_COLORS.length]} />
   );
-};
+});
 
-export default function PieChartComponent({ data, title, X, Y }: any) {
+function PieChartComponent({ data, title, X, Y }: any) {
   const { theme: themeMode } = useTheme();
   const RenderCustomLegend = () => {
     return (
@@ -116,3 +117,5 @@ export default function PieChartComponent({ data, title, X, Y }: any) {
     </>
   );
 }
+
+export default React.memo(PieChartComponent);

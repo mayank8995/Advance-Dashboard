@@ -1,3 +1,4 @@
+import React from 'react';
 import type { StatusBadgeProps } from '../../types/types';
 import {
   statusColors,
@@ -27,4 +28,4 @@ export const StatusBadge = ({ value }: StatusBadgeProps) => {
   );
 };
 
-export default StatusBadge;
+export default React.memo(StatusBadge);

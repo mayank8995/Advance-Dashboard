@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import type { TopProjectsList } from '../../types/types';
 import ErrorPage from '../Error/ErrorPage';
 
-export const TopProjectsCard = ({
+const TopProjectsCard = ({
   topProjects,
   title,
   isError,
@@ -130,4 +130,4 @@ export const TopProjectsCard = ({
   );
 };
 
-export default TopProjectsCard;
+export default React.memo(TopProjectsCard);

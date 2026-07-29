@@ -13,7 +13,7 @@ import type {
   KeyMetricCardsProps,
 } from '../../types/types';
 
-export default function KeyMetric({ metricData }: KeyMetricCardsProps) {
+function KeyMetric({ metricData }: KeyMetricCardsProps) {
   const { isLoading } = useLoader();
   const data: KeyMetricCardsConfig = {
     [KEY_TRACK_METRIC['TOTAL_EMPLOYEES']]: {
@@ -122,3 +122,5 @@ export default function KeyMetric({ metricData }: KeyMetricCardsProps) {
     </div>
   );
 }
+
+export default React.memo(KeyMetric);

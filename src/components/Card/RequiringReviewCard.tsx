@@ -10,7 +10,7 @@ import {
 } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 
-export const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
+const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
   return (
     <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-red-950/20 dark:border-none">
       <div className=" mb-4 flex flex-row items-center justify-between">
@@ -86,4 +86,4 @@ export const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
   );
 };
 
-export default RequiringReviewCard;
+export default React.memo(RequiringReviewCard);

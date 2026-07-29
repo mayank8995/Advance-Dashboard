@@ -5,7 +5,7 @@ import type { DesktopTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
 
-export const DesktopTable = ({
+const DesktopTable = ({
   list,
   headersData,
   columnsData,
@@ -171,4 +171,4 @@ export const DesktopTable = ({
   );
 };
 
-export default DesktopTable;
+export default React.memo(DesktopTable);

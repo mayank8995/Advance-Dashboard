@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import type { MobileTableProps } from '../../types/types';
 import { bgColors, gradients } from '../../utils/constants';
 import FormField from '../Form/FormField';
 
-export default function MobileViewCardForTable({
+function MobileViewCardForTable({
   list,
   columnsData,
   tableQueryParams,
@@ -113,3 +113,5 @@ export default function MobileViewCardForTable({
     </>
   );
 }
+
+export default React.memo(MobileViewCardForTable);

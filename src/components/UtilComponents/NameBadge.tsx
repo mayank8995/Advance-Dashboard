@@ -1,3 +1,4 @@
+import React from 'react';
 import type { NameBadgeProps } from '../../types/types';
 
 export const NameBadge = ({ value }: NameBadgeProps) => {
@@ -25,4 +26,4 @@ export const NameBadge = ({ value }: NameBadgeProps) => {
   );
 };
 
-export default NameBadge;
+export default React.memo(NameBadge);

@@ -13,7 +13,7 @@ import { className } from '../../utils/constants';
 import type { SelectedChip, TableToolbarProps } from '../../types/types';
 import { useQueryClient } from '@tanstack/react-query';
 
-export const TableToolbar = ({
+const TableToolbar = ({
   txtToBeSearched,
   setTextToBeSearched,
   tableQueryParams,
@@ -208,4 +208,4 @@ export const TableToolbar = ({
   );
 };
 
-export default TableToolbar;
+export default React.memo(TableToolbar);
