@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @eslint-react/set-state-in-effect */
 import {
   useEffect,
   useRef,
@@ -59,7 +61,7 @@ function ProfileSettings() {
   useEffect(() => {
     if (profileData?.data && Object.keys(profileData)?.length > 0) {
       setIsEditing(true);
-      setFormValues(profileData.data);
+      setFormValues(profileData.data as ProfileForm);
     }
   }, [profileData]);
 
@@ -179,7 +181,9 @@ function ProfileSettings() {
 
   function handleUpload() {
     try {
-      uploadRef?.current && uploadRef?.current?.click();
+      if (uploadRef?.current) {
+        uploadRef?.current?.click();
+      }
     } catch (e) {
       const { message } = getApiErrorDetails(e);
       toast.error(message, {});

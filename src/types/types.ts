@@ -230,7 +230,6 @@ export type InputFieldType = ComponentProps<'input'> & {
   errors?: any;
   data?: any;
   maxlength?: number | undefined;
-  onChange?: (e: any, name?: any) => any;
 };
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -563,4 +562,16 @@ export type LoginProfile = {
 export type SelectedChip = {
   key: string;
   value: string[];
+};
+
+type Metadata = {
+  pagination: TableQueryParams;
+  title: string;
+};
+export type TopProjectEmployeeResponse = Metadata & {
+  employees: TopProject[];
+};
+
+export type EmployeeDirectoryResponse = Metadata & {
+  employees: Employee[];
 };

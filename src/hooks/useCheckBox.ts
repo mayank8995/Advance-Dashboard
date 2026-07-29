@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import type { ListType } from '../types/types';
 
 export function useCheckBox(list: ListType[]) {
-  const [selectedRow, setSelectedRow] = useState(new Set());
+  const [selectedRow, setSelectedRow] = useState(() => new Set());
   const handleOnChange = function (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
   ) {

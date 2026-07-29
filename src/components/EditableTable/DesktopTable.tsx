@@ -68,7 +68,7 @@ export const DesktopTable = ({
         {!isLoading ? (
           <tbody className="divide-y divide-slate-200">
             {list?.length > 0 ? (
-              list?.map((row: any, index: number) => (
+              list?.map((row, index: number) => (
                 <tr
                   key={`${row.id}-${index * 2}`}
                   className={`hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
@@ -88,21 +88,21 @@ export const DesktopTable = ({
                   ))} */}
                   {/* {Hooking checkboxlist into list as checkbox list is derived from list} */}
                   <td
-                    id={row?.id}
+                    id={String(row?.id)}
                     className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
                   >
                     <FormField
-                      name={row?.id}
+                      name={String(row?.id)}
                       type={'checkbox'}
-                      id={row?.id}
+                      id={String(row?.id)}
                       checked={selectedRow.has(String(row?.id))}
                       onChange={handleOnChange}
                       className={`${className} cursor-pointer`}
                     />
                   </td>
-                  {columnsData?.map((coloumn, id: number) => (
+                  {columnsData?.map((coloumn) => (
                     <td
-                      key={id}
+                      key={coloumn?.key}
                       className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
                     >
                       {Array.isArray(row[coloumn?.key]) &&

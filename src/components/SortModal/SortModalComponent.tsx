@@ -25,7 +25,7 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
 }) => {
   const [focusedIndex, setFocusedIndex] = useState('');
 
-  const myElementRef: any = useRef(null);
+  const myElementRef = useRef<HTMLButtonElement>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,9 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
   }
 
   function getSortIcon(sortConfig: SortConfig, key: string) {
-    if (sortConfig.key !== key) return <ArrowUpDown size={20} />;
+    if (sortConfig.key !== key) {
+      return <ArrowUpDown size={20} />;
+    }
     return sortConfig.direction === 'asc' ? (
       <ArrowUp size={20} />
     ) : (
@@ -47,7 +49,10 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
       setLoading(true);
       setTimeout(() => {
         setLoading(false);
-        onSort && onSort(myElementRef?.current?.id);
+        const id = myElementRef?.current?.id;
+        if (id) {
+          onSort(id);
+        }
       }, 300);
     }
   }

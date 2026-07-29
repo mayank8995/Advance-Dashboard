@@ -4,9 +4,9 @@ import { useTheme } from '../../hooks/useTheme';
 
 export default function Toggle() {
   const { toggleTheme } = useTheme();
-  const [enabled, setEnabled] = useState<boolean>(
-    localStorage.getItem('theme') === 'dark'
-  );
+  const [enabled, setEnabled] = useState<boolean>(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
   function toggle(enable: boolean) {
     const root = document.documentElement;
     if (enable) {
@@ -37,10 +37,10 @@ export default function Toggle() {
       >
         {/* Thumb */}
         <div
-          className={`absolute  ${enabled ? 'top-[2px] left-[6px]' : 'top-[2px] left-[2px]'} bg-white h-5 w-5 rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`}
+          className={`absolute  ${enabled ? 'top-0.5 left-1.5' : 'top-0.5 left-0.5'} bg-white h-5 w-5 rounded-full transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`}
         />
         <div
-          className={`absolute ${enabled ? '' : 'left-[5px]'} transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-0' : 'translate-x-5'}`}
+          className={`absolute ${enabled ? '' : 'left-1.25'} transition-transform duration-200 ease-in-out ${enabled ? 'translate-x-0' : 'translate-x-5'}`}
         >
           {enabled ? (
             <Moon width={20} className="text-slate-100" fill="white" />

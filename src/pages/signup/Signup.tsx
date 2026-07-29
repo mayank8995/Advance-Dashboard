@@ -95,16 +95,18 @@ export default function Signup({
   };
   const steps = [
     <StepOneForm
+      key={'formOne'}
       onCustomEvent={onCustomEvent}
       data={formData.formOne}
       errors={errors}
-      onChange={(d, k) => updateStep('formOne', d, k)}
+      handleOnChange={(d, k) => updateStep('formOne', d, k)}
     />,
     <StepTwoForm
+      key={'formTwo'}
       handleBack={handleBack}
       data={formData.formTwo}
       errors={errors}
-      onChange={(d, k) => updateStep('formTwo', d, k)}
+      handleOnChange={(d, k) => updateStep('formTwo', d, k)}
     />,
   ];
 
@@ -193,13 +195,13 @@ export default function Signup({
 export function StepOneForm({
   data,
   errors,
-  onChange,
+  handleOnChange,
   onCustomEvent,
 }: {
   data: FormData['formOne'];
   errors: Errors;
-  onChange: (data: FormData['formOne'], activeKey: string) => void;
-  onCustomEvent?: any;
+  handleOnChange: (data: FormData['formOne'], activeKey: string) => void;
+  onCustomEvent?: () => void;
 }) {
   return (
     <>
@@ -216,13 +218,14 @@ export function StepOneForm({
           Name
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.name}
           name={'name'}
           type={'text'}
           placeholder={'Enter your name'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange({ ...data, name: event.target.value }, 'name')
+          }
           className={loginClassName}
           id={'name'}
         />
@@ -232,13 +235,14 @@ export function StepOneForm({
           Email
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.email}
           name={'email'}
           type={'email'}
           placeholder={'you@example.com'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange({ ...data, email: event.target.value }, 'email')
+          }
           className={loginClassName}
           id={'email'}
         />
@@ -248,13 +252,17 @@ export function StepOneForm({
           Password
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.password}
           name={'password'}
           type={'password'}
           placeholder={'••••••••'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange(
+              { ...data, password: event.target.value },
+              'password'
+            )
+          }
           className={loginClassName}
           id={'password'}
         />
@@ -264,13 +272,17 @@ export function StepOneForm({
           Confirm Password
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.confirmPassword}
           name={'confirmPassword'}
           type={'password'}
           placeholder={'••••••••'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange(
+              { ...data, confirmPassword: event.target.value },
+              'confirmPassword'
+            )
+          }
           className={loginClassName}
           id={'confirmPassword'}
         />
@@ -282,13 +294,13 @@ export function StepOneForm({
 export function StepTwoForm({
   data,
   errors,
-  onChange,
+  handleOnChange,
   handleBack,
 }: {
   data: FormData['formTwo'];
   errors: Errors;
-  onChange: (data: FormData['formTwo'], activeKey: string) => void;
-  handleBack: any;
+  handleOnChange: (data: FormData['formTwo'], activeKey: string) => void;
+  handleBack: () => void;
 }) {
   return (
     <>
@@ -305,13 +317,17 @@ export function StepTwoForm({
           Department
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.department}
           name={'department'}
           type={'text'}
           placeholder={'Enter your department'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange(
+              { ...data, department: event.target.value },
+              'department'
+            )
+          }
           className={loginClassName}
           id={'department'}
         />
@@ -321,13 +337,17 @@ export function StepTwoForm({
           Designation
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.designation}
           name={'designation'}
           type={'text'}
           placeholder={'Enter your designation'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange(
+              { ...data, designation: event.target.value },
+              'designation'
+            )
+          }
           className={loginClassName}
           id={'designation'}
         />
@@ -337,13 +357,14 @@ export function StepTwoForm({
           Employee Id
         </label>
         <FormField
-          data={data}
           errors={errors}
           value={data?.empId}
           name={'empId'}
           type={'text'}
           placeholder={'B/XXXX..'}
-          onChange={onChange as any}
+          onChange={(event) =>
+            handleOnChange({ ...data, empId: event.target.value }, 'empId')
+          }
           className={loginClassName}
           id={'empId'}
         />

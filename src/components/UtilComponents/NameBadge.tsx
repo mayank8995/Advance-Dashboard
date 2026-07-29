@@ -1,7 +1,9 @@
 import type { NameBadgeProps } from '../../types/types';
 
 export const NameBadge = ({ value }: NameBadgeProps) => {
-  if (!value) return;
+  if (!value) {
+    return;
+  }
   return (
     // <span className="inline-flex items-center gap-2 rounded-full bg-[#534ab7] dark:bg-[#534ab7] px-3 py-1 text-sm font-medium text-slate-200">
     //   <span className="flex h-6 w-6 -ml-2 items-center justify-center rounded-full bg-[#6d68a9] text-xs font-semibold text-white">

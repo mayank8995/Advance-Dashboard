@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState } from 'react';
 import CustomTable from '../../components/EditableTable/CustomTable';
 import {
@@ -6,7 +7,10 @@ import {
   headers_employees,
 } from '../../utils/constants';
 import { useTableData } from '../../services/utils.service';
-import type { TableQueryParams } from '../../types/types';
+import type {
+  EmployeeDirectoryResponse,
+  TableQueryParams,
+} from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import { columns_employees } from '../../components/EditableTable/CustomCellRenderer';
 
@@ -24,7 +28,8 @@ function Employees() {
     refetch,
   } = useTableData({ ...query }, setIsLoading, signal);
 
-  const list = tableQuery?.['data']?.['employees'] || [];
+  const list =
+    (tableQuery?.['data'] as EmployeeDirectoryResponse)?.['employees'] || [];
 
   function handleTableQuery(queryData: TableQueryParams, signal?: AbortSignal) {
     setQuery((prev) => ({ ...prev, ...queryData }));
@@ -35,7 +40,8 @@ function Employees() {
       handleTableQuery={handleTableQuery}
       list={list || []}
       tableQueryParams={
-        tableQuery?.['data']?.['pagination'] || DEFAULT_TABLE_QUERY_PARAMS
+        (tableQuery?.['data'] as EmployeeDirectoryResponse)?.['pagination'] ||
+        DEFAULT_TABLE_QUERY_PARAMS
       }
       columnsData={columns_employees}
       headersData={headers_employees}
