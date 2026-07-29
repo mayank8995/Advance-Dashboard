@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/set-state-in-effect */
 import React, { useEffect, useState } from 'react';
 import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
@@ -67,25 +68,26 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   }, [filterList]);
   // console.log('tabValue>>', tabValue);
 
-  /** do not remove this commented code*/
   useEffect(() => {
-    const result = tabValue?.flatMap((item: any) => {
+    const result = tabValue?.flatMap((item) => {
       return [
         {
           key: item[0],
           value: [
-            ...item[1]
-              ?.filter((it: any) => it.selected === true)
-              ?.map((i: any) => i?.value),
+            ...(item?.[1]
+              ?.filter((it) => it.selected === true)
+              ?.map((i) => i?.value) ?? []),
           ],
         },
       ];
     });
-    const checkIfEmpty: any =
-      result && result?.filter((res: any) => res.value.length > 0);
-    console.log('checkIfEmpty>>', checkIfEmpty);
-    if (checkIfEmpty && checkIfEmpty.length === 0) setSelectedChips([]);
-    else setSelectedChips(result as any[]);
+    const checkIfEmpty =
+      result && result?.filter((res) => res.value.length > 0);
+    if (checkIfEmpty && checkIfEmpty.length === 0) {
+      setSelectedChips([]);
+    } else {
+      setSelectedChips(result as SelectedChip[]);
+    }
   }, [tabValue]);
 
   // function handleTabs(e: any) {
@@ -99,7 +101,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       ?.map((it) => ({ [it.key]: it?.value?.join(',') }))
       .reduce(
         (accumulator, currentItem) => ({ ...accumulator, ...currentItem }),
-        {} as Record<string, any>
+        {}
       );
     setTimeout(() => {
       setLoading(false);
@@ -117,22 +119,27 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     closeModal();
   }
 
-  function handleSelectedChips(e: any) {
-    const tab = e?.target?.id && e?.target?.id?.split('-');
-    setTabValue((prev) =>
-      prev?.map((item) =>
-        item[0] === tab[0]
-          ? [
-              item[0],
-              item[1]?.map((chip) =>
-                chip.value === tab[1]
-                  ? { ...chip, selected: !chip.selected }
-                  : chip
-              ),
-            ]
-          : item
-      )
-    );
+  function handleSelectedChips(e: React.MouseEvent<HTMLButtonElement>) {
+    if (!e?.currentTarget) {
+      return;
+    }
+    const tab = e?.currentTarget?.id && e?.currentTarget?.id?.split('-');
+    if (tab) {
+      setTabValue((prev) =>
+        prev?.map((item) =>
+          item[0] === tab[0]
+            ? [
+                item[0],
+                item[1]?.map((chip) =>
+                  chip.value === tab[1]
+                    ? { ...chip, selected: !chip.selected }
+                    : chip
+                ),
+              ]
+            : item
+        )
+      );
+    }
   }
 
   function clearFilter() {
@@ -189,7 +196,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
                     onClick={(event) =>
                       setFocusedIndex(event.currentTarget?.tabIndex)
                     }
-                    key={index + filterKey}
+                    key={filterKey}
                     className={`h-10.5 cursor-pointer text-xs w-28 wrap-anywhere flex items-center justify-center border-slate-200 dark:border-white/10  ${
                       focusedIndex === index
                         ? 'bg-[#534ab7] text-white'
@@ -206,15 +213,17 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
           </div>
           <div className="flex flex-col">
             {tabValue &&
-              tabValue?.map((item: any, index: number) => (
-                <React.Fragment key={index + item[1]}>
+              tabValue?.map((item, index: number) => (
+                <React.Fragment key={`${item[0]}-filters`}>
                   {focusedIndex === index && (
                     <div
                       className="transition-all duration-200 ease-out outline-none  p-2 relative flex flex-wrap items-center overflow-auto overflow-x-auto   "
                       itemID={`${index}`}
                     >
-                      {item[1]?.map((chipObj: any, chipId: number) => (
-                        <React.Fragment key={`${chipId}-${chipObj?.value}`}>
+                      {item[1]?.map((chipObj) => (
+                        <React.Fragment
+                          key={`${item[0]}-filters-${chipObj?.value}`}
+                        >
                           {
                             <button
                               id={`${item[0]}-${chipObj?.value}`}
@@ -275,7 +284,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
         </div>
       </div>
       <button
-        className="fixed inset-0 bg-black/40 dark:bg-black/60 z-200"
+        className="fixed inset-0 bg-black/40 dark:bg-black/60 z-30"
         onClick={handleCloseModal}
       />
     </>

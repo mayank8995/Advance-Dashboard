@@ -4,7 +4,7 @@ import { NO_RESULT_FOUND } from '../../utils/constants';
 import type { MobileTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 
-export const MobileTable = ({
+const MobileTable = ({
   list,
   rowsPerPage,
   columnsData,

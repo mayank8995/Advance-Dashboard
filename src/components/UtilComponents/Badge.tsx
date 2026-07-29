@@ -1,3 +1,4 @@
+import React from 'react';
 import type { BadgeProps } from '../../types/types';
 
 export const Badge = ({ value }: BadgeProps) => {
@@ -18,4 +19,4 @@ export const Badge = ({ value }: BadgeProps) => {
   );
 };
 
-export default Badge;
+export default React.memo(Badge);

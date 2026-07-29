@@ -1,3 +1,4 @@
+import React from 'react';
 import type { ReviewReasonBadgeProps } from '../../types/types';
 import {
   reviewColors,
@@ -28,4 +29,4 @@ export const ReviewReasonBadge = ({ value }: ReviewReasonBadgeProps) => {
   );
 };
 
-export default ReviewReasonBadge;
+export default React.memo(ReviewReasonBadge);

@@ -7,8 +7,9 @@ import {
   YAxis,
 } from 'recharts';
 import { useTheme } from '../../hooks/useTheme';
+import React from 'react';
 
-export default function BarChartComponent({ data, title, X, Y }: any) {
+function BarChartComponent({ data, title, X, Y }: any) {
   const { theme: themeMode } = useTheme();
 
   return (
@@ -111,3 +112,5 @@ export default function BarChartComponent({ data, title, X, Y }: any) {
     </>
   );
 }
+
+export default React.memo(BarChartComponent);

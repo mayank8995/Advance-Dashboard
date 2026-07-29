@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import EmployeeTableSkeleton from './EmployeeTableSkeleton';
 
-export const Skeleton = () => {
+const Skeleton = React.memo(() => {
   const location = useLocation();
   return (
     <div className="flex flex-col flex-auto dark:bg-gray-800">
@@ -130,6 +130,6 @@ export const Skeleton = () => {
       </>
     </div>
   );
-};
+});
 
 export default Skeleton;

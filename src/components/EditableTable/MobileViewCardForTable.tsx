@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import type { MobileTableProps } from '../../types/types';
 import { bgColors, gradients } from '../../utils/constants';
 import FormField from '../Form/FormField';
 
-export default function MobileViewCardForTable({
+function MobileViewCardForTable({
   list,
   columnsData,
   tableQueryParams,
@@ -35,7 +35,7 @@ export default function MobileViewCardForTable({
     <>
       {list?.map((row: any, index: number) => (
         <div
-          key={`${row.id}-${index}`}
+          key={`${row.id}-data`}
           className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 "
         >
           {columnsData?.map((coloumn) => {
@@ -61,9 +61,9 @@ export default function MobileViewCardForTable({
                     </div>
                     <FormField
                       className={`cursor-pointer w-auto`}
-                      name={row?.id}
+                      name={String(row?.id)}
                       type={'checkbox'}
-                      id={row?.id}
+                      id={String(row?.id)}
                       checked={selectedRow.has(String(row?.id))}
                       onChange={handleOnChange}
                     />
@@ -113,3 +113,5 @@ export default function MobileViewCardForTable({
     </>
   );
 }
+
+export default React.memo(MobileViewCardForTable);

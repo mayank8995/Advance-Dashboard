@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @eslint-react/set-state-in-effect */
 import {
   useEffect,
   useRef,
@@ -59,7 +61,7 @@ function ProfileSettings() {
   useEffect(() => {
     if (profileData?.data && Object.keys(profileData)?.length > 0) {
       setIsEditing(true);
-      setFormValues(profileData.data);
+      setFormValues(profileData.data as ProfileForm);
     }
   }, [profileData]);
 
@@ -179,7 +181,9 @@ function ProfileSettings() {
 
   function handleUpload() {
     try {
-      uploadRef?.current && uploadRef?.current?.click();
+      if (uploadRef?.current) {
+        uploadRef?.current?.click();
+      }
     } catch (e) {
       const { message } = getApiErrorDetails(e);
       toast.error(message, {});
@@ -258,6 +262,7 @@ function ProfileSettings() {
                       <div className="relative">
                         <div className="w-32 h-32 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
                           <img
+                            loading="eager"
                             src={formValues?.image || '/avatar_fallback.svg'}
                             className="aspect-square w-full h-full object-cover"
                             alt="User Profile"

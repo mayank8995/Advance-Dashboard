@@ -1,6 +1,7 @@
+import React from 'react';
 import { className, labelclassName } from '../../utils/constants';
 
-export const ProfileSettingSkeleton = () => {
+const ProfileSettingSkeleton = React.memo(() => {
   return (
     <div className="h-full w-full bg-slate-200 dark:bg-gray-800">
       <div className="p-4  dark:bg-gray-800">
@@ -103,6 +104,6 @@ export const ProfileSettingSkeleton = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ProfileSettingSkeleton;

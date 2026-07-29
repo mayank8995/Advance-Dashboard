@@ -7,8 +7,9 @@ import {
   YAxis,
 } from 'recharts';
 import { useTheme } from '../../hooks/useTheme';
+import React from 'react';
 
-export default function MultiCityBarChartComponent({ title, X, Y, data }: any) {
+function MultiCityBarChartComponent({ title, X, Y, data }: any) {
   const { theme: themeMode } = useTheme();
   return (
     <>
@@ -108,3 +109,5 @@ export default function MultiCityBarChartComponent({ title, X, Y, data }: any) {
     </>
   );
 }
+
+export default React.memo(MultiCityBarChartComponent);

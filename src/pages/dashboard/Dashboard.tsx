@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import KeyMetric from '../../components/Card/KeyMetric';
 import { useQueryClient } from '@tanstack/react-query';
 import { TOP_PROJECTS } from '../../utils/constants';
@@ -9,6 +10,7 @@ import MeetingKPIsCard from '../../components/Card/MeetingKPIsCard';
 import RequiringReviewCard from '../../components/Card/RequiringReviewCard';
 import type {
   AnalyticsCard,
+  TopProjectEmployeeResponse,
   KeyMetricCards,
   MeetingKPIsCardProps,
   PromotedThisYearCardProps,
@@ -42,7 +44,7 @@ function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
         {/* <Card topProjects={cachedData} title={TOP_PROJECTS} cardToShow={{topProjects: true}}></Card> */}
         <TopProjectsCard
-          topProjects={topProjects?.['data']}
+          topProjects={topProjects?.['data'] as TopProjectEmployeeResponse}
           title={TOP_PROJECTS}
           isError={isError}
           isLoading={isLoading}

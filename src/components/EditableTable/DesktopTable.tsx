@@ -5,7 +5,7 @@ import type { DesktopTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
 
-export const DesktopTable = ({
+const DesktopTable = ({
   list,
   headersData,
   columnsData,
@@ -16,6 +16,7 @@ export const DesktopTable = ({
   selectedRow,
   setSelectedRow,
   handleOnChange,
+  ref,
 }: DesktopTableProps) => {
   const { isLoading } = useLoader();
   // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
@@ -43,10 +44,11 @@ export const DesktopTable = ({
             <tr className="cursor-pointer dark:bg-slate-800 dark:border-slate-700">
               <th className="px-4 py-4 text-left text-xs font-semibold tracking-wider text-slate-600 dark:text-slate-400">
                 <FormField
+                  ref={ref}
                   name={'selectAll'}
                   type={'checkbox'}
                   id={'selectAll'}
-                  checked={selectedRow.has('selectAll')}
+                  checked={selectedRow.size === list.length}
                   onChange={handleOnChange}
                   className={`${className} cursor-pointer`}
                 />
@@ -88,21 +90,21 @@ export const DesktopTable = ({
                   ))} */}
                   {/* {Hooking checkboxlist into list as checkbox list is derived from list} */}
                   <td
-                    id={row?.id}
+                    id={String(row?.id)}
                     className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
                   >
                     <FormField
-                      name={row?.id}
+                      name={String(row?.id)}
                       type={'checkbox'}
-                      id={row?.id}
+                      id={String(row?.id)}
                       checked={selectedRow.has(String(row?.id))}
                       onChange={handleOnChange}
                       className={`${className} cursor-pointer`}
                     />
                   </td>
-                  {columnsData?.map((coloumn, id: number) => (
+                  {columnsData?.map((coloumn) => (
                     <td
-                      key={id}
+                      key={coloumn?.key}
                       className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
                     >
                       {Array.isArray(row[coloumn?.key]) &&
@@ -171,4 +173,4 @@ export const DesktopTable = ({
   );
 };
 
-export default DesktopTable;
+export default React.memo(DesktopTable);

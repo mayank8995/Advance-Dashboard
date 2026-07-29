@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { ChangeEvent } from 'react';
 import type { InputFieldType } from '../../types/types';
 import { className as defaultClass } from '../../utils/constants';
@@ -12,15 +13,13 @@ function FormField({
   errors,
   maxlength,
   style,
-  data,
   checked,
   onClick,
   id,
+  ref,
 }: InputFieldType) {
   function handleOnchange(e: ChangeEvent<HTMLInputElement>) {
-    name && data
-      ? onChange?.({ ...data, [name]: e.target.value }, name)
-      : onChange?.(e);
+    onChange?.(e);
   }
   return (
     <>
@@ -40,9 +39,16 @@ function FormField({
         autoComplete="off"
         autoCorrect="off"
         spellCheck="false"
+        aria-describedby={`${name}-error-message`}
+        ref={ref}
       />
       {name && errors && errors[name] && (
-        <span className="text-red-400 px-2" style={{ fontSize: '12px' }}>
+        <span
+          id={`${name}-error-message`}
+          aria-live="assertive"
+          className="text-red-400 px-2"
+          style={{ fontSize: '12px' }}
+        >
           {errors[name]}
         </span>
       )}

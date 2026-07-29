@@ -1,5 +1,6 @@
 import { Star } from 'lucide-react';
 import type { RatingProps } from '../../types/types';
+import React from 'react';
 
 export const Rating = ({ value }: RatingProps) => {
   return (
@@ -10,4 +11,4 @@ export const Rating = ({ value }: RatingProps) => {
   );
 };
 
-export default Rating;
+export default React.memo(Rating);

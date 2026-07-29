@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
-import { useState, useEffect, type ChangeEvent } from 'react';
+import React, { useState, useEffect, type ChangeEvent } from 'react';
 import Breadcrumb from '../Breadcrumbs/Breadcrumbs';
 import { useQueryClient } from '@tanstack/react-query';
 import FilterModal from '../FilterComponent/FilterModal';
@@ -13,8 +13,13 @@ import EmployeeTableSkeleton from '../Skeleton/EmployeeTableSkeleton';
 import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
 import { exportSelected } from '../../services/utils.service';
+import { toast } from 'react-toastify';
+// const FilterModal = React.lazy(() => import('../FilterComponent/FilterModal'));
+// const SortModalComponent = React.lazy(
+//   () => import('../SortModal/SortModalComponent')
+// );
 
-export default function CustomTable({
+function CustomTable({
   list,
   tableQueryParams,
   handleTableQuery,
@@ -26,12 +31,14 @@ export default function CustomTable({
   isLoading,
   refetch,
 }: CustomTableProps) {
-  const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
+  const { selectedRow, setSelectedRow, handleOnChange, ref } =
+    useCheckBox(list);
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTxtToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [downloading, setDownloading] = useState(false);
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
   }, []);
@@ -139,13 +146,25 @@ export default function CustomTable({
     handleTableQuery({ ...tableQueryParams, page: 1 });
   };
 
-  const bulkAction = () => {
-    exportSelected(
-      selectedRow,
-      list,
-      headersData,
-      tableQueryParams?.tableType ?? 'employee'
-    );
+  const bulkAction = async () => {
+    try {
+      setDownloading(true);
+      const response = await exportSelected(
+        selectedRow,
+        list,
+        headersData,
+        tableQueryParams?.tableType ?? 'employee'
+      );
+      setDownloading(false);
+      toast.success(response.message);
+    } catch (error) {
+      setDownloading(false);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Error in downloading. Please try again.';
+      toast.error(errorMessage);
+    }
   };
   return (
     <>
@@ -180,6 +199,9 @@ export default function CustomTable({
               bulkAction={bulkAction}
               selectedRow={selectedRow}
               handleOnChange={handleOnChange}
+              downloading={downloading}
+              ref={ref}
+              listSize={list.length}
             />
             {!isError ? (
               <div className="flex flex-col justify-center">
@@ -194,6 +216,7 @@ export default function CustomTable({
                   selectedRow={selectedRow}
                   setSelectedRow={setSelectedRow}
                   handleOnChange={handleOnChange}
+                  ref={ref}
                 />
                 <MobileTable
                   rowsPerPage={rowsPerPage}
@@ -214,7 +237,7 @@ export default function CustomTable({
         <EmployeeTableSkeleton />
       )}
       <div
-        className={`transition-opacity duration-400 ${showModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
+        className={`transition-opacity duration-300 absolute inset-0 z-30 ${showModal ? ' opacity-100' : ' opacity-0 pointer-events-none'}`}
       >
         {
           <FilterModal
@@ -227,7 +250,7 @@ export default function CustomTable({
         }
       </div>
       <div
-        className={`transition-opacity duration-400 ${showSortModal ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
+        className={`transition-opacity duration-300 absolute inset-0 z-30 ${showSortModal ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         {
           <SortModalComponent
@@ -244,3 +267,5 @@ export default function CustomTable({
     </>
   );
 }
+
+export default React.memo(CustomTable);

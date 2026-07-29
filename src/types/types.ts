@@ -1,5 +1,5 @@
 import type { QueryClientConfig } from '@tanstack/react-query';
-import type { ChangeEvent, ComponentProps, ReactNode } from 'react';
+import type { ChangeEvent, ComponentProps, ReactNode, RefObject } from 'react';
 
 export interface LoginData {
   name: string;
@@ -133,11 +133,14 @@ export type TableToolbarProps = {
   openSortModal: () => void;
   handlePrevious: () => void;
   handleNext: () => void;
-  bulkAction?: () => void;
+  bulkAction: () => Promise<void>;
   selectedRow: Set<unknown>;
   handleOnChange: (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
   ) => void;
+  downloading: boolean;
+  ref?: RefObject<HTMLInputElement | null>;
+  listSize: number;
 };
 export type HeaderType =
   | TableHeader<Employee>[]
@@ -165,6 +168,7 @@ export type DesktopTableProps = {
   handleOnChange: (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
   ) => void;
+  ref?: RefObject<HTMLInputElement | null>;
 };
 
 export type MobileTableProps = {
@@ -230,7 +234,7 @@ export type InputFieldType = ComponentProps<'input'> & {
   errors?: any;
   data?: any;
   maxlength?: number | undefined;
-  onChange?: (e: any, name?: any) => any;
+  ref?: RefObject<HTMLInputElement | null>;
 };
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -563,4 +567,16 @@ export type LoginProfile = {
 export type SelectedChip = {
   key: string;
   value: string[];
+};
+
+type Metadata = {
+  pagination: TableQueryParams;
+  title: string;
+};
+export type TopProjectEmployeeResponse = Metadata & {
+  employees: TopProject[];
+};
+
+export type EmployeeDirectoryResponse = Metadata & {
+  employees: Employee[];
 };

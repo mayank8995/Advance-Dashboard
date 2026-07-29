@@ -1,8 +1,9 @@
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import type { DonutChartProps } from '../../types/types';
 import { useTheme } from '../../hooks/useTheme';
+import React from 'react';
 
-export const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
+const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
   const { theme: themeMode } = useTheme();
 
   const data = [
@@ -101,3 +102,5 @@ export const DonutCharts = ({ data: rawData, title }: DonutChartProps) => {
     </div>
   );
 };
+
+export default React.memo(DonutCharts);
