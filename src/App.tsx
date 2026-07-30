@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
@@ -10,9 +10,7 @@ import { useTheme } from './hooks/useTheme';
 function App() {
   const [show, setShow] = useState<boolean>(true);
   const { theme } = useTheme();
-  // useEffect(() => {
-  //   localStorage.setItem('theme', 'dark');
-  // }, []);
+
   return (
     <ErrorBoundary fallback={<ErrorBoundaryPage />}>
       <div className="h-screen max-h-full relative">
