@@ -1,7 +1,7 @@
 import React from 'react';
 import type { NameBadgeProps } from '../../types/types';
 
-export const NameBadge = ({ value }: NameBadgeProps) => {
+const NameBadge = ({ value }: NameBadgeProps) => {
   if (!value) {
     return;
   }

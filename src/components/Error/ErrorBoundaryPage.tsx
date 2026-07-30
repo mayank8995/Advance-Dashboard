@@ -1,4 +1,4 @@
-export const ErrorBoundaryPage = () => {
+const ErrorBoundaryPage = () => {
   return (
     <div className="p-6 sm:p-0  flex flex-col justify-center items-center h-screen max-h-screen">
       <div className="w-37.5 md:w-50 rounded-lg mb-2">

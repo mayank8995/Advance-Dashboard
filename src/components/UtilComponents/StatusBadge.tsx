@@ -7,7 +7,7 @@ import {
   textColorsDark,
 } from '../../utils/constants';
 
-export const StatusBadge = ({ value }: StatusBadgeProps) => {
+const StatusBadge = ({ value }: StatusBadgeProps) => {
   if (!value) {
     return;
   }

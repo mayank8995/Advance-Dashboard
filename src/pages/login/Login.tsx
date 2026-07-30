@@ -96,11 +96,15 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
     }
   };
   return (
-    <div className="h-100 md:max-h-150 md:h-127.5 bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
+    <div className="h-100 md:max-h-150 md:h-127.5 bg-violet-50 border-violet-200 dark:bg-[#211a3d] border dark:border-[#7c3aed]/20  rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-white font-bold text-xl">Welcome back</h2>
-        <p className="text-slate-400 text-sm">Sign in to your account</p>
+        <h2 className="text-slate-900 dark:text-white font-bold text-xl">
+          Welcome back
+        </h2>
+        <p className="text-slate-900 dark:text-white text-sm">
+          Sign in to your account
+        </p>
       </div>
 
       {/* Email */}
@@ -165,13 +169,15 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
         {/* Submit */}
         <button
           type="submit"
-          className=" w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-4  mb-4 px-6 
+          disabled={isLoading}
+          className={` w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg mt-4  mb-4 px-6 
                          text-sm
                         shadow-lg shadow-indigo-500/30
-                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
-                        hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                        
-                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed"
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40   
+                        hover:enabled:bg-[#8e89f2]                     
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed
+                         ${[isLoading ? 'disabled:bg-[#8e89f2] cursor-not-allowed' : undefined].filter(Boolean).join(' ')}
+                        `}
         >
           {isLoading ? (
             <TailSpin
@@ -193,7 +199,7 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
           Don't have an account?{' '}
           <a onClick={() => onCustomEvent(false)} className="text-blue-500">Create one</a>
         </p> */}
-      <p className="text-center text-slate-400 text-sm">
+      <p className="text-center text-slate-600 dark:text-slate-400 text-sm">
         Don't have an account?{' '}
         <button
           onClick={() => onCustomEvent(false)}

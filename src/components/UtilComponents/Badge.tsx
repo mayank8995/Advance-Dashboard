@@ -1,7 +1,7 @@
 import React from 'react';
 import type { BadgeProps } from '../../types/types';
 
-export const Badge = ({ value }: BadgeProps) => {
+const Badge = ({ value }: BadgeProps) => {
   return (
     <div className="flex flex-col items-start">
       <div

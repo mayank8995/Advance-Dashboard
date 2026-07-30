@@ -6,9 +6,9 @@ import type {
   TopPerformer,
   TopProject,
 } from '../../types/types';
-import { Badge } from '../UtilComponents/Badge';
+import Badge from '../UtilComponents/Badge';
 import NameBadge from '../UtilComponents/NameBadge';
-import { Rating } from '../UtilComponents/Rating';
+import Rating from '../UtilComponents/Rating';
 import ReviewReasonBadge from '../UtilComponents/ReviewReasonBadge';
 import StatusBadge from '../UtilComponents/StatusBadge';
 

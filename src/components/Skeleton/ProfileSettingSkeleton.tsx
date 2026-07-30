@@ -80,26 +80,6 @@ const ProfileSettingSkeleton = React.memo(() => {
             </div>
           </div>
           <hr className="border-t-2  border-gray-300 border-dotted dark:border-gray-600"></hr>
-          <div className="flex justify-between items-center p-4">
-            <div
-              className="
-              bg-slate-200
-                        px-6 py-2.5
-                        
-                        rounded-xl
-                        
-                    "
-            />
-
-            <div
-              id="reset"
-              className="
-                    px-6 py-2.5
-                bg-slate-200
-              
-                "
-            ></div>
-          </div>
         </div>
       </div>
     </div>

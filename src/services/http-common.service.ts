@@ -9,6 +9,8 @@ interface ApiError extends AxiosError {
   data: unknown;
   statusText: string;
 }
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 500;
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
@@ -40,13 +42,25 @@ apiClient.interceptors.response.use(
     // Do something with response data
     return normalizeApiResponse(response);
   },
-  function (error: AxiosError) {
+  async function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     reportError(error);
-    // const status = Number(error.response?.status);
-    // if (error && status >= 400) {
-    //   normalizeApiError(error);
-    // }
+    const config = error.config as InternalAxiosRequestConfig & {
+      _retryCount?: number;
+    };
+
+    if (config && config.url === '/login') {
+      console.log('onfig>>>', config);
+      config._retryCount = config._retryCount ?? 0;
+      if (
+        config?._retryCount < MAX_RETRIES &&
+        (!error.response || error.response.status >= 500)
+      ) {
+        config._retryCount++;
+        await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+        return apiClient(config);
+      }
+    }
     return Promise.reject(normalizeApiError(error));
     // return normalizeApiError(error);
   }
@@ -62,7 +76,6 @@ function normalizeApiResponse(response: AxiosResponse): AxiosResponse {
 }
 
 function normalizeApiError(error: AxiosError): ApiError {
-  console.error('normalizeApiError', error?.response);
   const normalizedError = error as ApiError;
   normalizedError.status = Number(error.response?.status);
   normalizedError.statusText =
