@@ -7,7 +7,7 @@ import {
   reviewtextColorsDark,
 } from '../../utils/constants';
 
-export const ReviewReasonBadge = ({ value }: ReviewReasonBadgeProps) => {
+const ReviewReasonBadge = ({ value }: ReviewReasonBadgeProps) => {
   if (!value) {
     return;
   }

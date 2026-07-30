@@ -1,11 +1,17 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Hourglass } from 'react-loader-spinner';
+import { useEffect } from 'react';
 
 export const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
-
+  useEffect(() => {
+    const root = document.documentElement;
+    if (localStorage.getItem('theme') === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+    }
+  }, []);
   if (isLoading) {
     return (
       <div className="flex justify-center h-full bg-slate-100 dark:bg-gray-800">

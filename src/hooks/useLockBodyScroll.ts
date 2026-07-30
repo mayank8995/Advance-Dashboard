@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export const useLockBodyScroll = (modal: boolean) => {
+const useLockBodyScroll = (modal: boolean) => {
   useEffect(() => {
     if (!modal) {
       return;

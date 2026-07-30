@@ -113,7 +113,7 @@ export default function Signup({
   const isLastStep = step === stepConfig.length - 1;
 
   return (
-    <div className="overflow-y-auto h-100 md:max-h-150 md:h-127.5 bg-[#211a3d] border border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
+    <div className="overflow-y-auto h-100 md:max-h-150 md:h-127.5 bg-violet-50 border-violet-200 dark:bg-[#211a3d] border dark:border-[#7c3aed]/20 rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
       <form noValidate>
         {steps[step]}
         <div>
@@ -121,22 +121,24 @@ export default function Signup({
             <div className="mt-4 sm:mt-0 flex flex-row justify-between items-end">
               <button
                 type="button"
-                className="mb-2 md:hidden flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
+                className="mb-2 md:hidden flex flex-row font-medium tracking-wide cursor-pointer"
                 onClick={handleBack}
               >
-                <ChevronLeft className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
-                <span className="pl-1">Back</span>
+                <ChevronLeft className="text-slate-900 dark:text-white text-xs font-medium tracking-wide" />{' '}
+                <span className="pl-1 text-slate-900 dark:text-white">
+                  Back
+                </span>
               </button>
               <button
                 type="button"
                 onClick={handleFinalSubmit}
-                className="w-fit md:w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-0 md:mt-4  px-6 
+                className={`w-fit md:w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg mt-0 md:mt-4  px-6 
                          text-sm
                         shadow-lg shadow-indigo-500/30
-                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
-                        hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                        
-                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed"
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40   
+                        hover:enabled:bg-[#8e89f2]                     
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed
+                         ${[isLoading ? 'disabled:bg-[#8e89f2] cursor-not-allowed' : undefined].filter(Boolean).join(' ')}`}
               >
                 {isLoading ? (
                   <TailSpin
@@ -157,29 +159,31 @@ export default function Signup({
             <div className="mt-4 sm:mt-0 flex flex-row justify-between items-end">
               <button
                 type="button"
-                className="md:hidden mb-2 flex flex-row text-slate-400 font-medium cursor-pointer"
+                className="md:hidden mb-2 flex flex-row font-medium cursor-pointer"
                 onClick={onCustomEvent}
               >
-                <StepBack className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
-                <span className="pl-2">Back to Login</span>
+                <StepBack className="text-slate-900 dark:text-white text-xs font-medium tracking-wide" />{' '}
+                <span className="pl-2 text-slate-900 dark:text-white">
+                  Back to Login
+                </span>
               </button>
               <button
                 type="button"
-                className="md:hidden mb-2 flex flex-row-reverse text-slate-400 font-medium cursor-pointer"
+                className="md:hidden mb-2 flex flex-row-reverse text-slate-900 dark:text-white font-medium cursor-pointer"
                 onClick={handleNext}
               >
-                <StepForward className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
+                <StepForward className="text-slate-900 dark:text-white text-xs font-medium tracking-wide" />{' '}
                 <span className="pr-2">Next</span>
               </button>
               <button
                 type="button"
-                className="hidden md:flex justify-center w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity  hover:bg-gray-700  mt-0 md:mt-4  px-6 
+                className={`hidden md:flex justify-center w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg mt-0 md:mt-4  px-6 
                          text-sm
                         shadow-lg shadow-indigo-500/30
-                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
-                        hover:enabled:from-slate-800 hover:enabled:to-gray-900
-                        
-                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed"
+                        hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40   
+                        hover:enabled:bg-[#8e89f2]                     
+                        cursor-pointer disabled:text-gray-400 disabled:cursor-not-allowed
+                         ${[isLoading ? 'disabled:bg-[#8e89f2] cursor-not-allowed' : undefined].filter(Boolean).join(' ')}`}
                 onClick={handleNext}
               >
                 Next
@@ -207,11 +211,13 @@ export function StepOneForm({
     <>
       <button
         type="button"
-        className="hidden md:flex mb-2 flex-row text-slate-400 font-medium cursor-pointer"
+        className="hidden md:flex mb-2 flex-row font-medium cursor-pointer"
         onClick={onCustomEvent}
       >
-        <StepBack className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
-        <span className="pl-2">Back to Login</span>
+        <StepBack className="text-slate-900 dark:text-white text-xs font-medium tracking-wide" />{' '}
+        <span className="pl-2 text-slate-900 dark:text-white">
+          Back to Login
+        </span>
       </button>
       <div className="mb-2 flex flex-col">
         <label htmlFor="name" className={loginLabelclassNAme}>
@@ -306,11 +312,11 @@ export function StepTwoForm({
     <>
       <button
         type="button"
-        className="mb-2 hidden md:flex flex-row text-slate-400 font-medium tracking-wide cursor-pointer"
+        className="mb-2 hidden md:flex flex-row font-medium tracking-wide cursor-pointer"
         onClick={handleBack}
       >
-        <ChevronLeft className="text-slate-400 text-xs font-medium tracking-wide" />{' '}
-        <span className="pl-1">Back</span>
+        <ChevronLeft className="text-slate-900 dark:text-white text-xs font-medium tracking-wide" />{' '}
+        <span className="pl-1 text-slate-900 dark:text-white">Back</span>
       </button>
       <div className="mb-2 flex flex-col">
         <label htmlFor="department" className={loginLabelclassNAme}>

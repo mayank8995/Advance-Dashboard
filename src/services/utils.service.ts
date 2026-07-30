@@ -75,7 +75,13 @@ export function usePerFormanceTableData(params: TableQueryParams) {
   });
 }
 
-export function useAllData() {
+export function useAllData(params: TableQueryParams) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { totalPages, totalItems, ...updatedParams } = params;
+  const queryParams =
+    'tableType' in updatedParams
+      ? updatedParams
+      : { ...updatedParams, tableType: 'employees' };
   return useQueries({
     queries: [
       {
@@ -88,22 +94,15 @@ export function useAllData() {
         queryFn: getPerformanceCards,
         staleTime: Infinity,
       },
-      // {
-      //   queryKey: [
-      //     'performance',
-      //     Object.values({
-      //       ...DEFAULT_TABLE_QUERY_PARAMS,
-      //       tableType: 'topProjects',
-      //     }),
-      //   ],
-      //   queryFn: () =>
-      //     getTableEmployees({
-      //       ...DEFAULT_TABLE_QUERY_PARAMS,
-      //       tableType: 'topProjects',
-      //     }),
-      //   placeholderData: keepPreviousData, // Smooth transitions,
-      //   staleTime: Infinity,
-      // },
+      {
+        queryKey: [
+          'performance',
+          ...Object.values(queryParams).map((v) => String(v)),
+        ],
+        queryFn: () => getTableEmployees(queryParams),
+        placeholderData: keepPreviousData, // Smooth transitions,
+        staleTime: Infinity,
+      },
     ],
   });
 }
@@ -129,6 +128,7 @@ export function useProfileData(user: LoginProfile) {
     queryKey: ['profileData'],
     queryFn: () => getProfileData(user),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+    retry: 1,
   });
 }
 

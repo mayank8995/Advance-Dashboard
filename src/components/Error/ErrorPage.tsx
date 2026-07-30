@@ -1,6 +1,6 @@
 import type { QueryClientConfigProps } from '../../types/types';
 
-export const ErrorPage = ({ refetchAll }: QueryClientConfigProps) => {
+const ErrorPage = ({ refetchAll }: QueryClientConfigProps) => {
   return (
     <div className="m-10 p-6 sm:p-0  flex flex-col justify-center items-center h-fit dark:bg-gray-800">
       <div className="w-15 h-15 rounded-lg mb-2">
