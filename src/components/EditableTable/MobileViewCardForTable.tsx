@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import type { MobileTableProps } from '../../types/types';
-import { bgColors, gradients } from '../../utils/constants';
+import { bgColors, EMPLOYEE, gradients } from '../../utils/constants';
 import FormField from '../Form/FormField';
+import { useModal } from '../../context/ModalContext';
+import DetailModal from '../Overlay/DetailModal';
 
 function MobileViewCardForTable({
   list,
@@ -11,6 +13,8 @@ function MobileViewCardForTable({
   setSelectedRow,
   handleOnChange,
 }: MobileTableProps) {
+  const { openModal } = useModal();
+
   // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
 
   // to do - uses cases of when checkbox should be selected or not.
@@ -20,6 +24,8 @@ function MobileViewCardForTable({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
+  const isEmployeesTable = tableQueryParams?.tableType === EMPLOYEE;
+
   useEffect(() => {
     setSelectedRow(new Set());
   }, [tableQueryParams]);
@@ -52,12 +58,29 @@ function MobileViewCardForTable({
                           .map((n: string) => n[0])
                           .join('')}
                       </h1>
-                      <h2 className="pl-2 text-slate-800 dark:text-slate-300">
-                        {Array.isArray(row[coloumn?.key]) &&
-                        row[coloumn?.key]?.length > 0
-                          ? row[coloumn?.key][0]
-                          : row[coloumn?.key]}
-                      </h2>
+                      <button
+                        type="button"
+                        className={
+                          isEmployeesTable ? 'cursor-pointer' : 'cursor-default'
+                        }
+                        onClick={(event) => {
+                          if (!isEmployeesTable) {
+                            event.preventDefault();
+                            return;
+                          }
+                          openModal(DetailModal, {
+                            row,
+                            tableQueryParams,
+                          });
+                        }}
+                      >
+                        <h2 className="text-slate-800 dark:text-slate-300">
+                          {Array.isArray(row[coloumn?.key]) &&
+                          row[coloumn?.key]?.length > 0
+                            ? row[coloumn?.key][0]
+                            : row[coloumn?.key]}
+                        </h2>
+                      </button>
                     </div>
                     <FormField
                       className={`cursor-pointer w-auto`}

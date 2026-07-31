@@ -1,9 +1,11 @@
 import { TextSearch } from 'lucide-react';
 import React, { useEffect } from 'react';
-import { className, NO_RESULT_FOUND } from '../../utils/constants';
+import { className, EMPLOYEE, NO_RESULT_FOUND } from '../../utils/constants';
 import type { DesktopTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
+import { useModal } from '../../context/ModalContext';
+import DetailModal from '../Overlay/DetailModal';
 
 const DesktopTable = ({
   list,
@@ -18,6 +20,7 @@ const DesktopTable = ({
   handleOnChange,
   ref,
 }: DesktopTableProps) => {
+  const { openModal } = useModal();
   const { isLoading } = useLoader();
   // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
   // to do - uses cases of when checkbox should be selected or not.
@@ -27,6 +30,7 @@ const DesktopTable = ({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
+  const isEmployeesTable = tableQueryParams?.tableType === EMPLOYEE;
   useEffect(() => {
     setSelectedRow(new Set());
   }, [tableQueryParams]);
@@ -73,7 +77,17 @@ const DesktopTable = ({
               list?.map((row: any, index: number) => (
                 <tr
                   key={`${row.id}-${index * 2}`}
-                  className={`hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
+                  className={`${isEmployeesTable ? 'cursor-pointer' : 'cursor-default'} hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
+                  onClick={(event) => {
+                    if (!isEmployeesTable) {
+                      event.preventDefault();
+                      return;
+                    }
+                    openModal(DetailModal, {
+                      row,
+                      tableQueryParams,
+                    });
+                  }}
                 >
                   {/* {Object.keys(columnsData)?.map((columnsData, id) => (
                     <td
@@ -110,13 +124,13 @@ const DesktopTable = ({
                       {Array.isArray(row[coloumn?.key]) &&
                       row[coloumn?.key]?.length > 0 ? (
                         row[coloumn?.key]?.map((item: string) => (
-                          <>
+                          <React.Fragment key={row[coloumn?.key] + item}>
                             {!coloumn?.render ? (
-                              <div key={row[coloumn?.key] + item}>{item}</div>
+                              <div>{item}</div>
                             ) : (
                               coloumn?.render(item)
                             )}
-                          </>
+                          </React.Fragment>
                         ))
                       ) : (
                         <>

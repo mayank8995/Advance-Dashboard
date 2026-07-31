@@ -50,13 +50,12 @@ apiClient.interceptors.response.use(
     };
 
     if (config && config.url === '/login') {
-      console.log('onfig>>>', config);
       config._retryCount = config._retryCount ?? 0;
       if (
         config?._retryCount < MAX_RETRIES &&
         (!error.response || error.response.status >= 500)
       ) {
-        config._retryCount++;
+        config._retryCount = config._retryCount + 1;
         await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
         return apiClient(config);
       }
