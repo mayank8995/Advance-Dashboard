@@ -26,7 +26,7 @@ function App() {
                     src={
                       theme === 'dark'
                         ? '/admin_portal_logo.svg'
-                        : '/admin_portal_logo_light_theme.png'
+                        : '/admin_portal_logo_light.svg'
                     }
                     className="w-full h-full object-cover"
                     alt="admin portal logo"
@@ -62,12 +62,18 @@ function App() {
             <div className="flex md:hidden flex-col items-center mb-2">
               <div className="w-15 h-15 rounded-lg ">
                 <img
-                  src={'/admin_portal_logo.svg'}
+                  src={
+                    theme === 'dark'
+                      ? '/admin_portal_logo.svg'
+                      : '/admin_portal_logo_light.svg'
+                  }
                   className="w-full h-full object-cover"
                   alt="admin portal logo"
                 />
               </div>
-              <span className="text-lg font-bold text-white">Admin Portal</span>
+              <span className="text-lg font-bold text-slate-900 dark:text-white">
+                Admin Portal
+              </span>
             </div>
             {show ? (
               <Login

@@ -84,8 +84,9 @@ const TableToolbar = ({
             dark:outline-none dark:focus:outline-none
             "
                 >
-                  {[2, 3, 5, 7, 10, 15].map((option) => (
+                  {[2, 3, 5, 7, 10, 15].map((option, index) => (
                     <option
+                      key={`option-${index}`}
                       className="text-sm font-bold outline-none"
                       value={option}
                     >

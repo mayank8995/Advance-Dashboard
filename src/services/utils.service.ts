@@ -224,3 +224,46 @@ export const getApiErrorDetails = (err: unknown) => {
     url: axiosError?.config?.url,
   };
 };
+
+export function isValidPrimitive(value: any) {
+  return (
+    value !== null &&
+    value !== undefined &&
+    typeof value !== 'object' &&
+    typeof value !== 'function'
+  );
+}
+
+// To extract the value from array of objects
+export function extract(current: any, remainingKeys: string[]) {
+  // collect whatever we have
+  if (remainingKeys.length === 0) {
+    if (current == null) return [];
+
+    if (Array.isArray(current)) {
+      return current.flatMap((item) => extract(item, []));
+    }
+
+    if (typeof current === 'object') {
+      return [];
+    }
+
+    return [String(current)];
+  }
+
+  if (current == null) {
+    return [];
+  }
+
+  if (Array.isArray(current)) {
+    return current.flatMap((item) => extract(item, remainingKeys));
+  }
+
+  if (typeof current !== 'object') {
+    return [];
+  }
+
+  const [key, ...rest] = remainingKeys;
+
+  return extract(current[key], rest);
+}

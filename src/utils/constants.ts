@@ -314,6 +314,7 @@ export const statusColors: Record<string, string> = {
   'on track': 'bg-emerald-400',
   completed: 'bg-[#534ab7]/20',
   'at risk': 'bg-orange-400',
+  'on notice': 'bg-orange-400',
   active: 'bg-green-100',
   dead: 'bg-slate-500/20',
   support: 'bg-fuchsia-500/20',
@@ -323,6 +324,7 @@ export const textColors: Record<string, string> = {
   'on track': `text-white`,
   completed: `text-emerald-500`,
   'at risk': `text-white`,
+  'on notice': 'text-white',
   active: `text-green-700`,
   dead: `text-slate-600`,
   support: `text-amber-500`,
@@ -332,6 +334,7 @@ export const statusColorsDark: Record<string, string> = {
   'on track': 'bg-emerald-900/40',
   completed: 'bg-[#534ab7]/20',
   'at risk': 'bg-emerald-900/40',
+  'on notice': 'bg-emerald-900/40',
   active: 'bg-green-100',
   dead: 'bg-slate-500/20',
   support: 'bg-fuchsia-500/20',
@@ -341,6 +344,7 @@ export const textColorsDark: Record<string, string> = {
   'on track': `text-emerald-400`,
   completed: `text-emerald-500`,
   'at risk': `text-orange-400`,
+  'on notice': 'text-orange-400',
   active: `text-green-700`,
   dead: `text-slate-600`,
   support: `text-amber-500`,
@@ -373,3 +377,76 @@ export const reviewtextColorsDark: Record<string, string> = {
   'on notice period': 'text-red-400',
   'low satisfaction': 'text-purple-400',
 };
+
+export const EMPLOYEE_FIELD_LABELS: Record<keyof Employee, string> = {
+  id: 'ID',
+  name: 'Name',
+  email: 'Email',
+  phone: 'Phone',
+  department: 'Department',
+  designation: 'Designation',
+  manager: 'Manager',
+  joiningDate: 'Joining Date',
+  yearsOfExperience: 'Years of Experience',
+  salary: 'Salary',
+  location: 'Location',
+  workMode: 'Work Mode',
+  projects: 'Projects',
+  skills: 'Skills',
+  rating: 'Rating',
+  attendancePercentage: 'Attendance Percentage',
+  employeeSatisfaction: 'Employee Satisfaction',
+  onNoticePeriod: 'On Notice Period',
+};
+
+export const TOP_PERFORMER_FIELD_LABELS: Record<keyof TopPerformer, string> = {
+  id: 'ID',
+  name: 'Name',
+  designation: 'Designation',
+  department: 'Department',
+  rating: 'Rating',
+};
+
+export const TOP_PROJECT_FIELD_LABELS: Record<keyof TopProject, string> = {
+  id: 'ID',
+  name: 'Name',
+  projectName: 'Project Name',
+  riskStatus: 'Risk Status',
+  status: 'Status',
+};
+
+export const PROMOTED_EMPLOYEE_FIELD_LABELS: Record<
+  keyof PromotedEmployee,
+  string
+> = {
+  id: 'ID',
+  name: 'Name',
+  currentDesignation: 'Current Designation',
+  previousDesignation: 'Previous Designation',
+  department: 'Department',
+  promotedOn: 'Promoted On',
+};
+
+export const EMPLOYEE_REVIEW_FIELD_LABELS: Record<
+  keyof EmployeeRequiringReview,
+  string
+> = {
+  id: 'ID',
+  name: 'Name',
+  designation: 'Designation',
+  department: 'Department',
+  reviewReason: 'Review Reason',
+  rating: 'Rating',
+};
+
+export const FIELD_LABELS = {
+  employees: EMPLOYEE_FIELD_LABELS,
+  topPerformer: TOP_PERFORMER_FIELD_LABELS,
+  topProject: TOP_PROJECT_FIELD_LABELS,
+  promotedEmployee: PROMOTED_EMPLOYEE_FIELD_LABELS,
+  employeeReview: EMPLOYEE_REVIEW_FIELD_LABELS,
+} as const;
+
+export type FIELD_TYPE = keyof typeof FIELD_LABELS;
+
+export const EMPLOYEE = 'employees';

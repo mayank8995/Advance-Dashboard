@@ -13,6 +13,7 @@ import { AuthProvider } from './context/AuthContext.tsx';
 import { ProtectedRoute } from './pages/protected-routes/ProtectedRoutes.tsx';
 import { LoaderFlagProvider } from './context/Loadercontext.tsx';
 import ErrorBoundaryPage from './components/Error/ErrorBoundaryPage.tsx';
+import { ModalProvider } from './context/ModalContext.tsx';
 const Home = React.lazy(() => import('./components/Home/Home.tsx'));
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard.tsx'));
 const Employees = React.lazy(() => import('./pages/employee/Employees.tsx'));
@@ -99,7 +100,9 @@ createRoot(document.getElementById('root')!).render(
       <ToastContainer autoClose={1000} />
       <AuthProvider>
         <LoaderFlagProvider>
-          <RouterProvider router={router} />
+          <ModalProvider>
+            <RouterProvider router={router} />
+          </ModalProvider>
         </LoaderFlagProvider>
       </AuthProvider>
     </QueryClientProvider>
