@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
@@ -10,6 +10,12 @@ import { useTheme } from './hooks/useTheme';
 function App() {
   const [show, setShow] = useState<boolean>(true);
   const { theme } = useTheme();
+  useEffect(() => {
+    const root = document.documentElement;
+    if (localStorage.getItem('theme') === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+    }
+  }, []);
 
   return (
     <ErrorBoundary fallback={<ErrorBoundaryPage />}>

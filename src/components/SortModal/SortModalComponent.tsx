@@ -132,9 +132,9 @@ const SortModalComponent = <T extends ListType>({
                   visible={true}
                   height={20}
                   width={20}
-                  color="#ffff"
+                  color="#fff"
+                  radius="4"
                   ariaLabel="tail-spin-loading"
-                  radius="1"
                   wrapperStyle={{}}
                   wrapperClass="flex items-center justify-center"
                 />

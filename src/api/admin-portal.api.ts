@@ -147,7 +147,6 @@ export const doSignup = async (form: SignUpForm) => {
 };
 
 export const fetchEmployeeDetails = async (params: { id: number }) => {
-  console.log('params>>>', params);
   try {
     const res = await apiClient.get('/getEmployeeDetails', { params });
     // console.log("Created:", res);
