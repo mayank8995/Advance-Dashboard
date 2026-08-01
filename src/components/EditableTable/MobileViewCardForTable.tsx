@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import type { MobileTableProps, TableTypeProps } from '../../types/types';
-import { bgColors, EMPLOYEE, gradients, TOP_PROJ } from '../../utils/constants';
+import type {
+  ListType,
+  MobileTableProps,
+  TableTypeMap,
+} from '../../types/types';
+import { bgColors, gradients, TOP_PROJ } from '../../utils/constants';
 import FormField from '../Form/FormField';
 import { useModal } from '../../context/ModalContext';
 import DetailModal from '../Overlay/DetailModal';
 
-function MobileViewCardForTable<T extends TableTypeProps>({
+function MobileViewCardForTable<T extends ListType>({
   list,
   columnsData,
   tableQueryParams,
@@ -24,7 +28,8 @@ function MobileViewCardForTable<T extends TableTypeProps>({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  const isTopProj = tableQueryParams?.tableType === TOP_PROJ;
+  const isTopProj =
+    tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
 
   useEffect(() => {
     setSelectedRow(new Set());
@@ -134,4 +139,6 @@ function MobileViewCardForTable<T extends TableTypeProps>({
   );
 }
 
-export default React.memo(MobileViewCardForTable);
+export default React.memo(MobileViewCardForTable) as <T extends ListType>(
+  props: MobileTableProps<T>
+) => React.ReactElement;

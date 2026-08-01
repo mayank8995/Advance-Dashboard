@@ -1,10 +1,10 @@
 import { TextSearch } from 'lucide-react';
 import MobileViewCardForTable from './MobileViewCardForTable';
 import { NO_RESULT_FOUND } from '../../utils/constants';
-import type { MobileTableProps } from '../../types/types';
+import type { ListType, MobileTableProps } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 
-const MobileTable = ({
+const MobileTable = <T extends ListType>({
   list,
   rowsPerPage,
   columnsData,
@@ -12,7 +12,7 @@ const MobileTable = ({
   selectedRow,
   setSelectedRow,
   handleOnChange,
-}: MobileTableProps) => {
+}: MobileTableProps<T>) => {
   const { isLoading } = useLoader();
   return (
     <div className="lg:hidden pl-2 pr-2">

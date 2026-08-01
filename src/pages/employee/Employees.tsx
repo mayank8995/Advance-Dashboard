@@ -19,7 +19,7 @@ function Employees() {
   const [signal, setSignal] = useState<AbortSignal>();
 
   const [query, setQuery] = useState<TableQueryParams>(
-    DEFAULT_TABLE_QUERY_PARAMS
+    DEFAULT_TABLE_QUERY_PARAMS as TableQueryParams
   );
   const {
     data: tableQuery,

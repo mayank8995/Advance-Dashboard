@@ -1,36 +1,30 @@
 import { TextSearch } from 'lucide-react';
 import React, { useEffect } from 'react';
-import {
-  className,
-  EMPLOYEE,
-  NO_RESULT_FOUND,
-  TOP_PROJ,
-} from '../../utils/constants';
+import { className, NO_RESULT_FOUND, TOP_PROJ } from '../../utils/constants';
 import type {
   DesktopTableProps,
   ListType,
-  TableHeader,
   TableTypeMap,
-  TableTypeProps,
 } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
 import { useModal } from '../../context/ModalContext';
 import DetailModal from '../Overlay/DetailModal';
 
-const DesktopTable = <T extends TableTypeProps>({
-  list,
-  headersData,
-  columnsData,
-  handleSort,
-  getSortIcon,
-  rowsPerPage,
-  tableQueryParams,
-  selectedRow,
-  setSelectedRow,
-  handleOnChange,
-  ref,
-}: DesktopTableProps<T>) => {
+const DesktopTable = <T extends ListType>(props: DesktopTableProps<T>) => {
+  const {
+    list,
+    headersData,
+    columnsData,
+    handleSort,
+    getSortIcon,
+    rowsPerPage,
+    tableQueryParams,
+    selectedRow,
+    setSelectedRow,
+    handleOnChange,
+    ref,
+  } = props;
   const { openModal } = useModal();
   const { isLoading } = useLoader();
   // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
@@ -41,7 +35,8 @@ const DesktopTable = <T extends TableTypeProps>({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  const isTopProj = tableQueryParams?.tableType === TOP_PROJ;
+  const isTopProj =
+    tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
   console.log('isTopProj>>>>', isTopProj);
   useEffect(() => {
     setSelectedRow(new Set());
@@ -201,4 +196,7 @@ const DesktopTable = <T extends TableTypeProps>({
   );
 };
 
-export default React.memo(DesktopTable);
+const MemoizedDesktopTable = React.memo(DesktopTable) as <T extends ListType>(
+  props: DesktopTableProps<T>
+) => React.ReactElement;
+export default MemoizedDesktopTable;

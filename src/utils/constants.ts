@@ -194,22 +194,6 @@ export const headers_requiringReview: TableHeader<EmployeeRequiringReview>[] = [
   { key: 'rating', value: 'Rating' },
 ];
 
-export const CARD_CONTENT_LIMIT_TO_SCROLL = 5;
-
-export const VIEW_MORE_ROUTES = {
-  top_projects: 'topProjects',
-  top_performers: 'topPerformers',
-  promotedThisYear: 'promotedThisYear',
-  requiringReview: 'requiringReview',
-};
-
-export const VIEW_MORE_ROUTES_VALUES = {
-  top_projects: 'Top Projects',
-  top_performers: 'Top Performers',
-  promotedThisYear: 'Promoted This Year',
-  requiringReview: 'Requiring Review',
-};
-
 export const headers_employees: TableHeader<Employee>[] = [
   { key: 'id', value: 'Id' },
   { key: 'name', value: 'Name' },
@@ -220,6 +204,24 @@ export const headers_employees: TableHeader<Employee>[] = [
   { key: 'workMode', value: 'Work Mode' },
   { key: 'rating', value: 'Rating' },
 ];
+
+export const CARD_CONTENT_LIMIT_TO_SCROLL = 5;
+
+export const VIEW_MORE_ROUTES = {
+  top_projects: 'topProjects',
+  top_performers: 'topPerformers',
+  promotedThisYear: 'promotedThisYear',
+  requiringReview: 'requiringReview',
+  employees: 'employees',
+};
+
+export const VIEW_MORE_ROUTES_VALUES = {
+  top_projects: 'Top Projects',
+  top_performers: 'Top Performers',
+  promotedThisYear: 'Promoted This Year',
+  requiringReview: 'Requiring Review',
+  employees: 'Employees',
+};
 
 export type HeadersType =
   | TableHeader<Employee>
@@ -300,6 +302,12 @@ export const TABLE_CONFIG = {
     title: '',
     tableType: VIEW_MORE_ROUTES.requiringReview,
   },
+  // [VIEW_MORE_ROUTES.employees]: {
+  //   headers: headers_employees,
+  //   columns: columns_employees,
+  //   title: '',
+  //   tableType: VIEW_MORE_ROUTES.employees,
+  // },
 };
 
 export const DEFAULT_TABLE_QUERY_PARAMS = {

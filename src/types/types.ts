@@ -58,8 +58,8 @@ export const initialFormData: FormData = {
   formTwo: { designation: '', department: '', empId: '' },
 };
 
-export interface ResponseObject {
-  data: ListType[];
+export interface ResponseObject<T> {
+  data: T[];
   status: number;
   statusText: string;
 }
@@ -88,8 +88,8 @@ export type TableQueryParams = {
   totalItems?: number;
   totalPages?: number;
   sortBy?: string;
-  order?: string;
-  tableType?: string;
+  order?: 'asc' | 'desc';
+  tableType?: TableTypeProps;
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
@@ -151,13 +151,13 @@ export type TableTypeMap = {
 };
 
 export type TableTypeProps = keyof TableTypeMap;
-export type HeaderType<T extends ListType = ListType> = TableHeader<T>[];
-export type ColumnType<T extends ListType = ListType> = Column<T>[];
+export type HeaderType<T extends ListType> = TableHeader<T>[];
+export type ColumnType<T extends ListType> = Column<T>[];
 
-export type DesktopTableProps<T extends TableTypeProps = TableTypeProps> = {
-  list: TableTypeMap[T][];
-  columnsData: ColumnType<TableTypeMap[T]>;
-  headersData: HeaderType<TableTypeMap[T]>;
+export type DesktopTableProps<T extends ListType> = {
+  list: T[];
+  columnsData: Column<T>[];
+  headersData: TableHeader<T>[];
   rowsPerPage: number;
   handleSort: (e: string) => void;
   getSortIcon: (e: string) => ReactNode;
@@ -170,10 +170,10 @@ export type DesktopTableProps<T extends TableTypeProps = TableTypeProps> = {
   ref?: RefObject<HTMLInputElement | null>;
 };
 
-export type MobileTableProps<T extends TableTypeProps = TableTypeProps> = {
-  list: TableTypeMap[T][];
+export type MobileTableProps<T extends ListType> = {
+  list: T[];
   rowsPerPage: number;
-  columnsData: ColumnType<TableTypeMap[T]>;
+  columnsData: Column<T>[];
   tableQueryParams?: TableQueryParams;
   selectedRow: Set<unknown>;
   setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
@@ -183,7 +183,7 @@ export type MobileTableProps<T extends TableTypeProps = TableTypeProps> = {
 };
 
 export type FilterList = {
-  tableType: string;
+  tableType: TableTypeProps;
 };
 
 export type DonutChartProps = {
@@ -326,12 +326,12 @@ export type ListType =
   | PromotedEmployee
   | EmployeeRequiringReview;
 
-export type CustomTableProps<T extends ListType = ListType> = ErrorPageProps & {
+export type CustomTableProps<T extends ListType> = ErrorPageProps & {
   list: T[];
   tableQueryParams: TableQueryParams;
   handleTableQuery: (data: TableQueryParams, signal?: AbortSignal) => void;
-  columnsData: ColumnType<T>;
-  headersData: HeaderType<T>;
+  columnsData: Column<T>[];
+  headersData: TableHeader<T>[];
   title: string;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 };
@@ -555,16 +555,3 @@ export type TopProjectEmployeeResponse = Metadata & {
 export type EmployeeDirectoryResponse = Metadata & {
   employees: Employee[];
 };
-
-export type ColumnsData =
-  | Column<Employee>[]
-  | Column<TopPerformer>[]
-  | Column<TopProject>[]
-  | Column<PromotedEmployee>[]
-  | Column<EmployeeRequiringReview>[];
-export type HeadersData =
-  | TableHeader<Employee>[]
-  | TableHeader<TopPerformer>[]
-  | TableHeader<TopProject>[]
-  | TableHeader<PromotedEmployee>[]
-  | TableHeader<EmployeeRequiringReview>[];

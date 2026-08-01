@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { CORRESPONDING_FILTER_TABLE_KEY_NAME } from '../../utils/constants';
 import { X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
-import type { SelectedChip, TableQueryParams } from '../../types/types';
+import type {
+  SelectedChip,
+  TableQueryParams,
+  TableTypeMap,
+} from '../../types/types';
 import { useFilterList } from '../../services/utils.service';
 import { useSearchParams } from 'react-router-dom';
 
@@ -32,7 +36,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   const [searchParams] = useSearchParams();
   const target = searchParams?.get('target');
   const { data: filterList } = useFilterList({
-    tableType: target || 'employees',
+    tableType: (target || 'employees') as keyof TableTypeMap,
   });
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [tabID, setTabID] = useState<string[]>();
@@ -105,12 +109,15 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       );
     setTimeout(() => {
       setLoading(false);
-      setQuery((prev) => ({
-        ...prev,
-        tableType: target || 'employees',
-        // dynamicFilters: { ...prev?.dynamicFilters, ...filters },
-        ...filters,
-      }));
+      setQuery(
+        (prev) =>
+          ({
+            ...prev,
+            tableType: target || 'employees',
+            // dynamicFilters: { ...prev?.dynamicFilters, ...filters },
+            ...filters,
+          }) as TableQueryParams
+      );
       submitFilterData(selectedChips);
     }, 300);
   }

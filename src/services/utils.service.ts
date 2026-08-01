@@ -12,9 +12,9 @@ import type {
   FilterList,
   ListType,
   LoginProfile,
+  TableHeader,
   TableQueryParams,
 } from '../types/types';
-import type { HeadersType } from '../utils/constants';
 import axios from 'axios';
 
 // export function useGetData() {
@@ -63,7 +63,7 @@ export function usePerFormanceTableData(params: TableQueryParams) {
   const queryParams =
     'tableType' in updatedParams
       ? updatedParams
-      : { ...updatedParams, tableType: 'employees' };
+      : ({ ...updatedParams, tableType: 'employees' } as TableQueryParams);
 
   return useQuery({
     queryKey: [
@@ -82,7 +82,7 @@ export function useAllData(params: TableQueryParams) {
   const queryParams =
     'tableType' in updatedParams
       ? updatedParams
-      : { ...updatedParams, tableType: 'employees' };
+      : ({ ...updatedParams, tableType: 'employees' } as TableQueryParams);
   return useQueries({
     queries: [
       {
@@ -141,15 +141,15 @@ export function useEmployeeDetail(id: { id: number }) {
   });
 }
 
-export async function exportSelected(
+export async function exportSelected<T extends ListType>(
   selectedRow: Set<unknown>,
-  data: ListType[],
-  headers: HeadersType[],
+  data: T[],
+  headers: TableHeader<T>[],
   fileName: string
 ) {
   try {
     const rows = data?.filter((item) => {
-      if (selectedRow.has(String(item?.id))) {
+      if (selectedRow.has(String(item.id))) {
         return true;
       }
       return false;
@@ -157,9 +157,9 @@ export async function exportSelected(
 
     const headerRow = headers.map((header) => header.value);
 
-    const dataRows = rows.map((row: ListType) =>
+    const dataRows = rows.map((row) =>
       headers.map((header) => {
-        const value = row[header.key as keyof ListType];
+        const value = row[header.key];
         return escapeCSVValue(value);
       })
     );

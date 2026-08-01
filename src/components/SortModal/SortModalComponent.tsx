@@ -2,27 +2,27 @@ import React, { useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown, X } from 'lucide-react';
 import { TailSpin } from 'react-loader-spinner';
 import FormField from '../Form/FormField';
-import type { HeadersData } from '../../types/types';
+import type { ListType, TableHeader } from '../../types/types';
 
 type SortConfig = {
   key: string;
   direction: string;
 };
 
-interface SortModalComponentProps {
+interface SortModalComponentProps<T extends ListType> {
   isOpen?: boolean;
-  headersData: HeadersData;
+  headersData: TableHeader<T>[];
   sortConfig: SortConfig;
   onSort: (value: string) => void;
   closeSortModal: () => void;
 }
 
-const SortModalComponent: React.FC<SortModalComponentProps> = ({
+const SortModalComponent = <T extends ListType>({
   headersData,
   sortConfig,
   onSort,
   closeSortModal,
-}) => {
+}: SortModalComponentProps<T>) => {
   const [focusedIndex, setFocusedIndex] = useState('');
 
   const myElementRef = useRef<HTMLButtonElement>(null);
@@ -151,4 +151,9 @@ const SortModalComponent: React.FC<SortModalComponentProps> = ({
   );
 };
 
-export default React.memo(SortModalComponent);
+const MemoizedSortModal = React.memo(SortModalComponent) as <
+  T extends ListType,
+>(
+  props: SortModalComponentProps<T>
+) => React.ReactElement;
+export default MemoizedSortModal;
