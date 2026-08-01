@@ -1,4 +1,5 @@
 import type { Errors, FormData } from '../types/types';
+import { FORM_FIELD_ERROR_LABELS } from '../utils/constants';
 
 export function validateField(name: string, value: any) {
   let errorMsg = '';
@@ -13,7 +14,7 @@ export function validateField(name: string, value: any) {
   }
   if (
     name === 'email' &&
-    !/^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})?$/.test(value)
+    !/^(?!\s*$)([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)
   ) {
     errorMsg = 'Invalid email address';
   }
@@ -31,7 +32,7 @@ export function validateField(name: string, value: any) {
       name === 'jdate') &&
     !value.trim()
   ) {
-    errorMsg = `${name} is required!`;
+    errorMsg = `${FORM_FIELD_ERROR_LABELS[name] ?? name} is required!`;
   }
   // console.log(name, value)
   return errorMsg;
@@ -49,10 +50,10 @@ export const validateFormOne = (data: FormData['formOne']): Errors => {
     if (field === 'name' && data[field].length < 3) {
       errors[field] = 'Username must be at least 3 characters';
     }
-    if (field === 'confirmPassword' && data[field].length < 3) {
-      errors[field] = 'confirm Password must be at least 6 characters';
+    if (field === 'confirmPassword' && data[field].length < 6) {
+      errors[field] = 'Confirm Password must be at least 6 characters';
     }
-    if (field === 'password' && data[field].length < 3) {
+    if (field === 'password' && data[field].length < 6) {
       errors[field] = 'Password must be at least 6 characters';
     }
 
@@ -62,7 +63,7 @@ export const validateFormOne = (data: FormData['formOne']): Errors => {
     )
       errors[field] = 'Invalid email address';
     if (!data[field].trim()) {
-      errors[field] = `${field} is required`;
+      errors[field] = `${FORM_FIELD_ERROR_LABELS[field] ?? field} is required`;
     }
   });
   if (data.confirmPassword !== data.password) {
@@ -82,7 +83,7 @@ export const validateFormTwo = (data: FormData['formTwo']): Errors => {
       errors[field] = 'Special characters not allowed';
     }
     if (!data[field].trim()) {
-      errors[field] = `${field} is required`;
+      errors[field] = `${FORM_FIELD_ERROR_LABELS[field] ?? field} is required`;
     }
   });
   return errors;

@@ -100,10 +100,10 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
     <div className="h-100 md:max-h-150 md:h-127.5 bg-violet-50 border-violet-200 dark:bg-[#211a3d] border dark:border-[#7c3aed]/20  rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-slate-900 dark:text-white font-bold text-xl">
+        <h2 className="text-slate-900 dark:text-white font-bold text-lg md:text-xl">
           Welcome back
         </h2>
-        <p className="text-slate-900 dark:text-white text-sm">
+        <p className="text-slate-900 dark:text-white text-sm font-medium">
           Sign in to your account
         </p>
       </div>
@@ -184,9 +184,9 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
             <TailSpin
               visible={true}
               height={20}
-              color="#4fa94d"
+              color="#fff"
+              radius="4"
               ariaLabel="tail-spin-loading"
-              radius="1"
               wrapperStyle={{}}
               wrapperClass="flex items-center justify-center"
             />

@@ -145,9 +145,9 @@ export default function Signup({
                   <TailSpin
                     visible={true}
                     height={20}
-                    color="#4fa94d"
+                    color="#fff"
+                    radius="4"
                     ariaLabel="tail-spin-loading"
-                    radius="1"
                     wrapperStyle={{}}
                     wrapperClass="flex items-center justify-center"
                   />

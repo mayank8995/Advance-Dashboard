@@ -450,13 +450,16 @@ export const EMPLOYEE_REVIEW_FIELD_LABELS: Record<
   rating: 'Rating',
 };
 
-// export const FIELD_LABELS = {
-//   employees: EMPLOYEE_FIELD_LABELS,
-//   topPerformers: TOP_PERFORMER_FIELD_LABELS,
-//   topProjects: TOP_PROJECT_FIELD_LABELS,
-// } as const;
-
-// export type FIELD_TYPE = keyof typeof FIELD_LABELS;
-
 export const EMPLOYEE = 'employees';
 export const TOP_PROJ = 'topProjects';
+
+export const FORM_FIELD_ERROR_LABELS: Record<string, string> = {
+  name: 'Name',
+  email: 'Email',
+  phone: 'Phone',
+  department: 'Department',
+  designation: 'Designation',
+  password: 'Password',
+  confirmPassword: 'Confirm Password',
+  empId: 'Employee ID',
+};

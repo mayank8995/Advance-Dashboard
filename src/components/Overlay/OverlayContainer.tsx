@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import type { MODAL_COMPONENTS, ModalType } from '../../utils/modalRegistry';
+import useLockBodyScroll from '../../hooks/useLockBodyScroll';
 type OverlayContainerProps<T extends ModalType> = {
   Component: (typeof MODAL_COMPONENTS)[T];
   props: Record<any, any>;
@@ -11,6 +12,7 @@ const OverlayContainer = <T extends ModalType>({
   props,
   onClose,
 }: OverlayContainerProps<T>) => {
+  useLockBodyScroll(true);
   const modalRoot = document.getElementById('modal-root');
   if (!modalRoot) {
     return null;
