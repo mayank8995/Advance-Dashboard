@@ -8,7 +8,11 @@ import TableToolbar from './TableToolbar';
 import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
-import type { CustomTableProps, SelectedChip } from '../../types/types';
+import type {
+  CustomTableProps,
+  SelectedChip,
+  TableTypeMap,
+} from '../../types/types';
 import EmployeeTableSkeleton from '../Skeleton/EmployeeTableSkeleton';
 import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
@@ -158,12 +162,13 @@ function CustomTable({
       setDownloading(false);
       toast.success(response.message);
     } catch (error) {
-      setDownloading(false);
       const errorMessage =
         error instanceof Error
           ? error.message
           : 'Error in downloading. Please try again.';
       toast.error(errorMessage);
+    } finally {
+      setDownloading(false);
     }
   };
   return (

@@ -6,6 +6,7 @@ import {
   getPerformanceCards,
   getProfileData,
   getFilterList,
+  fetchEmployeeDetails,
 } from '../api/admin-portal.api';
 import type {
   FilterList,
@@ -132,6 +133,14 @@ export function useProfileData(user: LoginProfile) {
   });
 }
 
+export function useEmployeeDetail(id: { id: number }) {
+  return useQuery({
+    queryKey: ['employeeDetail', id],
+    queryFn: () => fetchEmployeeDetails(id),
+    staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+  });
+}
+
 export async function exportSelected(
   selectedRow: Set<unknown>,
   data: ListType[],
@@ -235,7 +244,7 @@ export function isValidPrimitive(value: any) {
 }
 
 // To extract the value from array of objects
-export function extract(current: any, remainingKeys: string[]) {
+export function extract(current: any, remainingKeys: string[]): string[] {
   // collect whatever we have
   if (remainingKeys.length === 0) {
     if (current == null) return [];

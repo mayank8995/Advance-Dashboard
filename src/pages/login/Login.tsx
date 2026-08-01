@@ -73,6 +73,7 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
       const { message } = getApiErrorDetails(err);
       toast.error(message, {});
       console.error('POST FAILED', err);
+    } finally {
       setIsLoading(false);
     }
   };

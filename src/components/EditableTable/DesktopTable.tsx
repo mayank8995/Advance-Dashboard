@@ -1,13 +1,24 @@
 import { TextSearch } from 'lucide-react';
 import React, { useEffect } from 'react';
-import { className, EMPLOYEE, NO_RESULT_FOUND } from '../../utils/constants';
-import type { DesktopTableProps } from '../../types/types';
+import {
+  className,
+  EMPLOYEE,
+  NO_RESULT_FOUND,
+  TOP_PROJ,
+} from '../../utils/constants';
+import type {
+  DesktopTableProps,
+  ListType,
+  TableHeader,
+  TableTypeMap,
+  TableTypeProps,
+} from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
 import { useModal } from '../../context/ModalContext';
 import DetailModal from '../Overlay/DetailModal';
 
-const DesktopTable = ({
+const DesktopTable = <T extends TableTypeProps>({
   list,
   headersData,
   columnsData,
@@ -19,7 +30,7 @@ const DesktopTable = ({
   setSelectedRow,
   handleOnChange,
   ref,
-}: DesktopTableProps) => {
+}: DesktopTableProps<T>) => {
   const { openModal } = useModal();
   const { isLoading } = useLoader();
   // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
@@ -30,7 +41,8 @@ const DesktopTable = ({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  const isEmployeesTable = tableQueryParams?.tableType === EMPLOYEE;
+  const isTopProj = tableQueryParams?.tableType === TOP_PROJ;
+  console.log('isTopProj>>>>', isTopProj);
   useEffect(() => {
     setSelectedRow(new Set());
   }, [tableQueryParams]);
@@ -74,17 +86,17 @@ const DesktopTable = ({
         {!isLoading ? (
           <tbody className="divide-y divide-slate-200">
             {list?.length > 0 ? (
-              list?.map((row: any, index: number) => (
+              list?.map((row, index: number) => (
                 <tr
                   key={`${row.id}-${index * 2}`}
-                  className={`${isEmployeesTable ? 'cursor-pointer' : 'cursor-default'} hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
+                  className={`${!isTopProj ? 'cursor-pointer' : 'cursor-default'} hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
                   onClick={(event) => {
-                    if (!isEmployeesTable) {
+                    if (isTopProj) {
                       event.preventDefault();
                       return;
                     }
                     openModal(DetailModal, {
-                      row,
+                      id: row.id,
                       tableQueryParams,
                     });
                   }}
@@ -116,32 +128,34 @@ const DesktopTable = ({
                       className={`${className} cursor-pointer`}
                     />
                   </td>
-                  {columnsData?.map((coloumn) => (
-                    <td
-                      key={coloumn?.key}
-                      className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
-                    >
-                      {Array.isArray(row[coloumn?.key]) &&
-                      row[coloumn?.key]?.length > 0 ? (
-                        row[coloumn?.key]?.map((item: string) => (
-                          <React.Fragment key={row[coloumn?.key] + item}>
-                            {!coloumn?.render ? (
-                              <div>{item}</div>
-                            ) : (
-                              coloumn?.render(item)
-                            )}
-                          </React.Fragment>
-                        ))
-                      ) : (
-                        <>
-                          {' '}
-                          {!coloumn?.render
-                            ? row[coloumn?.key]
-                            : coloumn?.render(row[coloumn?.key])}{' '}
-                        </>
-                      )}
-                    </td>
-                  ))}
+                  {columnsData?.map((column) => {
+                    const value = row[column?.key];
+                    return (
+                      <td
+                        key={column?.key}
+                        className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
+                      >
+                        {Array.isArray(value) && value?.length > 0 ? (
+                          value?.map((item: string) => (
+                            <React.Fragment key={value + item}>
+                              {!column?.render ? (
+                                <div>{item}</div>
+                              ) : (
+                                column?.render(item)
+                              )}
+                            </React.Fragment>
+                          ))
+                        ) : (
+                          <>
+                            {' '}
+                            {!column?.render
+                              ? value
+                              : column?.render(String(value))}{' '}
+                          </>
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))
             ) : (

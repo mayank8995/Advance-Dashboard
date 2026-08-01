@@ -12,7 +12,6 @@ export const accordians = [
       'location',
       'workMode',
       'yearsOfExperience',
-      'onNoticePeriod',
     ],
   },
   {

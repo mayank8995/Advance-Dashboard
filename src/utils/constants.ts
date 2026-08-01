@@ -378,7 +378,7 @@ export const reviewtextColorsDark: Record<string, string> = {
   'low satisfaction': 'text-purple-400',
 };
 
-export const EMPLOYEE_FIELD_LABELS: Record<keyof Employee, string> = {
+export const FIELD_LABELS: Record<keyof Employee, string> = {
   id: 'ID',
   name: 'Name',
   email: 'Email',
@@ -397,6 +397,9 @@ export const EMPLOYEE_FIELD_LABELS: Record<keyof Employee, string> = {
   attendancePercentage: 'Attendance Percentage',
   employeeSatisfaction: 'Employee Satisfaction',
   onNoticePeriod: 'On Notice Period',
+  projectName: 'Project Name',
+  riskStatus: 'Risk Status',
+  status: 'Status',
 };
 
 export const TOP_PERFORMER_FIELD_LABELS: Record<keyof TopPerformer, string> = {
@@ -439,14 +442,13 @@ export const EMPLOYEE_REVIEW_FIELD_LABELS: Record<
   rating: 'Rating',
 };
 
-export const FIELD_LABELS = {
-  employees: EMPLOYEE_FIELD_LABELS,
-  topPerformer: TOP_PERFORMER_FIELD_LABELS,
-  topProject: TOP_PROJECT_FIELD_LABELS,
-  promotedEmployee: PROMOTED_EMPLOYEE_FIELD_LABELS,
-  employeeReview: EMPLOYEE_REVIEW_FIELD_LABELS,
-} as const;
+// export const FIELD_LABELS = {
+//   employees: EMPLOYEE_FIELD_LABELS,
+//   topPerformers: TOP_PERFORMER_FIELD_LABELS,
+//   topProjects: TOP_PROJECT_FIELD_LABELS,
+// } as const;
 
-export type FIELD_TYPE = keyof typeof FIELD_LABELS;
+// export type FIELD_TYPE = keyof typeof FIELD_LABELS;
 
 export const EMPLOYEE = 'employees';
+export const TOP_PROJ = 'topProjects';

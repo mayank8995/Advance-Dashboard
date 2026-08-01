@@ -34,8 +34,9 @@ export async function getTableEmployees(
     return response;
   } catch (error) {
     console.error('Error fetching data:', error);
-    setIsLoading?.(false);
     throw error;
+  } finally {
+    setIsLoading?.(false);
   }
 }
 export async function getFilterList(params: FilterList) {
@@ -134,6 +135,21 @@ export const doSignup = async (form: SignUpForm) => {
   // console.log("form>>>", form);
   try {
     const res = await apiClient.post('/signup', JSON.stringify(form));
+    // console.log("Created:", res);
+    return res;
+  } catch (err: unknown) {
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
+    throw err;
+  }
+};
+
+export const fetchEmployeeDetails = async (params: { id: number }) => {
+  console.log('params>>>', params);
+  try {
+    const res = await apiClient.get('/getEmployeeDetails', { params });
     // console.log("Created:", res);
     return res;
   } catch (err: unknown) {

@@ -2,12 +2,12 @@ import type { QueryClientConfig } from '@tanstack/react-query';
 import type { ChangeEvent, ComponentProps, ReactNode, RefObject } from 'react';
 
 export interface LoginData {
-  name: string;
-  id: string;
+  readonly name: string;
+  readonly id: string;
 }
 
 export interface ProfileForm {
-  id?: string | undefined;
+  readonly id?: string | undefined;
   name: string;
   phone?: string;
   email?: string;
@@ -142,23 +142,22 @@ export type TableToolbarProps = {
   ref?: RefObject<HTMLInputElement | null>;
   listSize: number;
 };
-export type HeaderType =
-  | TableHeader<Employee>[]
-  | TableHeader<TopPerformer>[]
-  | TableHeader<TopProject>[]
-  | TableHeader<PromotedEmployee>[]
-  | TableHeader<EmployeeRequiringReview>[];
-export type ColumnType =
-  | Column<Employee>[]
-  | Column<TopPerformer>[]
-  | Column<TopProject>[]
-  | Column<PromotedEmployee>[]
-  | Column<EmployeeRequiringReview>[];
+export type TableTypeMap = {
+  employees: Employee;
+  topPerformer: TopPerformer;
+  topProject: TopProject;
+  promotedEmployee: PromotedEmployee;
+  employeeReview: EmployeeRequiringReview;
+};
 
-export type DesktopTableProps = {
-  list: ListType[];
-  columnsData: ColumnType;
-  headersData: HeaderType;
+export type TableTypeProps = keyof TableTypeMap;
+export type HeaderType<T extends ListType = ListType> = TableHeader<T>[];
+export type ColumnType<T extends ListType = ListType> = Column<T>[];
+
+export type DesktopTableProps<T extends TableTypeProps = TableTypeProps> = {
+  list: TableTypeMap[T][];
+  columnsData: ColumnType<TableTypeMap[T]>;
+  headersData: HeaderType<TableTypeMap[T]>;
   rowsPerPage: number;
   handleSort: (e: string) => void;
   getSortIcon: (e: string) => ReactNode;
@@ -171,15 +170,10 @@ export type DesktopTableProps = {
   ref?: RefObject<HTMLInputElement | null>;
 };
 
-export type MobileTableProps = {
-  list: ListType[];
+export type MobileTableProps<T extends TableTypeProps = TableTypeProps> = {
+  list: TableTypeMap[T][];
   rowsPerPage: number;
-  columnsData:
-    | Column<Employee>[]
-    | Column<TopPerformer>[]
-    | Column<TopProject>[]
-    | Column<PromotedEmployee>[]
-    | Column<EmployeeRequiringReview>[];
+  columnsData: ColumnType<TableTypeMap[T]>;
   tableQueryParams?: TableQueryParams;
   selectedRow: Set<unknown>;
   setSelectedRow: React.Dispatch<React.SetStateAction<Set<unknown>>>;
@@ -270,6 +264,9 @@ export interface Employee {
   attendancePercentage: number;
   employeeSatisfaction: SatisfactionLevel;
   onNoticePeriod: boolean;
+  projectName?: string;
+  riskStatus?: string;
+  status?: string;
 }
 
 export type EmployeeProps = {
@@ -278,7 +275,7 @@ export type EmployeeProps = {
 
 export type Column<T> = {
   [K in keyof T]: {
-    key: K;
+    key: Extract<keyof T, string>;
     header: string;
     render?: (value: string) => ReactNode;
   };
@@ -319,7 +316,7 @@ export interface EmployeeRequiringReview {
 }
 
 export type TableHeader<T> = {
-  key: keyof T;
+  key: Extract<keyof T, string>;
   value: string;
 };
 export type ListType =
@@ -329,37 +326,15 @@ export type ListType =
   | PromotedEmployee
   | EmployeeRequiringReview;
 
-export type CustomTableProps = ErrorPageProps & {
-  list: ListType[];
+export type CustomTableProps<T extends ListType = ListType> = ErrorPageProps & {
+  list: T[];
   tableQueryParams: TableQueryParams;
   handleTableQuery: (data: TableQueryParams, signal?: AbortSignal) => void;
-  columnsData:
-    | Column<Employee>[]
-    | Column<TopPerformer>[]
-    | Column<TopProject>[]
-    | Column<PromotedEmployee>[]
-    | Column<EmployeeRequiringReview>[];
-  headersData:
-    | TableHeader<Employee>[]
-    | TableHeader<TopPerformer>[]
-    | TableHeader<TopProject>[]
-    | TableHeader<PromotedEmployee>[]
-    | TableHeader<EmployeeRequiringReview>[];
+  columnsData: ColumnType<T>;
+  headersData: HeaderType<T>;
   title: string;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
 };
-export type ColumnsData =
-  | Column<Employee>[]
-  | Column<TopPerformer>[]
-  | Column<TopProject>[]
-  | Column<PromotedEmployee>[]
-  | Column<EmployeeRequiringReview>[];
-export type HeadersData =
-  | TableHeader<Employee>[]
-  | TableHeader<TopPerformer>[]
-  | TableHeader<TopProject>[]
-  | TableHeader<PromotedEmployee>[]
-  | TableHeader<EmployeeRequiringReview>[];
 
 type Trend = 'up' | 'down';
 
@@ -580,3 +555,16 @@ export type TopProjectEmployeeResponse = Metadata & {
 export type EmployeeDirectoryResponse = Metadata & {
   employees: Employee[];
 };
+
+export type ColumnsData =
+  | Column<Employee>[]
+  | Column<TopPerformer>[]
+  | Column<TopProject>[]
+  | Column<PromotedEmployee>[]
+  | Column<EmployeeRequiringReview>[];
+export type HeadersData =
+  | TableHeader<Employee>[]
+  | TableHeader<TopPerformer>[]
+  | TableHeader<TopProject>[]
+  | TableHeader<PromotedEmployee>[]
+  | TableHeader<EmployeeRequiringReview>[];
