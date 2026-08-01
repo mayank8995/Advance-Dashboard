@@ -302,7 +302,10 @@ function ProfileSettings() {
                         Personal Information
                       </h2>
                     </div>
-                    <div className="flex flex-col-reverse">
+                    <div className="mb-4 flex flex-col">
+                      <label htmlFor="name" className={labelclassName}>
+                        Name
+                      </label>
                       <FormField
                         errors={errors}
                         value={formValues?.name}
@@ -313,11 +316,11 @@ function ProfileSettings() {
                         className={className}
                         id={'name'}
                       />
-                      <label htmlFor="name" className={labelclassName}>
-                        Name
-                      </label>
                     </div>
-                    <div className="flex flex-col-reverse">
+                    <div className="mb-4 flex flex-col">
+                      <label htmlFor="phone" className={labelclassName}>
+                        Phone Number
+                      </label>
                       <FormField
                         maxlength={10}
                         errors={errors}
@@ -329,11 +332,11 @@ function ProfileSettings() {
                         className={className}
                         id={'phone'}
                       />
-                      <label htmlFor="phone" className={labelclassName}>
-                        Phone Number
-                      </label>
                     </div>
-                    <div className="flex flex-col-reverse">
+                    <div className="mb-4 flex flex-col">
+                      <label htmlFor="email" className={labelclassName}>
+                        Email
+                      </label>
                       <FormField
                         errors={errors}
                         value={formValues?.email}
@@ -344,11 +347,11 @@ function ProfileSettings() {
                         className={className}
                         id={'email'}
                       />
-                      <label htmlFor="email" className={labelclassName}>
-                        Email
-                      </label>
                     </div>
-                    <div className="flex flex-col-reverse">
+                    <div className="mb-4 flex flex-col">
+                      <label htmlFor="department" className={labelclassName}>
+                        Department
+                      </label>
                       <FormField
                         errors={errors}
                         value={formValues?.department}
@@ -359,11 +362,11 @@ function ProfileSettings() {
                         className={className}
                         id={'department'}
                       />
-                      <label htmlFor="department" className={labelclassName}>
-                        Department
-                      </label>
                     </div>
-                    <div className="flex flex-col-reverse">
+                    <div className="mb-4 flex flex-col">
+                      <label htmlFor="designation" className={labelclassName}>
+                        Designation
+                      </label>
                       <FormField
                         errors={errors}
                         value={formValues?.designation}
@@ -374,9 +377,6 @@ function ProfileSettings() {
                         className={className}
                         id={'designation'}
                       />
-                      <label htmlFor="designation" className={labelclassName}>
-                        Designation
-                      </label>
                     </div>
                   </div>
                 </div>
@@ -388,7 +388,10 @@ function ProfileSettings() {
                       Account Information
                     </h2>
                   </div>
-                  <div className="flex flex-col-reverse">
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="empId" className={labelclassName}>
+                      Employee ID
+                    </label>
                     <FormField
                       errors={errors}
                       value={formValues?.empId}
@@ -399,11 +402,11 @@ function ProfileSettings() {
                       className={className}
                       id={'empId'}
                     />
-                    <label htmlFor="empId" className={labelclassName}>
-                      Employee ID
-                    </label>
                   </div>
-                  <div className="flex flex-col-reverse">
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="jdate" className={labelclassName}>
+                      Joining Date
+                    </label>
                     <FormField
                       errors={errors}
                       value={formValues?.jdate}
@@ -414,11 +417,11 @@ function ProfileSettings() {
                       className={className}
                       id={'jdate'}
                     />
-                    <label htmlFor="jdate" className={labelclassName}>
-                      Joining Date
-                    </label>
                   </div>
-                  <div className="flex flex-col-reverse">
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="wmode" className={labelclassName}>
+                      Work Mode
+                    </label>
                     <FormField
                       errors={errors}
                       value={formValues?.wmode}
@@ -429,11 +432,11 @@ function ProfileSettings() {
                       className={className}
                       id={'wmode'}
                     />
-                    <label htmlFor="wmode" className={labelclassName}>
-                      Work Mode
-                    </label>
                   </div>
-                  <div className="flex flex-col-reverse">
+                  <div className="mb-4 flex flex-col">
+                    <label htmlFor="location" className={labelclassName}>
+                      Location
+                    </label>
                     <FormField
                       errors={errors}
                       value={formValues?.location}
@@ -444,9 +447,6 @@ function ProfileSettings() {
                       className={className}
                       id={'location'}
                     />
-                    <label htmlFor="location" className={labelclassName}>
-                      Location
-                    </label>
                   </div>
                 </div>
                 <hr className="border-t-2  border-gray-300 border-dotted dark:border-gray-600"></hr>

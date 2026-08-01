@@ -462,4 +462,7 @@ export const FORM_FIELD_ERROR_LABELS: Record<string, string> = {
   password: 'Password',
   confirmPassword: 'Confirm Password',
   empId: 'Employee ID',
+  jdate: 'Joining Date',
+  wmode: 'Work Mode',
+  location: 'Location',
 };
