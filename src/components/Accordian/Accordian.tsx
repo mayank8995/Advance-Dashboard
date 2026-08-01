@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { ListType, TableQueryParams } from '../../types/types';
+import type { Employee } from '../../types/types';
 import { extract } from '../../services/utils.service';
 import { FIELD_LABELS } from '../../utils/constants';
 import { ChevronDown, ChevronUp } from 'lucide-react';
@@ -15,14 +15,9 @@ type AccordionSection = {
 };
 interface Accordian {
   accordian: AccordionSection;
-  tableQueryParams: TableQueryParams;
-  content: ListType;
+  content: Employee;
 }
-export default function Accordion({
-  accordian,
-  tableQueryParams,
-  content,
-}: Accordian) {
+export default function Accordion({ accordian, content }: Accordian) {
   const [openAccordian, setOpenAccordian] = useState(
     () => accordian.initialState
   );
@@ -35,25 +30,27 @@ export default function Accordion({
       return (
         <>
           {accordian?.fields?.map((field) => {
+            let value = null;
+            let rowLabel = null;
             if (
               field.indexOf('$') !== -1 &&
               accordian.fieldType === 'array-objects'
             ) {
               const title = field?.split('$')?.[0];
               if (title.length) {
-                const value = extract(content, field.split('$'));
-                const rowLabel =
-                  FIELD_LABELS?.[tableQueryParams?.tableType]?.[
-                    field.split('$')?.[0]
-                  ];
+                value = extract(content, field.split('$'));
+                rowLabel =
+                  FIELD_LABELS[field.split('$')?.[0] as keyof Employee];
                 return (
                   <React.Fragment key={`item-${field}`}>
                     <div className="flex justify-between text-sm">
-                      <span className="text-xs text-gray-500">{rowLabel}</span>
+                      <span className="text-xs  font-medium text-gray-500">
+                        {rowLabel}
+                      </span>
                       {value?.map((val) => (
                         <span
                           key={val}
-                          className="text-xs font-semibold text-gray-900"
+                          className="text-xs font-semibold text-gray-900 dark:text-white"
                         >
                           {val}
                         </span>
@@ -63,32 +60,34 @@ export default function Accordion({
                 );
               }
             }
-            const rowLabel =
-              FIELD_LABELS?.[tableQueryParams?.tableType]?.[field];
-            const value = content?.[field];
+            rowLabel = FIELD_LABELS[field as keyof Employee];
+            value = content?.[field as keyof Employee];
             return (
               <React.Fragment key={`item-${field}`}>
                 <div className="flex justify-between text-sm">
                   {accordian?.showColumns && (
-                    <span className="text-xs text-gray-500">{rowLabel}</span>
+                    <span className="text-xs font-medium text-gray-500 leading-normal">
+                      {rowLabel}
+                    </span>
                   )}
-                  {accordian?.fieldType === 'array' ? (
+                  {Array.isArray(value) && accordian?.fieldType === 'array' ? (
                     value?.map((val) => (
                       <span
-                        key={val}
-                        className="text-xs font-semibold text-gray-900"
+                        key={String(val)}
+                        className="text-xs font-medium text-gray-900 leading-normal dark:text-white"
                       >
-                        {val}
+                        {String(val)}
                       </span>
                     ))
                   ) : (
-                    <span className="text-xs font-semibold text-gray-900">
-                      {value}
+                    <span className="text-xs font-medium text-gray-900 leading-normal dark:text-white">
+                      {String(value)}
                     </span>
                   )}
                 </div>
               </React.Fragment>
             );
+            return null;
           })}
         </>
       );
@@ -99,7 +98,7 @@ export default function Accordion({
   return (
     <div
       className={
-        'mt-2 rounded-xl border border-gray-200 bg-gray-50/50 p-5 flex flex-col gap-3'
+        'mt-2 rounded-2xl bg-linear-to-br from-white to-indigo-50/40 border border-slate-100 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-slate-900/50 p-2 flex flex-col gap-3 shadow-sm'
       }
       id={accordian?.id}
       aria-controls={`accordian-panel-${accordian?.id}`}
@@ -107,11 +106,15 @@ export default function Accordion({
     >
       <button
         type="button"
-        className="flex justify-between text-sm font-semibold"
+        className="flex justify-between text-sm font-semibold items-center cursor-pointer"
       >
-        <span>{accordian?.label}</span>{' '}
+        <span className="dark:text-white">{accordian?.label}</span>{' '}
         <span aria-hidden={!openAccordian} aria-expanded={openAccordian}>
-          {!openAccordian ? <ChevronDown /> : <ChevronUp />}
+          {!openAccordian ? (
+            <ChevronDown className="dark:text-white" size={18} />
+          ) : (
+            <ChevronUp className="dark:text-white" size={18} />
+          )}
         </span>
       </button>
       {openAccordian && (

@@ -8,7 +8,11 @@ import TableToolbar from './TableToolbar';
 import DesktopTable from './DesktopTable';
 import MobileTable from './MobileTable';
 import useLockBodyScroll from '../../hooks/useLockBodyScroll';
-import type { CustomTableProps, SelectedChip } from '../../types/types';
+import type {
+  CustomTableProps,
+  ListType,
+  SelectedChip,
+} from '../../types/types';
 import EmployeeTableSkeleton from '../Skeleton/EmployeeTableSkeleton';
 import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
@@ -19,18 +23,19 @@ import { toast } from 'react-toastify';
 //   () => import('../SortModal/SortModalComponent')
 // );
 
-function CustomTable({
-  list,
-  tableQueryParams,
-  handleTableQuery,
-  columnsData,
-  headersData,
-  title,
-  setQuery,
-  isError,
-  isLoading,
-  refetch,
-}: CustomTableProps) {
+function CustomTable<T extends ListType>(props: CustomTableProps<T>) {
+  const {
+    list,
+    tableQueryParams,
+    handleTableQuery,
+    columnsData,
+    headersData,
+    title,
+    setQuery,
+    isError,
+    isLoading,
+    refetch,
+  } = props;
   const { selectedRow, setSelectedRow, handleOnChange, ref } =
     useCheckBox(list);
   const queryClient = useQueryClient();
@@ -91,7 +96,7 @@ function CustomTable({
       ...tableQueryParams,
       page: 1,
       sortBy: key,
-      order: direction,
+      order: direction as 'asc' | 'desc',
     });
   };
 
@@ -158,12 +163,13 @@ function CustomTable({
       setDownloading(false);
       toast.success(response.message);
     } catch (error) {
-      setDownloading(false);
       const errorMessage =
         error instanceof Error
           ? error.message
           : 'Error in downloading. Please try again.';
       toast.error(errorMessage);
+    } finally {
+      setDownloading(false);
     }
   };
   return (
@@ -267,5 +273,7 @@ function CustomTable({
     </>
   );
 }
-
-export default React.memo(CustomTable);
+const MemoizedCustomTable = React.memo(CustomTable) as <T extends ListType>(
+  props: CustomTableProps<T>
+) => React.ReactElement;
+export default MemoizedCustomTable;

@@ -1,19 +1,13 @@
 import { X } from 'lucide-react';
 import React from 'react';
 import StatusBadge from '../UtilComponents/StatusBadge';
-import type { ListType, TableQueryParams } from '../../types/types';
 import { accordians } from '../Accordian/AccordianRenderer';
 import Accordion from '../Accordian/Accordian';
+import { useEmployeeDetail } from '../../services/utils.service';
 
-const DetailModal = ({
-  onClose,
-  row,
-  tableQueryParams,
-}: {
-  onClose: () => void;
-  row: ListType;
-  tableQueryParams: TableQueryParams;
-}) => {
+const DetailModal = ({ onClose, id }: { onClose: () => void; id: number }) => {
+  const { data: details } = useEmployeeDetail({ id });
+  const row = details?.['data'] ?? [];
   return (
     <div className="p-4">
       <div className="flex flex-row justify-between items-center">
@@ -31,7 +25,7 @@ const DetailModal = ({
         </button>
       </div>
 
-      <div className="grid grid-cols-[auto_1fr_auto] gap-2 p-4">
+      <div className="grid grid-cols-[auto_1fr_auto] gap-4 pt-4 pb-4">
         <div className="flex items-center w-15 h-15 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
           <img
             loading="eager"
@@ -41,8 +35,10 @@ const DetailModal = ({
           />
         </div>
         <dl>
-          <dd className="text-sm font-bold">{row?.name}</dd>
-          <dd className="text-xs whitespace-nowrap overflow-hidden text-ellipsis font-semibold">
+          <dd className="text-sm font-bold leading-normal dark:text-white">
+            {row?.name}
+          </dd>
+          <dd className="text-xs whitespace-nowrap overflow-hidden text-ellipsis font-semibold dark:text-white">
             {row?.designation}
           </dd>
           <dd className="text-xs whitespace-nowrap overflow-hidden text-ellipsis text-slate-600 font-semibold">
@@ -53,16 +49,12 @@ const DetailModal = ({
           <StatusBadge value={!row?.onNoticePeriod ? 'Active' : 'On Notice'} />
         </div>
       </div>
-      <div className="p-4 flex-1 flex flex-col">
-        <div>
+      <div className="p-4 flex-1 flex flex-col ">
+        <div className="">
           {accordians.map((accordian) => {
             return (
               <React.Fragment key={accordian.id}>
-                <Accordion
-                  accordian={accordian}
-                  content={row}
-                  tableQueryParams={tableQueryParams}
-                />
+                <Accordion accordian={accordian} content={row} />
               </React.Fragment>
             );
           })}

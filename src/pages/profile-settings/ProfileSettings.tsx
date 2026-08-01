@@ -154,6 +154,7 @@ function ProfileSettings() {
       const { message } = getApiErrorDetails(err);
       toast.error(message, {});
       console.error('POST FAILED', err);
+    }finally{
       setIsLoading(false);
     }
   };

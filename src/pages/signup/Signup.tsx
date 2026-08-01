@@ -90,6 +90,7 @@ export default function Signup({
       const { message } = getApiErrorDetails(err);
       toast.error(message, {});
       console.error('POST FAILED', err);
+    } finally {
       setIsLoading(false);
     }
   };

@@ -19,7 +19,7 @@ const OverlayContainer = <T extends ModalType>({
   return (
     <>
       {createPortal(
-        <div className="h-full max-h-full overflow-auto w-screen md:w-fit  bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10  fixed z-300 right-0 top-0">
+        <div className="h-full max-h-full overflow-auto w-screen md:w-fit  bg-white dark:bg-slate-950  border border-slate-200 dark:border-white/10  fixed z-300 right-0 top-0">
           <ModalComponent {...props} onClose={onClose} />
         </div>,
         modalRoot

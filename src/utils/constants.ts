@@ -194,22 +194,6 @@ export const headers_requiringReview: TableHeader<EmployeeRequiringReview>[] = [
   { key: 'rating', value: 'Rating' },
 ];
 
-export const CARD_CONTENT_LIMIT_TO_SCROLL = 5;
-
-export const VIEW_MORE_ROUTES = {
-  top_projects: 'topProjects',
-  top_performers: 'topPerformers',
-  promotedThisYear: 'promotedThisYear',
-  requiringReview: 'requiringReview',
-};
-
-export const VIEW_MORE_ROUTES_VALUES = {
-  top_projects: 'Top Projects',
-  top_performers: 'Top Performers',
-  promotedThisYear: 'Promoted This Year',
-  requiringReview: 'Requiring Review',
-};
-
 export const headers_employees: TableHeader<Employee>[] = [
   { key: 'id', value: 'Id' },
   { key: 'name', value: 'Name' },
@@ -220,6 +204,24 @@ export const headers_employees: TableHeader<Employee>[] = [
   { key: 'workMode', value: 'Work Mode' },
   { key: 'rating', value: 'Rating' },
 ];
+
+export const CARD_CONTENT_LIMIT_TO_SCROLL = 5;
+
+export const VIEW_MORE_ROUTES = {
+  top_projects: 'topProjects',
+  top_performers: 'topPerformers',
+  promotedThisYear: 'promotedThisYear',
+  requiringReview: 'requiringReview',
+  employees: 'employees',
+};
+
+export const VIEW_MORE_ROUTES_VALUES = {
+  top_projects: 'Top Projects',
+  top_performers: 'Top Performers',
+  promotedThisYear: 'Promoted This Year',
+  requiringReview: 'Requiring Review',
+  employees: 'Employees',
+};
 
 export type HeadersType =
   | TableHeader<Employee>
@@ -300,6 +302,12 @@ export const TABLE_CONFIG = {
     title: '',
     tableType: VIEW_MORE_ROUTES.requiringReview,
   },
+  // [VIEW_MORE_ROUTES.employees]: {
+  //   headers: headers_employees,
+  //   columns: columns_employees,
+  //   title: '',
+  //   tableType: VIEW_MORE_ROUTES.employees,
+  // },
 };
 
 export const DEFAULT_TABLE_QUERY_PARAMS = {
@@ -378,7 +386,7 @@ export const reviewtextColorsDark: Record<string, string> = {
   'low satisfaction': 'text-purple-400',
 };
 
-export const EMPLOYEE_FIELD_LABELS: Record<keyof Employee, string> = {
+export const FIELD_LABELS: Record<keyof Employee, string> = {
   id: 'ID',
   name: 'Name',
   email: 'Email',
@@ -397,6 +405,9 @@ export const EMPLOYEE_FIELD_LABELS: Record<keyof Employee, string> = {
   attendancePercentage: 'Attendance Percentage',
   employeeSatisfaction: 'Employee Satisfaction',
   onNoticePeriod: 'On Notice Period',
+  projectName: 'Project Name',
+  riskStatus: 'Risk Status',
+  status: 'Status',
 };
 
 export const TOP_PERFORMER_FIELD_LABELS: Record<keyof TopPerformer, string> = {
@@ -439,14 +450,13 @@ export const EMPLOYEE_REVIEW_FIELD_LABELS: Record<
   rating: 'Rating',
 };
 
-export const FIELD_LABELS = {
-  employees: EMPLOYEE_FIELD_LABELS,
-  topPerformer: TOP_PERFORMER_FIELD_LABELS,
-  topProject: TOP_PROJECT_FIELD_LABELS,
-  promotedEmployee: PROMOTED_EMPLOYEE_FIELD_LABELS,
-  employeeReview: EMPLOYEE_REVIEW_FIELD_LABELS,
-} as const;
+// export const FIELD_LABELS = {
+//   employees: EMPLOYEE_FIELD_LABELS,
+//   topPerformers: TOP_PERFORMER_FIELD_LABELS,
+//   topProjects: TOP_PROJECT_FIELD_LABELS,
+// } as const;
 
-export type FIELD_TYPE = keyof typeof FIELD_LABELS;
+// export type FIELD_TYPE = keyof typeof FIELD_LABELS;
 
 export const EMPLOYEE = 'employees';
+export const TOP_PROJ = 'topProjects';

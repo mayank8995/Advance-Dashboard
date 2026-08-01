@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react';
-import type { MobileTableProps } from '../../types/types';
-import { bgColors, EMPLOYEE, gradients } from '../../utils/constants';
+import type {
+  ListType,
+  MobileTableProps,
+  TableTypeMap,
+} from '../../types/types';
+import { bgColors, gradients, TOP_PROJ } from '../../utils/constants';
 import FormField from '../Form/FormField';
 import { useModal } from '../../context/ModalContext';
 import DetailModal from '../Overlay/DetailModal';
 
-function MobileViewCardForTable({
+function MobileViewCardForTable<T extends ListType>({
   list,
   columnsData,
   tableQueryParams,
   selectedRow,
   setSelectedRow,
   handleOnChange,
-}: MobileTableProps) {
+}: MobileTableProps<T>) {
   const { openModal } = useModal();
 
   // const { selectedRow, setSelectedRow, handleOnChange } = useCheckBox(list);
@@ -24,7 +28,8 @@ function MobileViewCardForTable({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  const isEmployeesTable = tableQueryParams?.tableType === EMPLOYEE;
+  const isTopProj =
+    tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
 
   useEffect(() => {
     setSelectedRow(new Set());
@@ -39,12 +44,13 @@ function MobileViewCardForTable({
   }
   return (
     <>
-      {list?.map((row: any, index: number) => (
+      {list?.map((row, index: number) => (
         <div
           key={`${row.id}-data`}
           className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 "
         >
           {columnsData?.map((coloumn) => {
+            const value = row[coloumn?.key];
             return (
               <div key={coloumn.key}>
                 {coloumn?.key === 'name' && (
@@ -53,7 +59,7 @@ function MobileViewCardForTable({
                       <h1
                         className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}
                       >
-                        {row[coloumn?.key]
+                        {String(value)
                           ?.split(' ')
                           .map((n: string) => n[0])
                           .join('')}
@@ -61,24 +67,23 @@ function MobileViewCardForTable({
                       <button
                         type="button"
                         className={
-                          isEmployeesTable ? 'cursor-pointer' : 'cursor-default'
+                          !isTopProj ? 'cursor-pointer' : 'cursor-default'
                         }
                         onClick={(event) => {
-                          if (!isEmployeesTable) {
+                          if (isTopProj) {
                             event.preventDefault();
                             return;
                           }
                           openModal(DetailModal, {
-                            row,
+                            id: row.id,
                             tableQueryParams,
                           });
                         }}
                       >
                         <h2 className="text-slate-800 dark:text-slate-300">
-                          {Array.isArray(row[coloumn?.key]) &&
-                          row[coloumn?.key]?.length > 0
-                            ? row[coloumn?.key][0]
-                            : row[coloumn?.key]}
+                          {Array.isArray(value) && value?.length > 0
+                            ? value[0]
+                            : value}
                         </h2>
                       </button>
                     </div>
@@ -104,24 +109,21 @@ function MobileViewCardForTable({
                           .join(' ')}
                       </h2>
                       <h2 className="pl-2 text-slate-800 dark:text-slate-300">
-                        {Array.isArray(row[coloumn?.key]) &&
-                        row[coloumn?.key]?.length > 0 ? (
-                          row[coloumn?.key]?.map(
-                            (item: string, index: number) => (
-                              <>
-                                <div key={index + row[coloumn?.key].length}>
-                                  {!coloumn?.render
-                                    ? item
-                                    : coloumn?.render(item)}
-                                </div>
-                              </>
-                            )
-                          )
+                        {Array.isArray(value) && value?.length > 0 ? (
+                          value?.map((item: string, index: number) => (
+                            <>
+                              <div key={index + value.length}>
+                                {!coloumn?.render
+                                  ? item
+                                  : coloumn?.render(item)}
+                              </div>
+                            </>
+                          ))
                         ) : (
                           <>
                             {!coloumn?.render
                               ? row[coloumn?.key]
-                              : coloumn?.render(row[coloumn?.key])}
+                              : coloumn?.render(String(value))}
                           </>
                         )}
                       </h2>
@@ -137,4 +139,6 @@ function MobileViewCardForTable({
   );
 }
 
-export default React.memo(MobileViewCardForTable);
+export default React.memo(MobileViewCardForTable) as <T extends ListType>(
+  props: MobileTableProps<T>
+) => React.ReactElement;
