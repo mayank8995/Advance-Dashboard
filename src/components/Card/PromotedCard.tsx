@@ -1,11 +1,4 @@
-import {
-  ArrowRight,
-  ArrowUpCircle,
-  Award,
-  ChevronsUp,
-  TrendingUp,
-  Trophy,
-} from 'lucide-react';
+import { ArrowRight, ChevronsUp, TrendingUp, Trophy } from 'lucide-react';
 import type { PromotedList } from '../../types/types';
 import React from 'react';
 import {
