@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import KeyMetric from '../../components/Card/KeyMetric';
-import { TOP_PROJECTS } from '../../utils/constants';
+// import { TOP_PROJECTS } from '../../utils/constants';
 import KeyMetricCard from '../../components/Card/KeyMetricCard';
-import TopProjectsCard from '../../components/Card/TopProjectsCard';
+// import TopProjectsCard from '../../components/Card/TopProjectsCard';
 import TopPerformersCard from '../../components/Card/TopPerformersCard';
 import PromotedCard from '../../components/Card/PromotedCard';
 import MeetingKPIsCard from '../../components/Card/MeetingKPIsCard';
 import RequiringReviewCard from '../../components/Card/RequiringReviewCard';
 import type {
-  TopProjectEmployeeResponse,
+  // TopProjectEmployeeResponse,
   MeetingKPIsCardProps,
   PromotedThisYearCardProps,
   RequiringReviewCardProps,
@@ -27,7 +27,7 @@ function Dashboard() {
   });
   const metricData = results[0]?.data?.data;
   const cachedPerformanceCardData = results[1]?.data?.data;
-  const topProjects = results[2]?.data;
+  // const topProjects = results[2]?.data;
   const isLoading = results.some((query) => query.isLoading);
   const isError = results.some((query) => query.isError);
   const refetchAll = () => {
@@ -64,7 +64,7 @@ function Dashboard() {
                     cachedPerformanceCardData?.meetingKPIs as MeetingKPIsCardProps
                   }
                 ></MeetingKPIsCard>
-                <TopProjectsCard
+                {/* <TopProjectsCard
                   topProjects={
                     topProjects?.['data'] as TopProjectEmployeeResponse
                   }
@@ -72,7 +72,7 @@ function Dashboard() {
                   isError={isError}
                   isLoading={isLoading}
                   refetch={refetchAll}
-                />
+                /> */}
               </div>
             </>
           ) : (
