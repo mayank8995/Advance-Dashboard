@@ -27,12 +27,13 @@ function App() {
               <div className="flex items-center gap-2">
                 <div className="w-15 h-15 rounded-lg ">
                   <img
+                    fetchPriority="high"
                     src={
                       theme === 'dark'
                         ? '/admin_portal_logo.svg'
                         : '/admin_portal_logo_light.svg'
                     }
-                    className="w-full h-full object-cover"
+                    className="object-cover"
                     alt="admin portal logo"
                   />
                 </div>
@@ -66,12 +67,13 @@ function App() {
             <div className="flex md:hidden flex-col items-center mb-2">
               <div className="w-15 h-15 rounded-lg ">
                 <img
+                  fetchPriority="high"
                   src={
                     theme === 'dark'
                       ? '/admin_portal_logo.svg'
                       : '/admin_portal_logo_light.svg'
                   }
-                  className="w-full h-full object-cover"
+                  className="object-cover"
                   alt="admin portal logo"
                 />
               </div>
