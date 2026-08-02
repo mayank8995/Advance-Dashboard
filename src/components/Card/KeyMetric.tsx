@@ -56,42 +56,39 @@ function KeyMetric({ metricData }: KeyMetricCardsProps) {
               >
                 <div className="items-center flex flex-row ">
                   <div
-                    className={`h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center`}
+                    className={`h-8 w-8 xl:h-10 xl:w-10 rounded-xl bg-blue-100 flex items-center justify-center`}
                   >
                     {data[key]?.icon === KEY_TRACK_METRIC_ICON['USER'] && (
-                      <User className="h-6 w-6 text-blue-600" size={5} />
+                      <User className="h-4 w-4 xl:h-6 xl:w-6 text-blue-600" />
                     )}
                     {data[key]?.icon ===
                       KEY_TRACK_METRIC_ICON['FOLDER_DOT'] && (
-                      <FolderDot className="h-6 w-6 text-green-600" size={5} />
+                      <FolderDot className="h-4 w-4 xl:h-6 xl:w-6 text-green-600" />
                     )}
                     {data[key]?.icon ===
                       KEY_TRACK_METRIC_ICON['INDIAN_RUPEE'] && (
-                      <IndianRupee
-                        className="h-6 w-6 text-orange-600"
-                        size={5}
-                      />
+                      <IndianRupee className="h-4 w-4 xl:h-6 xl:w-6 text-orange-600" />
                     )}
                     {data[key]?.icon ===
                       KEY_TRACK_METRIC_ICON['CIRCLE_PERCENT'] && (
-                      <CirclePercent
-                        className="h-6 w-6 text-purple-600"
-                        size={5}
-                      />
+                      <CirclePercent className="h-4 w-4 xl:h-6 xl:w-6 text-purple-600" />
                     )}
                     {data[key]?.icon ===
                       KEY_TRACK_METRIC_ICON['USER_MINUS'] && (
-                      <UserMinus className="h-6 w-6 text-red-600" size={5} />
+                      <UserMinus className="h-4 w-4 xl:h-6 xl:w-6 text-red-600" />
                     )}
                   </div>
                   <div className="pl-2 flex flex-col">
-                    <div className="hidden lg:flex items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100 w-50 truncate">
+                    <span
+                      title={key}
+                      className="hidden lg:flex items-center mb-1 text-sm xl:text-base text-slate-500 font-medium dark:text-slate-100 text-ellipsis overflow-hidden"
+                    >
                       {key.length > 25 ? `${key.substring(0, 25)}...` : key}
-                    </div>
-                    <div className="lg:hidden items-center mb-1 text-sm text-slate-500 font-medium dark:text-slate-100">
+                    </span>
+                    <span className="lg:hidden items-center mb-1 text-sm xl:text-base text-slate-500 font-medium dark:text-slate-100 text-ellipsis overflow-hidden">
                       {key}
-                    </div>
-                    <h2 className="text-xl font-bold text-indigo-600 drop-shadow-sm ">
+                    </span>
+                    <h2 className="font-bold text-indigo-600 drop-shadow-sm text-sm">
                       {data[key]?.value}
                     </h2>
                   </div>

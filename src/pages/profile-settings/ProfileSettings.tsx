@@ -237,10 +237,10 @@ function ProfileSettings() {
           {!isError ? (
             <div className="p-4 dark:bg-gray-800">
               <div className="mb-6">
-                <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+                <h1 className="text-base xl:text-2xl font-bold text-slate-800 dark:text-slate-100">
                   {SIDE_BAR_ITEMS.SETTINGS}
                 </h1>
-                <h2 className="text-sm text-slate-400 mt-1 dark:text-slate-300">
+                <h2 className="text-xs xl:text-sm text-slate-500 mt-1 dark:text-slate-300">
                   {PROFILE_SUBHEAD}
                 </h2>
               </div>
@@ -254,7 +254,7 @@ function ProfileSettings() {
                   <div className="bg-linear-to-br from-indigo-50 to-violet-50 rounded-2xl p-8 h-full dark:bg-linear-to-br dark:from-slate-900 dark:to-green-950/20">
                     <div className="flex items-center gap-2 mb-4">
                       <div className="w-1 h-5 bg-indigo-500 rounded-full" />
-                      <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
+                      <h2 className="text-sm xl:text-base font-bold text-slate-800 dark:text-slate-100">
                         Avatar
                       </h2>
                     </div>
@@ -285,10 +285,10 @@ function ProfileSettings() {
                       </div>
                       {formValues?.name && (
                         <div className="text-center">
-                          <p className="font-bold text-slate-800 dark:text-slate-100">
+                          <p className="font-bold text-slate-800 dark:text-slate-100 text-sm xl:text-base">
                             {formValues?.name}
                           </p>
-                          <p className="text-xs text-slate-400 dark:text-slate-300">
+                          <p className="text-xs text-slate-500 dark:text-slate-300">
                             {formValues?.designation}
                           </p>
                         </div>
@@ -298,7 +298,7 @@ function ProfileSettings() {
                   <div>
                     <div className="flex items-center gap-2 mb-4">
                       <div className="w-1 h-5 bg-indigo-500 rounded-full" />
-                      <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
+                      <h2 className="text-sm xl:text-base font-bold text-slate-800 dark:text-slate-100">
                         Personal Information
                       </h2>
                     </div>
@@ -384,7 +384,7 @@ function ProfileSettings() {
                 <div className="p-4">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-5 bg-indigo-500 rounded-full" />
-                    <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
+                    <h2 className="text-sm xl:text-base font-bold text-slate-800 dark:text-slate-100">
                       Account Information
                     </h2>
                   </div>
@@ -457,7 +457,7 @@ function ProfileSettings() {
                       className="
                         px-6 py-2.5
                         bg-linear-to-r from-indigo-600 to-violet-600
-                        text-white font-semibold text-sm
+                        text-white font-semibold text-xs xl:text-base
                         rounded-xl
                         shadow-lg shadow-indigo-500/30
                         hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/40
@@ -488,7 +488,7 @@ function ProfileSettings() {
                       className="
                     px-6 py-2.5
                 bg-linear-to-r from-slate-600 to-violet-200
-                text-white font-semibold text-sm
+                text-white font-semibold text-xs xl:text-base
                 rounded-xl
                 shadow-lg shadow-indigo-500/30
                 hover:shadow-xl hover:shadow-indigo-500/40
@@ -509,7 +509,7 @@ function ProfileSettings() {
                       className="
                           px-6 py-2.5
                         bg-linear-to-r from-indigo-600 to-violet-600
-                        text-white font-semibold text-sm
+                        text-white font-semibold text-xs xl:text-base
                         rounded-xl
                         shadow-lg shadow-indigo-500/30
                         hover:shadow-xl hover:shadow-indigo-500/40

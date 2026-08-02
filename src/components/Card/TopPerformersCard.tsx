@@ -10,18 +10,18 @@ import type { TopPerformersList } from '../../types/types';
 
 const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
   return (
-    <div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-yellow-950/20 dark:border-none">
+    <div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-4 xl:p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-yellow-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center justify-center">
-          <div className="mr-2 w-8 h-8 rounded-lg flex items-center justify-center">
+          <div className="mr-2 h-5 w-5 xl:h-6 xl:w-6 rounded-lg flex items-center justify-center">
             {' '}
             <UserStar className="text-amber-500 dark:text-amber-100" />
           </div>
-          <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">
+          <h1 className=" flex items-center text-sm xl:text-base font-bold dark:text-slate-100">
             {topPerformersList?.title}
           </h1>
         </div>
-        <span className="whitespace-nowrap bg-green-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
+        <span className="whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
           ↑ {topPerformersList?.trendValue}%
         </span>
       </div>
@@ -35,7 +35,7 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                     <div className="inline-flex items-center gap-6 text-sm">
                       {index >= 0 && index <= 2 && (
                         <Medal
-                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0
+                          className={`h-5 w-5 xl:h-6 xl:w-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0
               ${
                 index === 0
                   ? 'text-yellow-400'
@@ -49,7 +49,7 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                       )}
                       {index > 2 && (
                         <div
-                          className={`w-8 h-8 text-center text-sm font-bold dark:text-slate-100`}
+                          className={`h-5 w-5 xl:h-6 xl:w-6 text-center text-sm font-bold dark:text-slate-100`}
                         >
                           {index + 1}
                         </div>
@@ -64,12 +64,14 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                       </div>
                     </div>
                     <div className="flex gap-1 text-sm font-bold items-center">
+                      <h1 className="dark:text-slate-100 text-xs">
+                        {value?.rating}
+                      </h1>
                       <Star
                         size={14}
                         className="text-amber-200"
                         fill="#FFEA00"
                       />
-                      <h1 className="dark:text-slate-100">{value?.rating}</h1>
                     </div>
                   </div>
                 )}

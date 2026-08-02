@@ -97,14 +97,14 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ToastContainer autoClose={1000} />
-      <AuthProvider>
-        <LoaderFlagProvider>
-          <ModalProvider>
+      <ModalProvider>
+        <ToastContainer autoClose={1000} />
+        <AuthProvider>
+          <LoaderFlagProvider>
             <RouterProvider router={router} />
-          </ModalProvider>
-        </LoaderFlagProvider>
-      </AuthProvider>
+          </LoaderFlagProvider>
+        </AuthProvider>
+      </ModalProvider>
     </QueryClientProvider>
   </StrictMode>
 );

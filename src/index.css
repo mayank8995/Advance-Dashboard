@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* @theme {
+  --breakpoint-xs: 480px;
+} */
 * {
   font-family: 'Inter', sans-serif;
-  
 }
 
 select option {
@@ -13,5 +15,5 @@ select option {
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }

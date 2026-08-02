@@ -73,15 +73,22 @@ function Navigation() {
       >
         {/* Logo */}
         <div className="px-6 py-8 border-b border-slate-800">
-          <h1 className="text-3xl font-bold text-white">Admin Panel</h1>
+          <h1 className="font-bold text-white text-sm md:text-xl">
+            Admin Panel
+          </h1>
 
-          <p className="text-slate-400 text-sm mt-1">Workforce Management</p>
+          <p className="text-slate-400 text-xs md:text-sm mt-1">
+            Workforce Management
+          </p>
         </div>
 
         {/* Nav Links */}
         <nav className="flex-1 p-4 space-y-2 h-full overflow-y-auto">
           {navItems?.map((item) => (
-            <button key={item.name} className={`w-full max-w-full`}>
+            <button
+              key={item.name}
+              className={`w-full max-w-full text-xs md:text-sm`}
+            >
               <NavLink
                 key={item.name}
                 to={item.path}
@@ -110,31 +117,31 @@ function Navigation() {
               { `${item.name}` === SIDE_BAR_ITEMS.SETTINGS && <Settings className="h-5 w-5" />} */}
                 {item.name === SIDE_BAR_ITEMS.DASHBOARD && (
                   <>
-                    <Home className="h-5 w-5" size={18} />
+                    <Home className="h-4 w-4 md:h-5 md:w-5" />
                     {item.name}
                   </>
                 )}
                 {item.name === SIDE_BAR_ITEMS.EMPLOYEES && (
                   <>
-                    <Users className="h-5 w-5" size={18} />
+                    <Users className="h-4 w-4 md:h-5 md:w-5" />
                     {item.name}
                   </>
                 )}
                 {item.name === SIDE_BAR_ITEMS.ANALYTICS && (
                   <>
-                    <BarChart3 className="h-5 w-5" size={18} />
+                    <BarChart3 className="h-4 w-4 md:h-5 md:w-5" />
                     {item.name}
                   </>
                 )}
                 {item.name === SIDE_BAR_ITEMS.SETTINGS && (
                   <>
-                    <Settings className="h-5 w-5" size={18} />
+                    <Settings className="h-4 w-4 md:h-5 md:w-5" />
                     {item.name}
                   </>
                 )}
                 {item.name === SIDE_BAR_ITEMS.LOGOUT && (
                   <>
-                    <LogOut className="h-5 w-5" size={18} />
+                    <LogOut className="h-4 w-4 md:h-5 md:w-5" />
                     {item.name}
                   </>
                 )}
@@ -145,7 +152,9 @@ function Navigation() {
 
         {/* Footer */}
         <div className="mt-auto p-6 border-t border-slate-800">
-          <p className="text-xs text-slate-500">© 2026 Admin Dashboard</p>
+          <p className="text-xs md:text-sm text-slate-500">
+            © 2026 Admin Dashboard
+          </p>
         </div>
       </div>
     </>

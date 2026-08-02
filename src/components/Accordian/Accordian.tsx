@@ -43,14 +43,14 @@ export default function Accordion({ accordian, content }: Accordian) {
                   FIELD_LABELS[field.split('$')?.[0] as keyof Employee];
                 return (
                   <React.Fragment key={`item-${field}`}>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-xs  font-medium text-gray-500">
+                    <div className="flex justify-between">
+                      <span className="text-xs xl:text-sm font-medium text-gray-500">
                         {rowLabel}
                       </span>
                       {value?.map((val) => (
                         <span
                           key={val}
-                          className="text-xs font-semibold text-gray-900 dark:text-white"
+                          className="text-xs xl:text-sm  font-semibold text-gray-900 dark:text-white"
                         >
                           {val}
                         </span>
@@ -64,9 +64,9 @@ export default function Accordion({ accordian, content }: Accordian) {
             value = content?.[field as keyof Employee];
             return (
               <React.Fragment key={`item-${field}`}>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between">
                   {accordian?.showColumns && (
-                    <span className="text-xs font-medium text-gray-500 leading-normal">
+                    <span className="text-xs xl:text-sm font-medium text-gray-500 leading-normal">
                       {rowLabel}
                     </span>
                   )}
@@ -74,13 +74,13 @@ export default function Accordion({ accordian, content }: Accordian) {
                     value?.map((val) => (
                       <span
                         key={String(val)}
-                        className="text-xs font-medium text-gray-900 leading-normal dark:text-white"
+                        className="text-xs xl:text-sm font-medium text-gray-900 leading-normal dark:text-white"
                       >
                         {String(val)}
                       </span>
                     ))
                   ) : (
-                    <span className="text-xs font-medium text-gray-900 leading-normal dark:text-white">
+                    <span className="text-xs xl:text-sm font-medium text-gray-900 leading-normal dark:text-white">
                       {String(value)}
                     </span>
                   )}
@@ -106,9 +106,9 @@ export default function Accordion({ accordian, content }: Accordian) {
     >
       <button
         type="button"
-        className="flex justify-between text-sm font-semibold items-center cursor-pointer"
+        className="flex justify-between font-semibold items-center cursor-pointer"
       >
-        <span className="dark:text-white">{accordian?.label}</span>{' '}
+        <span className="dark:text-white text-sm">{accordian?.label}</span>{' '}
         <span aria-hidden={!openAccordian} aria-expanded={openAccordian}>
           {!openAccordian ? (
             <ChevronDown className="dark:text-white" size={18} />
