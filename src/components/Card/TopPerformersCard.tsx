@@ -1,4 +1,4 @@
-import { ArrowRight, Medal, Star, UserStar } from 'lucide-react';
+import { ArrowRight, Medal, Star, TrendingUp, UserStar } from 'lucide-react';
 import React from 'react';
 import {
   CARD_CONTENT_LIMIT_TO_SCROLL,
@@ -21,8 +21,9 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
             {topPerformersList?.title}
           </h1>
         </div>
-        <span className="whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
-          ↑ {topPerformersList?.trendValue}%
+        <span className="gap-1 whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
+          <TrendingUp size={12} strokeWidth={2.5} />
+          <span>{topPerformersList?.trendValue}%</span>
         </span>
       </div>
       <div className="flex-1 flex flex-col justify-evenly">
@@ -31,11 +32,11 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
             return (
               <React.Fragment key={value.id}>
                 {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="inline-flex items-center gap-6 text-sm">
+                  <div className="min-w-0 flex items-center justify-between mb-2 xs:items-start">
+                    <div className="flex items-center gap-6 text-sm flex-1 min-w-0">
                       {index >= 0 && index <= 2 && (
                         <Medal
-                          className={`h-5 w-5 xl:h-6 xl:w-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0
+                          className={`shrink-0 self-start h-5 w-5 xl:h-6 xl:w-6 rounded-full flex items-center justify-center text-sm font-bold
               ${
                 index === 0
                   ? 'text-yellow-400'
@@ -49,21 +50,21 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                       )}
                       {index > 2 && (
                         <div
-                          className={`h-5 w-5 xl:h-6 xl:w-6 text-center text-sm font-bold dark:text-slate-100`}
+                          className={`shrink-0 self-start h-5 w-5 xl:h-6 xl:w-6 text-center text-sm font-bold dark:text-slate-100`}
                         >
                           {index + 1}
                         </div>
                       )}
-                      <div>
-                        <h1 className="flex items-center text-sm font-bold dark:text-slate-100">
+                      <div className="flex flex-col gap-1 min-w-0">
+                        <h1 className="text-sm font-bold dark:text-slate-100 truncate">
                           {value?.name}
                         </h1>
-                        <h2 className="flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
+                        <h2 className="text-xs text-slate-500 font-bold dark:text-slate-300 truncate">
                           {value?.designation}
                         </h2>
                       </div>
                     </div>
-                    <div className="flex gap-1 text-sm font-bold items-center">
+                    <div className="shrink-0 self-start min-w-0 flex gap-1 text-sm font-bold items-center">
                       <h1 className="dark:text-slate-100 text-xs">
                         {value?.rating}
                       </h1>

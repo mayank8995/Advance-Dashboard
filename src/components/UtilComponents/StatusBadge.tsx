@@ -12,7 +12,7 @@ const StatusBadge = ({ value }: StatusBadgeProps) => {
     return;
   }
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col items-start flex-1 min-w-0">
       <div
         className={`px-1 py-0 md:px-3 md:py-1
                     rounded-full

@@ -43,7 +43,7 @@ function Dashboard() {
               <KeyMetricCard>
                 <KeyMetric metricData={metricData}></KeyMetric>
               </KeyMetricCard>
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-2 xl:p-4">
                 <TopPerformersCard
                   topPerformersList={
                     cachedPerformanceCardData?.topPerformers as TopPerformersCardProps

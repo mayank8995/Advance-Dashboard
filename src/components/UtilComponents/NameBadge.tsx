@@ -12,16 +12,16 @@ const NameBadge = ({ value }: NameBadgeProps) => {
     //   </span>
     //   {value}
     // </span>
-    <div className="flex items-center">
+    <div className="flex items-center flex-1 min-w-0 gap-2">
       <h1
-        className={` bg-[#534ab7] dark:bg-[#534ab7] col-span-0 w-8 h-8 rounded-full text-white text-xs font-bold flex items-center justify-center`}
+        className={`shrink-0 bg-[#534ab7] dark:bg-[#534ab7] col-span-0 w-8 h-8 rounded-full text-white text-xs font-bold flex items-center justify-center`}
       >
         {value
           ?.split(' ')
           .map((n: string) => n[0])
           .join('')}
       </h1>
-      <h2 className="pl-2 text-slate-800 dark:text-slate-300">{value}</h2>
+      <h2 className="text-slate-800 dark:text-slate-300 truncate">{value}</h2>
     </div>
   );
 };

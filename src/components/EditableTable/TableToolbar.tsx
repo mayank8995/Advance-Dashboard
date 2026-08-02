@@ -35,7 +35,7 @@ const TableToolbar = ({
     queryClient.getQueryData(['filterKeyData']) || [];
   return (
     <React.Fragment>
-      <div className="lg:hidden px-6 py-4">
+      <div className="lg:hidden px-6 pt-4">
         <div className="relative">
           <FormField
             style={{ width: '100%' }}

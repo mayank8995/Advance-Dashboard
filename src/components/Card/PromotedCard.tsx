@@ -1,4 +1,4 @@
-import { ArrowRight, Trophy } from 'lucide-react';
+import { ArrowRight, ChevronsUp, TrendingUp, Trophy } from 'lucide-react';
 import type { PromotedList } from '../../types/types';
 import React from 'react';
 import {
@@ -22,8 +22,9 @@ const PromotedCard = ({ promotedThisYear }: PromotedList) => {
             {promotedThisYear?.title}
           </h1>
         </div>
-        <h2 className="whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
-          ↑ {promotedThisYear?.trendValue}%
+        <h2 className="gap-1 whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
+          <TrendingUp size={12} strokeWidth={2.5} />
+          <span>{promotedThisYear?.trendValue}%</span>
         </h2>
       </div>
       <div className="flex-1 flex flex-col justify-evenly">
@@ -32,34 +33,29 @@ const PromotedCard = ({ promotedThisYear }: PromotedList) => {
             return (
               <React.Fragment key={value.id}>
                 {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
-                  <div className="flex flex-row justify-between mb-2">
-                    <div>
-                      <div className="inline-flex items-center gap-3">
-                        <h1
-                          className={`w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
-                        >
-                          {value.name
-                            .split(' ')
-                            .map((n: string) => n[0])
-                            .join('')}
+                  <div className="flex flex-row justify-between max-xs:flex-col max-xs:gap-2 mb-2 min-w-0">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <h1
+                        className={`shrink-0 self-start w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
+                      >
+                        {value.name
+                          .split(' ')
+                          .map((n: string) => n[0])
+                          .join('')}
+                      </h1>
+                      <div className="flex flex-col gap-1 min-w-0">
+                        <h1 className="text-sm font-bold dark:text-slate-100 truncate">
+                          {value?.name}
                         </h1>
-                        <div>
-                          <h1 className="flex items-center text-sm font-bold dark:text-slate-100">
-                            {value?.name}
-                          </h1>
-                          <h1 className="flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
-                            {value?.currentDesignation}
-                          </h1>
-                        </div>
+                        <h1 className="text-xs text-slate-500 font-bold dark:text-slate-300 truncate">
+                          {value?.currentDesignation}
+                        </h1>
                       </div>
                     </div>
-                    <div className="text-xs">
-                      <h2 className="flex items-center text-xs font-bold dark:text-slate-100">
-                        ↑ Promoted On
-                      </h2>
-                      <h2 className="flex items-center text-xs font-bold dark:text-slate-100">
-                        {' '}
-                        {value?.promotedOn}
+                    <div className="shrink-0 self-start max-xs:self-end min-w-0 ">
+                      <h2 className="text-amber-500 dark:text-amber-100 flex items-center justify-center">
+                        <ChevronsUp size={12} strokeWidth={2.5} />
+                        <span className=" text-xs">{value?.promotedOn}</span>
                       </h2>
                     </div>
                   </div>

@@ -13,9 +13,9 @@ const ReviewReasonBadge = ({ value }: ReviewReasonBadgeProps) => {
   }
 
   return (
-    <div className="flex flex-col items-start p-1">
+    <div className="flex flex-col items-start p-1 flex-1 min-w-0">
       <div
-        className={`px-1 py-0 md:px-3 md:py-1
+        className={`shrink-0 px-1 py-0 md:px-3 md:py-1
                     rounded-full
                     ${reviewColors[value.toLocaleLowerCase()]}
                      ${reviewtextColors[value.toLocaleLowerCase()]}

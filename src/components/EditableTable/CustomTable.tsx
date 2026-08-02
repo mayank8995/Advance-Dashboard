@@ -175,19 +175,19 @@ function CustomTable<T extends ListType>(props: CustomTableProps<T>) {
   return (
     <>
       {!isLoading ? (
-        <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
+        <div className="min-h-screen bg-slate-50 p-2 xl:p-4 dark:bg-gray-800">
           <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
             <div className="flex items-center justify-between px-6 py-4 pb-0">
-              <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-base  items-center gap-2">
+              <h2 className="flex flex-row text-slate-800 dark:text-slate-100 font-semibold text-sm xl:text-base  items-center gap-2">
                 <Breadcrumb />
                 {title}
               </h2>
               <span
-                className="px-3 py-1
+                className="px-3 py-0.5 xl:py-1
                               rounded-full
                               bg-green-100
                               text-green-700
-                               text-xs
+                               text-[10px] xl:text-xs
                               font-semibold dark:bg-emerald-900/40 dark:text-emerald-400"
               >
                 Total: {tableQueryParams?.totalItems || 0}

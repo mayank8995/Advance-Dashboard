@@ -6,11 +6,9 @@ export default function Breadcrumb() {
   return (
     <>
       {location.pathname.includes('/viewmore') && (
-        <span className="pr-2">
-          <NavLink to={'/home/dashboard'}>
-            <StepBack />
-          </NavLink>
-        </span>
+        <NavLink to={'/home/dashboard'}>
+          <StepBack className="h-5 w-5 xl:h-6 xl:w-6 text-slate-800 dark:text-slate-100" />
+        </NavLink>
       )}
     </>
   );

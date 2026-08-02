@@ -42,7 +42,7 @@ const TopProjectsCard = ({
                     return (
                       <React.Fragment key={value.name + index}>
                         {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
-                          <div className="flex flex-row mb-2">
+                          <div className="flex flex-row mb-2 flex-1 min-w-0">
                             {RISK_STATUS.COMPLETED === value?.riskStatus && (
                               <div className="h-auto bg-green-700 w-1.5 xl:w-2 rounded-full "></div>
                             )}
@@ -52,12 +52,12 @@ const TopProjectsCard = ({
                             {RISK_STATUS.ON_TRACK === value?.riskStatus && (
                               <div className="h-auto bg-green-500 w-1.5 xl:w-2 rounded-full"></div>
                             )}
-                            <div className="p-2 flex flex-row justify-between w-full">
-                              <div className="flex flex-col">
-                                <span className="text-gray-950 font-bold text-sm dark:text-slate-100">
+                            <div className="p-2 flex flex-row justify-between max-xs:flex-col max-xs:gap-2 w-full flex-1 min-w-0">
+                              <div className="flex flex-col gap-1 min-w-0">
+                                <span className="text-gray-950 font-bold text-sm dark:text-slate-100 truncate">
                                   {value?.projectName}
                                 </span>
-                                <span className="mb-1 flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
+                                <span className="mb-1 text-xs text-slate-500 font-bold dark:text-slate-300 truncate">
                                   {PROJECT_DETAILS.MANAGER}:&nbsp;
                                   {value?.name && value?.name.length > 20
                                     ? value.name
@@ -67,7 +67,7 @@ const TopProjectsCard = ({
                                     : value.name}
                                 </span>
                               </div>
-                              <div className="items-center flex justify-end">
+                              <div className="shrink-0 self-start max-xs:self-end min-w-0 items-center flex justify-end">
                                 <span
                                   className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-[10px] xl:text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-[10px] xl:text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
                                 >

@@ -1,4 +1,4 @@
-import { ArrowRight, TriangleAlert } from 'lucide-react';
+import { ArrowRight, TrendingDown, TriangleAlert } from 'lucide-react';
 import type { ReviewList } from '../../types/types';
 import React from 'react';
 import {
@@ -22,8 +22,9 @@ const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
             {requiringReview?.title}
           </h1>
         </div>
-        <h2 className="whitespace-nowrap bg-amber-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">
-          ↓ {requiringReview?.trendValue}%
+        <h2 className="gap-1 whitespace-nowrap bg-amber-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">
+          <TrendingDown size={12} strokeWidth={2.5} />
+          <span>{requiringReview?.trendValue}%</span>
         </h2>
       </div>
       <div className="flex-1 flex flex-col justify-evenly">
@@ -32,26 +33,26 @@ const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
             return (
               <React.Fragment key={value.id}>
                 {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
-                  <div className="flex flex-row justify-between mb-2">
-                    <div className="inline-flex items-center gap-3">
+                  <div className="flex flex-row justify-between max-xs:flex-col max-xs:gap-2 mb-2 min-w-0">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
                       <h1
-                        className={`w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
+                        className={`shrink-0 self-start w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
                       >
                         {value.name
                           .split(' ')
                           .map((n: string) => n[0])
                           .join('')}
                       </h1>
-                      <div>
-                        <h1 className="flex items-center text-sm font-bold dark:text-slate-100">
+                      <div className="flex flex-col gap-1 flex-1 min-w-0">
+                        <h1 className="text-sm font-bold dark:text-slate-100 truncate">
                           {value?.name}
                         </h1>
-                        <h1 className="flex items-center text-xs text-slate-500 font-bold dark:text-slate-300">
+                        <h1 className="text-xs text-slate-500 font-bold dark:text-slate-300 truncate">
                           {value?.designation}
                         </h1>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
+                    <div className="shrink-0 self-start max-xs:self-end min-w-0 flex flex-col items-end gap-1">
                       <span
                         className={`flex items-center text-[10px] xl:text-xs px-2 py-0.2 xl:py-0.5 rounded-full font-bold whitespace-nowrap
             ${value.reviewReason[0] === 'Low Rating' ? 'bg-orange-100 text-orange-600 dark:bg-emerald-900/40 dark:text-orange-400' : ''}
