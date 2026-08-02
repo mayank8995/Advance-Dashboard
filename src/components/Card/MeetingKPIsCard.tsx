@@ -1,4 +1,4 @@
-import { Target } from 'lucide-react';
+import { Target, TrendingUp } from 'lucide-react';
 import type { MeetingKPIList } from '../../types/types';
 import React from 'react';
 
@@ -14,8 +14,9 @@ function MeetingKPIsCard({ meetingKPIs }: MeetingKPIList) {
             {meetingKPIs?.title}
           </h1>
         </div>
-        <h2 className="whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
-          ↑ {meetingKPIs?.trendValue}%
+        <h2 className="gap-1 whitespace-nowrap bg-green-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-emerald-400">
+          <TrendingUp size={12} strokeWidth={2.5} />
+          <span>{meetingKPIs?.trendValue}%</span>
         </h2>
       </div>
       <div className="flex-1 flex flex-col justify-evenly">

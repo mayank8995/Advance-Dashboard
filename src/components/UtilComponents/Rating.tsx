@@ -4,9 +4,9 @@ import React from 'react';
 
 const Rating = ({ value }: RatingProps) => {
   return (
-    <div className="flex flex-row justify-start items-center">
-      <Star className="pr-1 text-amber-300" fill="#FCD34D" size={18} />
-      <span>{value}</span>{' '}
+    <div className="shrink-0 self-start min-w-0 flex gap-1 text-sm font-bold items-center">
+      <h1 className="dark:text-slate-100 text-xs">{value}</h1>
+      <Star size={14} className="text-amber-200" fill="#FFEA00" />
     </div>
   );
 };

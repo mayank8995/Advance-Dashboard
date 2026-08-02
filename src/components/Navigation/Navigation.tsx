@@ -44,7 +44,7 @@ function Navigation() {
       <div className="absolute top-0 right-0 md:hidden flex items-center justify-between p-4">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="pl-2 text-xl text-slate-800 dark:text-slate-100"
+          className="pl-2 text-xl text-slate-800 dark:text-slate-100 cursor-pointer"
         >
           ☰
         </button>

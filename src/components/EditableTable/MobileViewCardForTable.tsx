@@ -36,7 +36,7 @@ function MobileViewCardForTable<T extends ListType>({
   }, [tableQueryParams]);
 
   function getRowCss(value: string) {
-    const initialCss = `grid grid-cols-2 gap-y-2 text-xs`;
+    const initialCss = `grid grid-cols-2 gap-y-2 text-xs min-w-0 flex-1`;
     if (value === 'id') {
       return 'hidden';
     }
@@ -54,10 +54,10 @@ function MobileViewCardForTable<T extends ListType>({
             return (
               <React.Fragment key={coloumn.key}>
                 {coloumn?.key === 'name' && (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex items-center justify-between min-w-0">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
                       <h1
-                        className={`w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
+                        className={`shrink-0 w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
                       >
                         {String(value)
                           ?.split(' ')
@@ -66,9 +66,7 @@ function MobileViewCardForTable<T extends ListType>({
                       </h1>
                       <button
                         type="button"
-                        className={
-                          !isTopProj ? 'cursor-pointer' : 'cursor-default'
-                        }
+                        className={` flex flex-col gap-1 min-w-0 ${!isTopProj ? 'cursor-pointer' : 'cursor-default'}`}
                         onClick={(event) => {
                           if (isTopProj) {
                             event.preventDefault();
@@ -80,7 +78,7 @@ function MobileViewCardForTable<T extends ListType>({
                           });
                         }}
                       >
-                        <h2 className="text-indigo-600 dark:text-indigo-400 text-sm xl:text-base">
+                        <h2 className="text-indigo-600 dark:text-indigo-400 text-sm xl:text-base truncate">
                           {Array.isArray(value) && value?.length > 0
                             ? value[0]
                             : value}
@@ -100,7 +98,7 @@ function MobileViewCardForTable<T extends ListType>({
                 <>
                   {coloumn?.key !== 'name' && (
                     <div className={getRowCss(coloumn?.key)}>
-                      <h2 className="text-slate-500 text-xs xl:text-base">
+                      <h2 className="text-slate-500 text-xs xl:text-base truncate">
                         {coloumn?.header
                           ?.split(' ')
                           .map(
