@@ -9,7 +9,7 @@ function Home() {
     <ErrorBoundary fallback={<ErrorBoundaryPage />}>
       <div className="md:flex md:flex-col h-screen bg-slate-100 dark:bg-gray-800">
         <Header />
-        <div className=" flex-col md:flex md:flex-row md:flex-1 h-full md:overflow-hidden dark:bg-gray-800">
+        <div className=" flex-col md:flex md:flex-row md:flex-1 h-auto md:overflow-hidden dark:bg-gray-800">
           <Navigation />
           <div
             data-test="home"

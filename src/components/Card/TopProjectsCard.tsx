@@ -21,13 +21,13 @@ const TopProjectsCard = ({
   const topProj = topProjects?.employees;
 
   return (
-    <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
+    <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-xl border-t-4 shadow-sm border border-slate-100 p-4 xl:p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between gap-4">
         <div className="flex items-center justify-center">
-          <div className="mr-2 w-8 h-8 rounded-lg flex items-center justify-center">
+          <div className="mr-2 h-5 w-5 xl:h-6 xl:w-6 rounded-lg flex items-center justify-center">
             {<Briefcase className="text-amber-500 dark:text-amber-100" />}
           </div>
-          <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">
+          <h1 className=" flex items-center text-sm xl:text-base font-bold dark:text-slate-100">
             {title}
           </h1>
         </div>
@@ -44,13 +44,13 @@ const TopProjectsCard = ({
                         {index < CARD_CONTENT_LIMIT_TO_SCROLL && (
                           <div className="flex flex-row mb-2">
                             {RISK_STATUS.COMPLETED === value?.riskStatus && (
-                              <div className="h-auto bg-green-700 w-2 rounded-full "></div>
+                              <div className="h-auto bg-green-700 w-1.5 xl:w-2 rounded-full "></div>
                             )}
                             {RISK_STATUS.AT_RISK === value?.riskStatus && (
-                              <div className="h-auto bg-red-700 w-2 rounded-full"></div>
+                              <div className="h-auto bg-red-700 w-1.5 xl:w-2 rounded-full"></div>
                             )}
                             {RISK_STATUS.ON_TRACK === value?.riskStatus && (
-                              <div className="h-auto bg-green-500 w-2 rounded-full"></div>
+                              <div className="h-auto bg-green-500 w-1.5 xl:w-2 rounded-full"></div>
                             )}
                             <div className="p-2 flex flex-row justify-between w-full">
                               <div className="flex flex-col">
@@ -69,7 +69,7 @@ const TopProjectsCard = ({
                               </div>
                               <div className="items-center flex justify-end">
                                 <span
-                                  className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
+                                  className={`whitespace-nowrap ${RISK_STATUS.AT_RISK === value?.riskStatus ? 'bg-orange-400 text-white font-semibold px-2 py-0.5 rounded-full text-[10px] xl:text-xs dark:bg-emerald-900/40 dark:text-orange-400' : 'bg-emerald-400 text-white font-semibold px-2 py-0.5 rounded-full text-[10px] xl:text-xs dark:bg-emerald-900/40 dark:text-emerald-400'}`}
                                 >
                                   {value?.riskStatus}
                                 </span>

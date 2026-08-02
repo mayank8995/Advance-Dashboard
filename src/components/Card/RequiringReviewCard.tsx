@@ -12,17 +12,17 @@ import { Link } from 'react-router-dom';
 
 const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
   return (
-    <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-red-950/20 dark:border-none">
+    <div className="h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-4 xl:p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-red-950/20 dark:border-none">
       <div className=" mb-4 flex flex-row items-center justify-between">
         <div className="flex items-center justify-center">
-          <div className="mr-2 w-8 h-8 rounded-lg  flex items-center justify-center">
+          <div className="mr-2 h-5 w-5 xl:h-6 xl:w-6 rounded-lg  flex items-center justify-center">
             <TriangleAlert className="text-amber-500 dark:text-amber-100" />
           </div>
-          <h1 className=" flex items-center text-lg font-bold dark:text-slate-100">
+          <h1 className=" flex items-center text-sm xl:text-base font-bold dark:text-slate-100">
             {requiringReview?.title}
           </h1>
         </div>
-        <h2 className="whitespace-nowrap bg-amber-400 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">
+        <h2 className="whitespace-nowrap bg-amber-400 text-white text-[10px] xl:text-xs font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center dark:bg-emerald-900/40 dark:text-amber-400">
           ↓ {requiringReview?.trendValue}%
         </h2>
       </div>
@@ -35,7 +35,7 @@ const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
                   <div className="flex flex-row justify-between mb-2">
                     <div className="inline-flex items-center gap-3">
                       <h1
-                        className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}
+                        className={`w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
                       >
                         {value.name
                           .split(' ')
@@ -53,7 +53,7 @@ const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       <span
-                        className={`flex items-center text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap
+                        className={`flex items-center text-[10px] xl:text-xs px-2 py-0.2 xl:py-0.5 rounded-full font-bold whitespace-nowrap
             ${value.reviewReason[0] === 'Low Rating' ? 'bg-orange-100 text-orange-600 dark:bg-emerald-900/40 dark:text-orange-400' : ''}
             ${value.reviewReason[0] === 'Low Attendance' ? 'bg-yellow-100 text-yellow-600 dark:bg-emerald-900/40 dark:text-yellow-400' : ''}
             ${value.reviewReason[0] === 'On Notice Period' ? 'bg-red-100 text-red-600 dark:bg-emerald-900/40 dark:text-red-400' : ''}

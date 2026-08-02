@@ -52,12 +52,12 @@ function MobileViewCardForTable<T extends ListType>({
           {columnsData?.map((coloumn) => {
             const value = row[coloumn?.key];
             return (
-              <div key={coloumn.key}>
+              <React.Fragment key={coloumn.key}>
                 {coloumn?.key === 'name' && (
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3 shrink-0">
                       <h1
-                        className={`w-9 h-9 rounded-full text-white font-bold text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 w-8 h-8 rounded-full bg-indigo-500 text-white text-xs font-bold flex items-center justify-center dark:bg-none dark:${bgColors[index % bgColors.length]}`}
+                        className={`w-6 h-6 xl:w-9 xl:h-9 rounded-full text-white font-bold text-[10px] xl:text-sm flex items-center justify-center ${gradients[index % gradients.length]} col-span-0 dark:${bgColors[index % bgColors.length]}`}
                       >
                         {String(value)
                           ?.split(' ')
@@ -80,7 +80,7 @@ function MobileViewCardForTable<T extends ListType>({
                           });
                         }}
                       >
-                        <h2 className="text-slate-800 dark:text-slate-300">
+                        <h2 className="text-indigo-600 dark:text-indigo-400 text-sm xl:text-base">
                           {Array.isArray(value) && value?.length > 0
                             ? value[0]
                             : value}
@@ -100,7 +100,7 @@ function MobileViewCardForTable<T extends ListType>({
                 <>
                   {coloumn?.key !== 'name' && (
                     <div className={getRowCss(coloumn?.key)}>
-                      <h2 className="text-slate-500">
+                      <h2 className="text-slate-500 text-xs xl:text-base">
                         {coloumn?.header
                           ?.split(' ')
                           .map(
@@ -108,7 +108,7 @@ function MobileViewCardForTable<T extends ListType>({
                           )
                           .join(' ')}
                       </h2>
-                      <h2 className="pl-2 text-slate-800 dark:text-slate-300">
+                      <h2 className="pl-2 text-slate-800 dark:text-slate-300 text-xs xl:text-base">
                         {Array.isArray(value) && value?.length > 0 ? (
                           value?.map((item: string, index: number) => (
                             <>
@@ -130,7 +130,7 @@ function MobileViewCardForTable<T extends ListType>({
                     </div>
                   )}
                 </>
-              </div>
+              </React.Fragment>
             );
           })}
         </div>

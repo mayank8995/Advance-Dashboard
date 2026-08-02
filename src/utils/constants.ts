@@ -138,21 +138,30 @@ focus:transition-all
 focus:duration-200
   `;
 
-export const className = `w-full px-4 py-2.5 
-  bg-slate-50 dark:bg-slate-800
-  border border-slate-200  dark:border-slate-700
-  rounded-xl 
-  text-slate-800 dark:text-slate-300
-  text-sm
-  focus:outline-none 
-  focus:ring-2 
-  focus:ring-indigo-400 dark:focus:ring-slate-800
-  focus:border-transparent
-  focus:bg-white dark:focus:dark:bg-slate-800
-  focus:transition-all focus:duration-200
-  placeholder:text-slate-400 dark:placeholder:text-slate-500 dark:scheme-dark`;
+export const className = `w-full
+rounded-lg
+px-3
+py-2.5
+text-sm
 
-export const labelclassName = `block mb-1.5 mt-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wide`;
+bg-slate-50
+border border-slate-200
+text-slate-900
+placeholder:text-slate-400
+
+dark:bg-[#0f0a1f]
+dark:border-white/10
+dark:text-slate-200
+dark:placeholder:text-slate-500
+
+focus:outline-none
+focus:ring-2
+focus:ring-[#534ab7]
+focus:border-transparent
+focus:transition-all
+focus:duration-200`;
+
+export const labelclassName = `block mb-1.5 mt-1.5 text-slate-600 dark:text-slate-400 text-xs font-medium tracking-wide uppercase`;
 
 export const loginLabelclassNAme = `block mb-1.5 mt-1.5 text-slate-600 dark:text-slate-400 text-xs font-medium tracking-wide uppercase`;
 
