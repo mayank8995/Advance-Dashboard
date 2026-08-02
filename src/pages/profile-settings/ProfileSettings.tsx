@@ -235,7 +235,7 @@ function ProfileSettings() {
       {!isFormDataLoading ? (
         <div className="w-full  dark:bg-gray-800">
           {!isError ? (
-            <div className="p-4 dark:bg-gray-800">
+            <div className="p-2 xl:p-4 dark:bg-gray-800">
               <div className="mb-6">
                 <h1 className="text-base xl:text-2xl font-bold text-slate-800 dark:text-slate-100">
                   {SIDE_BAR_ITEMS.SETTINGS}
