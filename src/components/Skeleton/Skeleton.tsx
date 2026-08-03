@@ -13,7 +13,7 @@ const Skeleton = React.memo(() => {
             {Array.from({ length: 4 }, (_, index) => index + 1)?.map((_, i) => (
               <div
                 key={`items-start-${i}`}
-                className="items-start flex flex-col gap-3 p-2  bg-white border border-gray-200 rounded-xl shadow animate-pulse dark:bg-gray-800 dark:border-gray-700 dark:border-none"
+                className="flex flex-col gap-3 p-2  bg-white border border-gray-200 rounded-xl shadow animate-pulse dark:bg-gray-800 dark:border-gray-700 dark:border-none"
               >
                 <div className="items-center flex flex-row ">
                   <div

@@ -30,8 +30,8 @@ function App() {
                     fetchPriority="high"
                     src={
                       theme === 'dark'
-                        ? '/admin_portal_logo.svg'
-                        : '/admin_portal_logo_light.svg'
+                        ? '/assets/admin_portal_logo.svg'
+                        : '/assets/admin_portal_logo_light.svg'
                     }
                     className="object-cover"
                     alt="admin portal logo"
@@ -70,8 +70,8 @@ function App() {
                   fetchPriority="high"
                   src={
                     theme === 'dark'
-                      ? '/admin_portal_logo.svg'
-                      : '/admin_portal_logo_light.svg'
+                      ? '/assets/admin_portal_logo.svg'
+                      : '/assets/admin_portal_logo_light.svg'
                   }
                   className="object-cover"
                   alt="admin portal logo"

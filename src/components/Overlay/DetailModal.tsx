@@ -35,7 +35,7 @@ const DetailModal = ({ onClose, id }: { onClose: () => void; id: number }) => {
                 <div className="flex items-center w-15 h-15 rounded-full ring-4 ring-white shadow-xl overflow-hidden">
                   <img
                     loading="eager"
-                    src={'/avatar_fallback.svg'}
+                    src={'/assets/avatar_fallback.svg'}
                     className="aspect-square w-full h-full object-cover"
                     alt="User Profile"
                   />
