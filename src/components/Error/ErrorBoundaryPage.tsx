@@ -3,7 +3,7 @@ const ErrorBoundaryPage = () => {
     <div className="p-6 sm:p-0  flex flex-col justify-center items-center h-screen max-h-screen">
       <div className="w-37.5 md:w-50 rounded-lg mb-2">
         <img
-          src={'/ui-error-bordered.svg'}
+          src={'/assets/ui-error-bordered.svg'}
           className="object-cover"
           alt="User interface error logo"
         />

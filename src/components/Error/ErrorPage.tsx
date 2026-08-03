@@ -5,7 +5,7 @@ const ErrorPage = ({ refetchAll }: QueryClientConfigProps) => {
     <div className="m-10 p-6 sm:p-0  flex flex-col justify-center items-center h-fit dark:bg-gray-800">
       <div className="w-15 h-15 rounded-lg mb-2">
         <img
-          src={'/connection_error_icon.svg'}
+          src={'/assets/connection_error_icon.svg'}
           className="w-full h-full object-cover"
         />
       </div>
