@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
-import type {
-  ListType,
-  MobileTableProps,
-  TableTypeMap,
-} from '../../types/types';
-import { bgColors, gradients, TOP_PROJ } from '../../utils/constants';
+import type { ListType, MobileTableProps } from '../../types/types';
+import { bgColors, gradients, NAME } from '../../utils/constants';
 import FormField from '../Form/FormField';
 import { useModal } from '../../context/ModalContext';
 import DetailModal from '../Overlay/DetailModal';
+import AndOthersComponent from '../AndOthers/AndOthersComponent';
 
 function MobileViewCardForTable<T extends ListType>({
   list,
@@ -28,8 +25,8 @@ function MobileViewCardForTable<T extends ListType>({
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  const isTopProj =
-    tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
+  // const isTopProj =
+  //   tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
 
   useEffect(() => {
     setSelectedRow(new Set());
@@ -53,7 +50,7 @@ function MobileViewCardForTable<T extends ListType>({
             const value = row[coloumn?.key];
             return (
               <React.Fragment key={coloumn.key}>
-                {coloumn?.key === 'name' && (
+                {coloumn?.key === NAME && (
                   <div className="flex items-center justify-between min-w-0">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       <h1
@@ -66,12 +63,8 @@ function MobileViewCardForTable<T extends ListType>({
                       </h1>
                       <button
                         type="button"
-                        className={` flex flex-col gap-1 min-w-0 ${!isTopProj ? 'cursor-pointer' : 'cursor-default'}`}
-                        onClick={(event) => {
-                          if (isTopProj) {
-                            event.preventDefault();
-                            return;
-                          }
+                        className={` flex flex-col gap-1 min-w-0 cursor-pointer`}
+                        onClick={() => {
                           openModal(DetailModal, {
                             id: row.id,
                             tableQueryParams,
@@ -106,22 +99,18 @@ function MobileViewCardForTable<T extends ListType>({
                           )
                           .join(' ')}
                       </h2>
-                      <h2 className="pl-2 text-slate-800 dark:text-slate-300 text-xs xl:text-base">
+                      <h2 className=" text-slate-800 dark:text-slate-300 text-xs xl:text-base">
                         {Array.isArray(value) && value?.length > 0 ? (
-                          value?.map((item: string, index: number) => (
-                            <>
-                              <div key={index + value.length}>
-                                {!coloumn?.render
-                                  ? item
-                                  : coloumn?.render(item)}
-                              </div>
-                            </>
-                          ))
+                          <AndOthersComponent
+                            values={value}
+                            id={coloumn?.key}
+                            render={coloumn?.render}
+                          />
                         ) : (
                           <>
                             {!coloumn?.render
                               ? row[coloumn?.key]
-                              : coloumn?.render(String(value))}
+                              : coloumn?.render(String(value), coloumn?.key)}
                           </>
                         )}
                       </h2>

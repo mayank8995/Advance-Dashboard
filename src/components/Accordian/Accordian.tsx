@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
-import type { Employee } from '../../types/types';
+import type { AccordionSection, Employee } from '../../types/types';
 import { extract } from '../../services/utils.service';
 import { FIELD_LABELS } from '../../utils/constants';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
-type AccordionSection = {
-  id: string;
-  label?: string;
-  showColumns?: boolean;
-  initialState: boolean;
-  fieldType: string;
-  fields: string[];
-  render?: () => React.ReactNode;
-};
 interface Accordian {
   accordian: AccordionSection;
   content: Employee;
 }
-export default function Accordion({ accordian, content }: Accordian) {
+export default function Accordion({
+  accordian,
+  content,
+}: Accordian): React.ReactElement {
   const [openAccordian, setOpenAccordian] = useState(
     () => accordian.initialState
   );
@@ -108,7 +102,12 @@ export default function Accordion({ accordian, content }: Accordian) {
         type="button"
         className="flex justify-between font-semibold items-center cursor-pointer"
       >
-        <span className="dark:text-white text-sm">{accordian?.label}</span>{' '}
+        <div className="dark:text-white flex min-w-0 gap-2 flex-1 items-center">
+          {accordian?.render
+            ? accordian?.render({ className: 'h-4 w-4 xl:h-6 xl:w-6' })
+            : null}
+          <span className="text-xs xl:text-base">{accordian?.label}</span>
+        </div>{' '}
         <span aria-hidden={!openAccordian} aria-expanded={openAccordian}>
           {!openAccordian ? (
             <ChevronDown className="dark:text-white" size={18} />

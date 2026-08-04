@@ -23,7 +23,9 @@ import { toast } from 'react-toastify';
 //   () => import('../SortModal/SortModalComponent')
 // );
 
-function CustomTable<T extends ListType>(props: CustomTableProps<T>) {
+function CustomTable<T extends ListType>(
+  props: CustomTableProps<T>
+): React.ReactElement {
   const {
     list,
     tableQueryParams,

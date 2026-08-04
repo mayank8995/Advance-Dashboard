@@ -475,3 +475,5 @@ export const FORM_FIELD_ERROR_LABELS: Record<string, string> = {
   wmode: 'Work Mode',
   location: 'Location',
 };
+
+export const NAME = 'name';

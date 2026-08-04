@@ -1,7 +1,8 @@
 import React from 'react';
 import type { NameBadgeProps } from '../../types/types';
+import { NAME } from '../../utils/constants';
 
-const NameBadge = ({ value }: NameBadgeProps) => {
+const NameBadge = ({ value, id }: NameBadgeProps) => {
   if (!value) {
     return;
   }
@@ -21,7 +22,11 @@ const NameBadge = ({ value }: NameBadgeProps) => {
           .map((n: string) => n[0])
           .join('')}
       </h1>
-      <h2 className="text-slate-800 dark:text-slate-300 truncate">{value}</h2>
+      <h2
+        className={`${id === NAME ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-800 dark:text-slate-300 '}truncate`}
+      >
+        {value}
+      </h2>
     </div>
   );
 };

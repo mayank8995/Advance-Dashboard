@@ -213,6 +213,7 @@ export type StatusBadgeProps = {
 
 export type NameBadgeProps = {
   value: string;
+  id?: string;
 };
 
 export type ReviewReasonBadgeProps = {
@@ -277,10 +278,19 @@ export type Column<T> = {
   [K in keyof T]: {
     key: Extract<keyof T, string>;
     header: string;
-    render?: (value: string) => ReactNode;
+    render?: (value: string, id: string) => ReactNode;
   };
 }[keyof T];
 
+export type AccordionSection = {
+  id: string;
+  label?: string;
+  showColumns?: boolean;
+  initialState: boolean;
+  fieldType: 'string' | 'array' | 'array-objects';
+  fields: string[];
+  render?: (props?: Record<any, any>) => React.ReactNode;
+};
 export interface TopPerformer {
   id: number;
   name: string;
