@@ -13,7 +13,7 @@ import type {
   KeyMetricCardsProps,
 } from '../../types/types';
 
-function KeyMetric({ metricData }: KeyMetricCardsProps) {
+function KeyMetric({ metricData }: KeyMetricCardsProps): React.ReactElement {
   const { isLoading } = useLoader();
   const data: KeyMetricCardsConfig = {
     [KEY_TRACK_METRIC['TOTAL_EMPLOYEES']]: {

@@ -1,7 +1,18 @@
-export const accordians = [
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Brain,
+  TrendingUp,
+  UserRound,
+  Wallet,
+} from 'lucide-react';
+import type { AccordionSection } from '../../types/types';
+
+export const accordians: AccordionSection[] = [
   {
     id: 'overview',
     label: 'Overview',
+    render: (props?: Record<any, any>) => <LayoutDashboard {...props} />,
     fieldType: 'string',
     initialState: true,
     showColumns: true,
@@ -17,13 +28,15 @@ export const accordians = [
   {
     id: 'project',
     label: 'Assigned Projects',
+    render: (props?: Record<any, any>) => <FolderKanban {...props} />,
     fieldType: 'array-objects',
     initialState: false,
     fields: ['projects$projectName'],
   },
   {
     id: 'skills',
-    label: 'Current skills',
+    label: 'Current Skills',
+    render: (props?: Record<any, any>) => <Brain {...props} />,
     fieldType: 'array',
     initialState: false,
     fields: ['skills'],
@@ -31,6 +44,7 @@ export const accordians = [
   {
     id: 'performance',
     label: 'Performance',
+    render: (props?: Record<any, any>) => <TrendingUp {...props} />,
     showColumns: true,
     initialState: false,
     fieldType: 'string',
@@ -39,6 +53,7 @@ export const accordians = [
   {
     id: 'personalInfo',
     label: 'Personal Information',
+    render: (props?: Record<any, any>) => <UserRound {...props} />,
     showColumns: true,
     initialState: false,
     fieldType: 'string',
@@ -47,6 +62,7 @@ export const accordians = [
   {
     id: 'salary',
     label: 'Salary',
+    render: (props?: Record<any, any>) => <Wallet {...props} />,
     fieldType: 'string',
     initialState: false,
     fields: ['salary'],

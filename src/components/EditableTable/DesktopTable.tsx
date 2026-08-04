@@ -1,15 +1,12 @@
 import { TextSearch } from 'lucide-react';
 import React, { useEffect } from 'react';
-import { className, NO_RESULT_FOUND, TOP_PROJ } from '../../utils/constants';
-import type {
-  DesktopTableProps,
-  ListType,
-  TableTypeMap,
-} from '../../types/types';
+import { className, NAME, NO_RESULT_FOUND } from '../../utils/constants';
+import type { DesktopTableProps, ListType } from '../../types/types';
 import { useLoader } from '../../context/Loadercontext';
 import FormField from '../Form/FormField';
 import { useModal } from '../../context/ModalContext';
 import DetailModal from '../Overlay/DetailModal';
+import AndOthersComponent from '../AndOthers/AndOthersComponent';
 
 const DesktopTable = <T extends ListType>(props: DesktopTableProps<T>) => {
   const {
@@ -35,9 +32,7 @@ const DesktopTable = <T extends ListType>(props: DesktopTableProps<T>) => {
     ...restParams
   } = tableQueryParams || {};
   const restParamsKeys = JSON.stringify(restParams);*/
-  const isTopProj =
-    tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
-  console.log('isTopProj>>>>', isTopProj);
+  // const isTopProj = tableQueryParams?.tableType === (TOP_PROJ as keyof TableTypeMap);
   useEffect(() => {
     setSelectedRow(new Set());
   }, [tableQueryParams]);
@@ -84,31 +79,8 @@ const DesktopTable = <T extends ListType>(props: DesktopTableProps<T>) => {
               list?.map((row, index: number) => (
                 <tr
                   key={`${row.id}-${index * 2}`}
-                  className={`${!isTopProj ? 'cursor-pointer' : 'cursor-default'} hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
-                  onClick={(event) => {
-                    if (isTopProj) {
-                      event.preventDefault();
-                      return;
-                    }
-                    openModal(DetailModal, {
-                      id: row.id,
-                      tableQueryParams,
-                    });
-                  }}
+                  className={` hover:bg-blue-50 hover:transition-colors hover:duration-200 dark:hover:bg-slate-400/50 odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-800`}
                 >
-                  {/* {Object.keys(columnsData)?.map((columnsData, id) => (
-                    <td
-                      key={id}
-                      className="px-6 py-4 font-medium text-slate-800 dark:text-slate-400"
-                    >
-                      {Array.isArray(row[columnsData]) &&
-                      row[columnsData]?.length > 0
-                        ? row[columnsData]?.map((item: string) => (
-                            <div key={row[columnsData] + item}>{item}</div>
-                          ))
-                        : row[columnsData]}
-                    </td>
-                  ))} */}
                   {/* {Hooking checkboxlist into list as checkbox list is derived from list} */}
                   <td
                     id={String(row?.id)}
@@ -128,26 +100,43 @@ const DesktopTable = <T extends ListType>(props: DesktopTableProps<T>) => {
                     return (
                       <td
                         key={column?.key}
-                        className="px-4 py-4 font-medium text-slate-800 dark:text-slate-400"
+                        className={`px-4 py-4 font-medium text-slate-800 dark:text-slate-400`}
                       >
-                        {Array.isArray(value) && value?.length > 0 ? (
-                          value?.map((item: string) => (
-                            <React.Fragment key={value + item}>
-                              {!column?.render ? (
-                                <div>{item}</div>
-                              ) : (
-                                column?.render(item)
-                              )}
-                            </React.Fragment>
-                          ))
-                        ) : (
-                          <>
-                            {' '}
-                            {!column?.render
-                              ? value
-                              : column?.render(String(value))}{' '}
-                          </>
-                        )}
+                        <button
+                          id={column?.key}
+                          className={
+                            column?.key === NAME
+                              ? 'cursor-pointer'
+                              : 'cursor-default'
+                          }
+                          type="button"
+                          onClick={(
+                            event: React.MouseEvent<HTMLButtonElement>
+                          ) => {
+                            if (!(event.currentTarget.id === NAME)) {
+                              event.preventDefault();
+                              return;
+                            }
+                            openModal(DetailModal, {
+                              id: row.id,
+                              tableQueryParams,
+                            });
+                          }}
+                        >
+                          {Array.isArray(value) && value?.length > 0 ? (
+                            <AndOthersComponent
+                              values={value}
+                              id={column?.key}
+                              render={column?.render}
+                            />
+                          ) : (
+                            <>
+                              {!column?.render
+                                ? value
+                                : column?.render(String(value), column?.key)}
+                            </>
+                          )}
+                        </button>
                       </td>
                     );
                   })}

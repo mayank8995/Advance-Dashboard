@@ -1,4 +1,4 @@
-import { ArrowRight, Medal, Star, TrendingUp, UserStar } from 'lucide-react';
+import { ArrowRight, Medal, TrendingUp, UserStar } from 'lucide-react';
 import React from 'react';
 import {
   CARD_CONTENT_LIMIT_TO_SCROLL,
@@ -7,6 +7,7 @@ import {
 } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import type { TopPerformersList } from '../../types/types';
+import Rating from '../UtilComponents/Rating';
 
 const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
   return (
@@ -64,7 +65,7 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                         </h2>
                       </div>
                     </div>
-                    <div className="shrink-0 self-start min-w-0 flex gap-1 text-sm font-bold items-center">
+                    {/* <div className="shrink-0 self-start min-w-0 flex gap-1 text-sm font-bold items-center">
                       <h1 className="dark:text-slate-100 text-xs">
                         {value?.rating}
                       </h1>
@@ -73,7 +74,8 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                         className="text-amber-200"
                         fill="#FFEA00"
                       />
-                    </div>
+                    </div> */}
+                    <Rating value={String(value?.rating)} />
                   </div>
                 )}
               </React.Fragment>

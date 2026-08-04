@@ -20,7 +20,7 @@ export const columns_employees: Column<Employee>[] = [
   {
     key: 'name',
     header: 'Name',
-    render: (value: string) => <NameBadge value={value} />,
+    render: (value: string, id: string) => <NameBadge value={value} id={id} />,
   },
   {
     key: 'designation',
@@ -58,7 +58,7 @@ export const columns_top_performers: Column<TopPerformer>[] = [
   {
     key: 'name',
     header: 'Name',
-    render: (value: string) => <NameBadge value={value} />,
+    render: (value: string, id: string) => <NameBadge value={value} id={id} />,
   },
   {
     key: 'designation',
@@ -78,7 +78,7 @@ export const columns_top_projects: Column<TopProject>[] = [
   {
     key: 'name',
     header: 'Name',
-    render: (value: string) => <NameBadge value={value} />,
+    render: (value: string, id: string) => <NameBadge value={value} id={id} />,
   },
   {
     key: 'projectName',
@@ -103,7 +103,7 @@ export const columns_promotedThisYear: Column<PromotedEmployee>[] = [
   {
     key: 'name',
     header: 'Name',
-    render: (value: string) => <NameBadge value={value} />,
+    render: (value: string, id: string) => <NameBadge value={value} id={id} />,
   },
   {
     key: 'currentDesignation',
@@ -131,7 +131,7 @@ export const columns_requiringReview: Column<EmployeeRequiringReview>[] = [
   {
     key: 'name',
     header: 'Name',
-    render: (value: string) => <NameBadge value={value} />,
+    render: (value: string, id: string) => <NameBadge value={value} id={id} />,
   },
   {
     key: 'designation',
