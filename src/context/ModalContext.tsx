@@ -1,5 +1,5 @@
-import { createContext, useState, type ReactNode, useContext } from 'react';
-import { MODAL_COMPONENTS, type ModalType } from '../utils/modalRegistry';
+import { createContext, useState, useContext, type ReactNode } from 'react';
+import type { MODAL_COMPONENTS, ModalType } from '../utils/modalRegistry';
 import OverlayContainer from '../components/Overlay/OverlayContainer';
 
 export type ModalProps<T extends ModalType> = React.ComponentProps<
@@ -12,6 +12,7 @@ interface ModalContextType {
     props?: Record<any, any>
   ) => void;
   closeModal: () => void;
+  updateModalProps: (props: Record<any, any>) => void;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -30,13 +31,20 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setModalProps(props as Record<any, any>);
   };
 
+  const updateModalProps = (newProps: Record<any, any>) => {
+    setModalProps((prev) => ({
+      ...prev,
+      ...newProps,
+    }));
+  };
+
   const closeModal = () => {
     setModalComponent(null);
     setModalProps({});
   };
 
   return (
-    <ModalContext value={{ openModal, closeModal }}>
+    <ModalContext value={{ openModal, closeModal, updateModalProps }}>
       {children}
       {modalComponent && (
         <OverlayContainer

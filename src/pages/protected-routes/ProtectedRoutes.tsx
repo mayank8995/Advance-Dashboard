@@ -26,11 +26,8 @@ export const ProtectedRoute = () => {
     );
   }
 
-  // Redirect to login but save the current URL location for post-auth routing
   if (!isAuthenticated) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
-
-  // Render matching child components if authenticated
   return <Outlet />;
 };

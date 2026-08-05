@@ -141,7 +141,7 @@ export function useEmployeeDetail(id: { id: number }) {
   });
 }
 
-export async function exportSelected<T extends ListType>(
+export function exportSelected<T extends ListType>(
   selectedRow: Set<unknown>,
   data: T[],
   headers: TableHeader<T>[],
@@ -181,8 +181,6 @@ export async function exportSelected<T extends ListType>(
 
     link.click();
     URL.revokeObjectURL(url);
-
-    return Promise.resolve({ message: 'Downloading successful' });
   } catch (error) {
     throw error;
   }
@@ -247,7 +245,9 @@ export function isValidPrimitive(value: any) {
 export function extract(current: any, remainingKeys: string[]): string[] {
   // collect whatever we have
   if (remainingKeys.length === 0) {
-    if (current == null) return [];
+    if (current === null) {
+      return [];
+    }
 
     if (Array.isArray(current)) {
       return current.flatMap((item) => extract(item, []));
@@ -260,7 +260,7 @@ export function extract(current: any, remainingKeys: string[]): string[] {
     return [String(current)];
   }
 
-  if (current == null) {
+  if (current === null) {
     return [];
   }
 

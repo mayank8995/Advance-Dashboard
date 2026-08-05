@@ -10,6 +10,19 @@ import type { TopPerformersList } from '../../types/types';
 import Rating from '../UtilComponents/Rating';
 
 const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
+  const getMedalClassName = (index: number) => {
+    if (index === 0) {
+      return 'text-yellow-400';
+    }
+    if (index === 1) {
+      return 'text-gray-400';
+    }
+    if (index === 2) {
+      return 'text-amber-600';
+    }
+    return '';
+  };
+
   return (
     <div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-4 xl:p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 dark:bg-linear-to-br dark:from-slate-900 dark:to-yellow-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between">
@@ -37,16 +50,7 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
                     <div className="flex items-center gap-6 text-sm flex-1 min-w-0">
                       {index >= 0 && index <= 2 && (
                         <Medal
-                          className={`shrink-0 self-start h-5 w-5 xl:h-6 xl:w-6 rounded-full flex items-center justify-center text-sm font-bold
-              ${
-                index === 0
-                  ? 'text-yellow-400'
-                  : index === 1
-                    ? 'text-gray-400'
-                    : index === 2
-                      ? 'text-amber-600'
-                      : ''
-              }`}
+                          className={`shrink-0 self-start h-5 w-5 xl:h-6 xl:w-6 rounded-full flex items-center justify-center text-sm font-bold ${getMedalClassName(index)}`}
                         />
                       )}
                       {index > 2 && (

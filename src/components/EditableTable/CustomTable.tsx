@@ -18,10 +18,9 @@ import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
 import { exportSelected } from '../../services/utils.service';
 import { toast } from 'react-toastify';
-// const FilterModal = React.lazy(() => import('../FilterComponent/FilterModal'));
-// const SortModalComponent = React.lazy(
-//   () => import('../SortModal/SortModalComponent')
-// );
+import useScreenType from '../../hooks/useScreenSize';
+import { useModal } from '../../context/ModalContext';
+import { sortModalContainerCss } from '../../utils/constants';
 
 function CustomTable<T extends ListType>(
   props: CustomTableProps<T>
@@ -29,7 +28,6 @@ function CustomTable<T extends ListType>(
   const {
     list,
     tableQueryParams,
-    handleTableQuery,
     columnsData,
     headersData,
     title,
@@ -38,49 +36,66 @@ function CustomTable<T extends ListType>(
     isLoading,
     refetch,
   } = props;
+  const { screenType } = useScreenType();
+  const { openModal, updateModalProps } = useModal();
   const { selectedRow, setSelectedRow, handleOnChange, ref } =
     useCheckBox(list);
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTxtToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [showSortModal, setShowSortModal] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [downloading, setDownloading] = useState(false);
+
+  useEffect(() => {
+    const isMobile = screenType === 'sm' || screenType === 'md';
+    if (!isMobile) {
+      return;
+    }
+    updateModalProps({
+      sortConfig: {
+        key: tableQueryParams.sortBy as string,
+        direction: tableQueryParams.order as string,
+      },
+    });
+  }, [tableQueryParams.sortBy, tableQueryParams.order, screenType]);
+
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
   }, []);
   useLockBodyScroll(showModal);
-  useLockBodyScroll(showSortModal);
 
   function handleNext() {
-    handleTableQuery({
-      ...tableQueryParams,
-      page: Math.min(
-        tableQueryParams.page + 1,
-        tableQueryParams?.totalPages || 0
-      ),
-      limit: tableQueryParams.limit,
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: Math.min(
+          tableQueryParams.page + 1,
+          tableQueryParams?.totalPages || 0
+        ),
+        limit: tableQueryParams.limit,
+      };
     });
   }
   function handlePrevious() {
-    handleTableQuery({
-      ...tableQueryParams,
-      page: tableQueryParams.page - 1,
-      limit: tableQueryParams.limit,
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: tableQueryParams.page - 1,
+        limit: tableQueryParams.limit,
+      };
     });
   }
 
   useEffect(() => {
     const controller = new AbortController();
     const timerId = setTimeout(() => {
-      handleTableQuery(
-        {
-          ...tableQueryParams,
+      setQuery((prev) => {
+        return {
+          ...prev,
           page: 1,
           search: txtToBeSearched,
-        },
-        controller.signal
-      );
+        };
+      });
     }, 300);
     return () => {
       clearTimeout(timerId);
@@ -90,24 +105,24 @@ function CustomTable<T extends ListType>(
 
   // Handler functions
   const handleSort = (key: string) => {
-    let direction = 'asc';
-    if (tableQueryParams.sortBy === key && tableQueryParams.order === 'asc') {
-      direction = 'desc';
-    }
-    handleTableQuery({
-      ...tableQueryParams,
-      page: 1,
-      sortBy: key,
-      order: direction as 'asc' | 'desc',
+    setQuery((prev) => {
+      const direction = prev.order;
+      return {
+        ...prev,
+        sortBy: key,
+        order: direction === 'asc' ? 'desc' : 'asc',
+      };
     });
   };
 
   const handleRowsPerPageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e?.target?.value));
-    handleTableQuery({
-      ...tableQueryParams,
-      page: 1,
-      limit: Number(e?.target?.value),
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: 1,
+        limit: Number(e?.target?.value),
+      };
     });
   };
 
@@ -130,40 +145,52 @@ function CustomTable<T extends ListType>(
   };
 
   const openSortModal = () => {
-    setShowSortModal(true);
-    queryClient.setQueryData(['opensortmodal'], true);
+    openModal(SortModalComponent, {
+      headersData,
+      onSort: (key: string) => handleSort(key),
+      sortConfig: {
+        key: tableQueryParams.sortBy as string,
+        direction: tableQueryParams.order as string,
+      },
+      containerCss: sortModalContainerCss,
+    });
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const closeSortModal = () => {
-    setShowSortModal(false);
-  };
-
   const submitFilterData = (data: SelectedChip[]) => {
     queryClient.setQueryData(['filterKeyData'], data);
     closeModal();
-    handleTableQuery({ ...tableQueryParams, page: 1 });
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: 1,
+      };
+    });
   };
 
   const clearAllFilter = () => {
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
-    handleTableQuery({ ...tableQueryParams, page: 1 });
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: 1,
+      };
+    });
   };
 
-  const bulkAction = async () => {
+  const bulkAction = () => {
     try {
       setDownloading(true);
-      const response = await exportSelected(
+      exportSelected(
         selectedRow,
         list,
         headersData,
         tableQueryParams?.tableType ?? 'employee'
       );
       setDownloading(false);
-      toast.success(response.message);
     } catch (error) {
       const errorMessage =
         error instanceof Error
@@ -213,28 +240,31 @@ function CustomTable<T extends ListType>(
             />
             {!isError ? (
               <div className="flex flex-col justify-center">
-                <DesktopTable
-                  list={list}
-                  headersData={headersData}
-                  columnsData={columnsData}
-                  handleSort={handleSort}
-                  getSortIcon={getSortIcon}
-                  rowsPerPage={rowsPerPage}
-                  tableQueryParams={tableQueryParams}
-                  selectedRow={selectedRow}
-                  setSelectedRow={setSelectedRow}
-                  handleOnChange={handleOnChange}
-                  ref={ref}
-                />
-                <MobileTable
-                  rowsPerPage={rowsPerPage}
-                  list={list}
-                  columnsData={columnsData}
-                  tableQueryParams={tableQueryParams}
-                  selectedRow={selectedRow}
-                  setSelectedRow={setSelectedRow}
-                  handleOnChange={handleOnChange}
-                />
+                {screenType === 'sm' || screenType === 'md' ? (
+                  <MobileTable
+                    rowsPerPage={rowsPerPage}
+                    list={list}
+                    columnsData={columnsData}
+                    tableQueryParams={tableQueryParams}
+                    selectedRow={selectedRow}
+                    setSelectedRow={setSelectedRow}
+                    handleOnChange={handleOnChange}
+                  />
+                ) : (
+                  <DesktopTable
+                    list={list}
+                    headersData={headersData}
+                    columnsData={columnsData}
+                    handleSort={handleSort}
+                    getSortIcon={getSortIcon}
+                    rowsPerPage={rowsPerPage}
+                    tableQueryParams={tableQueryParams}
+                    selectedRow={selectedRow}
+                    setSelectedRow={setSelectedRow}
+                    handleOnChange={handleOnChange}
+                    ref={ref}
+                  />
+                )}
               </div>
             ) : (
               <ErrorPage refetchAll={() => refetch?.()} />
@@ -254,21 +284,6 @@ function CustomTable<T extends ListType>(
             clearAllFilter={clearAllFilter}
             tableQueryParams={tableQueryParams}
             setQuery={setQuery}
-          />
-        }
-      </div>
-      <div
-        className={`transition-opacity duration-300 absolute inset-0 z-30 ${showSortModal ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-      >
-        {
-          <SortModalComponent
-            closeSortModal={closeSortModal}
-            headersData={headersData}
-            onSort={(key: string) => handleSort(key)}
-            sortConfig={{
-              key: tableQueryParams.sortBy as string,
-              direction: tableQueryParams.order as string,
-            }}
           />
         }
       </div>

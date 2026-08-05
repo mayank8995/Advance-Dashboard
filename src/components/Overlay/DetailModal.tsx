@@ -6,14 +6,20 @@ import Accordion from '../Accordian/Accordian';
 import { useEmployeeDetail } from '../../services/utils.service';
 import EmployeeDetailSkeleton from '../Skeleton/EmployeeDetailSkeleton';
 import ErrorPage from '../Error/ErrorPage';
+import { employeeDetailModalContainerCss } from '../../utils/constants';
 
-const DetailModal = ({ onClose, id }: { onClose: () => void; id: number }) => {
+interface DetailModalProps {
+  onClose: () => void;
+  id: number;
+}
+
+const DetailModal = ({ onClose, id }: DetailModalProps) => {
   const { data: details, isError, isLoading } = useEmployeeDetail({ id });
   const row = details?.['data'] ?? [];
   return (
     <>
       {!isLoading ? (
-        <div className="p-4">
+        <div className={`p-4 ${employeeDetailModalContainerCss}`}>
           {!isError ? (
             <>
               <div className="flex flex-row justify-between items-center">

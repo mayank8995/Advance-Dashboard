@@ -35,7 +35,9 @@ function Navigation() {
         navigate(`${navItem.path}`);
       });
     } else {
-      navItem && navigate(`${navItem.path}`);
+      if (navItem) {
+        navigate(`${navItem.path}`);
+      }
     }
   }
   return (

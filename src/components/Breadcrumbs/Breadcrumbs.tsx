@@ -1,7 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { StepBack } from 'lucide-react';
+import React from 'react';
 
-export default function Breadcrumb() {
+function Breadcrumb() {
   const location = useLocation();
   return (
     <>
@@ -13,3 +14,5 @@ export default function Breadcrumb() {
     </>
   );
 }
+
+export default React.memo(Breadcrumb);

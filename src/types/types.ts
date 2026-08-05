@@ -133,7 +133,7 @@ export type TableToolbarProps = {
   openSortModal: () => void;
   handlePrevious: () => void;
   handleNext: () => void;
-  bulkAction: () => Promise<void>;
+  bulkAction: () => void;
   selectedRow: Set<unknown>;
   handleOnChange: (
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>
@@ -565,3 +565,5 @@ export type TopProjectEmployeeResponse = Metadata & {
 export type EmployeeDirectoryResponse = Metadata & {
   employees: Employee[];
 };
+
+export type ScreenType = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
