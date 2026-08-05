@@ -1,5 +1,5 @@
-import { createContext, useState, type ReactNode, useContext } from 'react';
-import { MODAL_COMPONENTS, type ModalType } from '../utils/modalRegistry';
+import { createContext, useState, useContext, type ReactNode } from 'react';
+import type { MODAL_COMPONENTS, ModalType } from '../utils/modalRegistry';
 import OverlayContainer from '../components/Overlay/OverlayContainer';
 
 export type ModalProps<T extends ModalType> = React.ComponentProps<

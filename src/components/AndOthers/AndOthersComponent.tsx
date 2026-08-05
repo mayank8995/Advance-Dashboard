@@ -13,10 +13,10 @@ const AndOthersComponent = ({
   render,
   id,
 }: AndOthersComponentProps) => {
+  const [showOthers, setShowOthers] = useState<boolean>(false);
   if (!values?.length) {
     return null;
   }
-  const [showOthers, setShowOthers] = useState<boolean>(false);
   function renderUI(values: string[]) {
     if (values?.length > 1) {
       const restOtherCount = values?.length - 1;

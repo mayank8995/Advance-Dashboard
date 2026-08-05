@@ -18,6 +18,7 @@ import ErrorPage from '../Error/ErrorPage';
 import { useCheckBox } from '../../hooks/useCheckBox';
 import { exportSelected } from '../../services/utils.service';
 import { toast } from 'react-toastify';
+import useScreenType from '../../hooks/useScreenSize';
 // const FilterModal = React.lazy(() => import('../FilterComponent/FilterModal'));
 // const SortModalComponent = React.lazy(
 //   () => import('../SortModal/SortModalComponent')
@@ -38,6 +39,7 @@ function CustomTable<T extends ListType>(
     isLoading,
     refetch,
   } = props;
+  const { screenType } = useScreenType();
   const { selectedRow, setSelectedRow, handleOnChange, ref } =
     useCheckBox(list);
   const queryClient = useQueryClient();
@@ -153,17 +155,16 @@ function CustomTable<T extends ListType>(
     handleTableQuery({ ...tableQueryParams, page: 1 });
   };
 
-  const bulkAction = async () => {
+  const bulkAction = () => {
     try {
       setDownloading(true);
-      const response = await exportSelected(
+      exportSelected(
         selectedRow,
         list,
         headersData,
         tableQueryParams?.tableType ?? 'employee'
       );
       setDownloading(false);
-      toast.success(response.message);
     } catch (error) {
       const errorMessage =
         error instanceof Error
@@ -213,28 +214,31 @@ function CustomTable<T extends ListType>(
             />
             {!isError ? (
               <div className="flex flex-col justify-center">
-                <DesktopTable
-                  list={list}
-                  headersData={headersData}
-                  columnsData={columnsData}
-                  handleSort={handleSort}
-                  getSortIcon={getSortIcon}
-                  rowsPerPage={rowsPerPage}
-                  tableQueryParams={tableQueryParams}
-                  selectedRow={selectedRow}
-                  setSelectedRow={setSelectedRow}
-                  handleOnChange={handleOnChange}
-                  ref={ref}
-                />
-                <MobileTable
-                  rowsPerPage={rowsPerPage}
-                  list={list}
-                  columnsData={columnsData}
-                  tableQueryParams={tableQueryParams}
-                  selectedRow={selectedRow}
-                  setSelectedRow={setSelectedRow}
-                  handleOnChange={handleOnChange}
-                />
+                {screenType === 'sm' || screenType === 'md' ? (
+                  <MobileTable
+                    rowsPerPage={rowsPerPage}
+                    list={list}
+                    columnsData={columnsData}
+                    tableQueryParams={tableQueryParams}
+                    selectedRow={selectedRow}
+                    setSelectedRow={setSelectedRow}
+                    handleOnChange={handleOnChange}
+                  />
+                ) : (
+                  <DesktopTable
+                    list={list}
+                    headersData={headersData}
+                    columnsData={columnsData}
+                    handleSort={handleSort}
+                    getSortIcon={getSortIcon}
+                    rowsPerPage={rowsPerPage}
+                    tableQueryParams={tableQueryParams}
+                    selectedRow={selectedRow}
+                    setSelectedRow={setSelectedRow}
+                    handleOnChange={handleOnChange}
+                    ref={ref}
+                  />
+                )}
               </div>
             ) : (
               <ErrorPage refetchAll={() => refetch?.()} />
