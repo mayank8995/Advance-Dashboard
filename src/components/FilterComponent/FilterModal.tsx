@@ -9,7 +9,6 @@ import type {
   TableTypeMap,
 } from '../../types/types';
 import { useFilterList } from '../../services/utils.service';
-import { useSearchParams } from 'react-router-dom';
 
 type FilterListItem = [string, string[]];
 interface FilterListResponse {
@@ -19,21 +18,22 @@ interface FilterListResponse {
 }
 interface FilterModalComponentProps {
   tableType?: string;
-  closeModal: () => void;
+  onClose: () => void;
   submitFilterData: (chips: SelectedChip[]) => void;
   clearAllFilter: () => void;
   filterList?: FilterListResponse;
   tableQueryParams?: TableQueryParams;
   setQuery: React.Dispatch<React.SetStateAction<TableQueryParams>>;
+  searchParams: URLSearchParams;
 }
 
 const FilterModal: React.FC<FilterModalComponentProps> = ({
-  closeModal,
+  onClose,
   submitFilterData,
   clearAllFilter,
   setQuery,
+  searchParams,
 }: FilterModalComponentProps) => {
-  const [searchParams] = useSearchParams();
   const target = searchParams?.get('target');
   const { data: filterList } = useFilterList({
     tableType: (target || 'employees') as keyof TableTypeMap,
@@ -70,7 +70,6 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
       setTabValue(finalModified);
     }
   }, [filterList]);
-  // console.log('tabValue>>', tabValue);
 
   useEffect(() => {
     const result = tabValue?.flatMap((item) => {
@@ -94,10 +93,6 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
     }
   }, [tabValue]);
 
-  // function handleTabs(e: any) {
-  //   setFocusedIndex(e.currentTarget?.tabIndex);
-  // }
-
   function submitModal() {
     setLoading(true);
     const filters = selectedChips
@@ -114,7 +109,6 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
           ({
             ...prev,
             tableType: target || 'employees',
-            // dynamicFilters: { ...prev?.dynamicFilters, ...filters },
             ...filters,
           }) as TableQueryParams
       );
@@ -123,7 +117,7 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
   }
 
   function handleCloseModal() {
-    closeModal();
+    onClose?.();
   }
 
   function handleSelectedChips(e: React.MouseEvent<HTMLButtonElement>) {
@@ -290,10 +284,6 @@ const FilterModal: React.FC<FilterModalComponentProps> = ({
           </button>
         </div>
       </div>
-      <button
-        className="fixed inset-0 bg-black/40 dark:bg-black/60 z-30"
-        onClick={handleCloseModal}
-      />
     </>
   );
 };
