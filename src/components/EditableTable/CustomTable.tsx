@@ -19,10 +19,8 @@ import { useCheckBox } from '../../hooks/useCheckBox';
 import { exportSelected } from '../../services/utils.service';
 import { toast } from 'react-toastify';
 import useScreenType from '../../hooks/useScreenSize';
-// const FilterModal = React.lazy(() => import('../FilterComponent/FilterModal'));
-// const SortModalComponent = React.lazy(
-//   () => import('../SortModal/SortModalComponent')
-// );
+import { useModal } from '../../context/ModalContext';
+import { sortModalContainerCss } from '../../utils/constants';
 
 function CustomTable<T extends ListType>(
   props: CustomTableProps<T>
@@ -30,7 +28,6 @@ function CustomTable<T extends ListType>(
   const {
     list,
     tableQueryParams,
-    handleTableQuery,
     columnsData,
     headersData,
     title,
@@ -40,49 +37,65 @@ function CustomTable<T extends ListType>(
     refetch,
   } = props;
   const { screenType } = useScreenType();
+  const { openModal, updateModalProps } = useModal();
   const { selectedRow, setSelectedRow, handleOnChange, ref } =
     useCheckBox(list);
   const queryClient = useQueryClient();
   const [txtToBeSearched, setTxtToBeSearched] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [showSortModal, setShowSortModal] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [downloading, setDownloading] = useState(false);
+
+  useEffect(() => {
+    const isMobile = screenType === 'sm' || screenType === 'md';
+    if (!isMobile) {
+      return;
+    }
+    updateModalProps({
+      sortConfig: {
+        key: tableQueryParams.sortBy as string,
+        direction: tableQueryParams.order as string,
+      },
+    });
+  }, [tableQueryParams.sortBy, tableQueryParams.order, screenType]);
+
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
   }, []);
   useLockBodyScroll(showModal);
-  useLockBodyScroll(showSortModal);
 
   function handleNext() {
-    handleTableQuery({
-      ...tableQueryParams,
-      page: Math.min(
-        tableQueryParams.page + 1,
-        tableQueryParams?.totalPages || 0
-      ),
-      limit: tableQueryParams.limit,
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: Math.min(
+          tableQueryParams.page + 1,
+          tableQueryParams?.totalPages || 0
+        ),
+        limit: tableQueryParams.limit,
+      };
     });
   }
   function handlePrevious() {
-    handleTableQuery({
-      ...tableQueryParams,
-      page: tableQueryParams.page - 1,
-      limit: tableQueryParams.limit,
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: tableQueryParams.page - 1,
+        limit: tableQueryParams.limit,
+      };
     });
   }
 
   useEffect(() => {
     const controller = new AbortController();
     const timerId = setTimeout(() => {
-      handleTableQuery(
-        {
-          ...tableQueryParams,
+      setQuery((prev) => {
+        return {
+          ...prev,
           page: 1,
           search: txtToBeSearched,
-        },
-        controller.signal
-      );
+        };
+      });
     }, 300);
     return () => {
       clearTimeout(timerId);
@@ -92,24 +105,24 @@ function CustomTable<T extends ListType>(
 
   // Handler functions
   const handleSort = (key: string) => {
-    let direction = 'asc';
-    if (tableQueryParams.sortBy === key && tableQueryParams.order === 'asc') {
-      direction = 'desc';
-    }
-    handleTableQuery({
-      ...tableQueryParams,
-      page: 1,
-      sortBy: key,
-      order: direction as 'asc' | 'desc',
+    setQuery((prev) => {
+      const direction = prev.order;
+      return {
+        ...prev,
+        sortBy: key,
+        order: direction === 'asc' ? 'desc' : 'asc',
+      };
     });
   };
 
   const handleRowsPerPageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(e?.target?.value));
-    handleTableQuery({
-      ...tableQueryParams,
-      page: 1,
-      limit: Number(e?.target?.value),
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: 1,
+        limit: Number(e?.target?.value),
+      };
     });
   };
 
@@ -132,27 +145,40 @@ function CustomTable<T extends ListType>(
   };
 
   const openSortModal = () => {
-    setShowSortModal(true);
-    queryClient.setQueryData(['opensortmodal'], true);
+    openModal(SortModalComponent, {
+      headersData,
+      onSort: (key: string) => handleSort(key),
+      sortConfig: {
+        key: tableQueryParams.sortBy as string,
+        direction: tableQueryParams.order as string,
+      },
+      containerCss: sortModalContainerCss,
+    });
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const closeSortModal = () => {
-    setShowSortModal(false);
-  };
-
   const submitFilterData = (data: SelectedChip[]) => {
     queryClient.setQueryData(['filterKeyData'], data);
     closeModal();
-    handleTableQuery({ ...tableQueryParams, page: 1 });
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: 1,
+      };
+    });
   };
 
   const clearAllFilter = () => {
     queryClient.removeQueries({ queryKey: ['filterKeyData'], exact: true });
-    handleTableQuery({ ...tableQueryParams, page: 1 });
+    setQuery((prev) => {
+      return {
+        ...prev,
+        page: 1,
+      };
+    });
   };
 
   const bulkAction = () => {
@@ -258,21 +284,6 @@ function CustomTable<T extends ListType>(
             clearAllFilter={clearAllFilter}
             tableQueryParams={tableQueryParams}
             setQuery={setQuery}
-          />
-        }
-      </div>
-      <div
-        className={`transition-opacity duration-300 absolute inset-0 z-30 ${showSortModal ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-      >
-        {
-          <SortModalComponent
-            closeSortModal={closeSortModal}
-            headersData={headersData}
-            onSort={(key: string) => handleSort(key)}
-            sortConfig={{
-              key: tableQueryParams.sortBy as string,
-              direction: tableQueryParams.order as string,
-            }}
           />
         }
       </div>

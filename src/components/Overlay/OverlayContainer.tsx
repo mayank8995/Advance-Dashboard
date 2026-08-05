@@ -20,12 +20,7 @@ const OverlayContainer = <T extends ModalType>({
   const ModalComponent = Component as React.ComponentType<any>;
   return (
     <>
-      {createPortal(
-        <div className="h-full max-h-full overflow-auto w-screen md:w-fit  bg-white dark:bg-slate-950  border border-slate-200 dark:border-white/10  fixed z-300 right-0 top-0">
-          <ModalComponent {...props} onClose={onClose} />
-        </div>,
-        modalRoot
-      )}
+      {createPortal(<ModalComponent {...props} onClose={onClose} />, modalRoot)}
       <button
         aria-label="overlay"
         className="fixed inset-0 bg-black/50 z-30 transition-opacity duration-300 ease-linear"

@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown, X } from 'lucide-react';
-import { TailSpin } from 'react-loader-spinner';
 import FormField from '../Form/FormField';
 import type { ListType, TableHeader } from '../../types/types';
 
 type SortConfig = {
   key: string;
-  direction: string;
+  direction: 'asc' | 'desc';
 };
 
 interface SortModalComponentProps<T extends ListType> {
@@ -14,20 +13,19 @@ interface SortModalComponentProps<T extends ListType> {
   headersData: TableHeader<T>[];
   sortConfig: SortConfig;
   onSort: (value: string) => void;
-  closeSortModal: () => void;
+  onClose: () => void;
+  containerCss: string;
 }
 
 const SortModalComponent = <T extends ListType>({
   headersData,
   sortConfig,
   onSort,
-  closeSortModal,
+  onClose,
+  containerCss,
 }: SortModalComponentProps<T>) => {
   const [focusedIndex, setFocusedIndex] = useState('');
-
   const myElementRef = useRef<HTMLButtonElement>(null);
-
-  const [loading, setLoading] = useState(false);
 
   function handleRadio(index: string) {
     setFocusedIndex(index);
@@ -46,27 +44,23 @@ const SortModalComponent = <T extends ListType>({
 
   function handleSort() {
     if (myElementRef?.current) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        const id = myElementRef?.current?.id;
-        if (id) {
-          onSort(id);
-        }
-      }, 300);
+      const id = myElementRef?.current?.id;
+      if (id) {
+        onSort(id);
+      }
     }
   }
 
   return (
     <>
-      <div className="bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10  fixed z-300 left-0 right-0 bottom-0 rounded-t-2xl">
+      <div className={`${containerCss}`}>
         <div className="flex flex-row justify-between items-center p-2 text-sm font-semibold border-b border-b-slate-200 dark:border-b-white/10">
           <h2 className="text-sm font-bold text-slate-900 dark:text-white">
             Sorting
           </h2>
           <button
             type="button"
-            onClick={() => closeSortModal?.()}
+            onClick={() => onClose?.()}
             aria-label="Close sort modal"
           >
             <X
@@ -95,15 +89,6 @@ const SortModalComponent = <T extends ListType>({
                                                 }`}
               onClick={() => handleRadio(header.key)}
             >
-              {/* {Dont remove this for now} */}
-              {/* <input
-                type="radio"
-                name={header.value}
-                value={header.value}
-                checked={focusedIndex === header.key}
-                onChange={() => handleRadio(header.key)}
-                className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
-              /> */}
               <FormField
                 name={header.value}
                 value={header.value}
@@ -113,7 +98,7 @@ const SortModalComponent = <T extends ListType>({
                 onChange={() => handleRadio(header.key)}
                 className={`m-2 outline-none ${focusedIndex === header.key ? 'w-4 h-4 accent-indigo-600' : ''}`}
               />
-              {header.value}
+              <span className="truncate">{header.value}</span>
             </button>
           ))}
           <div className="p-2 flex flex-row items-center">
@@ -126,27 +111,11 @@ const SortModalComponent = <T extends ListType>({
               className={`ml-2 flex items-center cursor-pointer px-2 py-2 rounded-md transition-colors ${!focusedIndex ? 'text-slate-500 bg-slate-700/50' : 'bg-[#534ab7] text-white '}`}
               disabled={!focusedIndex}
             >
-              {!loading && getSortIcon(sortConfig, focusedIndex)}
-              {loading && (
-                <TailSpin
-                  visible={true}
-                  height={20}
-                  width={20}
-                  color="#fff"
-                  radius="4"
-                  ariaLabel="tail-spin-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="flex items-center justify-center"
-                />
-              )}
+              {getSortIcon(sortConfig, focusedIndex)}
             </button>
           </div>
         </div>
       </div>
-      <button
-        className="fixed inset-0 bg-black/50 z-30"
-        onClick={() => closeSortModal?.()}
-      />
     </>
   );
 };

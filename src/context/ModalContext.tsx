@@ -12,6 +12,7 @@ interface ModalContextType {
     props?: Record<any, any>
   ) => void;
   closeModal: () => void;
+  updateModalProps: (props: Record<any, any>) => void;
 }
 
 const ModalContext = createContext<ModalContextType | null>(null);
@@ -30,13 +31,20 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setModalProps(props as Record<any, any>);
   };
 
+  const updateModalProps = (newProps: Record<any, any>) => {
+    setModalProps((prev) => ({
+      ...prev,
+      ...newProps,
+    }));
+  };
+
   const closeModal = () => {
     setModalComponent(null);
     setModalProps({});
   };
 
   return (
-    <ModalContext value={{ openModal, closeModal }}>
+    <ModalContext value={{ openModal, closeModal, updateModalProps }}>
       {children}
       {modalComponent && (
         <OverlayContainer
