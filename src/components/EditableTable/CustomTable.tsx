@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import useScreenType from '../../hooks/useScreenSize';
 import { useModal } from '../../context/ModalContext';
 import { sortModalContainerCss } from '../../utils/constants';
+import { useSearchParams } from 'react-router-dom';
 
 function CustomTable<T extends ListType>(
   props: CustomTableProps<T>
@@ -37,6 +38,8 @@ function CustomTable<T extends ListType>(
     refetch,
   } = props;
   const { screenType } = useScreenType();
+  const [searchParams] = useSearchParams();
+
   const { openModal, updateModalProps } = useModal();
   const { selectedRow, setSelectedRow, handleOnChange, ref } =
     useCheckBox(list);
@@ -140,8 +143,13 @@ function CustomTable<T extends ListType>(
   };
 
   const openFilterModal = () => {
-    setShowModal(true);
-    queryClient.setQueryData(['openmodal'], true);
+    openModal(FilterModal, {
+      submitFilterData,
+      clearAllFilter,
+      tableQueryParams,
+      setQuery,
+      searchParams,
+    });
   };
 
   const openSortModal = () => {
@@ -274,19 +282,6 @@ function CustomTable<T extends ListType>(
       ) : (
         <EmployeeTableSkeleton />
       )}
-      <div
-        className={`transition-opacity duration-300 absolute inset-0 z-30 ${showModal ? ' opacity-100' : ' opacity-0 pointer-events-none'}`}
-      >
-        {
-          <FilterModal
-            closeModal={closeModal}
-            submitFilterData={submitFilterData}
-            clearAllFilter={clearAllFilter}
-            tableQueryParams={tableQueryParams}
-            setQuery={setQuery}
-          />
-        }
-      </div>
     </>
   );
 }
