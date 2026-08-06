@@ -202,9 +202,9 @@ function ProfileSettings() {
       return;
     }
 
-    // (e.g. max 2MB)
-    if (file.size > 2 * 1024 * 1024) {
-      alert('File too large, max 2MB');
+    // (e.g. max 50KB)
+    if (file.size > 50 * 1024) {
+      alert('File too large, max 50KB');
       return;
     }
 
