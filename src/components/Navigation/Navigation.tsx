@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { startTransition, useState } from 'react';
+import React, { startTransition, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { NAV_ITEMS, SIDE_BAR_ITEMS } from '../../utils/constants';
 import { BarChart3, Home, LogOut, Settings, Users } from 'lucide-react';
@@ -162,4 +162,4 @@ function Navigation() {
     </>
   );
 }
-export default Navigation;
+export default React.memo(Navigation);
