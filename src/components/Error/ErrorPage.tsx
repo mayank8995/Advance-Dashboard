@@ -16,8 +16,7 @@ const ErrorPage = ({ refetchAll }: QueryClientConfigProps) => {
         Couldn't load.
       </h1>
       <p className="text-slate-400 text-sm mb-8  text-center text-balance">
-        There was a problem connecting to the server. Check your connection and
-        try again.
+        There was a problem connecting to the server. Please try again.
       </p>
 
       {refetchAll && (
