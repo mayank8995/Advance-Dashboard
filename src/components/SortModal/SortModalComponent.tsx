@@ -47,6 +47,9 @@ const SortModalComponent = <T extends ListType>({
       const id = myElementRef?.current?.id;
       if (id) {
         onSort(id);
+        setTimeout(() => {
+          onClose?.();
+        }, 150);
       }
     }
   }
