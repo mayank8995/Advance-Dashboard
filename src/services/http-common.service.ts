@@ -11,6 +11,7 @@ interface ApiError extends AxiosError {
 }
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 500;
+let access_token: string | null = null;
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
@@ -23,9 +24,13 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   function (config: InternalAxiosRequestConfig) {
     // Do something before request is sent
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.set('Authorization', `Bearer ${token}`);
+    console.log('here in login', config.url);
+    if (!(config.url === '/login' || config.url === '/signup')) {
+      if (access_token) {
+        config.headers.set('Authorization', `Bearer ${access_token}`);
+      } else {
+        throw 'Authentication Error';
+      }
     }
     return config;
   },
@@ -40,6 +45,9 @@ apiClient.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    if (response?.config?.url === '/login') {
+      access_token = response?.data?.token;
+    }
     return normalizeApiResponse(response);
   },
   async function (error: AxiosError) {
