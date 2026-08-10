@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { startTransition, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { NAV_ITEMS, SIDE_BAR_ITEMS } from '../../utils/constants';
 import { BarChart3, Home, LogOut, Settings, Users } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import type { NavItems } from '../../types/types';
+import { doLogout } from '../../api/admin-portal.api';
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +20,7 @@ function Navigation() {
     { name: SIDE_BAR_ITEMS.LOGOUT, path: NAV_ITEMS.LOGOUT },
   ];
 
-  function navigateToPage(
+  async function navigateToPage(
     isOpen: boolean,
     navItem?: NavItems,
     isMobile?: boolean
@@ -29,7 +31,12 @@ function Navigation() {
       setIsOpen(isOpen);
     }
     if (navItem && navItem.path === NAV_ITEMS.LOGOUT) {
-      context?.logout();
+      try {
+        await doLogout();
+        context?.logout();
+      } catch (error) {
+        console.error(error);
+      }
     } else if (navItem && navItem.path === NAV_ITEMS.ANALYTICS) {
       startTransition(() => {
         navigate(`${navItem.path}`);

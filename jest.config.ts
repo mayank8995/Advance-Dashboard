@@ -26,7 +26,7 @@ const config: Config = {
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
 
-    '\\.(gif|png|jpg|jpeg|svg)$': '<rootDir>/test/__mocks__/fileMock.ts',
+    '\\.(gif|png|jpg|jpeg|svg)$': '<rootDir>/test/__mocks__/fileMock.js',
   },
 
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
