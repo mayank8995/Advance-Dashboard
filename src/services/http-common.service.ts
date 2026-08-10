@@ -4,6 +4,7 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
+import { doLogout } from '../api/admin-portal.api';
 interface ApiError extends AxiosError {
   status: number;
   data: unknown;
@@ -24,12 +25,15 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   function (config: InternalAxiosRequestConfig) {
     // Do something before request is sent
-    console.log('here in login', config.url);
-    if (!(config.url === '/login' || config.url === '/signup')) {
+    if (
+      !(
+        config.url === '/login' ||
+        config.url === '/signup' ||
+        config.url === '/logout'
+      )
+    ) {
       if (access_token) {
         config.headers.set('Authorization', `Bearer ${access_token}`);
-      } else {
-        throw 'Authentication Error';
       }
     }
     return config;
@@ -53,6 +57,10 @@ apiClient.interceptors.response.use(
   async function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     reportError(error);
+    if (error.response?.status === 403) {
+      await doLogout();
+      return Promise.reject(new Error('Auth token expired'));
+    }
     const config = error.config as InternalAxiosRequestConfig & {
       _retryCount?: number;
     };

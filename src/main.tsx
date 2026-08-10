@@ -36,7 +36,7 @@ declare global {
 
 window.__TANSTACK_QUERY_CLIENT__ = queryClient;
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
