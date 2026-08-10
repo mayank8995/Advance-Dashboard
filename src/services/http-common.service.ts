@@ -15,7 +15,7 @@ const RETRY_DELAY_MS = 500;
 let access_token: string | null = null;
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  baseURL: process.env.VITE_API_URL || 'http://localhost:3000/',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
   timeout: 5000,
   withCredentials: true,
   headers: {
