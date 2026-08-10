@@ -9,7 +9,7 @@ import type {
   SignUpForm,
   TableQueryParams,
 } from '../types/types';
-import { router } from '../main';
+import { router } from '../router/router';
 
 export default async function getEmployees() {
   try {
@@ -146,6 +146,18 @@ export const doLogout = async () => {
   } finally {
     toast.info('Logged out!');
     router.navigate('/');
+  }
+};
+export const refreshToken = async () => {
+  try {
+    await apiClient.get('/refreshToken');
+  } catch (err: unknown) {
+    console.error('err>>>', err);
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
+    throw err;
   }
 };
 

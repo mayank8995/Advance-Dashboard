@@ -15,8 +15,9 @@ const RETRY_DELAY_MS = 500;
 let access_token: string | null = null;
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
+  baseURL: process.env.VITE_API_URL || 'http://localhost:3000/',
   timeout: 5000,
+  withCredentials: true,
   headers: {
     'Content-type': 'application/json',
   },
@@ -61,6 +62,19 @@ apiClient.interceptors.response.use(
       await doLogout();
       return Promise.reject(new Error('Auth token expired'));
     }
+    // if (error.response?.status === 401) {
+    //   console.log('error>>>>>', error?.response);
+    //   const responseData = error?.response?.data as
+    //     | Record<string, unknown>
+    //     | undefined;
+    //   const isTokenVerified = responseData?.token;
+    //   if (isTokenVerified === false) {
+    //     // refetch token
+    //     const token = await refreshToken();
+    //     console.log('token>>>', token);
+    //     // config.headers.set('Authorization', `Bearer ${access_token}`);
+    //   }
+    // }
     const config = error.config as InternalAxiosRequestConfig & {
       _retryCount?: number;
     };

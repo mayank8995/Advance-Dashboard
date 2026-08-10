@@ -1,0 +1,76 @@
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import App from '../App';
+import ErrorBoundaryPage from '../components/Error/ErrorBoundaryPage';
+import { ProtectedRoute } from '../pages/protected-routes/ProtectedRoutes';
+import React from 'react';
+const Home = React.lazy(() => import('../components/Home/Home.tsx'));
+const Dashboard = React.lazy(() => import('../pages/dashboard/Dashboard.tsx'));
+const Employees = React.lazy(() => import('../pages/employee/Employees.tsx'));
+const Analytics = React.lazy(() => import('../pages/analytics/Analytics.tsx'));
+const ProfileSettings = React.lazy(
+  () => import('../pages/profile-settings/ProfileSettings.tsx')
+);
+const ViewMore = React.lazy(
+  () => import('../components/ViewMore/ViewMore.tsx')
+);
+const DashboardRoot = React.lazy(
+  () => import('../pages/dashboard/DashboardRoot.tsx')
+);
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorBoundaryPage />,
+  },
+  {
+    path: '',
+    element: <ProtectedRoute />,
+    errorElement: <ErrorBoundaryPage />,
+    children: [
+      {
+        path: '/home',
+        element: <Home />,
+        errorElement: <ErrorBoundaryPage />,
+        handle: { breadcrumb: 'Home' },
+        children: [
+          {
+            index: true,
+            element: <Navigate to="dashboard" replace />,
+          },
+          {
+            path: 'dashboard',
+            element: <DashboardRoot />,
+            handle: { breadcrumb: 'Dashboard' },
+            children: [
+              {
+                path: '',
+                element: <Dashboard />,
+              },
+              {
+                path: 'viewmore',
+                element: <ViewMore />,
+                handle: { breadcrumb: 'View More' },
+              },
+            ],
+          },
+          {
+            path: 'employees',
+            element: <Employees />,
+            handle: { breadcrumb: 'Employees' },
+          },
+          {
+            path: 'analytics',
+            element: <Analytics />,
+            handle: { breadcrumb: 'Analytics' },
+          },
+          {
+            path: 'settings',
+            element: <ProfileSettings />,
+            handle: { breadcrumb: 'Settings' },
+          },
+        ],
+      },
+    ],
+  },
+]);
