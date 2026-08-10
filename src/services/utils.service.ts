@@ -16,6 +16,7 @@ import type {
   TableQueryParams,
 } from '../types/types';
 import axios from 'axios';
+import { REFETCH_TRY } from '../utils/constants';
 
 // export function useGetData() {
 //   return useQuery({
@@ -29,6 +30,7 @@ export function useFilterList(params: FilterList) {
     queryKey: ['filterList', params.tableType],
     queryFn: () => getFilterList(params),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+    retry: REFETCH_TRY,
   });
 }
 
@@ -54,6 +56,7 @@ export function useTableData(
     queryFn: () => getTableEmployees(queryParams, setIsLoading, signal),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
+    retry: REFETCH_TRY,
   });
 }
 
@@ -73,6 +76,7 @@ export function usePerFormanceTableData(params: TableQueryParams) {
     queryFn: () => getTableEmployees(queryParams),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
+    retry: REFETCH_TRY,
   });
 }
 
@@ -89,11 +93,13 @@ export function useAllData(params: TableQueryParams) {
         queryKey: ['analyticsData'],
         queryFn: getAnalytics,
         staleTime: Infinity,
+        retry: REFETCH_TRY,
       },
       {
         queryKey: ['performanceCardsData'],
         queryFn: getPerformanceCards,
         staleTime: Infinity,
+        retry: REFETCH_TRY,
       },
       {
         queryKey: [
@@ -103,6 +109,7 @@ export function useAllData(params: TableQueryParams) {
         queryFn: () => getTableEmployees(queryParams),
         placeholderData: keepPreviousData, // Smooth transitions,
         staleTime: Infinity,
+        retry: REFETCH_TRY,
       },
     ],
   });
@@ -129,7 +136,7 @@ export function useProfileData(user: LoginProfile) {
     queryKey: ['profileData'],
     queryFn: () => getProfileData(user),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-    retry: 1,
+    retry: REFETCH_TRY,
   });
 }
 
@@ -138,6 +145,7 @@ export function useEmployeeDetail(id: { id: number }) {
     queryKey: ['employeeDetail', id],
     queryFn: () => fetchEmployeeDetails(id),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+    retry: REFETCH_TRY,
   });
 }
 

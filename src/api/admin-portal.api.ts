@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import apiClient from '../services/http-common.service';
 import { getApiErrorDetails } from '../services/utils.service';
 import type {
@@ -8,6 +9,7 @@ import type {
   SignUpForm,
   TableQueryParams,
 } from '../types/types';
+import { router } from '../router/router';
 
 export default async function getEmployees() {
   try {
@@ -121,6 +123,34 @@ export const doLogin = async (form: LoginForm) => {
     const res = await apiClient.post('/login', JSON.stringify(form));
     // console.log("Created:", res);
     return res;
+  } catch (err: unknown) {
+    console.error('err>>>', err);
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
+    throw err;
+  }
+};
+
+export const doLogout = async () => {
+  try {
+    await apiClient.post('/logout');
+  } catch (err: unknown) {
+    console.error('err>>>', err);
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
+    throw err;
+  } finally {
+    toast.info('Logged out!');
+    router.navigate('/');
+  }
+};
+export const refreshToken = async () => {
+  try {
+    await apiClient.get('/refreshToken');
   } catch (err: unknown) {
     console.error('err>>>', err);
     const { message, status, url } = getApiErrorDetails(err);
