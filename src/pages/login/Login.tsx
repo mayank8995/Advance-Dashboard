@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { useState, type ChangeEvent, type SubmitEvent } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type SubmitEvent,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  GUEST_LOGIN,
   loginClassName,
   loginLabelclassNAme,
   NAV_ITEMS,
@@ -17,7 +24,13 @@ import { useAuth } from '../../context/AuthContext';
 import { getApiErrorDetails } from '../../services/utils.service';
 
 // LoginCard.jsx
-function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
+function Login({
+  onCustomEvent,
+  isGuest,
+}: {
+  onCustomEvent: (flag: boolean) => void;
+  isGuest?: boolean;
+}) {
   const navigate = useNavigate();
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -27,9 +40,21 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
-  // console.log("context>>>>",context)
+  const guestLoginStarted = useRef(false);
+  useEffect(() => {
+    if (!isGuest || guestLoginStarted.current) return;
+    guestLoginStarted.current = true;
+    if (isGuest) {
+      const guestForm = GUEST_LOGIN;
+      setForm((prev) => ({
+        ...prev,
+        ...guestForm,
+      }));
+      handleLogin(guestForm);
+    }
+  }, [isGuest]);
 
-  function checkFormValidity() {
+  function checkFormValidity(form: LoginForm) {
     let valid: boolean = true;
     for (const key of Object.keys(form) as Array<keyof LoginForm>) {
       const msg = validateField(key, form[key]);
@@ -44,12 +69,15 @@ function Login({ onCustomEvent }: { onCustomEvent: (flag: boolean) => void }) {
     }
     return valid;
   }
-  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    // console.log("Form submitted smoothly without a reload!");
+    handleLogin(form);
+  };
+
+  const handleLogin = async (form: LoginForm) => {
     try {
-      if (checkFormValidity()) {
+      if (checkFormValidity(form)) {
         // console.log("inside herer")
         setIsLoading(true);
         const res: {
