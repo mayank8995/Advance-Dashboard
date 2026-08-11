@@ -18,13 +18,6 @@ import type {
 import axios from 'axios';
 import { REFETCH_TRY } from '../utils/constants';
 
-// export function useGetData() {
-//   return useQuery({
-//     queryKey: ['employeesData'],
-//     queryFn: getEmployees,
-//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-//   });
-// }
 export function useFilterList(params: FilterList) {
   return useQuery({
     queryKey: ['filterList', params.tableType],
@@ -114,22 +107,6 @@ export function useAllData(params: TableQueryParams) {
     ],
   });
 }
-
-// export function useAnalyticsData() {
-//   return useQuery({
-//     queryKey: ['analyticsData'],
-//     queryFn: getAnalytics,
-//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-//   });
-// }
-
-// export function usePerformanceCardData() {
-//   return useQuery({
-//     queryKey: ['performanceCardsData'],
-//     queryFn: getPerformanceCards,
-//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-//   });
-// }
 
 export function useProfileData(user: LoginProfile) {
   return useQuery({

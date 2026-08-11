@@ -5,6 +5,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios';
 import { doLogout } from '../api/admin-portal.api';
+import { getEnv } from '../config/env';
 interface ApiError extends AxiosError {
   status: number;
   data: unknown;
@@ -12,10 +13,10 @@ interface ApiError extends AxiosError {
 }
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 500;
-let access_token: string | null = null;
+const { apiUrl } = getEnv();
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
+  baseURL: apiUrl || 'http://localhost:3000/',
   timeout: 5000,
   withCredentials: true,
   headers: {
@@ -33,6 +34,7 @@ apiClient.interceptors.request.use(
         config.url === '/logout'
       )
     ) {
+      let access_token: string | null = localStorage.getItem('access-token');
       if (access_token) {
         config.headers.set('Authorization', `Bearer ${access_token}`);
       }
@@ -51,7 +53,7 @@ apiClient.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     if (response?.config?.url === '/login') {
-      access_token = response?.data?.token;
+      localStorage.setItem('access-token', response?.data?.token);
     }
     return normalizeApiResponse(response);
   },
@@ -59,7 +61,8 @@ apiClient.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     reportError(error);
     if (error.response?.status === 403) {
-      await doLogout();
+      localStorage.removeItem('access-token');
+      doLogout();
       return Promise.reject(new Error('Auth token expired'));
     }
     // if (error.response?.status === 401) {

@@ -11,12 +11,12 @@ const EmployeeTableSkeleton = React.memo(() => {
     <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
       <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
         <div className="lg:hidden px-6 py-4">
-          <div className="relative bg-gray-200 dark:bg-gray-700 w-full h-6"></div>
+          <div className="relative bg-gray-200 dark:bg-gray-700 w-full h-6 rounded-2xl"></div>
         </div>
         <div className="mt-4 flex flex-row items-center justify-between">
           <div className="flex-1 justify-between  flex items-center px-6 pb-4">
             <div className="flex flex-row items-center">
-              <div className="flex justify-center items-center bg-gray-200 dark:bg-gray-700 w-10 h-5">
+              <div className="flex justify-center items-center bg-gray-200 dark:bg-gray-700 w-10 h-5 rounded-2xl">
                 <span className=" hidden lg:flex text-sm font-bold dark:text-slate-100 pr-2"></span>
               </div>
               {
@@ -43,7 +43,7 @@ const EmployeeTableSkeleton = React.memo(() => {
             </div>
           </div>
           <div className="hidden lg:flex px-6 pb-4 ">
-            <div className="relative bg-gray-200 dark:bg-gray-700 w-40 h-6">
+            <div className="relative bg-gray-200 dark:bg-gray-700 w-40 h-6 rounded-2xl">
               <div />
             </div>
           </div>

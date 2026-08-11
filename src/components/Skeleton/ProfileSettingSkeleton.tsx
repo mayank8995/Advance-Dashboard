@@ -80,6 +80,28 @@ const ProfileSettingSkeleton = React.memo(() => {
             </div>
           </div>
           <hr className="border-t-2  border-gray-300 border-dotted dark:border-gray-600"></hr>
+          <div className="p-4">
+            <div className="animate-pulse flex items-center gap-2 mb-4">
+              {/* <div className="w-1 h-5 bg-slate-500 rounded-full" /> */}
+              <h2></h2>
+            </div>
+            <div className="animate-pulse flex flex-col-reverse">
+              <div className={`${className} bg-slate-200`} />
+              <div className={`${labelclassName} bg-slate-200`}></div>
+            </div>
+            <div className="animate-pulse flex flex-col-reverse">
+              <div className={`${className} bg-slate-200`} />
+              <div className={`${labelclassName} bg-slate-200`}></div>
+            </div>
+            <div className="animate-pulse flex flex-col-reverse">
+              <div className={`${className} bg-slate-200`} />
+              <div className={`${labelclassName} bg-slate-200`}></div>
+            </div>
+            <div className="animate-pulse flex flex-col-reverse">
+              <div className={`${className} bg-slate-200`} />
+              <div className={`${labelclassName} bg-slate-200`}></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

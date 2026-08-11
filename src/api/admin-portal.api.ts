@@ -135,7 +135,11 @@ export const doLogin = async (form: LoginForm) => {
 
 export const doLogout = async () => {
   try {
-    await apiClient.post('/logout');
+    const response = await apiClient.post('/logout');
+    const { success } = response?.data;
+    if (success) {
+      router.navigate('/');
+    }
   } catch (err: unknown) {
     console.error('err>>>', err);
     const { message, status, url } = getApiErrorDetails(err);
@@ -145,7 +149,6 @@ export const doLogout = async () => {
     throw err;
   } finally {
     toast.info('Logged out!');
-    router.navigate('/');
   }
 };
 export const refreshToken = async () => {
