@@ -6,12 +6,14 @@ global.TextDecoder = TextDecoder;
 
 jest.mock('./src/config/env', () => ({
   getEnv: () => ({
-    apiUrl: 'https://json-server-portal.onrender.com/',
+    apiUrl: 'http://localhost:3000/',
   }),
 }));
 
-jest.mock('./src/services/http-common-service', () => ({
-  apiClient: {
+jest.mock('./src/services/http-common.service', () => ({
+  __esModule: true,
+  default: {
     get: jest.fn(),
+    post: jest.fn(),
   },
 }));
