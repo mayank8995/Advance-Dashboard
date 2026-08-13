@@ -27,6 +27,7 @@ const config: Config = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
 
     '\\.(gif|png|jpg|jpeg|svg)$': '<rootDir>/test/__mocks__/fileMock.js',
+    '^src/(.*)$': '<rootDir>/src/$1',
   },
 
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],

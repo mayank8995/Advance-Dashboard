@@ -8,6 +8,7 @@ import {
 import { Link } from 'react-router-dom';
 import type { TopPerformersList } from '../../types/types';
 import Rating from '../UtilComponents/Rating';
+import { loadViewMorePage } from '../../router/router';
 
 const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
   const getMedalClassName = (index: number) => {
@@ -93,6 +94,9 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
               className="items-center flex flex-row text-blue-700"
               to="/home/dashboard/viewmore?target=topPerformers"
               state={{ name: VIEW_MORE_ROUTES_VALUES.top_performers }}
+              onMouseEnter={() => {
+                loadViewMorePage();
+              }}
             >
               <span>{VIEW_MORE}</span>
               <ArrowRight className=" text-blue-700" />

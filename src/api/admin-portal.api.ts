@@ -141,6 +141,7 @@ export const doLogout = async () => {
       router.navigate('/');
     }
   } catch (err: unknown) {
+    router.navigate('/');
     console.error('err>>>', err);
     const { message, status, url } = getApiErrorDetails(err);
     console.error('API Error:', message);

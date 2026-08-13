@@ -10,6 +10,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import type { TopProjectsList } from '../../types/types';
 import ErrorPage from '../Error/ErrorPage';
+import { loadViewMorePage } from '../../router/router';
 
 const TopProjectsCard = ({
   topProjects,
@@ -120,6 +121,9 @@ const TopProjectsCard = ({
             className="items-center flex flex-row text-blue-700"
             to="/home/dashboard/viewmore?target=topProjects"
             state={{ name: VIEW_MORE_ROUTES_VALUES.top_projects }}
+            onMouseEnter={() => {
+              loadViewMorePage();
+            }}
           >
             <span>{VIEW_MORE}</span>
             <ArrowRight className=" text-blue-700" />

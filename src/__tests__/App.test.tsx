@@ -30,11 +30,10 @@ test('Renders the main page', () => {
   expect(screen.getByRole('button', { name: /Sign in/i })).toBeTruthy();
 });
 
-test('Renders the Form Error', async () => {
+test('Renders the Form Error', () => {
   const { container } = render(renderPage());
   const btn = screen.getByRole('button', { name: /Sign in/i });
   fireEvent.click(btn);
-  screen.debug();
   expect(container.querySelector('#email-error-message')?.textContent).toBe(
     'Invalid email address'
   );
