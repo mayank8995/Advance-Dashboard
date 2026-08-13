@@ -87,20 +87,5 @@ function Dashboard() {
     </>
   );
 }
-// {!isLoading ? (
-//             <div
-//               data-test="home"
-//               className="flex-1 overflow-y-auto dark:bg-gray-800"
-//             >
-//               {!isError ? (
-//                 <Outlet />
-//               ) : (
-//                 <div className="flex flex-col flex-1 h-screen overflow-y-auto justify-center items-center dark:bg-gray-800">
-//                   <ErrorPage refetchAll={refetchAll} />{' '}
-//                 </div>
-//               )}
-//             </div>
-//           ) : (
-//             <Skeleton />
-//           )}
+
 export default Dashboard;
