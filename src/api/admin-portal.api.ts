@@ -10,7 +10,6 @@ import type {
   TableQueryParams,
 } from '../types/types';
 import { router } from '../router/router';
-import axios from 'axios';
 
 export default async function getEmployees() {
   try {
@@ -198,9 +197,7 @@ export const fetchEmployeeDetails = async (params: { id: number }) => {
 // for this api different timeout
 export const checkHealth = async () => {
   try {
-    const response = await axios.get('/health', {
-      timeout: 70000,
-    });
+    const response = await apiClient.get('/health', { timeout: 70000 });
     return response;
   } catch (error) {
     throw error;
