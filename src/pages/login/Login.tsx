@@ -17,7 +17,7 @@ import {
 import FormField from '../../components/Form/FormField';
 import { validateField } from '../../services/form-validation.service';
 import type { LoginData, LoginForm } from '../../types/types';
-import { doLogin } from '../../api/admin-portal.api';
+import { checkHealth, doLogin } from '../../api/admin-portal.api';
 import { TailSpin } from 'react-loader-spinner';
 import { toast, type ToastContent } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
@@ -41,6 +41,12 @@ function Login({
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const guestLoginStarted = useRef(false);
+  const [serverWakingUp, setServerWakingUp] = useState(false);
+
+  useEffect(() => {
+    wakeUpServer();
+  }, []);
+
   useEffect(() => {
     if (!isGuest || guestLoginStarted.current) return;
     guestLoginStarted.current = true;
@@ -124,6 +130,21 @@ function Login({
       console.error(err);
     }
   };
+  const wakeUpServer = async () => {
+    const timer = setTimeout(() => {
+      setServerWakingUp(true);
+    }, 1000);
+    try {
+      const response = await checkHealth();
+      console.log('response health', response);
+    } catch (error) {
+      const { message } = getApiErrorDetails(error);
+      toast.error(message, {});
+    } finally {
+      clearTimeout(timer);
+      setServerWakingUp(false);
+    }
+  };
   return (
     <div className="h-100 md:max-h-150 md:h-127.5 bg-violet-50 border-violet-200 dark:bg-[#211a3d] border dark:border-[#7c3aed]/20  rounded-2xl shadow-2xl shadow-[#2d1b4e]/60 p-4 md:p-8 w-full max-w-md">
       {/* Header */}
@@ -168,34 +189,8 @@ function Login({
               id={'password'}
               onChange={handleOnChange}
             />
-            {/* <a href="#" className="text-sm text-blue-500">Forgot password?</a> */}
           </div>
         </div>
-
-        {/* Password */}
-        {/* <div className="mb-4">
-          <div className="flex justify-between mb-1.5">
-            <label className="text-sm text-gray-500">Password</label>
-            <a href="#" className="text-sm text-blue-500">Forgot password?</a>
-          </div>
-          <input
-            name="password"
-            type="password"
-            placeholder="••••••••"
-            onChange={handleOnChange}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div> */}
-
-        {/* Remember me */}
-        {/* <div className="flex items-center gap-2 mb-5">
-          <input type="checkbox" id="remember" className="w-4 h-4 cursor-pointer" />
-          <label htmlFor="remember" className="text-sm text-gray-500 cursor-pointer">
-            Remember me for 30 days
-          </label>
-        </div> */}
-
-        {/* Submit */}
         <button
           type="submit"
           disabled={isLoading}
@@ -223,11 +218,11 @@ function Login({
           )}
         </button>
       </form>
-      {/* Sign up link */}
-      {/* <p className="text-center text-sm text-gray-500">
-          Don't have an account?{' '}
-          <a onClick={() => onCustomEvent(false)} className="text-blue-500">Create one</a>
-        </p> */}
+      {serverWakingUp && (
+        <p className="mb-2 text-xs text-center font-medium text-amber-600 dark:text-amber-400">
+          ⚡Preparing demo server...
+        </p>
+      )}
       <p className="text-center text-slate-600 dark:text-slate-400 text-sm">
         Don't have an account?{' '}
         <button
