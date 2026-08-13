@@ -8,118 +8,212 @@ import React from 'react';
 
 const EmployeeTableSkeleton = React.memo(() => {
   return (
-    <div className="min-h-screen bg-slate-50 p-4 dark:bg-gray-800">
-      <div className="bg-white rounded-2xl shadow-md border border-slate-200 flex-1 overflow-x-auto dark:bg-slate-950 dark:border-none">
-        <div className="lg:hidden px-6 py-4">
-          <div className="relative bg-gray-200 dark:bg-gray-700 w-full h-6 rounded-2xl"></div>
+    <div className="min-h-screen bg-slate-50 p-3 sm:p-4 dark:bg-slate-950">
+      <div
+        className="
+      min-h-full overflow-hidden rounded-2xl
+      border border-slate-200
+      bg-white shadow-sm
+      dark:border-slate-800
+      dark:bg-slate-900
+    "
+      >
+        <div className="lg:hidden px-4 sm:px-6 pt-4">
+          <div className="h-6 w-full rounded-md bg-slate-200 dark:bg-slate-800 animate-pulse" />
         </div>
+
         <div className="mt-4 flex flex-row items-center justify-between">
-          <div className="flex-1 justify-between  flex items-center px-6 pb-4">
-            <div className="flex flex-row items-center">
-              <div className="flex justify-center items-center bg-gray-200 dark:bg-gray-700 w-10 h-5 rounded-2xl">
-                <span className=" hidden lg:flex text-sm font-bold dark:text-slate-100 pr-2"></span>
-              </div>
-              {
-                <div className="pl-2 flex items-center">
-                  <div className="cursor-pointer">
-                    <Funnel className="pl-2 text-gray-600 dark:text-gray-100" />
-                  </div>
-                  <div className="flex lg:hidden">
-                    {
-                      <ArrowUpDown className="pl-2 text-gray-600 dark:text-gray-100" />
-                    }
-                  </div>
+          <div className="flex flex-1 items-center justify-between px-4 pb-4 sm:px-6">
+            <div className="flex items-center">
+              <div
+                className="
+              h-5 w-10 rounded-md
+              bg-slate-200
+              dark:bg-slate-800
+              animate-pulse
+            "
+              />
+
+              <div className="ml-3 flex items-center gap-1">
+                <Funnel
+                  className="text-slate-300 dark:text-slate-700"
+                  size={18}
+                />
+
+                <div className="lg:hidden">
+                  <ArrowUpDown
+                    className="text-slate-300 dark:text-slate-700"
+                    size={18}
+                  />
                 </div>
-              }
+              </div>
             </div>
-            <div className="flex justify-center items-center">
-              <div>
-                <SquareChevronLeft />
-              </div>
-              <span className="text-xs md:text-sm font-bold  dark:text-slate-100"></span>
-              <div>
-                <SquareChevronRight />
-              </div>
+
+            <div className="flex items-center gap-2">
+              <SquareChevronLeft className="text-slate-300 dark:text-slate-700" />
+
+              <span
+                className="
+              h-4 w-10 rounded-md
+              bg-slate-200
+              dark:bg-slate-800
+              animate-pulse
+            "
+              />
+
+              <SquareChevronRight className="text-slate-300 dark:text-slate-700" />
             </div>
           </div>
-          <div className="hidden lg:flex px-6 pb-4 ">
-            <div className="relative bg-gray-200 dark:bg-gray-700 w-40 h-6 rounded-2xl">
-              <div />
-            </div>
+
+          <div className="hidden lg:flex px-6 pb-4">
+            <div
+              className="
+            h-6 w-40 rounded-md
+            bg-slate-200
+            dark:bg-slate-800
+            animate-pulse
+          "
+            />
           </div>
         </div>
-        <div className="flex flex-col justify-center">
-          <table className="hidden lg:table rounded-2xl shadow-lg border border-slate-200 m-2.5 dark:bg-slate-900 dark:border-slate-700  dark:shadow-slate-900/50">
-            <thead className=" bg-slate-100">
-              <tr className="cursor-pointer bg-gray-200 dark:bg-gray-700 dark:border-slate-700">
-                {Array.from({ length: 8 }, (_, index) => index + 1)?.map(
-                  (_, id) => {
-                    return (
-                      <th
-                        key={`${id}bg-gray`}
-                        className="animate-pulse bg-gray-300  dark:bg-gray-700 px-6 py-4 h-5 w-5"
-                      >
-                        {/* {'DASDA'} */}
-                      </th>
-                    );
-                  }
+
+        <div className="flex flex-col">
+          <table
+            className="
+          hidden lg:table
+          mx-3 mb-3
+          w-[calc(100%-1.5rem)]
+          overflow-hidden
+          rounded-xl
+          border border-slate-200
+          dark:border-slate-700
+        "
+          >
+            <thead>
+              <tr className="border-b border-slate-200 dark:border-slate-700">
+                {Array.from({ length: 8 }, (_, index) => index + 1).map(
+                  (_, id) => (
+                    <th key={`${id}bg-gray`} className="px-6 py-4">
+                      <div
+                        className="
+                      h-4 w-24
+                      rounded-md
+                      bg-slate-200
+                      dark:bg-slate-700
+                      animate-pulse
+                    "
+                      />
+                    </th>
+                  )
                 )}
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-100 border-t border-gray-100 animate-pulse">
-              {Array.from({ length: 5 }, (_, index) => index + 1)?.map(
-                (_, id) => {
-                  return (
-                    <tr key={`${id + 5}`} className="hover:bg-gray-50">
-                      {Array.from({ length: 8 }, (_, index) => index + 1)?.map(
-                        (_, i) => {
-                          return (
-                            <td key={`${i + 1 + id + 8}`} className="px-6 py-4">
-                              <div className="h-8 w-24 rounded bg-gray-200 dark:bg-gray-700"></div>
-                            </td>
-                          );
-                        }
-                      )}
-                    </tr>
-                  );
-                }
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+              {Array.from({ length: 6 }, (_, index) => index + 1).map(
+                (_, id) => (
+                  <tr key={`${id + 5}`}>
+                    {Array.from({ length: 8 }, (_, index) => index + 1).map(
+                      (_, i) => (
+                        <td key={`${i + 1 + id + 8}`} className="px-6 py-4">
+                          <div
+                            className={`
+                        h-4 rounded-md
+                        bg-slate-200
+                        dark:bg-slate-700
+                        animate-pulse
+                        ${i === 0 ? 'w-32' : 'w-24'}
+                      `}
+                          />
+                        </td>
+                      )
+                    )}
+                  </tr>
+                )
               )}
             </tbody>
           </table>
-          <div className="lg:hidden pl-2 pr-2">
-            {Array.from({ length: 5 }, (_, index) => index + 1)?.map(
-              (_, id) => {
-                return (
+
+          <div className="lg:hidden space-y-3 px-3 pb-3">
+            {Array.from({ length: 5 }, (_, index) => index + 1).map((_, id) => (
+              <div
+                key={`${id + 5}`}
+                className="
+                overflow-hidden rounded-2xl
+                border border-slate-200
+                bg-white
+                p-4
+                shadow-sm
+                dark:border-slate-800
+                dark:bg-slate-900
+              "
+              >
+                <div className="flex items-center gap-3 pb-4">
                   <div
-                    key={`${id + 5}`}
-                    className="bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-5 flex flex-col gap-3  dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20  mb-2  odd:bg-white even:bg-slate-50 dark:odd:bg-slate-900 dark:even:bg-slate-800/40 dark:border-slate-900/50 "
-                  >
-                    <div className="animate-pulse">
-                      <div className="flex items-center gap-3">
-                        <h1 className={`h-9 w-9 rounded-full bg-gray-200`}></h1>
-                        <h2 className="h-4 w-48 rounded bg-gray-200"></h2>
-                      </div>
-                    </div>
-                    {Array.from({ length: 8 }, (_, index) => index + 1)?.map(
-                      (_, i) => {
-                        return (
-                          <div
-                            key={`${i + 1 + id + 5}`}
-                            className="animate-pulse"
-                          >
-                            <div className={`grid grid-cols-2 gap-y-1 text-xs`}>
-                              <h2 className="h-4 w-25 rounded bg-gray-200"></h2>
-                              <h2 className="h-4 w-35 rounded bg-gray-200"></h2>
-                            </div>
-                          </div>
-                        );
-                      }
-                    )}
+                    className="
+                    h-10 w-10 shrink-0 rounded-full
+                    bg-slate-200
+                    dark:bg-slate-700
+                    animate-pulse
+                  "
+                  />
+
+                  <div className="flex-1 space-y-2">
+                    <div
+                      className="
+                      h-4 w-40 max-w-full rounded-md
+                      bg-slate-200
+                      dark:bg-slate-700
+                      animate-pulse
+                    "
+                    />
+
+                    <div
+                      className="
+                      h-3 w-28 rounded-md
+                      bg-slate-200
+                      dark:bg-slate-700
+                      animate-pulse
+                    "
+                    />
                   </div>
-                );
-              }
-            )}
+                </div>
+                <div className="space-y-3">
+                  {Array.from({ length: 8 }, (_, index) => index + 1).map(
+                    (_, i) => (
+                      <div
+                        key={`${i + 1 + id + 5}`}
+                        className="
+                      grid grid-cols-2
+                      gap-3
+                    "
+                      >
+                        <div
+                          className="
+                        h-3 w-20
+                        rounded-md
+                        bg-slate-200
+                        dark:bg-slate-700
+                        animate-pulse
+                      "
+                        />
+
+                        <div
+                          className="
+                        h-3 w-28
+                        justify-self-end
+                        rounded-md
+                        bg-slate-200
+                        dark:bg-slate-700
+                        animate-pulse
+                      "
+                        />
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -48,30 +48,84 @@ function Analytics() {
                   return (
                     <div
                       key={`suspense-${id}`}
-                      className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-xl shadow animate-pulse dark:bg-gray-800 dark:border-gray-700"
+                      className="
+    w-full max-w-sm
+    rounded-xl
+    border border-slate-200
+    bg-white
+    p-6
+    shadow-sm
+    animate-pulse
+    dark:border-slate-700
+    dark:bg-slate-800
+  "
                     >
-                      <div className="flex flex-col">
-                        <div className="h-3 w-25 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                      <div className="h-3 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+
+                      <div className="mx-auto mt-6 h-44 w-44 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+                        <div className="absolute inset-0 hidden rounded-full dark:block" />
                       </div>
-                      <div
-                        className="mx-auto w-44 h-44 rounded-full bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
-                        style={{
-                          background:
-                            'conic-gradient(#e5e7eb 0% 40%, #ffffff 40% 41%, #e5e7eb 41% 75%, #ffffff 75% 76%, #e5e7eb 76% 100%)',
-                        }}
-                      >
+
+                      <div className="mt-6 space-y-4">
+                        <div className="h-3 w-28 rounded-full bg-slate-200 dark:bg-slate-700" />
+                        <div className="h-3 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+                        <div className="h-3 w-32 rounded-full bg-slate-200 dark:bg-slate-700" />
+                      </div>
+
+                      <div className="mt-8">
+                        <div className="mb-4 h-3 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+
                         <div
-                          className="hidden dark:block absolute inset-0 rounded-full"
-                          style={{
-                            background:
-                              'conic-gradient(#374151 0% 40%, #1f2937 40% 41%, #374151 41% 75%, #1f2937 75% 76%, #374151 76% 100%)',
-                          }}
-                        ></div>
+                          className="relative h-40 w-full
+        overflow-hidden
+        rounded-lg
+        border border-slate-200
+        bg-slate-50
+        dark:border-slate-700
+        dark:bg-slate-900
+      "
+                        >
+                          <div className="absolute inset-x-0 top-1/4 border-t border-slate-200 dark:border-slate-700" />
+                          <div className="absolute inset-x-0 top-1/2 border-t border-slate-200 dark:border-slate-700" />
+                          <div className="absolute inset-x-0 top-3/4 border-t border-slate-200 dark:border-slate-700" />
+
+                          <div className="absolute left-[8%] top-[65%] h-2 w-[12%] rotate-[-15deg] rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="absolute left-[18%] top-[53%] h-2 w-[14%] rotate-20 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="absolute left-[31%] top-[58%] h-2 w-[13%] rotate-[-10deg] rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="absolute left-[43%] top-[43%] h-2 w-[15%] rotate-18deg rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="absolute left-[57%] top-[50%] h-2 w-[14%] rotate-[-20deg] rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="absolute left-[70%] top-[35%] h-2 w-[13%] rotate-12deg rounded-full bg-slate-200 dark:bg-slate-700" />
+                        </div>
+
+                        <div className="mt-3 flex justify-between">
+                          <div className="h-3 w-8 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="h-3 w-8 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="h-3 w-8 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="h-3 w-8 rounded-full bg-slate-200 dark:bg-slate-700" />
+                        </div>
                       </div>
-                      <div className="flex flex-col mt-6">
-                        <div className="h-3 w-25 mt-6 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                        <div className="h-3 w-25 mt-6 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                        <div className="h-3 w-25 mt-6 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+
+                      <div className="mt-8">
+                        <div className="mb-5 h-3 w-28 rounded-full bg-slate-200 dark:bg-slate-700" />
+
+                        <div className="mx-auto h-40 w-40 rounded-full bg-slate-200 dark:bg-slate-700" />
+
+                        <div className="mt-5 space-y-3">
+                          <div className="flex items-center gap-3">
+                            <div className="h-3 w-3 rounded-full bg-slate-200 dark:bg-slate-700" />
+                            <div className="h-3 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          </div>
+
+                          <div className="flex items-center gap-3">
+                            <div className="h-3 w-3 rounded-full bg-slate-200 dark:bg-slate-700" />
+                            <div className="h-3 w-20 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          </div>
+
+                          <div className="flex items-center gap-3">
+                            <div className="h-3 w-3 rounded-full bg-slate-200 dark:bg-slate-700" />
+                            <div className="h-3 w-28 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );

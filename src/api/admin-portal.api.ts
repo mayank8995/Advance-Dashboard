@@ -193,3 +193,13 @@ export const fetchEmployeeDetails = async (params: { id: number }) => {
     throw err;
   }
 };
+
+// for this api different timeout
+export const checkHealth = async () => {
+  try {
+    const response = await apiClient.get('/health', { timeout: 70000 });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

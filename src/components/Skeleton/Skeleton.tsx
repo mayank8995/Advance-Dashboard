@@ -5,65 +5,160 @@ import EmployeeTableSkeleton from './EmployeeTableSkeleton';
 const Skeleton = React.memo(() => {
   const location = useLocation();
   return (
-    <div className="flex flex-col flex-auto dark:bg-gray-800">
+    <div className="flex min-h-screen flex-auto flex-col bg-slate-50 dark:bg-slate-950">
       {(location?.pathname?.includes('dashboard') ||
         location?.pathname?.includes('analytics')) &&
         !location?.search?.includes('target') && (
-          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+          <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {Array.from({ length: 4 }, (_, index) => index + 1)?.map((_, i) => (
               <div
                 key={`items-start-${i}`}
-                className="flex flex-col gap-3 p-2  bg-white border border-gray-200 rounded-xl shadow animate-pulse dark:bg-gray-800 dark:border-gray-700 dark:border-none"
+                className="
+              flex flex-col gap-3 rounded-xl
+              border border-slate-200
+              bg-white p-4
+              shadow-sm
+              animate-pulse
+              dark:border-slate-800
+              dark:bg-slate-900
+            "
               >
-                <div className="items-center flex flex-row ">
+                <div className="flex flex-row items-center">
                   <div
-                    className={`animate-pulse h-10 w-10 rounded-xl bg-gray-200 dark:bg-gray-700 flex items-center justify-center`}
-                  ></div>
-                  <div className="pl-2 flex flex-col">
-                    <div className=" animate-pulse h-2  bg-gray-200 dark:bg-gray-700 items-center mb-1  dark:text-slate-100 w-50 truncate"></div>
-                    <h2 className=" animate-pulse h-2 bg-gray-200 dark:bg-gray-700 "></h2>
+                    className="
+                  flex h-10 w-10 shrink-0 items-center justify-center
+                  rounded-xl
+                  bg-slate-200
+                  dark:bg-slate-700
+                  animate-pulse
+                "
+                  />
+
+                  <div className="flex min-w-0 flex-col pl-3">
+                    <div
+                      className="
+                    mb-2 h-3 w-32 rounded-md
+                    bg-slate-200
+                    dark:bg-slate-700
+                    animate-pulse
+                    sm:w-40
+                  "
+                    />
+
+                    <div
+                      className="
+                    h-2 w-20 rounded-md
+                    bg-slate-200
+                    dark:bg-slate-700
+                    animate-pulse
+                  "
+                    />
                   </div>
                 </div>
               </div>
             ))}
           </div>
         )}
+
       <>
         {location?.pathname?.includes('dashboard') &&
         !location?.search?.includes('target') ? (
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
+          <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-3">
             {Array.from({ length: 5 }, (_, index) => index + 1).map((_, id) => {
               return (
                 <div
                   key={`w-full-${id}`}
-                  className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700"
+                  className="
+                w-full rounded-xl
+                border border-slate-200
+                bg-white p-5
+                shadow-sm
+                dark:border-slate-800
+                dark:bg-slate-900
+              "
                 >
-                  <div className="mb-4 flex items-center justify-between gap-4">
-                    <div className="flex items-center justify-center">
-                      <div className=" animate-pulse mr-2 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 w-10 h-8 rounded-lg flex items-center justify-center"></div>
-                      <h1 className=" animate-pulse h-2 w-20 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 flex items-center  dark:text-slate-100"></h1>
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <div className="flex items-center">
+                      <div
+                        className="
+                      mr-3 h-9 w-10
+                      rounded-lg
+                      bg-slate-200
+                      dark:bg-slate-700
+                      animate-pulse
+                    "
+                      />
+
+                      <div
+                        className="
+                      h-3 w-20
+                      rounded-md
+                      bg-slate-200
+                      dark:bg-slate-700
+                      animate-pulse
+                    "
+                      />
                     </div>
-                    <span className="animate-pulse h-4 w-10 whitespace-nowrap bg-gray-200 dark:bg-gray-700 dark:border-gray-700  px-2 py-0.5 rounded-full shadow-sm flex items-center"></span>
+
+                    <span
+                      className="
+                    h-5 w-12
+                    rounded-full
+                    bg-slate-200
+                    dark:bg-slate-700
+                    animate-pulse
+                  "
+                    />
                   </div>
-                  <div className="flex-1 flex flex-col justify-evenly">
+
+                  <div className="flex flex-1 flex-col">
                     {Array.from({ length: 5 }, (_, index) => index + 1)?.map(
                       (_, index) => (
                         <React.Fragment key={`w-9-${index}`}>
-                          <div className="flex flex-row mb-2">
-                            <div className="w-9 h-9 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 rounded-full ">
-                              <h1
-                                className={`animate-pulse w-9 h-9 rounded-full bg-gray-200 dark:bg-gray-700 dark:border-gray-700 flex items-center justify-center  col-span-0`}
-                              ></h1>
-                            </div>
-                            <div className="p-2 flex flex-row justify-between w-full">
-                              <div className="flex flex-col justify-between">
-                                <span className=" animate-pulse h-2 w-10  bg-gray-200 dark:bg-gray-700 dark:border-gray-700 mb-2"></span>
-                                <span className=" animate-pulse h-2 w-10 mb-1 flex items-center  bg-gray-200 dark:bg-gray-700 dark:border-gray-700 "></span>
-                              </div>
-                              <div className="items-center flex justify-end">
+                          <div className="mb-4 flex flex-row items-center">
+                            <div
+                              className="
+                            h-9 w-9 shrink-0
+                            rounded-full
+                            bg-slate-200
+                            dark:bg-slate-700
+                            animate-pulse
+                          "
+                            />
+
+                            <div className="flex w-full flex-row justify-between pl-3">
+                              <div className="flex flex-col justify-center">
                                 <span
-                                  className={`animate-pulse h-2 w-10 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 `}
-                                ></span>
+                                  className="
+                                mb-2 h-2 w-20
+                                rounded-md
+                                bg-slate-200
+                                dark:bg-slate-700
+                                animate-pulse
+                              "
+                                />
+
+                                <span
+                                  className="
+                                h-2 w-14
+                                rounded-md
+                                bg-slate-200
+                                dark:bg-slate-700
+                                animate-pulse
+                              "
+                                />
+                              </div>
+
+                              <div className="flex items-center justify-end">
+                                <span
+                                  className="
+                                h-2 w-12
+                                rounded-md
+                                bg-slate-200
+                                dark:bg-slate-700
+                                animate-pulse
+                              "
+                                />
                               </div>
                             </div>
                           </div>
@@ -71,8 +166,17 @@ const Skeleton = React.memo(() => {
                       )
                     )}
                   </div>
-                  <div className=" bottom-2 right-2 flex flex-col items-end ">
-                    <span className="w-10 bg-gray-200 dark:bg-gray-700 dark:border-gray-700 h-2"></span>
+
+                  <div className="mt-2 flex flex-col items-end">
+                    <span
+                      className="
+                    h-2 w-12
+                    rounded-md
+                    bg-slate-200
+                    dark:bg-slate-700
+                    animate-pulse
+                  "
+                    />
                   </div>
                 </div>
               );
@@ -81,36 +185,60 @@ const Skeleton = React.memo(() => {
         ) : (
           <React.Fragment>
             {location?.pathname?.includes('analytics') ? (
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
+              <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-3">
                 {Array.from({ length: 5 }, (_, index) => index + 1)?.map(
                   (_, id) => {
                     return (
                       <div
                         key={`suspense-${id}`}
-                        className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-xl shadow animate-pulse dark:bg-gray-800 dark:border-gray-700"
+                        className="
+                      w-full max-w-sm
+                      rounded-xl
+                      border border-slate-200
+                      bg-white p-6
+                      shadow-sm
+                      animate-pulse
+                      dark:border-slate-800
+                      dark:bg-slate-900
+                    "
                       >
                         <div className="flex flex-col">
-                          <div className="h-3 w-25 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          <div
+                            className="
+                          h-3 w-24
+                          rounded-full
+                          bg-slate-200
+                          dark:bg-slate-700
+                        "
+                          />
                         </div>
+
                         <div
-                          className="mx-auto w-44 h-44 rounded-full bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
+                          className="
+                        relative mx-auto mt-6
+                        h-44 w-44
+                        overflow-hidden rounded-full
+                        bg-slate-200
+                        dark:bg-slate-700
+                      "
                           style={{
                             background:
-                              'conic-gradient(#e5e7eb 0% 40%, #ffffff 40% 41%, #e5e7eb 41% 75%, #ffffff 75% 76%, #e5e7eb 76% 100%)',
+                              'conic-gradient(#e2e8f0 0% 40%, #ffffff 40% 41%, #e2e8f0 41% 75%, #ffffff 75% 76%, #e2e8f0 76% 100%)',
                           }}
                         >
                           <div
-                            className="hidden dark:block absolute inset-0 rounded-full"
+                            className="absolute inset-0 hidden rounded-full dark:block"
                             style={{
                               background:
-                                'conic-gradient(#374151 0% 40%, #1f2937 40% 41%, #374151 41% 75%, #1f2937 75% 76%, #374151 76% 100%)',
+                                'conic-gradient(#334155 0% 40%, #1e293b 40% 41%, #334155 41% 75%, #1e293b 75% 76%, #334155 76% 100%)',
                             }}
-                          ></div>
+                          />
                         </div>
-                        <div className="flex flex-col mt-6">
-                          <div className="h-3 w-25 mt-6 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                          <div className="h-3 w-25 mt-6 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                          <div className="h-3 w-25 mt-6 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+
+                        <div className="mt-6 flex flex-col gap-4">
+                          <div className="h-3 w-28 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="h-3 w-24 rounded-full bg-slate-200 dark:bg-slate-700" />
+                          <div className="h-3 w-32 rounded-full bg-slate-200 dark:bg-slate-700" />
                         </div>
                       </div>
                     );
