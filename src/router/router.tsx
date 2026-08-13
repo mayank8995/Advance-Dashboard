@@ -6,13 +6,15 @@ import React from 'react';
 const Home = React.lazy(() => import('../components/Home/Home.tsx'));
 const Dashboard = React.lazy(() => import('../pages/dashboard/Dashboard.tsx'));
 const Employees = React.lazy(() => import('../pages/employee/Employees.tsx'));
-const Analytics = React.lazy(() => import('../pages/analytics/Analytics.tsx'));
+export const loadAnalyticsPage = () =>
+  import('../pages/analytics/Analytics.tsx');
+const Analytics = React.lazy(loadAnalyticsPage);
 const ProfileSettings = React.lazy(
   () => import('../pages/profile-settings/ProfileSettings.tsx')
 );
-const ViewMore = React.lazy(
-  () => import('../components/ViewMore/ViewMore.tsx')
-);
+export const loadViewMorePage = () =>
+  import('../components/ViewMore/ViewMore.tsx');
+const ViewMore = React.lazy(loadViewMorePage);
 const DashboardRoot = React.lazy(
   () => import('../pages/dashboard/DashboardRoot.tsx')
 );

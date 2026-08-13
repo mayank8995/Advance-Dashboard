@@ -9,6 +9,7 @@ import {
   VIEW_MORE_ROUTES_VALUES,
 } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import { loadViewMorePage } from '../../router/router';
 
 const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
   return (
@@ -77,6 +78,9 @@ const RequiringReviewCard = ({ requiringReview }: ReviewList) => {
               className="items-center flex flex-row text-blue-700"
               to="/home/dashboard/viewmore?target=requiringReview"
               state={{ name: VIEW_MORE_ROUTES_VALUES.requiringReview }}
+              onMouseEnter={() => {
+                loadViewMorePage();
+              }}
             >
               <span>{VIEW_MORE}</span>
               <ArrowRight className=" text-blue-700" />

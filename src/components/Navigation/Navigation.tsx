@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import React, { startTransition, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { NAV_ITEMS, SIDE_BAR_ITEMS } from '../../utils/constants';
 import { BarChart3, Home, LogOut, Settings, Users } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import type { NavItems } from '../../types/types';
 import { doLogout } from '../../api/admin-portal.api';
+import { loadAnalyticsPage } from '../../router/router';
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,9 +39,7 @@ function Navigation() {
         console.error(error);
       }
     } else if (navItem && navItem.path === NAV_ITEMS.ANALYTICS) {
-      startTransition(() => {
-        navigate(`${navItem.path}`);
-      });
+      navigate(`${navItem.path}`);
     } else {
       if (navItem) {
         navigate(`${navItem.path}`);
@@ -102,6 +101,11 @@ function Navigation() {
                 key={item.name}
                 to={item.path}
                 onClick={() => navigateToPage(false, item)}
+                onMouseEnter={() => {
+                  if (item.path === NAV_ITEMS.ANALYTICS) {
+                    loadAnalyticsPage();
+                  }
+                }}
                 className={({ isActive }) =>
                   `flex
               items-center

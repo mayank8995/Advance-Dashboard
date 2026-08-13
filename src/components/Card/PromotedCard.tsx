@@ -9,6 +9,7 @@ import {
   VIEW_MORE_ROUTES_VALUES,
 } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import { loadViewMorePage } from '../../router/router';
 
 const PromotedCard = ({ promotedThisYear }: PromotedList) => {
   return (
@@ -71,6 +72,9 @@ const PromotedCard = ({ promotedThisYear }: PromotedList) => {
               className="items-center flex flex-row text-blue-700"
               to="/home/dashboard/viewmore?target=promotedThisYear"
               state={{ name: VIEW_MORE_ROUTES_VALUES.promotedThisYear }}
+              onMouseEnter={() => {
+                loadViewMorePage();
+              }}
             >
               <span>{VIEW_MORE}</span>
               <ArrowRight className=" text-blue-700" />
