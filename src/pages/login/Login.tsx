@@ -220,7 +220,7 @@ function Login({
       </form>
       {serverWakingUp && (
         <p className="mb-2 text-xs text-center font-medium text-amber-600 dark:text-amber-400">
-          ⚡Preparing demo server...
+          ⚡Waking up demo server...
         </p>
       )}
       <p className="text-center text-slate-600 dark:text-slate-400 text-sm">
