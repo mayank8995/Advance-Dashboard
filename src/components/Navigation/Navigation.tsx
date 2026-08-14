@@ -106,6 +106,11 @@ function Navigation() {
                     loadAnalyticsPage();
                   }
                 }}
+                onPointerDown={() => {
+                  if (item.path === NAV_ITEMS.ANALYTICS) {
+                    loadAnalyticsPage();
+                  }
+                }}
                 className={({ isActive }) =>
                   `flex
               items-center

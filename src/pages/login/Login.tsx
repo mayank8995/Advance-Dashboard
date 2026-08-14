@@ -23,6 +23,11 @@ import { toast, type ToastContent } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 import { getApiErrorDetails } from '../../services/utils.service';
 
+type ServerHealth = {
+  status: boolean;
+  message: string;
+};
+
 // LoginCard.jsx
 function Login({
   onCustomEvent,
@@ -41,7 +46,10 @@ function Login({
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const guestLoginStarted = useRef(false);
-  const [serverWakingUp, setServerWakingUp] = useState(false);
+  const [serverWakingUp, setServerWakingUp] = useState<ServerHealth>({
+    status: false,
+    message: '⚡Waking up demo server...',
+  });
 
   useEffect(() => {
     wakeUpServer();
@@ -91,9 +99,9 @@ function Login({
           data?: { user?: LoginData; message?: ToastContent<unknown> };
         } | null = await doLogin(form);
         if (res.status === 200) {
-          setIsLoading(false);
           toast.success(res?.data?.message, {});
           login({ ...res?.data?.user } as LoginData);
+          setIsLoading(false);
           navigate(NAV_ITEMS.DASHBOARD);
         } else {
           toast.error(res?.data?.message, {});
@@ -132,17 +140,24 @@ function Login({
   };
   const wakeUpServer = async () => {
     const timer = setTimeout(() => {
-      setServerWakingUp(true);
+      setServerWakingUp((prev) => ({ ...prev, status: true }));
     }, 1000);
     try {
       const response = await checkHealth();
       console.log('response health', response);
+      setServerWakingUp((prev) => ({
+        ...prev,
+        message:
+          response?.data?.status === 'ok'
+            ? '✓ Demo server is ready!'
+            : prev.message,
+      }));
     } catch (error) {
       const { message } = getApiErrorDetails(error);
       toast.error(message, {});
     } finally {
       clearTimeout(timer);
-      setServerWakingUp(false);
+      setServerWakingUp((prev) => ({ ...prev, status: false }));
     }
   };
   return (
@@ -218,9 +233,9 @@ function Login({
           )}
         </button>
       </form>
-      {serverWakingUp && (
+      {serverWakingUp?.status && (
         <p className="mb-2 text-xs text-center font-medium text-amber-600 dark:text-amber-400">
-          ⚡Waking up demo server...
+          {serverWakingUp?.message}
         </p>
       )}
       <p className="text-center text-slate-600 dark:text-slate-400 text-sm">

@@ -97,6 +97,7 @@ const TopPerformersCard = ({ topPerformersList }: TopPerformersList) => {
               onMouseEnter={() => {
                 loadViewMorePage();
               }}
+              onPointerDown={() => loadViewMorePage()}
             >
               <span>{VIEW_MORE}</span>
               <ArrowRight className=" text-blue-700" />
