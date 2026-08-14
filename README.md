@@ -24,7 +24,7 @@ The project focuses on building an admin dashboard similar to applications used 
 ## 🛠️ Tech Stack
 
 * **React**
-* **JavaScript / TypeScript**
+* **TypeScript**
 * **React Router**
 * **TanStack Query / React Query**
 * **Tailwind CSS**
@@ -166,8 +166,6 @@ New features and improvements are continuously being added as the application ev
 ## 👨‍💻 Author
 
 **Mayank Gupta**
-
-Senior Frontend Engineer
 
 ---
 
