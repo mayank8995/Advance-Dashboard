@@ -22,6 +22,7 @@ import { TailSpin } from 'react-loader-spinner';
 import { toast, type ToastContent } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 import { getApiErrorDetails } from '../../services/utils.service';
+import { loadDashboardPage } from '../../router/router';
 
 type ServerHealth = {
   status: boolean;
@@ -99,13 +100,11 @@ function Login({
           data?: { user?: LoginData; message?: ToastContent<unknown> };
         } | null = await doLogin(form);
         if (res.status === 200) {
-          toast.success(res?.data?.message, {});
           login({ ...res?.data?.user } as LoginData);
-          setIsLoading(false);
+          toast.success(res?.data?.message, {});
           navigate(NAV_ITEMS.DASHBOARD);
         } else {
           toast.error(res?.data?.message, {});
-          setIsLoading(false);
         }
       } else {
         // console.log("ELSE SUBMIT");
@@ -209,6 +208,12 @@ function Login({
         <button
           type="submit"
           disabled={isLoading}
+          onMouseEnter={() => {
+            loadDashboardPage();
+          }}
+          onPointerDown={() => {
+            loadDashboardPage();
+          }}
           className={` w-full bg-[#534ab7] text-white font-semibold py-3 rounded-lg mt-4  mb-4 px-6 
                          text-sm
                         shadow-lg shadow-indigo-500/30
