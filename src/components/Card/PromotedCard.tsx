@@ -9,10 +9,11 @@ import {
   VIEW_MORE_ROUTES_VALUES,
 } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import { loadViewMorePage } from '../../router/router';
 
 const PromotedCard = ({ promotedThisYear }: PromotedList) => {
   return (
-    <div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl border-t-4 shadow-sm border border-slate-100 p-4 xl:p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 darK:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20 dark:border-none">
+    <div className=" h-full bg-linear-to-br from-white to-indigo-50/40 rounded-2xl  shadow-sm border border-slate-100 p-4 xl:p-5 flex flex-col gap-3 hover:shadow-xl hover:shadow-indigo-100/50 dark:hover:shadow-indigo-950/40  hover:-translate-y-0.5 transition-all duration-200 darK:bg-gradient-to-br dark:from-slate-900 dark:to-green-950/20 dark:border-none">
       <div className="mb-4 flex items-center justify-between gap-4">
         <div className="flex items-center justify-center">
           <div className="mr-2 h-5 w-5 xl:h-6 xl:w-6 rounded-lg  flex items-center justify-center">
@@ -71,6 +72,10 @@ const PromotedCard = ({ promotedThisYear }: PromotedList) => {
               className="items-center flex flex-row text-blue-700"
               to="/home/dashboard/viewmore?target=promotedThisYear"
               state={{ name: VIEW_MORE_ROUTES_VALUES.promotedThisYear }}
+              onMouseEnter={() => {
+                loadViewMorePage();
+              }}
+              onPointerDown={() => loadViewMorePage()}
             >
               <span>{VIEW_MORE}</span>
               <ArrowRight className=" text-blue-700" />

@@ -2,57 +2,103 @@ import React from 'react';
 
 const FilterModalSkeleton = () => {
   return (
-    <div className="bg-white dark:bg-gray-800 border border-slate-200 dark:border-white/10 flex flex-col max-h-[85vh] md:h-125 md:max-h-125 shadow-sm  fixed z-300 left-0 right-0 bottom-0 md:absolute md:top-[50%] md:left-[50%] md:transform md:-translate-x-1/2 md:-translate-y-1/2 rounded-t-2xl md:rounded-2xl">
-      <div className="flex flex-row justify-between items-center p-4 border-b border-b-slate-200 dark:border-b-white/10"></div>
+    <div
+      className="
+    fixed bottom-0 left-0 right-0 z-300
+    flex max-h-[85vh] flex-col
+    overflow-hidden
+    rounded-t-2xl
+    border border-slate-200
+    bg-white shadow-xl
+    dark:border-slate-800
+    dark:bg-slate-900
+    md:absolute md:left-1/2 md:top-1/2
+    md:max-h-125
+    md:w-180
+    md:-translate-x-1/2 md:-translate-y-1/2
+    md:rounded-2xl
+  "
+    >
+      <div
+        className="
+      flex h-14 shrink-0 items-center justify-between
+      border-b border-slate-200
+      px-4
+      dark:border-slate-800
+      animate-pulse
+    "
+      >
+        <div className="h-4 w-28 rounded-md bg-slate-200 dark:bg-slate-700" />
 
-      <div className="flex flex-1 overflow-y-auto animate-pulse">
-        <div className="flex flex-col border-r border-r-slate-200 dark:border-r-white/10 animate-pulse">
-          {[1, 2, 3, 4]?.map((item) => {
-            return (
-              <div
-                key={`${item}-tabId`}
-                className="bg-gray-200 dark:bg-gray-700 animate-pulse h-10.5 cursor-pointer text-xs w-28 wrap-anywhere flex items-center justify-center border-slate-200 dark:border-white/10"
-              ></div>
-            );
-          })}
+        <div className="h-8 w-8 rounded-lg bg-slate-200 dark:bg-slate-700" />
+      </div>
+
+      <div className="flex min-h-0 flex-1 animate-pulse">
+        <div
+          className="
+        flex w-32 shrink-0 flex-col
+        overflow-y-auto
+        border-r border-slate-200
+        bg-slate-50
+        dark:border-slate-800
+        dark:bg-slate-950
+      "
+        >
+          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+            <div
+              key={`${item}-tabId`}
+              className="
+            mx-2 my-1
+            h-10
+            rounded-lg
+            bg-slate-200
+            dark:bg-slate-800
+          "
+            />
+          ))}
         </div>
-        <div className="flex flex-col animate-pulse">
-          {[1, 2, 3, 4]?.map((item, index: number) => (
+
+        <div className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-5">
+          <div className="mb-5 h-4 w-32 rounded-md bg-slate-200 dark:bg-slate-700" />
+
+          {[1, 2, 3, 4, 5].map((item, index) => (
             <React.Fragment key={`${item}-filters`}>
-              {
-                <div
-                  className="transition-all duration-200 ease-out outline-none  p-2 relative flex flex-wrap items-center overflow-auto overflow-x-auto   "
-                  itemID={`${index}`}
-                >
-                  <div
-                    className={`w-15 bg-gray-200 dark:bg-gray-700 animate-pulse cursor-pointer m-1 inline-flex items-center gap-1.5 
-                                                px-4 py-2 rounded-full font-medium whitespace-nowrap 
-                                                border transition-all duration-150 
-                                                text-xs
-                                            border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-white/25'
-                                                `}
-                  ></div>
-                  <div
-                    className={`w-15 bg-gray-200 dark:bg-gray-700 animate-pulse cursor-pointer m-1 inline-flex items-center gap-1.5 
-                                                px-4 py-2 rounded-full font-medium whitespace-nowrap 
-                                                border transition-all duration-150 
-                                                text-xs
-                                            border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-white/25'
-                                                `}
-                  ></div>
-                  <div
-                    className={`w-15 bg-gray-200 dark:bg-gray-700 animate-pulse cursor-pointer m-1 inline-flex items-center gap-1.5 
-                                                px-4 py-2 rounded-full font-medium whitespace-nowrap 
-                                                border transition-all duration-150 
-                                                text-xs
-                                            border-slate-300 dark:border-white/15 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-white/25'
-                                                `}
-                  ></div>
+              <div className="mb-5">
+                <div className="mb-3 h-3 w-24 rounded-md bg-slate-200 dark:bg-slate-700" />
+
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3, 4].map((chip) => (
+                    <div
+                      key={`${index}-${chip}`}
+                      className="
+                    h-8
+                    w-16
+                    rounded-full
+                    border border-slate-200
+                    bg-slate-100
+                    dark:border-slate-700
+                    dark:bg-slate-800
+                  "
+                    />
+                  ))}
                 </div>
-              }
+              </div>
             </React.Fragment>
           ))}
         </div>
+      </div>
+
+      <div
+        className="
+      flex h-14 shrink-0 items-center justify-end gap-3
+      border-t border-slate-200
+      px-4
+      dark:border-slate-800
+      animate-pulse
+    "
+      >
+        <div className="h-9 w-20 rounded-lg bg-slate-200 dark:bg-slate-700" />
+        <div className="h-9 w-24 rounded-lg bg-slate-200 dark:bg-slate-700" />
       </div>
     </div>
   );

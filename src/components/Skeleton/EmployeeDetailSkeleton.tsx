@@ -2,31 +2,162 @@ import React from 'react';
 
 const EmployeeDetailSkeleton = () => {
   return (
-    <div className="p-4 h-full max-h-full overflow-auto w-screen md:w-fit animate-pulse rounded-lg shadow bg-slate-300 dark:bg-slate-950 border border-slate-200 dark:border-white/10 fixed z-300 right-0 top-0">
-      <div className="grid grid-cols-[auto_1fr_auto] gap-4 pt-4 pb-4">
-        <div className="w-15 h-15 rounded-full ring-4 ring-white shadow-xl overflow-hidden animate-pulse">
-          <div className="aspect-square w-full h-full object-cover" />
-        </div>
-        <dl className="bg-slate-200 dark:bg-gray-800 rounded-2xl">
-          <dd className="m-2 h-2 w-10 text-sm font-bold leading-normal dark:text-white rounded-2xl bg-linear-to-br from-white to-indigo-50/40 border animate-pulse border-slate-100 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-slate-900/50 "></dd>
-          <dd className="m-2 h-2 w-10 text-xs whitespace-nowrap overflow-hidden text-ellipsis font-semibold dark:text-white rounded-2xl bg-linear-to-br from-white to-indigo-50/40 border animate-pulse border-slate-100 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-slate-900/50 "></dd>
-          <dd className="m-2 h-2 w-10 text-xs whitespace-nowrap overflow-hidden text-ellipsis text-slate-600 font-semibold animate-pulse rounded-2xl bg-linear-to-br from-white to-indigo-50/40 border border-slate-100 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-slate-900/50"></dd>
-        </dl>
-        <div></div>
+    <div
+      className="
+    p-3 sm:p-4
+    w-full sm:w-115 md:w-125 lg:w-135
+    h-full
+    overflow-y-auto
+    bg-white dark:bg-slate-900
+    text-slate-900 dark:text-slate-100
+    shadow-2xl
+    fixed z-300 right-0 top-0
+    animate-pulse
+  "
+    >
+      <div
+        className="
+      flex flex-row items-center justify-between
+      pb-3
+      border-b border-slate-200
+      dark:border-slate-700
+    "
+      >
+        <div
+          className="
+        h-5 w-32 sm:w-36
+        rounded-md
+        bg-slate-200
+        dark:bg-slate-700
+      "
+        />
+
+        <div
+          className="
+        w-8 h-8
+        rounded-lg
+        bg-slate-100
+        dark:bg-slate-800
+      "
+        />
       </div>
-      <div className="p-4 flex-1 flex flex-col bg-slate-200 dark:bg-gray-800 h-full rounded-2xl">
-        <div className="animate-pulse flex flex-col gap-3">
-          {[1, 2, 3, 4].map((i) => {
-            return (
-              <React.Fragment key={i ** 2}>
-                <div
-                  className={
-                    'h-15 w-full mt-2 animate-pulse rounded-2xl bg-linear-to-br from-white to-indigo-50/40 border border-slate-100 dark:bg-linear-to-br dark:from-slate-900 dark:to-purple-950/20 dark:border-slate-900/50 p-2 flex flex-col gap-3 shadow-sm'
-                  }
-                ></div>
-              </React.Fragment>
-            );
-          })}
+
+      <div
+        className="
+      grid grid-cols-[auto_minmax(0,1fr)_auto]
+      gap-3 sm:gap-4
+      items-center
+      pt-4 pb-4
+    "
+      >
+        <div
+          className="
+        w-14 h-14
+        sm:w-16 sm:h-16
+        rounded-full
+        shrink-0
+        bg-slate-200
+        dark:bg-slate-700
+        ring-2
+        ring-slate-200
+        dark:ring-slate-700
+      "
+        />
+
+        <dl className="min-w-0">
+          <dd
+            className="
+          h-4
+          w-28 sm:w-36
+          rounded-md
+          bg-slate-200
+          dark:bg-slate-700
+        "
+          />
+
+          <dd
+            className="
+          mt-2
+          h-3
+          w-36 sm:w-44
+          rounded-md
+          bg-slate-200
+          dark:bg-slate-700
+        "
+          />
+
+          <dd
+            className="
+          mt-2
+          h-3
+          w-24 sm:w-32
+          rounded-md
+          bg-slate-200
+          dark:bg-slate-700
+        "
+          />
+        </dl>
+        <div
+          className="
+        shrink-0
+        h-6 w-16
+        rounded-full
+        bg-slate-200
+        dark:bg-slate-700
+      "
+        />
+      </div>
+
+      {/* Accordion content */}
+      <div className="p-2 sm:p-3 flex-1 flex flex-col">
+        <div className="space-y-2.5">
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <React.Fragment key={item}>
+              <div
+                className="
+              h-14
+              w-full
+              rounded-2xl
+              border border-slate-200
+              bg-slate-50
+              shadow-sm
+              dark:border-slate-700
+              dark:bg-slate-800
+            "
+              >
+                <div className="flex h-full items-center justify-between px-4">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="
+                    h-5 w-5
+                    rounded-md
+                    bg-slate-200
+                    dark:bg-slate-700
+                  "
+                    />
+
+                    <div
+                      className="
+                    h-4 w-24
+                    rounded-md
+                    bg-slate-200
+                    dark:bg-slate-700
+                  "
+                    />
+                  </div>
+
+                  <div
+                    className="
+                  h-4 w-4
+                  rounded
+                  bg-slate-200
+                  dark:bg-slate-700
+                "
+                  />
+                </div>
+              </div>
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>

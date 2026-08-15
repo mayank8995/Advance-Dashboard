@@ -16,19 +16,14 @@ import type {
   TableQueryParams,
 } from '../types/types';
 import axios from 'axios';
+import { REFETCH_TRY } from '../utils/constants';
 
-// export function useGetData() {
-//   return useQuery({
-//     queryKey: ['employeesData'],
-//     queryFn: getEmployees,
-//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-//   });
-// }
 export function useFilterList(params: FilterList) {
   return useQuery({
     queryKey: ['filterList', params.tableType],
     queryFn: () => getFilterList(params),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+    retry: REFETCH_TRY,
   });
 }
 
@@ -54,6 +49,7 @@ export function useTableData(
     queryFn: () => getTableEmployees(queryParams, setIsLoading, signal),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
+    retry: REFETCH_TRY,
   });
 }
 
@@ -73,6 +69,7 @@ export function usePerFormanceTableData(params: TableQueryParams) {
     queryFn: () => getTableEmployees(queryParams),
     placeholderData: keepPreviousData, // Smooth transitions,
     staleTime: Infinity,
+    retry: REFETCH_TRY,
   });
 }
 
@@ -89,11 +86,13 @@ export function useAllData(params: TableQueryParams) {
         queryKey: ['analyticsData'],
         queryFn: getAnalytics,
         staleTime: Infinity,
+        retry: REFETCH_TRY,
       },
       {
         queryKey: ['performanceCardsData'],
         queryFn: getPerformanceCards,
         staleTime: Infinity,
+        retry: REFETCH_TRY,
       },
       {
         queryKey: [
@@ -103,33 +102,18 @@ export function useAllData(params: TableQueryParams) {
         queryFn: () => getTableEmployees(queryParams),
         placeholderData: keepPreviousData, // Smooth transitions,
         staleTime: Infinity,
+        retry: REFETCH_TRY,
       },
     ],
   });
 }
-
-// export function useAnalyticsData() {
-//   return useQuery({
-//     queryKey: ['analyticsData'],
-//     queryFn: getAnalytics,
-//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-//   });
-// }
-
-// export function usePerformanceCardData() {
-//   return useQuery({
-//     queryKey: ['performanceCardsData'],
-//     queryFn: getPerformanceCards,
-//     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-//   });
-// }
 
 export function useProfileData(user: LoginProfile) {
   return useQuery({
     queryKey: ['profileData'],
     queryFn: () => getProfileData(user),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
-    retry: 1,
+    retry: REFETCH_TRY,
   });
 }
 
@@ -138,6 +122,7 @@ export function useEmployeeDetail(id: { id: number }) {
     queryKey: ['employeeDetail', id],
     queryFn: () => fetchEmployeeDetails(id),
     staleTime: Infinity, // Keep the data "fresh" forever so it doesn't re-fetch
+    retry: REFETCH_TRY,
   });
 }
 

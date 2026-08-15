@@ -37,17 +37,21 @@ export default function Accordion({
                   FIELD_LABELS[field.split('$')?.[0] as keyof Employee];
                 return (
                   <React.Fragment key={`item-${field}`}>
-                    <div className="flex justify-between">
-                      <span className="text-xs xl:text-sm font-medium text-gray-500">
+                    <div className="flex flex-row justify-between gap-2">
+                      <h2
+                        title={rowLabel}
+                        className="text-xs xl:text-sm font-medium text-gray-500"
+                      >
                         {rowLabel}
-                      </span>
+                      </h2>
                       {value?.map((val) => (
-                        <span
+                        <h2
+                          title={val}
                           key={val}
-                          className="text-xs xl:text-sm  font-semibold text-gray-900 dark:text-white"
+                          className="text-xs xl:text-sm  font-semibold text-gray-900 dark:text-white  min-w-0 flex-1 break-all text-end"
                         >
                           {val}
-                        </span>
+                        </h2>
                       ))}
                     </div>
                   </React.Fragment>
@@ -58,30 +62,36 @@ export default function Accordion({
             value = content?.[field as keyof Employee];
             return (
               <React.Fragment key={`item-${field}`}>
-                <div className="flex justify-between">
+                <div className="flex flex-row justify-between gap-2">
                   {accordian?.showColumns && (
-                    <span className="text-xs xl:text-sm font-medium text-gray-500 leading-normal">
+                    <h2
+                      title={rowLabel}
+                      className="text-xs xl:text-sm font-medium text-gray-500 shrink-0 whitespace-nowrap"
+                    >
                       {rowLabel}
-                    </span>
+                    </h2>
                   )}
                   {Array.isArray(value) && accordian?.fieldType === 'array' ? (
                     value?.map((val) => (
-                      <span
+                      <h2
+                        title={String(val)}
                         key={String(val)}
-                        className="text-xs xl:text-sm font-medium text-gray-900 leading-normal dark:text-white"
+                        className="text-xs xl:text-sm font-medium text-gray-900  dark:text-white  min-w-0 flex-1 break-all text-end"
                       >
                         {String(val)}
-                      </span>
+                      </h2>
                     ))
                   ) : (
-                    <span className="text-xs xl:text-sm font-medium text-gray-900 leading-normal dark:text-white">
+                    <h2
+                      title={String(value)}
+                      className="text-xs xl:text-sm font-medium text-gray-900  dark:text-white  min-w-0 flex-1 break-all text-end"
+                    >
                       {String(value)}
-                    </span>
+                    </h2>
                   )}
                 </div>
               </React.Fragment>
             );
-            return null;
           })}
         </>
       );
@@ -106,7 +116,7 @@ export default function Accordion({
           {accordian?.render
             ? accordian?.render({ className: 'h-4 w-4 xl:h-6 xl:w-6' })
             : null}
-          <span className="text-xs xl:text-base">{accordian?.label}</span>
+          <h2 className="text-xs lg:text-sm truncate">{accordian?.label}</h2>
         </div>{' '}
         <span aria-hidden={!openAccordian} aria-expanded={openAccordian}>
           {!openAccordian ? (

@@ -6,10 +6,13 @@ import { CheckCircle } from 'lucide-react';
 import ErrorBoundary from './components/Error/ErrorBoundary';
 import ErrorBoundaryPage from './components/Error/ErrorBoundaryPage';
 import { useTheme } from './hooks/useTheme';
+import { useSearchParams } from 'react-router-dom';
 
 function App() {
   const [show, setShow] = useState<boolean>(true);
   const { theme } = useTheme();
+  const [searchParams] = useSearchParams();
+  const isGuest = searchParams?.get('isGuest') === 'true';
   const root = document.documentElement;
   if (localStorage.getItem('theme') === 'dark') {
     root.setAttribute('data-theme', 'dark');
@@ -84,6 +87,7 @@ function App() {
             {show ? (
               <Login
                 key={'login'}
+                isGuest={isGuest}
                 onCustomEvent={(flag: boolean) => setShow(flag)}
               />
             ) : (

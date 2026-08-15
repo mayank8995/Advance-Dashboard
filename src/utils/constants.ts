@@ -480,3 +480,9 @@ export const NAME = 'name';
 
 export const sortModalContainerCss = `bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10  fixed z-300 left-0 right-0 bottom-0 rounded-t-2xl`;
 export const employeeDetailModalContainerCss = `h-full max-h-full overflow-auto w-screen md:w-fit  bg-white dark:bg-slate-950  border border-slate-200 dark:border-white/10  fixed z-300 right-0 top-0`;
+export const REFETCH_TRY = 3;
+
+export const GUEST_LOGIN = {
+  email: 'test@ad.com',
+  password: '987654',
+};

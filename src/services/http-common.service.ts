@@ -4,6 +4,8 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
+import { doLogout } from '../api/admin-portal.api';
+import { getEnv } from '../config/env';
 interface ApiError extends AxiosError {
   status: number;
   data: unknown;
@@ -11,10 +13,12 @@ interface ApiError extends AxiosError {
 }
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 500;
+const { apiUrl } = getEnv();
 const apiClient = axios.create({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/',
+  baseURL: apiUrl || 'http://localhost:3000/',
   timeout: 5000,
+  withCredentials: true,
   headers: {
     'Content-type': 'application/json',
   },
@@ -23,9 +27,17 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   function (config: InternalAxiosRequestConfig) {
     // Do something before request is sent
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.set('Authorization', `Bearer ${token}`);
+    if (
+      !(
+        config.url === '/login' ||
+        config.url === '/signup' ||
+        config.url === '/logout'
+      )
+    ) {
+      let access_token: string | null = localStorage.getItem('access-token');
+      if (access_token) {
+        config.headers.set('Authorization', `Bearer ${access_token}`);
+      }
     }
     return config;
   },
@@ -40,11 +52,32 @@ apiClient.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    if (response?.config?.url === '/login') {
+      localStorage.setItem('access-token', response?.data?.token);
+    }
     return normalizeApiResponse(response);
   },
   async function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     reportError(error);
+    if (error.response?.status === 403) {
+      localStorage.removeItem('access-token');
+      doLogout();
+      return Promise.reject(new Error('Auth token expired'));
+    }
+    // if (error.response?.status === 401) {
+    //   console.log('error>>>>>', error?.response);
+    //   const responseData = error?.response?.data as
+    //     | Record<string, unknown>
+    //     | undefined;
+    //   const isTokenVerified = responseData?.token;
+    //   if (isTokenVerified === false) {
+    //     // refetch token
+    //     const token = await refreshToken();
+    //     console.log('token>>>', token);
+    //     // config.headers.set('Authorization', `Bearer ${access_token}`);
+    //   }
+    // }
     const config = error.config as InternalAxiosRequestConfig & {
       _retryCount?: number;
     };

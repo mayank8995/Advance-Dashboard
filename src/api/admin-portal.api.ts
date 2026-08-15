@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import apiClient from '../services/http-common.service';
 import { getApiErrorDetails } from '../services/utils.service';
 import type {
@@ -8,6 +9,7 @@ import type {
   SignUpForm,
   TableQueryParams,
 } from '../types/types';
+import { router } from '../router/router';
 
 export default async function getEmployees() {
   try {
@@ -131,6 +133,38 @@ export const doLogin = async (form: LoginForm) => {
   }
 };
 
+export const doLogout = async () => {
+  try {
+    const response = await apiClient.post('/logout');
+    const { success } = response?.data;
+    if (success) {
+      router.navigate('/');
+    }
+  } catch (err: unknown) {
+    router.navigate('/');
+    console.error('err>>>', err);
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
+    throw err;
+  } finally {
+    toast.info('Logged out!');
+  }
+};
+export const refreshToken = async () => {
+  try {
+    await apiClient.get('/refreshToken');
+  } catch (err: unknown) {
+    console.error('err>>>', err);
+    const { message, status, url } = getApiErrorDetails(err);
+    console.error('API Error:', message);
+    console.error('Status:', status);
+    console.error('URL:', url);
+    throw err;
+  }
+};
+
 export const doSignup = async (form: SignUpForm) => {
   // console.log("form>>>", form);
   try {
@@ -157,5 +191,15 @@ export const fetchEmployeeDetails = async (params: { id: number }) => {
     console.error('Status:', status);
     console.error('URL:', url);
     throw err;
+  }
+};
+
+// for this api different timeout
+export const checkHealth = async () => {
+  try {
+    const response = await apiClient.get('/health', { timeout: 70000 });
+    return response;
+  } catch (error) {
+    throw error;
   }
 };
