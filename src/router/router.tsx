@@ -15,9 +15,10 @@ const ProfileSettings = React.lazy(
 export const loadViewMorePage = () =>
   import('../components/ViewMore/ViewMore.tsx');
 const ViewMore = React.lazy(loadViewMorePage);
-const DashboardRoot = React.lazy(
-  () => import('../pages/dashboard/DashboardRoot.tsx')
-);
+
+export const loadDashboardPage = () =>
+  import('../pages/dashboard/DashboardRoot.tsx');
+const DashboardRoot = React.lazy(loadDashboardPage);
 
 export const router = createBrowserRouter([
   {
