@@ -152,8 +152,7 @@ function Login({
             : prev.message,
       }));
     } catch (error) {
-      const { message } = getApiErrorDetails(error);
-      toast.error(message, {});
+      toast.error('Please try again!');
     } finally {
       clearTimeout(timer);
       setServerWakingUp((prev) => ({ ...prev, status: false }));
