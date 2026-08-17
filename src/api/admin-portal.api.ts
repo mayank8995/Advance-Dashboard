@@ -10,6 +10,8 @@ import type {
   TableQueryParams,
 } from '../types/types';
 import { router } from '../router/router';
+import axios from 'axios';
+import { getEnv } from '../config/env';
 
 export default async function getEmployees() {
   try {
@@ -197,7 +199,15 @@ export const fetchEmployeeDetails = async (params: { id: number }) => {
 // for this api different timeout
 export const checkHealth = async () => {
   try {
-    const response = await apiClient.get('/health', { timeout: 70000 });
+    const { apiUrl } = getEnv();
+    const response = await axios.get('/health', {
+      baseURL: apiUrl || 'http://localhost:3000/',
+      timeout: 90000,
+      withCredentials: true,
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
     return response;
   } catch (error) {
     throw error;

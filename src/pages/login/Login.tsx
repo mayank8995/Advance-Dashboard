@@ -152,7 +152,7 @@ function Login({
             : prev.message,
       }));
     } catch (error) {
-      toast.error('Please try again!');
+      toast.error('Request timed out.Please try again!');
     } finally {
       clearTimeout(timer);
       setServerWakingUp((prev) => ({ ...prev, status: false }));
