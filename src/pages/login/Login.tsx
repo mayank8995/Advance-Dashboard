@@ -49,12 +49,8 @@ function Login({
   const guestLoginStarted = useRef(false);
   const [serverWakingUp, setServerWakingUp] = useState<ServerHealth>({
     status: false,
-    message: '⚡Waking up demo server...',
+    message: '⚡Waking up free demo server...',
   });
-
-  useEffect(() => {
-    wakeUpServer();
-  }, []);
 
   useEffect(() => {
     if (!isGuest || guestLoginStarted.current) return;
@@ -95,6 +91,8 @@ function Login({
       if (checkFormValidity(form)) {
         // console.log("inside herer")
         setIsLoading(true);
+        // first check render server(free) health check
+        await wakeUpServer();
         const res: {
           status?: number;
           data?: { user?: LoginData; message?: ToastContent<unknown> };
