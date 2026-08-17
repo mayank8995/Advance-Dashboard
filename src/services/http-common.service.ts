@@ -11,7 +11,7 @@ interface ApiError extends AxiosError {
   data: unknown;
   statusText: string;
 }
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 5;
 const RETRY_DELAY_MS = 500;
 const { apiUrl } = getEnv();
 const apiClient = axios.create({
